@@ -1,0 +1,959 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grade 12 | English Proficiency Test</title>
+    <style>
+        :root {
+            --primary: #8ec5fc;
+            --primary-hover: #7eb3ea;
+            --secondary: #e0c3fc;
+            --success: #a8e6cf;
+            --danger: #ffaaa5;
+            --text-main: #3d405b;
+            --text-light: #707b8e;
+            --glass-bg: rgba(255, 255, 255, 0.65);
+            --glass-border: rgba(255, 255, 255, 0.4);
+            --glass-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.05);
+            --font-family: 'Inter', system-ui, -apple-system, sans-serif;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: var(--font-family);
+            color: var(--text-main);
+            min-height: 100vh;
+            background-image: linear-gradient(120deg, #fdfbfb 0%, #ebedee 100%);
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Ambient Pastel Blobs Background */
+        .blob {
+            position: fixed;
+            border-radius: 50%;
+            filter: blur(80px);
+            z-index: -1;
+            opacity: 0.6;
+        }
+        .blob-1 { top: -10%; left: -10%; width: 50vw; height: 50vw; background: var(--secondary); }
+        .blob-2 { bottom: -10%; right: -10%; width: 60vw; height: 60vw; background: var(--primary); }
+        .blob-3 { top: 40%; left: 60%; width: 40vw; height: 40vw; background: #fbc2eb; }
+
+        /* Glassmorphism Utilities */
+        .glass {
+            background: var(--glass-bg);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            box-shadow: var(--glass-shadow);
+        }
+
+        /* Layout Container */
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 2rem;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Header */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.2rem 2rem;
+            margin-bottom: 2rem;
+            position: sticky;
+            top: 1rem;
+            z-index: 100;
+            transition: all 0.3s ease;
+        }
+
+        h1 {
+            font-size: 1.4rem;
+            font-weight: 700;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .stats-bar {
+            display: flex;
+            gap: 1.5rem;
+            align-items: center;
+            font-weight: 600;
+            color: var(--text-main);
+        }
+
+        .timer {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: rgba(255, 255, 255, 0.8);
+            padding: 0.5rem 1rem;
+            border-radius: 30px;
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        /* Views */
+        .view {
+            display: none;
+            animation: fadeIn 0.4s ease forwards;
+            flex: 1;
+        }
+        .view.active {
+            display: flex;
+            flex-direction: column;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Start Screen */
+        .hero {
+            text-align: center;
+            padding: 4rem 2rem;
+            margin: auto;
+            max-width: 600px;
+        }
+        .hero h2 { font-size: 2.5rem; margin-bottom: 1rem; }
+        .hero p { color: var(--text-light); line-height: 1.6; margin-bottom: 2rem; }
+        
+        .btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            font-size: 1.1rem;
+            font-weight: 600;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(142, 197, 252, 0.4);
+            font-family: inherit;
+        }
+        .btn:hover { background: var(--primary-hover); transform: translateY(-2px); }
+        .btn-outline { background: transparent; color: var(--text-main); border: 2px solid var(--primary); box-shadow: none; }
+        .btn-outline:hover { background: rgba(142, 197, 252, 0.1); transform: translateY(-2px); }
+
+        /* Quiz Screen */
+        .question-card {
+            padding: 2rem;
+            margin-bottom: 1.5rem;
+            transition: all 0.2s ease;
+        }
+        .question-header {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+        .q-number {
+            background: var(--secondary);
+            color: #6a4c93;
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            font-weight: bold;
+            flex-shrink: 0;
+        }
+        .q-text { font-size: 1.1rem; line-height: 1.5; font-weight: 500; }
+
+        .options {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 0.8rem;
+            margin-left: 3rem;
+        }
+
+        @media (min-width: 600px) {
+            .options { grid-template-columns: 1fr 1fr; }
+        }
+
+        .option-label {
+            display: flex;
+            align-items: center;
+            padding: 1rem 1.5rem;
+            background: rgba(255, 255, 255, 0.5);
+            border: 2px solid transparent;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        .option-label:hover { background: rgba(255, 255, 255, 0.8); }
+        .option-label.selected {
+            background: rgba(142, 197, 252, 0.15);
+            border-color: var(--primary);
+        }
+        
+        input[type="radio"] { display: none; }
+        
+        .custom-radio {
+            width: 20px;
+            height: 20px;
+            border: 2px solid #cbd5e1;
+            border-radius: 50%;
+            margin-right: 1rem;
+            position: relative;
+            flex-shrink: 0;
+            transition: all 0.2s ease;
+        }
+        .option-label.selected .custom-radio { border-color: var(--primary); }
+        .option-label.selected .custom-radio::after {
+            content: '';
+            position: absolute;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            width: 10px; height: 10px;
+            background: var(--primary);
+            border-radius: 50%;
+        }
+
+        /* Results Screen */
+        .results-header {
+            text-align: center;
+            padding: 3rem;
+            margin-bottom: 2rem;
+        }
+        .score-circle {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            background: conic-gradient(var(--success) var(--percentage), #eee 0);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem;
+            position: relative;
+        }
+        .score-circle::before {
+            content: '';
+            position: absolute;
+            width: 120px; height: 120px;
+            background: #fff; /* Inner circle to make it a ring */
+            border-radius: 50%;
+        }
+        .score-text {
+            position: relative;
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--text-main);
+        }
+        
+        .result-breakdown {
+            margin-top: 2rem;
+        }
+        
+        .result-card {
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            border-left: 6px solid #ddd;
+        }
+        .result-card.correct { border-left-color: var(--success); }
+        .result-card.incorrect { border-left-color: var(--danger); }
+        
+        .result-tag {
+            display: inline-block;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+        .correct .result-tag { background: #e6f9f0; color: #2d8659; }
+        .incorrect .result-tag { background: #ffebeb; color: #cc3333; }
+        
+        .user-answer { font-weight: 600; text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 4px; }
+        .correct-answer-text { margin-top: 0.8rem; font-size: 0.95rem; color: #2d8659; font-weight: 500; }
+
+        .explanation {
+            margin-top: 1.2rem;
+            padding: 1rem;
+            background: rgba(142, 197, 252, 0.15);
+            border-radius: 8px;
+            font-size: 0.95rem;
+            color: var(--text-main);
+            border-left: 3px solid var(--primary);
+            line-height: 1.5;
+        }
+        .explanation strong { color: var(--primary); }
+
+        .actions { text-align: center; margin: 2rem 0 4rem; display: flex; justify-content: center; gap: 1rem; }
+
+        /* Progress Bar */
+        .progress-container {
+            width: 100%; height: 6px; background: rgba(0,0,0,0.05);
+            border-radius: 3px; margin-top: 1rem; overflow: hidden;
+        }
+        .progress-bar {
+            height: 100%; background: var(--primary);
+            width: 0%; transition: width 0.3s ease;
+        }
+
+        /* Short Answer inputs (Included to fulfill multi-type requirement natively) */
+        .short-answer-input {
+            width: 100%; padding: 1rem; margin-left: 3rem; max-width: 400px;
+            border: 2px solid #e2e8f0; border-radius: 12px; font-size: 1rem; font-family: inherit;
+            background: rgba(255,255,255,0.8); transition: border-color 0.2s;
+        }
+        .short-answer-input:focus { outline: none; border-color: var(--primary); }
+
+        /* Modal Styles */
+        .modal-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.4); backdrop-filter: blur(4px);
+            display: none; justify-content: center; align-items: center; z-index: 1000;
+            opacity: 0; transition: opacity 0.3s ease;
+        }
+        .modal-overlay.active {
+            display: flex; opacity: 1;
+        }
+        .modal-content {
+            padding: 2.5rem 2rem; max-width: 450px; width: 90%; text-align: center;
+            transform: translateY(20px); transition: transform 0.3s ease;
+        }
+        .modal-overlay.active .modal-content {
+            transform: translateY(0);
+        }
+        .modal-content h3 { margin-bottom: 1rem; color: var(--text-main); font-size: 1.5rem; }
+        .modal-content p { color: var(--text-light); line-height: 1.5; margin-bottom: 2rem; }
+
+        @media (max-width: 768px) {
+            .container { padding: 1rem; }
+            header { flex-direction: column; gap: 1rem; text-align: center; padding: 1rem; }
+            .options { margin-left: 0; }
+            .short-answer-input { margin-left: 0; }
+            .hero h2 { font-size: 2rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+    <div class="blob blob-3"></div>
+
+    <div class="container">
+        <!-- Header -->
+        <header class="glass" id="main-header">
+            <h1>Grade 12 | English Proficiency</h1>
+            <div class="stats-bar">
+                <div id="progress-text" style="display: none;">0 / 0 Answered</div>
+                <div class="timer">
+                    <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                    <span id="timer-display">00:00</span>
+                </div>
+            </div>
+        </header>
+
+        <!-- View 1: Start Screen -->
+        <main id="view-start" class="view glass active hero">
+            <h2>Present Tenses Assessment</h2>
+            <p>This comprehensive test evaluates your mastery of English present tenses. The assessment contains 50 questions based on various contextual scenarios.</p>
+            <p>Your progress is automatically saved to your browser, so you can resume if you accidentally close the tab.</p>
+            <div style="margin-top: 2rem;">
+                <button class="btn" onclick="startTest()" id="start-btn">Start Test</button>
+            </div>
+        </main>
+
+        <!-- View 2: Quiz Screen -->
+        <main id="view-quiz" class="view">
+            <div class="glass" style="padding: 1.5rem; margin-bottom: 2rem;">
+                <h3 style="margin-bottom: 0.5rem; color: var(--text-main);">Test Progress</h3>
+                <div class="progress-container">
+                    <div id="progress-bar" class="progress-bar"></div>
+                </div>
+            </div>
+
+            <div id="questions-container">
+                <!-- Questions injected here by JS -->
+            </div>
+
+            <div class="actions">
+                <button class="btn" onclick="submitTest()">Submit Assessment</button>
+            </div>
+        </main>
+
+        <!-- View 3: Results Screen -->
+        <main id="view-results" class="view">
+            <div class="glass results-header">
+                <h2 style="margin-bottom: 1.5rem;">Assessment Complete</h2>
+                <div id="score-circle" class="score-circle" style="--percentage: 0%;">
+                    <div class="score-text"><span id="score-text">0</span>%</div>
+                </div>
+                <p style="font-size: 1.2rem; margin-bottom: 0.5rem;" id="score-fraction">0 / 0 Correct</p>
+                <p style="color: var(--text-light);">Total Time: <span id="final-time">00:00</span></p>
+            </div>
+
+            <div class="actions" style="margin-top: 0; margin-bottom: 2rem;">
+                <button class="btn" onclick="resetTest()">Retake Test</button>
+                <button class="btn btn-outline" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">Review Answers below</button>
+            </div>
+
+            <div id="results-breakdown" class="result-breakdown">
+                <!-- Breakdown injected here -->
+            </div>
+        </main>
+    </div>
+
+    <!-- Custom Modal -->
+    <div id="modal-overlay" class="modal-overlay">
+        <div class="glass modal-content">
+            <h3 id="modal-title">Confirm</h3>
+            <p id="modal-message">Are you sure?</p>
+            <div class="actions" style="margin-top: 0; margin-bottom: 0;">
+                <button class="btn btn-outline" id="modal-cancel">Cancel</button>
+                <button class="btn" id="modal-confirm">Confirm</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        /**
+         * 1. Data Source & Answer Key 
+         * The raw markdown exactly as provided by the user.
+         */
+        const rawMarkdown = `
+1\\. The government ______ increasing pressure from environmental groups, and ministers are expected to respond soon.  
+ A. faces  B. is facing  C. has faced  D. has been facing
+
+2\\. I ______ why so many people object to the proposal, but I still think it deserves consideration.  
+ A. understand  B. am understanding  C. have understood  D. have been understanding
+
+3\\. The company ______ substantial losses over the past few years, but analysts remain optimistic about its future.  
+ A. suffers  B. is suffering  C. has suffered  D. has been suffering
+
+4\\. This is the first occasion on which the two departments ______ together on a major project.  
+ A. work  B. are working  C. have worked  D. have been working
+
+5\\. The number of students choosing online courses ______ steadily, reflecting changes in learning habits.  
+ A. increases  B. is increasing  C. has increased  D. has been increased
+
+6\\. I ______ the feeling that something important has been left unsaid.  
+ A. get  B. am getting  C. have got  D. have been getting
+
+7\\. Researchers ______ the long-term consequences of the policy for nearly a decade, yet no consensus has emerged.  
+ A. study  B. are studying  C. have studied  D. have been studying
+
+8\\. The museum ______ one of the finest collections of ancient manuscripts in the region.  
+ A. possesses  B. is possessing  C. has possessed  D. has been possessing
+
+9\\. You look exhausted. ______ on this report since early this morning?  
+ A. Do you work  B. Are you working  C. Have you worked  D. Have you been working
+
+10\\. More and more evidence ______ that the traditional explanation may be inadequate.  
+ A. suggests  B. is suggesting  C. has suggested  D. has been suggesting
+
+11\\. The committee ______ serious reservations about the proposal, although no official statement has yet been issued.  
+ A. has  B. is having  C. has had  D. has been having
+
+12\\. I ______ increasingly difficult to accept the assumption that economic growth alone guarantees social progress.  
+ A. find  B. am finding  C. have found  D. have been finding
+
+13\\. The latest evidence ______ strongly against the traditional interpretation of the data.  
+ A. argues  B. is arguing  C. has argued  D. has been arguing
+
+14\\. The country ______ profound demographic changes, the consequences of which remain uncertain.  
+ A. undergoes  B. is undergoing  C. has undergone  D. has been undergone
+
+15\\. This is the only explanation that ______ any sense to me.  
+ A. makes  B. is making  C. has made  D. has been making
+
+16\\. Scientists ______ increasing attention to the possibility that the disease may spread through indirect contact.  
+ A. pay  B. are paying  C. have paid  D. have been paying
+
+17\\. I ______ your argument, but I cannot accept your conclusion.  
+ A. see  B. am seeing  C. have seen  D. have been seeing
+
+18\\. The university ______ considerable criticism recently for its handling of the issue.  
+ A. receives  B. is receiving  C. has received  D. has been received
+
+19\\. How long ______ the possibility of expanding the business abroad?  
+ A. do they consider  B. are they considering  C. have they considered  D. have they been considering
+
+20\\. The public ______ increasingly aware of the environmental consequences of excessive consumption.  
+ A. becomes  B. is becoming  C. has become  D. has been becoming
+
+**21\\.** The research team ______ possible links between the two phenomena for several years, but no definitive conclusion has yet been reached.  
+ A. investigates  B. is investigating  C. has investigated  D. has been investigating
+
+**22\\.** I ______ it increasingly difficult to reconcile the two conflicting accounts of the incident.  
+ A. find  B. am finding  C. have found  D. have been finding
+
+**23\\.** This is by far the most convincing explanation that scientists ______ for the decline of the species.  
+ A. offer  B. are offering  C. have offered  D. have been offering
+
+**24\\.** The economy ______ signs of recovery, although many experts remain cautious about the long-term outlook.  
+ A. shows  B. is showing  C. has shown  D. has been showing
+
+**25\\.** How long ______ the possibility that the original theory may be fundamentally flawed?  
+ A. do researchers consider  B. are researchers considering  C. have researchers considered  D. have researchers been considering
+
+**26\\.** The latest findings ______ serious doubts on the validity of the traditional model.  
+ A. cast  B. are casting  C. have cast  D. have been casting
+
+**27\\.** I ______ exactly what you mean, but I think the evidence points in another direction.  
+ A. see  B. am seeing  C. have seen  D. have been seeing
+
+**28\\.** The city ______ significant demographic changes over the past two decades, transforming its social and economic structure.  
+ A. undergoes  B. is undergoing  C. has undergone  D. has been undergoing
+
+**29\\.** The board ______ whether further action is necessary and is expected to announce its decision shortly.  
+ A. considers  B. is considering  C. has considered  D. has been considering
+
+**30\\.** Public confidence in the healthcare system ______ gradually as access to medical services improves.  
+ A. restores  B. is restoring  C. has restored  D. is being restored
+
+**31\\.** The committee ______ considerable concern about the long-term implications of the policy, although it has not reached a final decision.  
+ A. expresses  B. is expressing  C. has expressed  D. has been expressing
+
+**32\\.** I ______ increasingly convinced that the traditional explanation fails to account for all the evidence.  
+ A. become  B. am becoming  C. have become  D. have been becoming
+
+**33\\.** This is the first study that ______ a direct connection between the two variables.  
+ A. establishes  B. is establishing  C. has established  D. has been establishing
+
+**34\\.** The evidence ______ strongly towards the conclusion that the original theory is incomplete.  
+ A. points  B. is pointing  C. has pointed  D. has been pointing
+
+**35\\.** How long ______ the possibility that the data may have been misinterpreted?  
+ A. do experts suspect  B. are experts suspecting  C. have experts suspected  D. have experts been suspecting
+
+**36\\.** The company ______ significant progress in reducing its environmental impact over the past decade.  
+ A. makes  B. is making  C. has made  D. has been making
+
+**37\\.** I ______ your reasoning, but I think you underestimate the importance of the available evidence.  
+ A. appreciate  B. am appreciating  C. have appreciated  D. have been appreciating
+
+**38\\.** The population ______ older, creating new challenges for the healthcare system.  
+ A. grows  B. is growing  C. has grown  D. has been grown
+
+**39\\.** Researchers ______ increasing attention to the role of genetic factors in the development of the disease.  
+ A. pay  B. are paying  C. have paid  D. have been paying
+
+**40\\.** The museum ______ one of the most comprehensive collections of Asian art in Europe.  
+ A. houses  B. is housing  C. has housed  D. has been housing
+
+**41\\.** The latest survey ______ that public attitudes towards renewable energy are changing rapidly.  
+ A. indicates  B. is indicating  C. has indicated  D. has been indicating
+
+**42\\.** I ______ it increasingly difficult to distinguish fact from speculation in the reports that are being published.  
+ A. find  B. am finding  C. have found  D. have been finding
+
+**43\\.** The government ______ various measures to address the problem, but none has proved entirely successful.  
+ A. introduces  B. is introducing  C. has introduced  D. has been introducing
+
+**44\\.** This is by far the most persuasive argument that historians ______ in support of the theory.  
+ A. produce  B. are producing  C. have produced  D. have been producing
+
+**45\\.** The scientific community ______ increasingly aware of the limitations of the current model.  
+ A. becomes  B. is becoming  C. has become  D. has been becoming
+
+**46\\.** How long ______ the possibility that the species may become extinct in the wild?  
+ A. do conservationists consider  B. are conservationists considering  C. have conservationists considered  D. have conservationists been considering
+
+**47\\.** The evidence ______ little doubt that urgent action is required.  
+ A. leaves  B. is leaving  C. has left  D. has been leaving
+
+**48\\.** I ______ exactly why the proposal attracts so much support, but I remain sceptical about its practical value.  
+ A. see  B. am seeing  C. have seen  D. have been seeing
+
+**49\\.** The region ______ substantial economic growth over the last twenty years, despite repeated periods of instability.  
+ A. experiences  B. is experiencing  C. has experienced  D. has been experiencing
+
+**50\\.** Researchers ______ the long-term effects of climate change for decades, yet many important questions remain unanswered.  
+ A. study  B. are studying  C. have studied  D. have been studying
+        `;
+
+        // Accurate Answer Key Generated based on Present Tense rules
+        const answerKey = {
+            1:"B", 2:"A", 3:"C", 4:"C", 5:"B", 6:"A", 7:"D", 8:"A", 9:"D", 10:"A",
+            11:"A", 12:"A", 13:"A", 14:"B", 15:"A", 16:"B", 17:"A", 18:"C", 19:"D", 20:"B",
+            21:"D", 22:"A", 23:"C", 24:"B", 25:"D", 26:"C", 27:"A", 28:"C", 29:"B", 30:"D",
+            31:"B", 32:"B", 33:"C", 34:"A", 35:"C", 36:"C", 37:"A", 38:"B", 39:"B", 40:"A",
+            41:"A", 42:"A", 43:"C", 44:"C", 45:"B", 46:"D", 47:"A", 48:"A", 49:"C", 50:"D"
+        };
+
+        // Explanations for the correct answers
+        const explanations = {
+            1: "The phrase 'increasing pressure' describes a changing, ongoing situation, which requires the present continuous tense.",
+            2: "'Understand' is a stative verb describing a state of mind, so it is rarely used in the continuous form. Present simple is correct.",
+            3: "'Over the past few years' indicates an action starting in the past and continuing to the present. The present perfect emphasizes the accumulated losses up to now.",
+            4: "The structure 'This is the first time/occasion...' must be followed by the present perfect tense.",
+            5: "The word 'steadily' and the context of a changing trend ('reflecting changes') require the present continuous.",
+            6: "'Get the feeling' is a common idiomatic expression and 'get' acts as a stative verb in this context, requiring the present simple.",
+            7: "The phrase 'for nearly a decade' combined with the ongoing lack of consensus highlights the duration of an uninterrupted activity, requiring the present perfect continuous.",
+            8: "'Possess' is a stative verb indicating ownership, which cannot be used in continuous tenses. Present simple is required.",
+            9: "'Since early this morning' combined with visible present evidence ('look exhausted') requires the present perfect continuous to emphasize the duration of the exhausting activity.",
+            10: "'Suggest' when referring to what evidence points to is used as a stative verb in the present simple.",
+            11: "'Have' indicating possession or holding an opinion (reservations) is a stative verb. Present simple is used.",
+            12: "'Find' used to express an opinion or state of mind is a stative verb requiring the present simple.",
+            13: "'Argues' acts as a fact-stating verb here for evidence. The present simple is used for general truths and facts established by evidence.",
+            14: "The country is in the middle of 'profound demographic changes,' indicating an ongoing, temporary process, thus taking the present continuous.",
+            15: "'Make sense' is a fixed state, so 'makes' (present simple) is the correct form.",
+            16: "'Increasing attention' indicates a developing trend or changing situation, which requires the present continuous.",
+            17: "'See' meaning 'understand' is a stative verb and is not used in continuous forms. Present simple is correct.",
+            18: "The keyword 'recently' combined with a completed accumulation of criticism up to now calls for the present perfect.",
+            19: "'Consider' as a mental process happening over a period of time up to the present ('How long...') takes the present perfect continuous.",
+            20: "'Increasingly aware' shows a gradual change currently happening. The present continuous ('is becoming') expresses this changing state.",
+            21: "'For several years' with no conclusion yet emphasizes the ongoing nature of the research, needing the present perfect continuous.",
+            22: "Like question 12, 'find' expressing a mental state or opinion is a stative verb. Present simple is appropriate.",
+            23: "The structure 'This is by far the most...' requires the present perfect tense to describe an experience/action up to the present.",
+            24: "The economy is currently in the process of 'showing signs', which is a temporary, ongoing development. Present continuous is correct.",
+            25: "Similar to Q19, asking 'how long' about an ongoing, active mental process requires the present perfect continuous.",
+            26: "'The latest findings' refers to a recent past event with a strong connection/result in the present, taking the present perfect.",
+            27: "'See' in the sense of 'understand' is a stative verb, meaning it takes the present simple.",
+            28: "'Over the past two decades' implies a time period spanning from the past to the present, requiring the present perfect.",
+            29: "The board is actively in the process of making a decision right now ('expected to announce... shortly'). This active process uses the present continuous.",
+            30: "'Confidence' is being acted upon (passive voice), and 'gradually' indicates an ongoing change, so the present continuous passive is correct.",
+            31: "The committee 'is expressing' concern right now before reaching a decision. The ongoing, temporary nature makes present continuous appropriate.",
+            32: "'Becoming increasingly convinced' represents a gradual, ongoing change in state of mind, requiring the present continuous.",
+            33: "The structure 'This is the first study that...' necessitates the present perfect tense.",
+            34: "'Points' describes a fact or general truth about what the evidence indicates. Present simple is correct.",
+            35: "'Suspect' is a stative verb describing a state of mind, so even with 'how long', it takes the present perfect simple instead of continuous.",
+            36: "'Over the past decade' connects a past period to the present, requiring the present perfect to show the progress achieved.",
+            37: "'Appreciate' (meaning understand/value) is a stative verb. The present simple is required.",
+            38: "The population 'is growing' older, which is a gradual, ongoing change. The present continuous is used for changing situations.",
+            39: "Paying 'increasing attention' indicates a developing trend, which takes the present continuous.",
+            40: "'House' in the sense of 'to contain' or 'to store' describes a permanent state. The present simple is used.",
+            41: "'Indicates' is used to state a fact or what a survey shows. Present simple is the standard tense for this.",
+            42: "Similar to Q12 and Q22, 'find' representing a mental opinion is a stative verb and takes the present simple.",
+            43: "The phrase 'none has proved entirely successful' connects past actions to a present result, which requires the present perfect.",
+            44: "The superlative phrase 'This is by far the most...' must be followed by the present perfect.",
+            45: "'Becoming increasingly aware' is a gradual, ongoing change, calling for the present continuous.",
+            46: "Asking 'How long' about an active, ongoing mental process (considering) up to the present takes the present perfect continuous.",
+            47: "'Leaves little doubt' is a statement of fact regarding the evidence. Facts and general truths use the present simple.",
+            48: "Like Q17 and Q27, 'see' meaning 'understand' is a stative verb and uses the present simple.",
+            49: "'Over the last twenty years' implies a duration up to now, focusing on the accumulated experience, thus using the present perfect.",
+            50: "'For decades, yet... remain unanswered' focuses on the prolonged, ongoing duration of the study, requiring the present perfect continuous."
+        };
+
+        /**
+         * 2. Parser Engine
+         * Parses the raw Markdown string into structured Javascript objects.
+         * Infers question types (multiple choice vs short answer) dynamically.
+         */
+        function parseMarkdownTest(markdown) {
+            const lines = markdown.split('\n');
+            const questions = [];
+            let currentQ = null;
+
+            for (let i = 0; i < lines.length; i++) {
+                let line = lines[i].trim();
+                if (!line) continue;
+
+                // Match variations of numbering: "1.", "1\.", "**1\.**", etc.
+                const qMatch = line.match(/^(?:\*\*)?(\d+)(?:\\\.)?(?:\.)?(?:\*\*)?\s+(.*)/);
+
+                if (qMatch) {
+                    if (currentQ) questions.push(currentQ);
+                    currentQ = {
+                        id: parseInt(qMatch[1]),
+                        text: qMatch[2].replace(/\\_/g, '_'), // Clean up escaped underscores
+                        type: 'short_answer', // Defaults to short answer, changed if options found
+                        options: null
+                    };
+                } else if (currentQ) {
+                    // Try to match Multiple Choice options structure
+                    // Matches: "A. xxx B. yyy C. zzz D. www" even with unicode spaces
+                    const mcqMatch = line.match(/A\.\s*(.*?)\s*B\.\s*(.*?)\s*C\.\s*(.*?)\s*D\.\s*(.*)/);
+                    if (mcqMatch) {
+                        currentQ.type = 'multiple_choice';
+                        currentQ.options = {
+                            A: mcqMatch[1].trim(),
+                            B: mcqMatch[2].trim(),
+                            C: mcqMatch[3].trim(),
+                            D: mcqMatch[4].trim()
+                        };
+                    } else if (line.match(/True\s*\/\s*False/i)) {
+                        currentQ.type = 'true_false';
+                        currentQ.options = { True: "True", False: "False" };
+                    }
+                }
+            }
+            if (currentQ) questions.push(currentQ);
+            return questions;
+        }
+
+        const testQuestions = parseMarkdownTest(rawMarkdown);
+
+        /**
+         * 3. State Management & Storage
+         */
+        let state = {
+            answers: {},
+            elapsedSeconds: 0,
+            timerInterval: null
+        };
+
+        function loadState() {
+            const savedAnswers = localStorage.getItem('english_test_answers');
+            const savedTime = localStorage.getItem('english_test_time');
+            
+            if (savedAnswers) state.answers = JSON.parse(savedAnswers);
+            if (savedTime) state.elapsedSeconds = parseInt(savedTime, 10);
+            
+            if (Object.keys(state.answers).length > 0) {
+                document.getElementById('start-btn').innerText = 'Resume Test';
+            }
+        }
+
+        function saveState() {
+            localStorage.setItem('english_test_answers', JSON.stringify(state.answers));
+            localStorage.setItem('english_test_time', state.elapsedSeconds);
+        }
+
+        /**
+         * 4. UI & Logic Interactions
+         */
+        function formatTime(seconds) {
+            const m = String(Math.floor(seconds / 60)).padStart(2, '0');
+            const s = String(seconds % 60).padStart(2, '0');
+            return `${m}:${s}`;
+        }
+
+        function startTimer() {
+            clearInterval(state.timerInterval);
+            state.timerInterval = setInterval(() => {
+                state.elapsedSeconds++;
+                document.getElementById('timer-display').innerText = formatTime(state.elapsedSeconds);
+                if (state.elapsedSeconds % 5 === 0) saveState(); // Periodic save
+            }, 1000);
+        }
+
+        function switchView(viewId) {
+            document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+            document.getElementById(viewId).classList.add('active');
+            window.scrollTo(0, 0);
+        }
+
+        function updateProgress() {
+            const total = testQuestions.length;
+            const answered = Object.keys(state.answers).length;
+            const percentage = (answered / total) * 100;
+            
+            document.getElementById('progress-bar').style.width = `${percentage}%`;
+            document.getElementById('progress-text').innerText = `${answered} / ${total} Answered`;
+            document.getElementById('progress-text').style.display = 'block';
+        }
+
+        function selectOption(questionId, optionKey) {
+            state.answers[questionId] = optionKey;
+            
+            // Update UI
+            const qContainer = document.getElementById(`q-${questionId}`);
+            qContainer.querySelectorAll('.option-label').forEach(lbl => lbl.classList.remove('selected'));
+            
+            const selectedLabel = qContainer.querySelector(`input[value="${optionKey}"]`).closest('.option-label');
+            selectedLabel.classList.add('selected');
+            
+            saveState();
+            updateProgress();
+        }
+
+        function handleShortAnswer(questionId, value) {
+            state.answers[questionId] = value;
+            saveState();
+            updateProgress();
+        }
+
+        /**
+         * 5. Rendering Engine
+         */
+        function startTest() {
+            renderQuestions();
+            updateProgress();
+            document.getElementById('timer-display').innerText = formatTime(state.elapsedSeconds);
+            startTimer();
+            switchView('view-quiz');
+        }
+
+        function renderQuestions() {
+            const container = document.getElementById('questions-container');
+            container.innerHTML = '';
+
+            testQuestions.forEach((q, index) => {
+                const card = document.createElement('div');
+                card.className = 'glass question-card';
+                card.id = `q-${q.id}`;
+
+                let html = `
+                    <div class="question-header">
+                        <div class="q-number">${q.id}</div>
+                        <div class="q-text">${q.text}</div>
+                    </div>
+                `;
+
+                if (q.type === 'multiple_choice' || q.type === 'true_false') {
+                    html += `<div class="options">`;
+                    for (const [key, value] of Object.entries(q.options)) {
+                        const isChecked = state.answers[q.id] === key;
+                        html += `
+                            <label class="option-label ${isChecked ? 'selected' : ''}">
+                                <div class="custom-radio"></div>
+                                <input type="radio" name="q-${q.id}" value="${key}" 
+                                       onchange="selectOption(${q.id}, '${key}')" 
+                                       ${isChecked ? 'checked' : ''}>
+                                <span><strong>${key}.</strong> ${value}</span>
+                            </label>
+                        `;
+                    }
+                    html += `</div>`;
+                } else {
+                    const savedVal = state.answers[q.id] || '';
+                    html += `
+                        <input type="text" class="short-answer-input" placeholder="Type your answer here..."
+                               value="${savedVal}" oninput="handleShortAnswer(${q.id}, this.value)">
+                    `;
+                }
+
+                card.innerHTML = html;
+                container.appendChild(card);
+            });
+        }
+
+        function showModal(title, message, onConfirm) {
+            const overlay = document.getElementById('modal-overlay');
+            document.getElementById('modal-title').innerText = title;
+            document.getElementById('modal-message').innerText = message;
+            
+            const btnConfirm = document.getElementById('modal-confirm');
+            const btnCancel = document.getElementById('modal-cancel');
+            
+            // Clone to remove old event listeners
+            const newBtnConfirm = btnConfirm.cloneNode(true);
+            btnConfirm.parentNode.replaceChild(newBtnConfirm, btnConfirm);
+            
+            const newBtnCancel = btnCancel.cloneNode(true);
+            btnCancel.parentNode.replaceChild(newBtnCancel, btnCancel);
+            
+            newBtnConfirm.onclick = () => {
+                overlay.classList.remove('active');
+                onConfirm();
+            };
+            
+            newBtnCancel.onclick = () => overlay.classList.remove('active');
+            
+            overlay.classList.add('active');
+        }
+
+        function submitTest() {
+            const answeredCount = Object.keys(state.answers).length;
+            if (answeredCount < testQuestions.length) {
+                showModal(
+                    "Incomplete Assessment",
+                    `You have only answered ${answeredCount} out of ${testQuestions.length} questions. Are you sure you want to submit?`,
+                    processSubmission
+                );
+            } else {
+                processSubmission();
+            }
+        }
+
+        function processSubmission() {
+            clearInterval(state.timerInterval);
+            renderResults();
+            switchView('view-results');
+        }
+
+        function renderResults() {
+            let correctCount = 0;
+            const breakdownContainer = document.getElementById('results-breakdown');
+            breakdownContainer.innerHTML = '';
+
+            testQuestions.forEach(q => {
+                const userAnswer = state.answers[q.id];
+                const correctAnswer = answerKey[q.id];
+                
+                // Flexible grading (checks mapped correct answer)
+                let isCorrect = false;
+                if (q.type === 'multiple_choice') {
+                    isCorrect = userAnswer === correctAnswer;
+                } else {
+                    // Just fallback grading for short answer (not applicable here, but safe)
+                    isCorrect = userAnswer && String(userAnswer).toLowerCase().trim() === String(correctAnswer).toLowerCase().trim();
+                }
+
+                if (isCorrect) correctCount++;
+
+                const card = document.createElement('div');
+                card.className = `glass result-card ${isCorrect ? 'correct' : 'incorrect'}`;
+                
+                let userDisplay = userAnswer ? `${userAnswer}. ${q.options ? q.options[userAnswer] : userAnswer}` : 'No answer provided';
+                let correctDisplay = `${correctAnswer}. ${q.options ? q.options[correctAnswer] : correctAnswer}`;
+
+                card.innerHTML = `
+                    <div class="result-tag">${isCorrect ? '✓ Correct' : '✗ Incorrect'}</div>
+                    <div style="font-weight: 500; margin-bottom: 1rem;">${q.id}. ${q.text}</div>
+                    
+                    <div style="font-size: 0.95rem;">
+                        Your answer: <span class="user-answer" style="color: ${isCorrect ? '#2d8659' : '#cc3333'}">${userDisplay}</span>
+                    </div>
+                    
+                    ${!isCorrect ? `<div class="correct-answer-text">Correct answer: <strong>${correctDisplay}</strong></div>` : ''}
+                    
+                    <div class="explanation">
+                        <strong>Explanation:</strong> ${explanations[q.id] || "No explanation provided."}
+                    </div>
+                `;
+                
+                breakdownContainer.appendChild(card);
+            });
+
+            const percentage = Math.round((correctCount / testQuestions.length) * 100);
+            
+            document.getElementById('score-text').innerText = percentage;
+            document.getElementById('score-circle').style.setProperty('--percentage', `${percentage}%`);
+            document.getElementById('score-fraction').innerText = `${correctCount} / ${testQuestions.length} Correct`;
+            document.getElementById('final-time').innerText = formatTime(state.elapsedSeconds);
+            
+            // Clean local storage upon completion, but keep timer frozen in state
+            localStorage.removeItem('english_test_answers');
+            localStorage.removeItem('english_test_time');
+        }
+
+        function resetTest() {
+            showModal(
+                "Retake Test",
+                "Are you sure you want to start over? All current progress will be lost.",
+                processReset
+            );
+        }
+
+        function processReset() {
+            state.answers = {};
+            state.elapsedSeconds = 0;
+            clearInterval(state.timerInterval);
+            
+            localStorage.removeItem('english_test_answers');
+            localStorage.removeItem('english_test_time');
+            
+            document.getElementById('timer-display').innerText = '00:00';
+            document.getElementById('progress-text').style.display = 'none';
+            document.getElementById('start-btn').innerText = 'Start Test';
+            
+            switchView('view-start');
+        }
+
+        // Initialize on Load
+        window.onload = () => {
+            loadState();
+        };
+
+    </script>
+</body>
+</html>
