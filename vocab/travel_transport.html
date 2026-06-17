@@ -6,7 +6,7 @@
     <title>Grade 12 | Lesson 2 | Travel & Transport</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500&family=Jost:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,600;0,800;1,600&display=swap" rel="stylesheet">
     <style>
         :root {
             /* Theme: Modern Pastel Clean Chic (Lavender & Blush Pink) */
@@ -27,15 +27,15 @@
             --shadow-md: 0 10px 25px rgba(167, 139, 250, 0.1);
         }
 
-        * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Jost', sans-serif; }
 
         body { background-color: var(--bg-body); color: var(--text-main); line-height: 1.6; padding-bottom: 2rem; font-weight: 400; }
         .container { max-width: 1200px; margin: 0 auto; padding: 0 1rem; }
         
-        .brand-banner { background-color: var(--card-bg); color: var(--primary-hover); text-align: center; padding: 1rem; font-weight: 800; font-size: 1.1rem; letter-spacing: 0.15em; width: 100%; border-bottom: 1px solid var(--primary-light); margin-bottom: 2.5rem; text-transform: uppercase; box-shadow: var(--shadow-sm); }
+        .brand-banner { background-color: var(--card-bg); color: var(--primary-hover); text-align: center; padding: 1rem; font-family: 'Playfair Display', serif; font-weight: 800; font-size: 1.1rem; letter-spacing: 0.15em; width: 100%; border-bottom: 1px solid var(--primary-light); margin-bottom: 2.5rem; text-transform: uppercase; box-shadow: var(--shadow-sm); }
 
         header { text-align: center; margin-bottom: 2.5rem; }
-        h1 { color: var(--text-main); font-size: 2.4rem; margin-bottom: 0.5rem; font-weight: 800; letter-spacing: -0.02em; }
+        h1 { color: var(--text-main); font-size: 2.6rem; margin-bottom: 0.5rem; font-family: 'Playfair Display', serif; font-weight: 800; letter-spacing: -0.02em; }
         .subtitle { color: var(--text-muted); font-size: 1.1rem; font-weight: 500; }
 
         /* Topic Filter Controls */
@@ -58,7 +58,7 @@
         
         .word-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1rem; border-bottom: 1px solid var(--primary-light); padding-bottom: 1rem; }
         .word-main { display: flex; align-items: center; gap: 0.75rem; }
-        .word { font-size: 1.5rem; font-weight: 800; color: var(--primary-hover); text-transform: capitalize; letter-spacing: -0.01em; }
+        .word { font-size: 1.6rem; font-weight: 800; color: var(--primary-hover); font-family: 'Playfair Display', serif; text-transform: capitalize; letter-spacing: -0.01em; }
         .audio-btn { background: var(--bg-body); border: 1px solid var(--border); cursor: pointer; font-size: 1.1rem; padding: 0.4rem; border-radius: 50%; transition: all 0.2s ease; color: var(--primary); display: flex; align-items: center; justify-content: center; width: 36px; height: 36px;}
         .audio-btn:hover { transform: scale(1.1); background-color: var(--primary-light); border-color: var(--primary-light); }
         .meta-info { text-align: right; display: flex; flex-direction: column; align-items: flex-end; gap: 0.25rem; }
@@ -86,7 +86,7 @@
         .flashcard-scene.is-flipped .flashcard-inner { transform: rotateY(180deg); }
         .flashcard-face { position: absolute; width: 100%; height: 100%; backface-visibility: hidden; border-radius: 24px; box-shadow: var(--shadow-md); border: 1px solid var(--primary-light); background: var(--card-bg); padding: 3rem; display: flex; flex-direction: column; justify-content: center; align-items: center; overflow-y: auto; }
         .flashcard-front { text-align: center; }
-        .flashcard-front .word { font-size: 3.2rem; margin-bottom: 1.5rem; color: var(--primary-hover); text-transform: capitalize; font-weight: 800; letter-spacing: -0.02em;}
+        .flashcard-front .word { font-size: 3.5rem; margin-bottom: 1.5rem; color: var(--primary-hover); font-family: 'Playfair Display', serif; text-transform: capitalize; font-weight: 800; letter-spacing: -0.02em;}
         .flashcard-front .meta-row { display: flex; align-items: center; justify-content: center; gap: 1rem; margin-bottom: 1.5rem; }
         .flashcard-front .audio-btn { font-size: 1.5rem; background: var(--primary-light); padding: 0.8rem; border: none; width: 50px; height: 50px;}
         .flashcard-front .phonetic { font-size: 1.3rem; color: var(--text-muted); font-family: Arial, Helvetica, sans-serif; font-style: normal; font-weight: 500; }
@@ -147,7 +147,9 @@
                     <h2 class="word" id="fc-word">Word</h2>
                     <div class="meta-row">
                         <span class="phonetic" id="fc-phonetic">/wɜːd/</span>
-                        <button class="audio-btn" id="fc-audio" onclick="playAudioFromCard(event)" title="Listen to pronunciation">▶</button>
+                        <button class="audio-btn" id="fc-audio" onclick="playAudioFromCard(event)" title="Listen to pronunciation">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9v6h4l5 5V4L7 9H3z"></path><path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path><path d="M19.07 4.93a10 10 0 0 1 0 14.14"></path></svg>
+                        </button>
                     </div>
                     <div class="word-families" id="fc-forms" style="margin-top: 1.5rem; max-width: 85%;">Form</div>
                     <span class="topic-tag" id="fc-topic" style="margin-top: 1rem;">Topic</span>
@@ -199,7 +201,7 @@
         { topic: "Travel & Places", word: "Inhabit", phonetic: "/ɪnˈhæbɪt/", form: "Verb", forms: "N: Inhabitant | N: Habitat", def: "To live in or occupy (a place or environment).", translation: "Cư trú, sinh sống", example: "These remote islands are inhabited by a variety of rare bird species." },
         { topic: "Travel & Places", word: "Tranquil", phonetic: "/ˈtræŋkwɪl/", form: "Adjective", forms: "N: Tranquility", def: "Free from disturbance; calm, peaceful, and quiet.", translation: "Yên tĩnh, thanh bình", example: "We rented a small cabin by a tranquil lake for our summer vacation." },
         { topic: "Travel & Places", word: "Bustling", phonetic: "/ˈbʌslɪŋ/", form: "Adjective", forms: "V: Bustle", def: "(Of a place) full of energetic and noisy activity.", translation: "Nhộn nhịp, hối hả, sầm uất", example: "The hotel is located right in the center of the bustling market district." },
-        { topic: "Travel & Places", word: "Platform", phonetic: "/ˈplætfɔːm/", form: "Noun", forms: "N/A", def: "A raised level surface on which people or things can stand, usually at a railway station for getting on and off trains.", translation: "Sân ga", example: "The express train to Edinburgh will depart from platform number four." },
+        { topic: "Travel & Places", word: "Platform", phonetic: "/ˈplætfɔːm/", form: "Noun", forms: "N/A", def: "A digital service, network, or environment (like social media or booking sites) where users can interact, share content, or conduct business.", translation: "Nền tảng (kỹ thuật số/truyền thông)", example: "Many travelers now use digital media platforms to share their itineraries and find hidden gems." },
         { topic: "Travel & Places", word: "Hidden gem", phonetic: "/ˈhɪdn dʒem/", form: "Noun Phrase", forms: "N/A", def: "Something excellent, such as a place or a restaurant, that is not known by many people.", translation: "Viên ngọc ẩn (Nơi tuyệt vời nhưng ít người biết)", example: "That little coastal town is a true hidden gem, away from the typical tourist crowds." },
         { topic: "Travel & Places", word: "Itinerary", phonetic: "/aɪˈtɪnərəri/", form: "Noun", forms: "N/A", def: "A planned route or journey; a travel plan.", translation: "Lịch trình chuyến đi", example: "Our tour itinerary includes visits to three different historical castles." },
         { topic: "Travel & Places", word: "Embark on", phonetic: "/ɪmˈbɑːk ɒn/", form: "Phrasal Verb", forms: "N: Embarkation", def: "To begin (a course of action, especially one that is important or demanding) or go on board a ship/aircraft.", translation: "Bắt đầu (chuyến đi/dự án lớn), lên tàu", example: "Tomorrow morning, we will embark on a two-week cruise across the Mediterranean." },
@@ -236,7 +238,9 @@
                 <div class="word-header">
                     <div class="word-main">
                         <span class="word">${item.word}</span>
-                        <button class="audio-btn" onclick="playAudio('${item.word.replace(/'/g, "\\'")}')" title="Listen to pronunciation">▶</button>
+                        <button class="audio-btn" onclick="playAudio('${item.word.replace(/'/g, "\\'")}')" title="Listen to pronunciation">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9v6h4l5 5V4L7 9H3z"></path><path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path><path d="M19.07 4.93a10 10 0 0 1 0 14.14"></path></svg>
+                        </button>
                     </div>
                     <div class="meta-info">
                         <span class="phonetic">${item.phonetic}</span>
@@ -260,12 +264,46 @@
     renderGrid();
 
     // --- Audio Synthesis ---
+    let voices = [];
+    if ('speechSynthesis' in window) {
+        voices = window.speechSynthesis.getVoices();
+        window.speechSynthesis.onvoiceschanged = () => {
+            voices = window.speechSynthesis.getVoices();
+        };
+    }
+
     function playAudio(text) {
         if ('speechSynthesis' in window) {
             window.speechSynthesis.cancel();
             const utterance = new SpeechSynthesisUtterance(text);
             utterance.lang = 'en-GB';
             utterance.rate = 0.9;
+            
+            // Try to find a female voice profile
+            let femaleVoice = voices.find(voice => 
+                voice.name.includes('Female') || 
+                voice.name.includes('Samantha') || 
+                voice.name.includes('Victoria') || 
+                voice.name.includes('Zira') ||
+                voice.name.includes('Karen') ||
+                voice.name.includes('Tessa') ||
+                voice.name.includes('Fiona') ||
+                voice.name.includes('Moira') ||
+                voice.name.includes('Veena')
+            );
+            
+            // Fallback to any en-GB voice that isn't explicitly male
+            if (!femaleVoice) {
+                femaleVoice = voices.find(voice => voice.lang.includes('en-GB') && !voice.name.includes('Male'));
+            }
+            
+            if (femaleVoice) {
+                utterance.voice = femaleVoice;
+            } else {
+                // Adjust pitch slightly higher to mimic female voice if no explicit female voice is found
+                utterance.pitch = 1.3;
+            }
+
             window.speechSynthesis.speak(utterance);
         } else {
             alert("Sorry, your browser doesn't support text-to-speech pronunciation.");
