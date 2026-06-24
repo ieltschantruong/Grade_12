@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grade 12 Lesson 3 | Travel & Transport</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&family=Jost:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Playfair+Display:ital,wght@0,600;0,700;0,800;1,600&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            /* Theme: Modern Pastel Clean Chic (Pink & Fuchsia) */
+            --primary: #d6409f; /* Deep pink */
+            --primary-light: #fce7f3; /* Pastel pink */
+            --primary-hover: #be185d; 
+            --text-main: #334155;
+            --text-muted: #64748b;
+            --bg-body: #fdf2f8;
+            --card-bg: #ffffff;
+            --accent: #c026d3; /* Fuchsia */
+            --accent-light: #fae8ff; /* Soft Fuchsia */
+            --border: #fbcfe8;
+            --badge-bg: #fae8ff; 
+            --badge-text: #86198f; 
+            --success: #0284c7; /* Sky blue for translation */
+            
+            --font-headings: 'Playfair Display', serif;
+            --font-body: 'Jost', sans-serif;
+            --font-cursive: 'Caveat', cursive;
+            --font-ipa: Arial, Helvetica, sans-serif;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: var(--font-body); }
+
+        body { background-color: var(--bg-body); color: var(--text-main); line-height: 1.6; padding-bottom: 2rem; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 1rem; }
+        
+        .header-banner { background-color: var(--card-bg); color: var(--text-main); text-align: center; padding: 1rem; font-weight: 700; font-size: 1.2rem; letter-spacing: 0.1em; width: 100%; border-bottom: 3px solid var(--primary); margin-bottom: 2rem; text-transform: uppercase; font-family: var(--font-headings); }
+
+        header { text-align: center; margin-bottom: 2rem; }
+        h1 { color: var(--primary); font-size: 2.5rem; margin-bottom: 0.5rem; font-weight: 800; font-family: var(--font-headings); }
+        .subtitle { color: var(--text-muted); font-size: 1.1rem; font-weight: 500; letter-spacing: 0.05em; }
+
+        .filter-controls { display: flex; justify-content: center; gap: 0.8rem; margin-bottom: 1.5rem; flex-wrap: wrap; }
+        .filter-btn { padding: 0.5rem 1.2rem; font-size: 0.95rem; font-weight: 600; background: var(--card-bg); color: var(--primary); border: 2px solid var(--primary-light); border-radius: 50px; cursor: pointer; transition: all 0.3s ease; }
+        .filter-btn.active { background: var(--primary); color: white; border-color: var(--primary); box-shadow: 0 4px 10px rgba(214, 64, 159, 0.3); }
+        .filter-btn:hover:not(.active) { background: var(--primary-light); border-color: var(--primary); }
+
+        .view-controls { display: flex; justify-content: center; gap: 1rem; margin-bottom: 3rem; }
+        .view-btn { padding: 0.75rem 1.5rem; font-size: 1rem; font-weight: 600; background: var(--card-bg); color: var(--text-muted); border: 2px solid #e2e8f0; border-radius: 12px; cursor: pointer; transition: all 0.3s ease; display: flex; align-items: center; gap: 0.5rem; }
+        .view-btn.active { background: var(--accent); color: white; border-color: var(--accent); box-shadow: 0 4px 10px rgba(192, 38, 211, 0.3); }
+        .view-btn:hover:not(.active) { border-color: var(--accent); color: var(--accent); }
+
+        #grid-view { display: grid; grid-template-columns: repeat(auto-fill, minmax(350px, 1fr)); gap: 1.8rem; }
+        .vocab-card { background-color: var(--card-bg); border-radius: 16px; padding: 1.8rem; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.04); border: 1px solid var(--border); transition: transform 0.3s ease, box-shadow 0.3s ease; display: flex; flex-direction: column; }
+        .vocab-card:hover { transform: translateY(-5px); box-shadow: 0 12px 25px rgba(214, 64, 159, 0.15); border-color: var(--primary-light); }
+        .vocab-card.hidden { display: none; }
+        
+        .word-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.8rem; border-bottom: 2px dashed var(--border); padding-bottom: 0.8rem; }
+        .word-main { display: flex; align-items: center; gap: 0.8rem; }
+        .word { font-size: 1.6rem; font-weight: 800; color: var(--primary); text-transform: capitalize; font-family: var(--font-headings); }
+        
+        .audio-btn { background: var(--primary-light); border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; width: 36px; height: 36px; border-radius: 50%; transition: all 0.2s ease; color: var(--primary); }
+        .audio-btn:hover { transform: scale(1.1); background-color: var(--primary); color: white; box-shadow: 0 2px 8px rgba(214, 64, 159, 0.4); }
+        
+        .meta-info { text-align: right; display: flex; flex-direction: column; align-items: flex-end; gap: 0.25rem; }
+        .phonetic { font-size: 1rem; color: var(--text-muted); font-style: italic; font-family: var(--font-ipa); letter-spacing: 0.02em; }
+        
+        .word-families { background-color: #f8fafc; border: 1px dashed #cbd5e1; padding: 0.6rem; border-radius: 8px; font-size: 0.85rem; color: #475569; margin-bottom: 1rem; line-height: 1.4; }
+        .word-families strong { color: var(--primary); font-weight: 600; }
+
+        .topic-tag { font-size: 0.75rem; color: var(--badge-text); background: var(--badge-bg); padding: 0.3rem 0.8rem; border-radius: 20px; font-weight: 700; margin-bottom: 1rem; display: inline-block; text-transform: uppercase; letter-spacing: 0.05em;}
+        
+        .definition { font-size: 1.05rem; margin-bottom: 0.4rem; color: var(--text-main); font-weight: 500; }
+        .definition strong { color: var(--primary); }
+        .translation { font-size: 1rem; color: var(--success); margin-bottom: 1rem; font-weight: 600; }
+
+        .example-box { background-color: var(--accent-light); padding: 1.2rem; border-left: 4px solid var(--accent); border-radius: 8px; margin-top: auto; }
+        .example-box span { display: block; font-size: 1.25rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent); margin-bottom: 0.35rem; font-weight: 500; }
+        .example-text { font-family: var(--font-cursive); font-size: 3rem; color: #831843; line-height: 1.3; }
+
+        #flashcard-view { display: none; flex-direction: column; align-items: center; width: 100%; }
+        .flashcard-scene { width: 100%; max-width: 700px; height: 580px; perspective: 1000px; cursor: pointer; margin-bottom: 2rem; }
+        .flashcard-inner { width: 100%; height: 100%; position: relative; transition: transform 0.6s cubic-bezier(0.4, 0.2, 0.2, 1); transform-style: preserve-3d; }
+        .flashcard-scene.is-flipped .flashcard-inner { transform: rotateY(180deg); }
+        .flashcard-face { position: absolute; width: 100%; height: 100%; backface-visibility: hidden; border-radius: 24px; box-shadow: 0 15px 35px rgba(214, 64, 159, 0.15); border: 2px solid var(--primary-light); background: var(--card-bg); padding: 3rem; display: flex; flex-direction: column; justify-content: center; align-items: center; overflow-y: auto; }
+        
+        .flashcard-front { text-align: center; }
+        .flashcard-front .word { font-size: 3.2rem; margin-bottom: 1rem; color: var(--primary); font-weight: 800; font-family: var(--font-headings);}
+        .flashcard-front .meta-row { display: flex; align-items: center; gap: 1.2rem; margin-bottom: 1.5rem; }
+        .flashcard-front .audio-btn { width: 50px; height: 50px; }
+        .flashcard-front .audio-btn svg { width: 24px; height: 24px; }
+        .flashcard-front .phonetic { font-size: 1.4rem; color: var(--text-muted); font-style: italic; }
+        
+        .flashcard-back { transform: rotateY(180deg); background: #fdf2f8; align-items: flex-start; text-align: left; }
+        .flashcard-back h3 { color: var(--primary); font-size: 1.2rem; margin-bottom: 0.8rem; text-transform: uppercase; letter-spacing: 0.1em; font-weight: 800; font-family: var(--font-headings); }
+        .flashcard-back .definition { font-size: 1.2rem; margin-bottom: 0.5rem; color: var(--text-main); }
+        .flashcard-back .translation { font-size: 1.15rem; margin-bottom: 1.5rem; color: var(--success); font-weight: 600;}
+        .flashcard-back .example-box { width: 100%; padding: 1.2rem; border-radius: 12px; }
+        
+        .flashcard-hint { position: absolute; bottom: 1.5rem; font-size: 0.85rem; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.15em; font-weight: 600; }
+
+        .flashcard-controls { display: flex; align-items: center; gap: 1.5rem; background: var(--card-bg); padding: 1rem 2.5rem; border-radius: 50px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); border: 1px solid var(--border); }
+        .fc-btn { background: none; border: none; color: var(--primary); font-size: 1.05rem; font-weight: 700; cursor: pointer; padding: 0.6rem 1.5rem; border-radius: 25px; transition: all 0.2s; display: flex; align-items: center; gap: 0.5rem; }
+        .fc-btn:hover:not(:disabled) { background: var(--primary-light); color: var(--primary-hover); }
+        .fc-btn:disabled { opacity: 0.3; cursor: not-allowed; }
+        .fc-counter { font-weight: 800; font-size: 1.2rem; color: var(--accent); min-width: 80px; text-align: center; font-family: var(--font-headings); }
+
+        @media (max-width: 768px) { 
+            h1 { font-size: 2rem; } 
+            #grid-view { grid-template-columns: 1fr; } 
+            .flashcard-scene { height: 600px; } 
+            .flashcard-front .word { font-size: 2.5rem; } 
+            .flashcard-back .definition { font-size: 1.05rem; }
+            .flashcard-face { padding: 1.5rem; }
+            .example-text { font-size: 2.2rem; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="header-banner">Grade 12 | Chan Truong</div>
+
+<div class="container">
+    <header>
+        <h1>Travel & Transport</h1>
+        <p class="subtitle">Vocabulary for Lesson 3</p>
+    </header>
+
+    <div class="filter-controls" id="topic-filters">
+        <button class="filter-btn active" onclick="filterTopic('all')">All Terms</button>
+        <button class="filter-btn" onclick="filterTopic('Transport & Infrastructure')">Transport & Infrastructure</button>
+        <button class="filter-btn" onclick="filterTopic('Travel & Tourism')">Travel & Tourism</button>
+        <button class="filter-btn" onclick="filterTopic('General Travel')">General Travel</button>
+    </div>
+
+    <div class="view-controls">
+        <button class="view-btn active" id="btn-grid" onclick="switchView('grid')">📄 List View</button>
+        <button class="view-btn" id="btn-flashcards" onclick="switchView('flashcards')">🗂️ Flashcards</button>
+    </div>
+
+    <div id="flashcard-view">
+        <div class="flashcard-scene" id="flashcard-scene" onclick="flipCard()">
+            <div class="flashcard-inner">
+                <div class="flashcard-face flashcard-front">
+                    <h2 class="word" id="fc-word">Word</h2>
+                    <div class="meta-row">
+                        <span class="phonetic" id="fc-phonetic">/wɜːd/</span>
+                        <button class="audio-btn" id="fc-audio" onclick="playAudioFromCard(event)" title="Listen to pronunciation">
+                            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg>
+                        </button>
+                    </div>
+                    <div class="word-families" id="fc-forms" style="margin-top: 1.5rem; max-width: 85%;">Main Form</div>
+                    <div class="word-families" id="fc-related" style="margin-top: 0.5rem; max-width: 85%; background-color: var(--accent-light); border-color: #fbcfe8; color: var(--accent);">Related Forms</div>
+                    <span class="topic-tag" id="fc-topic" style="margin-top: 1rem;">Topic</span>
+                    <span class="flashcard-hint">Click card to flip</span>
+                </div>
+                <div class="flashcard-face flashcard-back">
+                    <h3>Meaning</h3>
+                    <p class="definition" id="fc-definition">Definition goes here.</p>
+                    <p class="translation" id="fc-translation">Vietnamese goes here.</p>
+                    <div id="fc-example-container" style="width: 100%; margin-top: 1.5rem;">
+                        <!-- Examples injected here -->
+                    </div>
+                    <span class="flashcard-hint" style="left: 50%; transform: translateX(-50%);">Click card to flip back</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="flashcard-controls">
+            <button class="fc-btn" id="fc-prev" onclick="prevCard()">◀ Prev</button>
+            <span class="fc-counter" id="fc-counter">1 / X</span>
+            <button class="fc-btn" id="fc-next" onclick="nextCard()">Next ▶</button>
+            <div style="width: 2px; height: 24px; background: var(--border); margin: 0 0.5rem;"></div>
+            <button class="fc-btn" onclick="shuffleCards()" title="Shuffle Order">🔀</button>
+        </div>
+    </div>
+
+    <main id="grid-view">
+        <!-- Injected via JavaScript -->
+    </main>
+</div>
+
+<script>
+    const vocabBank = [
+        { topic: "Transport & Infrastructure", word: "Expansion", phonetic: "/ɪkˈspænʃn/", form: "Noun", forms: "V: Expand | Adj: Expansive", def: "The act of increasing in size, volume, or quantity.", translation: "Sự mở rộng", example: "The airport expansion project aims to accommodate more international flights." },
+        { topic: "Transport & Infrastructure", word: "Lane", phonetic: "/leɪn/", form: "Noun", forms: "N/A", def: "A designated strip of track for travel, such as a bus lane or cycle lane.", translation: "Làn đường", example: "Cyclists must remain within the designated bicycle lane to avoid traffic." },
+        { topic: "Transport & Infrastructure", word: "Congestion", phonetic: "/kənˈdʒestʃən/", form: "Noun", forms: "V: Congest | Adj: Congested", def: "The state of being overcrowded or blocked.", translation: "Sự tắc nghẽn", example: "Severe traffic congestion usually occurs during the morning rush hour." },
+        { topic: "Transport & Infrastructure", word: "Infrastructure", phonetic: "/ˈɪnfrəstrʌktʃə(r)/", form: "Noun", forms: "Adj: Infrastructural", def: "Basic physical structures (roads, bridges, airports).", translation: "Cơ sở hạ tầng", example: "Investing in public transport infrastructure is essential for city growth." },
+        { topic: "Transport & Infrastructure", word: "Honk", phonetic: "/hɒŋk/", form: "Verb / Noun", forms: "N/A", def: "To sound a car horn.", translation: "Bấm còi", example: "Drivers often honk their horns in frustration when stuck in traffic." },
+        { topic: "Transport & Infrastructure", word: "Horn", phonetic: "/hɔːn/", form: "Noun", forms: "N/A", def: "A device on a vehicle for giving a warning sound.", translation: "Còi xe", example: "The bus driver tapped the horn to warn the taxi of its position." },
+        { topic: "Transport & Infrastructure", word: "Accommodate", phonetic: "/əˈkɒmədeɪt/", form: "Verb", forms: "N: Accommodation", def: "To provide enough space or facilities for.", translation: "Cung cấp chỗ, đáp ứng", example: "The high-speed rail network was designed to accommodate thousands of commuters daily." },
+        
+        { topic: "Travel & Tourism", word: "Itinerary", phonetic: "/aɪˈtɪnərəri/", form: "Noun", forms: "N/A", def: "A planned route or journey.", translation: "Hành trình, lịch trình", example: "Our travel agent provided a detailed itinerary for our three-week trip." },
+        { topic: "Travel & Tourism", word: "Landmark", phonetic: "/ˈlændmɑːk/", form: "Noun", forms: "N/A", def: "An object or feature of a landscape that is easily seen and recognized.", translation: "Điểm mốc, địa danh nổi tiếng", example: "The Eiffel Tower is a globally recognized landmark in Paris." },
+        { topic: "Travel & Tourism", word: "Influx", phonetic: "/ˈɪnflʌks/", form: "Noun", forms: "N/A", def: "An arrival or entry of large numbers of people.", translation: "Sự đổ xô vào", example: "The summer season always brings an influx of tourists to the coast." },
+        { topic: "Travel & Tourism", word: "Tourism board", phonetic: "/ˈtʊərɪzəm bɔːd/", form: "Noun Phrase", forms: "N/A", def: "An organization promoting tourism in a specific region.", translation: "Tổng cục du lịch", example: "The local tourism board is launching a campaign to promote sustainable travel." },
+        { topic: "Travel & Tourism", word: "Hospitality", phonetic: "/ˌhɒspɪˈtæləti/", form: "Noun", forms: "Adj: Hospitable", def: "Friendly and generous reception of guests.", translation: "Lòng hiếu khách", example: "The hotel staff is renowned for their warm hospitality towards international travelers." },
+        { topic: "Travel & Tourism", word: "Historical monument", phonetic: "/hɪˈstɒrɪkl ˈmɒnjumənt/", form: "Noun Phrase", forms: "N/A", def: "A building or structure of historical importance.", translation: "Di tích lịch sử", example: "Visitors are strictly prohibited from touching the ancient historical monument." },
+        { topic: "Travel & Tourism", word: "Suite", phonetic: "/swiːt/", form: "Noun", forms: "N/A", def: "A set of rooms in a hotel.", translation: "Dãy phòng (khách sạn)", example: "They booked a luxury suite overlooking the city center." },
+
+        { topic: "General Travel", word: "Ongoing", phonetic: "/ˈɒnɡəʊɪŋ/", form: "Adjective", forms: "N/A", def: "Continuing; still in progress.", translation: "Đang diễn ra", example: "There is an ongoing renovation at the main train station." },
+        { topic: "General Travel", word: "Drive", phonetic: "/draɪv/", form: "Verb", forms: "N: Drive / Driver", def: "To operate and control the direction and speed of a vehicle.", translation: "Lái xe", example: "He has to drive for six hours to reach the coastal village." },
+        { topic: "General Travel", word: "Progress", phonetic: "/ˈprəʊɡres/", form: "Noun", forms: "Adj: Progressive", def: "Forward or onward movement toward a destination.", translation: "Sự tiến triển", example: "Heavy rain has slowed our progress toward the capital city." },
+        { topic: "General Travel", word: "Allocate", phonetic: "/ˈæləkeɪt/", form: "Verb", forms: "N: Allocation", def: "To distribute resources for a particular purpose.", translation: "Phân bổ", example: "The city council needs to allocate more funds to road maintenance." },
+        { topic: "General Travel", word: "Transform", phonetic: "/trænsˈfɔːm/", form: "Verb", forms: "N: Transformation", def: "To make a thorough or dramatic change in form.", translation: "Biến đổi", example: "The new high-speed rail line will transform travel between the two cities." },
+        { topic: "General Travel", word: "Sustainable", phonetic: "/səˈsteɪnəbl/", form: "Adjective", forms: "N: Sustainability | V: Sustain", def: "Able to be maintained without depleting resources.", translation: "Bền vững", example: "We are promoting sustainable travel methods like cycling and electric buses." },
+        { topic: "General Travel", word: "Raise concern", phonetic: "/reɪz kənˈsɜːn/", form: "Phrase", forms: "N/A", def: "To express worry or anxiety about something.", translation: "Gây lo ngại", example: "Frequent train delays raise concerns among daily commuters." },
+        { topic: "General Travel", word: "Guideline", phonetic: "/ˈɡaɪdlaɪn/", form: "Noun", forms: "N/A", def: "A set of rules or instructions.", translation: "Nguyên tắc chỉ đạo, hướng dẫn", example: "Follow the safety guidelines when boarding the cruise ship." },
+        { topic: "General Travel", word: "Align with", phonetic: "/əˈlaɪn wɪð/", form: "Phrasal Verb", forms: "N: Alignment", def: "To be in agreement or collaboration with.", translation: "Phù hợp với", example: "The new flight paths align with international safety regulations." },
+        { topic: "General Travel", word: "Strain", phonetic: "/streɪn/", form: "Noun", forms: "N/A", def: "A force tending to pull or stretch something to an extreme degree.", translation: "Sự căng thẳng, áp lực", example: "The influx of travelers puts a lot of strain on local public transport." },
+        { topic: "General Travel", word: "Excessive", phonetic: "/ɪkˈsesɪv/", form: "Adjective", forms: "N: Excess | Adv: Excessively", def: "More than is necessary or normal.", translation: "Quá mức", example: "Excessive waiting times at security checks can ruin the holiday experience." },
+        { topic: "General Travel", word: "Necessity", phonetic: "/nəˈsesəti/", form: "Noun", forms: "Adj: Necessary", def: "The fact of being required or indispensable.", translation: "Sự cần thiết", example: "A valid passport is an absolute necessity for international travel." },
+        { topic: "General Travel", word: "Attenuate", phonetic: "/əˈtenjueɪt/", form: "Verb", forms: "N: Attenuation", def: "To reduce the force, effect, or value of.", translation: "Làm yếu đi, giảm bớt", example: "The new noise barriers help attenuate the sound from the nearby highway." },
+        { topic: "General Travel", word: "Intensify", phonetic: "/ɪnˈtensɪfaɪ/", form: "Verb", forms: "N: Intensity", def: "To become or make more intense.", translation: "Làm tăng cường", example: "The company plans to intensify its marketing efforts for travel packages." },
+        { topic: "General Travel", word: "Utilization", phonetic: "/ˌjuːtəlaɪˈzeɪʃn/", form: "Noun", forms: "V: Utilize", def: "The action of making practical and effective use of something.", translation: "Sự sử dụng, tận dụng", example: "Better utilization of trains can significantly reduce traffic on the roads." },
+        { topic: "General Travel", word: "Streaming platform", phonetic: "/ˈstriːmɪŋ ˈplætfɔːm/", form: "Noun Phrase", forms: "N/A", def: "A digital service that provides media content, often used during long travel.", translation: "Nền tảng phát trực tuyến", example: "Use the streaming platform on the long bus ride to watch movies." },
+        { topic: "General Travel", word: "Trilogy", phonetic: "/ˈtrɪlədʒi/", form: "Noun", forms: "N/A", def: "A group of three related books, films, or games.", translation: "Bộ ba tác phẩm", example: "He is famous for directing a science-fiction trilogy often shown on long-haul flights." },
+        { topic: "General Travel", word: "Premiere", phonetic: "/ˈpremieə(r)/", form: "Noun", forms: "N/A", def: "The first public performance of a work.", translation: "Buổi công chiếu", example: "I watched the movie premiere on my flight to London." },
+        { topic: "General Travel", word: "Narrative", phonetic: "/ˈnærətɪv/", form: "Noun", forms: "V: Narrate", def: "A spoken or written account of connected events; a story.", translation: "Cốt truyện, lời kể", example: "The audio guide provided a compelling narrative of the historical site." },
+        { topic: "General Travel", word: "Protagonist", phonetic: "/prəˈtæɡənɪst/", form: "Noun", forms: "N/A", def: "The leading character in a story or game.", translation: "Nhân vật chính", example: "You follow the protagonist through their journey across the city." },
+        { topic: "General Travel", word: "Fantasy", phonetic: "/ˈfæntəsi/", form: "Noun", forms: "Adj: Fantastic", def: "The faculty or activity of imagining things.", translation: "Thể loại kỳ ảo", example: "Many teenagers enjoy reading fantasy novels during their train commutes." },
+        { topic: "General Travel", word: "Fiction", phonetic: "/ˈfɪkʃn/", form: "Noun", forms: "Adj: Fictional", def: "Literature in the form of prose, especially novels.", translation: "Hư cấu, viễn tưởng", example: "He prefers science fiction books for his long international trips." },
+        { topic: "General Travel", word: "Myth", phonetic: "/mɪθ/", form: "Noun", forms: "Adj: Mythical", def: "A traditional story concerning early history.", translation: "Thần thoại", example: "The city's history is steeped in ancient myth and local legends." },
+        { topic: "General Travel", word: "Spike", phonetic: "/spaɪk/", form: "Noun", forms: "N/A", def: "A sharp increase in magnitude or value.", translation: "Sự tăng vọt", example: "There was a spike in travel bookings after the summer holidays began." },
+        { topic: "General Travel", word: "Surge", phonetic: "/sɜːdʒ/", form: "Noun", forms: "V: Surge", def: "A sudden powerful forward or upward movement.", translation: "Sự tăng đột ngột", example: "The city saw a surge of passengers during the marathon event." },
+        { topic: "General Travel", word: "Remunerative", phonetic: "/rɪˈmjuːnərətɪv/", form: "Adjective", forms: "N: Remuneration", def: "Financially rewarding; profitable.", translation: "Sinh lợi", example: "Professional drivers find this transport route to be highly remunerative." },
+        { topic: "General Travel", word: "Subjective", phonetic: "/səbˈdʒektɪv/", form: "Adjective", forms: "Adv: Subjectively", def: "Based on personal feelings rather than facts.", translation: "Chủ quan", example: "Judging which city has the best public transport system is entirely subjective." },
+        { topic: "General Travel", word: "Objective", phonetic: "/əbˈdʒektɪv/", form: "Adjective", forms: "Adv: Objectively", def: "Not influenced by personal feelings; based on facts.", translation: "Khách quan", example: "The report must remain objective when analyzing travel statistics." },
+        { topic: "General Travel", word: "Exposure", phonetic: "/ɪkˈspəʊʒə(r)/", form: "Noun", forms: "V: Expose", def: "The state of being exposed to contact with something.", translation: "Sự tiếp xúc", example: "Frequent exposure to international travel expands one's worldview." },
+        { topic: "General Travel", word: "Dictate", phonetic: "/dɪkˈteɪt/", form: "Verb", forms: "N: Dictator", def: "To control or command.", translation: "Quyết định, kiểm soát", example: "The train schedules often dictate our daily travel plans." },
+        { topic: "General Travel", word: "Indifference", phonetic: "/ɪnˈdɪfrəns/", form: "Noun", forms: "Adj: Indifferent", def: "Lack of interest, concern, or sympathy.", translation: "Sự thờ ơ", example: "Her indifference to the train delays showed how accustomed she was to traveling." }
+    ];
+
+    function renderGrid() {
+        const grid = document.getElementById('grid-view');
+        grid.innerHTML = '';
+        vocabBank.forEach(item => {
+            const article = document.createElement('article');
+            article.className = 'vocab-card';
+            article.setAttribute('data-topic', item.topic);
+            
+            article.innerHTML = `
+                <div class="word-header">
+                    <div class="word-main">
+                        <span class="word">${item.word}</span>
+                        <button class="audio-btn" onclick="playAudio('${item.word.replace(/'/g, "\\'")}')" title="Listen to pronunciation">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9v6h4l5 5V4L7 9H3z"></path><path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path><path d="M19.07 4.93a10 10 0 0 1 0 14.14"></path></svg>
+                        </button>
+                    </div>
+                    <div class="meta-info">
+                        <span class="phonetic">${item.phonetic}</span>
+                    </div>
+                </div>
+                <div class="word-families"><strong>Main Form:</strong> ${item.form}</div>
+                <div class="word-families" style="background-color: var(--accent-light); border-color: #fbcfe8; color: var(--accent); margin-top: -0.5rem;"><strong>Related Forms:</strong> ${item.forms}</div>
+                <span class="topic-tag">${item.topic}</span>
+                <p class="definition"><strong>Meaning:</strong> ${item.def}</p>
+                <p class="translation"><strong>Vietnamese:</strong> ${item.translation}</p>
+                
+                <div class="example-box">
+                    <span>Example</span>
+                    <span class="example-text" style="text-transform: none; letter-spacing: normal;">"${item.example}"</span>
+                </div>
+            `;
+            grid.appendChild(article);
+        });
+    }
+
+    renderGrid();
+
+    let voices = [];
+    if ('speechSynthesis' in window) {
+        voices = window.speechSynthesis.getVoices();
+        window.speechSynthesis.onvoiceschanged = () => {
+            voices = window.speechSynthesis.getVoices();
+        };
+    }
+
+    function playAudio(text) {
+        if ('speechSynthesis' in window) {
+            window.speechSynthesis.cancel();
+            const utterance = new SpeechSynthesisUtterance(text);
+            utterance.lang = 'en-GB';
+            utterance.rate = 0.9;
+            
+            let femaleVoice = voices.find(voice => 
+                voice.name.includes('Female') || 
+                voice.name.includes('Samantha') || 
+                voice.name.includes('Victoria') || 
+                voice.name.includes('Zira') ||
+                voice.name.includes('Karen') ||
+                voice.name.includes('Tessa') ||
+                voice.name.includes('Fiona') ||
+                voice.name.includes('Moira') ||
+                voice.name.includes('Veena')
+            );
+            
+            if (!femaleVoice) {
+                femaleVoice = voices.find(voice => voice.lang.includes('en-GB') && !voice.name.includes('Male'));
+            }
+            
+            if (femaleVoice) {
+                utterance.voice = femaleVoice;
+            } else {
+                utterance.pitch = 1.3;
+            }
+
+            window.speechSynthesis.speak(utterance);
+        } else {
+            alert("Sorry, your browser doesn't support text-to-speech pronunciation.");
+        }
+    }
+
+    function playAudioFromCard(event) {
+        event.stopPropagation();
+        const word = document.getElementById('fc-word').textContent;
+        playAudio(word);
+    }
+
+    function filterTopic(topicName) {
+        const filterBtns = document.querySelectorAll('.filter-btn');
+        filterBtns.forEach(btn => btn.classList.remove('active'));
+        event.target.classList.add('active');
+
+        const allCards = document.querySelectorAll('.vocab-card');
+        allCards.forEach(card => {
+            if (topicName === 'all' || card.getAttribute('data-topic') === topicName) {
+                card.classList.remove('hidden');
+            } else {
+                card.classList.add('hidden');
+            }
+        });
+
+        if(document.getElementById('flashcard-view').style.display === 'flex') {
+             extractDataFromGrid(topicName);
+             currentCardIndex = 0;
+             updateFlashcardUI();
+        }
+    }
+
+    function switchView(viewName) {
+        const gridView = document.getElementById('grid-view');
+        const flashcardView = document.getElementById('flashcard-view');
+        const btnGrid = document.getElementById('btn-grid');
+        const btnFlashcards = document.getElementById('btn-flashcards');
+
+        if (viewName === 'grid') {
+            gridView.style.display = 'grid';
+            flashcardView.style.display = 'none';
+            btnGrid.classList.add('active');
+            btnFlashcards.classList.remove('active');
+        } else {
+            gridView.style.display = 'none';
+            flashcardView.style.display = 'flex';
+            btnFlashcards.classList.add('active');
+            btnGrid.classList.remove('active');
+            
+            const activeFilter = document.querySelector('.filter-btn.active').textContent;
+            let topicName = 'all';
+            if (activeFilter.includes('Transport')) topicName = 'Transport & Infrastructure';
+            if (activeFilter.includes('Tourism')) topicName = 'Travel & Tourism';
+            if (activeFilter.includes('General')) topicName = 'General Travel';
+            
+            extractDataFromGrid(topicName);
+            currentCardIndex = 0;
+            updateFlashcardUI();
+        }
+    }
+
+    let flashcardData = [];
+    let currentCardIndex = 0;
+    const flashcardScene = document.getElementById('flashcard-scene');
+
+    function extractDataFromGrid(topicName = 'all') {
+        flashcardData = [];
+        vocabBank.forEach(item => {
+            if (topicName === 'all' || item.topic === topicName) {
+                flashcardData.push(item);
+            }
+        });
+    }
+
+    function updateFlashcardUI() {
+        if (flashcardData.length === 0) return;
+        const data = flashcardData[currentCardIndex];
+        
+        flashcardScene.classList.remove('is-flipped');
+        
+        setTimeout(() => {
+            document.getElementById('fc-word').textContent = data.word;
+            document.getElementById('fc-phonetic').textContent = data.phonetic;
+            document.getElementById('fc-topic').textContent = data.topic;
+            document.getElementById('fc-forms').innerHTML = `<strong>Main Form:</strong> ${data.form}`;
+            document.getElementById('fc-related').innerHTML = `<strong>Related Forms:</strong> ${data.forms}`;
+            
+            document.getElementById('fc-definition').textContent = data.def;
+            document.getElementById('fc-translation').textContent = data.translation;
+            
+            const examplesHTML = `
+                <div class="example-box" style="margin-bottom: 0.5rem;">
+                    <span style="color: var(--accent);">Usage Example</span>
+                    <span class="example-text" style="text-transform: none; letter-spacing: normal;">"${data.example}"</span>
+                </div>
+            `;
+            document.getElementById('fc-example-container').innerHTML = examplesHTML;
+            
+            document.getElementById('fc-counter').textContent = `${currentCardIndex + 1} / ${flashcardData.length}`;
+            
+            document.getElementById('fc-prev').disabled = currentCardIndex === 0;
+            document.getElementById('fc-next').disabled = currentCardIndex === flashcardData.length - 1;
+        }, 150);
+    }
+
+    function flipCard() { flashcardScene.classList.toggle('is-flipped'); }
+    function nextCard() { if (currentCardIndex < flashcardData.length - 1) { currentCardIndex++; updateFlashcardUI(); } }
+    function prevCard() { if (currentCardIndex > 0) { currentCardIndex--; updateFlashcardUI(); } }
+    
+    function shuffleCards() {
+        for (let i = flashcardData.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [flashcardData[i], flashcardData[j]] = [flashcardData[j], flashcardData[i]];
+        }
+        currentCardIndex = 0;
+        updateFlashcardUI();
+    }
+</script>
+</body>
+</html>
