@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grade 12 Lesson 6 | Health & Fitness | Vocabulary</title>
+    
+    <!-- New Modern Chic Fonts: Cormorant Garamond, Outfit, Dancing Script -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500&family=Dancing+Script:wght@500;700&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            /* Theme: Modern Pastel Chic (Matcha Green & Rose Water) */
+            --primary: #4d7c0f; /* Matcha Green */
+            --primary-light: #f7fee7; 
+            --primary-hover: #3f6212; 
+            --text-main: #334155;
+            --text-muted: #64748b;
+            --bg-body: #fdfbf7; /* Warm Pearl */
+            --card-bg: #ffffff;
+            --accent: #e11d48; /* Deep Rose */
+            --accent-light: #fff1f2; 
+            --border: #d9f99d;
+            --badge-bg: #ffe4e6; 
+            --badge-text: #9f1239; 
+            --success: #0284c7; /* Sky blue for translation */
+            
+            --font-headings: 'Cormorant Garamond', serif;
+            --font-body: 'Outfit', sans-serif;
+            --font-cursive: 'Dancing Script', cursive;
+            --font-ipa: Arial, Helvetica, sans-serif;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: var(--font-body); }
+
+        body { background-color: var(--bg-body); color: var(--text-main); line-height: 1.6; padding-bottom: 2rem; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 1rem; }
+        
+        .header-banner { background-color: var(--card-bg); color: var(--text-main); text-align: center; padding: 1.2rem; font-weight: 600; font-size: 1.1rem; letter-spacing: 0.15em; width: 100%; border-bottom: 2px solid var(--primary); margin-bottom: 2.5rem; text-transform: uppercase; font-family: var(--font-headings); }
+
+        header { text-align: center; margin-bottom: 2.5rem; }
+        h1 { color: var(--primary); font-size: 3rem; margin-bottom: 0.5rem; font-weight: 700; font-family: var(--font-headings); letter-spacing: 0.02em;}
+        .subtitle { color: var(--text-muted); font-size: 1.15rem; font-weight: 400; letter-spacing: 0.05em; }
+
+        .filter-controls { display: flex; justify-content: center; gap: 0.8rem; margin-bottom: 2rem; flex-wrap: wrap; }
+        .filter-btn { padding: 0.6rem 1.4rem; font-size: 0.95rem; font-weight: 500; background: var(--card-bg); color: var(--primary); border: 1px solid var(--border); border-radius: 50px; cursor: pointer; transition: all 0.3s ease; box-shadow: 0 2px 4px rgba(0,0,0,0.02);}
+        .filter-btn.active { background: var(--primary); color: white; border-color: var(--primary); box-shadow: 0 4px 12px rgba(77, 124, 15, 0.25); }
+        .filter-btn:hover:not(.active) { background: var(--primary-light); border-color: var(--primary); }
+
+        .view-controls { display: flex; justify-content: center; gap: 1rem; margin-bottom: 3rem; }
+        .view-btn { padding: 0.75rem 1.5rem; font-size: 1rem; font-weight: 500; background: var(--card-bg); color: var(--text-muted); border: 1px solid #e2e8f0; border-radius: 50px; cursor: pointer; transition: all 0.3s ease; display: flex; align-items: center; gap: 0.5rem; }
+        .view-btn.active { background: var(--accent); color: white; border-color: var(--accent); box-shadow: 0 4px 12px rgba(225, 29, 72, 0.25); }
+        .view-btn:hover:not(.active) { border-color: var(--accent); color: var(--accent); }
+
+        #grid-view { display: grid; grid-template-columns: repeat(auto-fill, minmax(360px, 1fr)); gap: 2rem; }
+        .vocab-card { background-color: var(--card-bg); border-radius: 20px; padding: 2rem; box-shadow: 0 10px 25px rgba(0, 0, 0, 0.03); border: 1px solid #f1f5f9; transition: transform 0.3s ease, box-shadow 0.3s ease; display: flex; flex-direction: column; }
+        .vocab-card:hover { transform: translateY(-5px); box-shadow: 0 15px 35px rgba(77, 124, 15, 0.1); border-color: var(--border); }
+        .vocab-card.hidden { display: none; }
+        
+        .word-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1rem; border-bottom: 1px solid var(--border); padding-bottom: 1rem; }
+        .word-main { display: flex; align-items: center; gap: 0.8rem; }
+        .word { font-size: 1.8rem; font-weight: 700; color: var(--primary); text-transform: capitalize; font-family: var(--font-headings); }
+        
+        .audio-btn { background: var(--primary-light); border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; width: 40px; height: 40px; border-radius: 50%; transition: all 0.2s ease; color: var(--primary); }
+        .audio-btn:hover { transform: scale(1.1); background-color: var(--primary); color: white; box-shadow: 0 4px 10px rgba(77, 124, 15, 0.3); }
+        
+        .meta-info { text-align: right; display: flex; flex-direction: column; align-items: flex-end; gap: 0.25rem; }
+        .phonetic { font-size: 1.05rem; color: var(--text-muted); font-style: italic; font-family: var(--font-ipa); letter-spacing: 0.02em; }
+        
+        .word-families { background-color: #f8fafc; border: 1px solid #e2e8f0; padding: 0.8rem; border-radius: 12px; font-size: 0.9rem; color: #475569; margin-bottom: 1.2rem; line-height: 1.5; font-weight: 300;}
+        .word-families strong { color: var(--primary); font-weight: 500; }
+
+        .topic-tag { font-size: 0.75rem; color: var(--badge-text); background: var(--badge-bg); padding: 0.4rem 1rem; border-radius: 20px; font-weight: 600; margin-bottom: 1.2rem; display: inline-block; text-transform: uppercase; letter-spacing: 0.1em;}
+        
+        .definition { font-size: 1.1rem; margin-bottom: 0.5rem; color: var(--text-main); font-weight: 400; }
+        .definition strong { color: var(--primary); font-weight: 600;}
+        .translation { font-size: 1.05rem; color: var(--success); margin-bottom: 1.5rem; font-weight: 500; }
+
+        .example-box { background-color: var(--accent-light); padding: 1.5rem; border-radius: 16px; margin-top: auto; position: relative;}
+        .example-box::before { content: ''; position: absolute; left: 0; top: 10%; bottom: 10%; width: 4px; background-color: var(--accent); border-radius: 0 4px 4px 0;}
+        .example-box span { display: block; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.15em; color: var(--accent); margin-bottom: 0.5rem; font-weight: 600; }
+        
+        /* VERY LARGE CURSIVE FONT FOR EXAMPLES */
+        .example-text { font-family: var(--font-cursive); font-size: 3.2rem; color: #9f1239; line-height: 1.2; font-weight: 700;}
+
+        #flashcard-view { display: none; flex-direction: column; align-items: center; width: 100%; }
+        .flashcard-scene { width: 100%; max-width: 750px; height: 600px; perspective: 1000px; cursor: pointer; margin-bottom: 2.5rem; }
+        .flashcard-inner { width: 100%; height: 100%; position: relative; transition: transform 0.7s cubic-bezier(0.4, 0.2, 0.2, 1); transform-style: preserve-3d; }
+        .flashcard-scene.is-flipped .flashcard-inner { transform: rotateY(180deg); }
+        .flashcard-face { position: absolute; width: 100%; height: 100%; backface-visibility: hidden; border-radius: 30px; box-shadow: 0 20px 40px rgba(77, 124, 15, 0.1); border: 1px solid var(--border); background: var(--card-bg); padding: 3.5rem; display: flex; flex-direction: column; justify-content: center; align-items: center; overflow-y: auto; }
+        
+        .flashcard-front { text-align: center; }
+        .flashcard-front .word { font-size: 4rem; margin-bottom: 1.2rem; color: var(--primary); font-weight: 700; font-family: var(--font-headings);}
+        .flashcard-front .meta-row { display: flex; align-items: center; gap: 1.5rem; margin-bottom: 2rem; }
+        .flashcard-front .audio-btn { width: 55px; height: 55px; }
+        .flashcard-front .audio-btn svg { width: 28px; height: 28px; }
+        .flashcard-front .phonetic { font-size: 1.5rem; color: var(--text-muted); font-style: italic; font-family: var(--font-ipa); }
+        
+        .flashcard-back { transform: rotateY(180deg); background: #fdfbf7; align-items: flex-start; text-align: left; }
+        .flashcard-back h3 { color: var(--primary); font-size: 1.3rem; margin-bottom: 1rem; text-transform: uppercase; letter-spacing: 0.15em; font-weight: 700; font-family: var(--font-headings); }
+        .flashcard-back .definition { font-size: 1.3rem; margin-bottom: 0.8rem; color: var(--text-main); font-weight: 400;}
+        .flashcard-back .translation { font-size: 1.2rem; margin-bottom: 2rem; color: var(--success); font-weight: 500;}
+        .flashcard-back .example-box { width: 100%; padding: 1.5rem; border-radius: 16px; }
+        
+        .flashcard-hint { position: absolute; bottom: 1.5rem; font-size: 0.85rem; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.2em; font-weight: 500; }
+
+        .flashcard-controls { display: flex; align-items: center; gap: 1.5rem; background: var(--card-bg); padding: 1.2rem 3rem; border-radius: 50px; box-shadow: 0 10px 25px rgba(0,0,0,0.05); border: 1px solid #f1f5f9; }
+        .fc-btn { background: none; border: none; color: var(--primary); font-size: 1.1rem; font-weight: 600; cursor: pointer; padding: 0.8rem 1.8rem; border-radius: 25px; transition: all 0.2s; display: flex; align-items: center; gap: 0.5rem; }
+        .fc-btn:hover:not(:disabled) { background: var(--primary-light); color: var(--primary-hover); transform: translateY(-2px);}
+        .fc-btn:disabled { opacity: 0.3; cursor: not-allowed; transform: none;}
+        .fc-counter { font-weight: 600; font-size: 1.3rem; color: var(--accent); min-width: 90px; text-align: center; font-family: var(--font-headings); letter-spacing: 0.05em;}
+
+        /* Structures for Patterns, Formations and Collocations */
+        .structure-container { margin: 0.8rem 0 1.2rem 0; padding: 1.2rem; background: #fdfbf7; border-radius: 16px; border: 1px dashed var(--primary); }
+        .structure-label { display: block; font-weight: 700; color: var(--accent); margin-bottom: 0.8rem; text-transform: uppercase; letter-spacing: 0.1em; font-size: 0.8rem; }
+        .structure-tags { display: flex; flex-wrap: wrap; gap: 0.6rem; }
+        .structure-tag { background: var(--card-bg); color: var(--primary); padding: 0.4rem 0.8rem; border-radius: 50px; font-size: 0.95rem; font-weight: 600; border: 1px solid var(--border); box-shadow: 0 2px 4px rgba(0,0,0,0.02); line-height: 1.2;}
+
+        @media (max-width: 768px) { 
+            h1 { font-size: 2.2rem; } 
+            #grid-view { grid-template-columns: 1fr; } 
+            .flashcard-scene { height: 650px; } 
+            .flashcard-front .word { font-size: 3rem; } 
+            .flashcard-back .definition { font-size: 1.15rem; }
+            .flashcard-face { padding: 2rem; }
+            .example-text { font-size: 2.6rem; } /* Adjusted for mobile */
+        }
+    </style>
+</head>
+<body>
+
+<div class="header-banner">Grade 12 | Chan Truong</div>
+
+<div class="container">
+    <header>
+        <h1>Lesson 6: Health & Fitness</h1>
+        <p class="subtitle">Core Vocabulary, Phrasal Verbs, Word Patterns & Collocations</p>
+    </header>
+
+    <div class="filter-controls" id="topic-filters">
+        <button class="filter-btn active" onclick="filterTopic('all')">All Items</button>
+        <button class="filter-btn" onclick="filterTopic('Core Vocabulary')">Core Vocabulary</button>
+        <button class="filter-btn" onclick="filterTopic('Phrasal Verbs')">Phrasal Verbs</button>
+        <button class="filter-btn" onclick="filterTopic('Patterns & Formations')">Patterns & Formations</button>
+        <button class="filter-btn" onclick="filterTopic('Collocations')">Collocations</button>
+    </div>
+
+    <div class="view-controls">
+        <button class="view-btn active" id="btn-grid" onclick="switchView('grid')">📄 List View</button>
+        <button class="view-btn" id="btn-flashcards" onclick="switchView('flashcards')">🗂️ Flashcards</button>
+    </div>
+
+    <div id="flashcard-view">
+        <div class="flashcard-scene" id="flashcard-scene" onclick="flipCard()">
+            <div class="flashcard-inner">
+                <div class="flashcard-face flashcard-front">
+                    <h2 class="word" id="fc-word">Word</h2>
+                    <div class="meta-row">
+                        <span class="phonetic" id="fc-phonetic">/wɜːd/</span>
+                        <button class="audio-btn" id="fc-audio" onclick="playAudioFromCard(event)" title="Listen to pronunciation">
+                            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg>
+                        </button>
+                    </div>
+                    <div class="word-families" id="fc-forms" style="margin-top: 1.5rem; max-width: 85%;">Main Form</div>
+                    <div class="word-families" id="fc-related" style="margin-top: 0.5rem; max-width: 85%; background-color: var(--accent-light); border-color: #fbcfe8; color: var(--accent);">Related Forms</div>
+                    <div id="fc-forms-container" style="width: 100%; display: flex; justify-content: center;"></div>
+                    <span class="topic-tag" id="fc-topic" style="margin-top: 1rem;">Topic</span>
+                    <span class="flashcard-hint">Click card to flip</span>
+                </div>
+                <div class="flashcard-face flashcard-back">
+                    <h3>Meaning</h3>
+                    <p class="definition" id="fc-definition">Definition goes here.</p>
+                    <p class="translation" id="fc-translation">Vietnamese goes here.</p>
+                    <div id="fc-example-container" style="width: 100%; margin-top: 1.5rem;">
+                        <!-- Examples injected here -->
+                    </div>
+                    <span class="flashcard-hint" style="left: 50%; transform: translateX(-50%);">Click card to flip back</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="flashcard-controls">
+            <button class="fc-btn" id="fc-prev" onclick="prevCard()">◀ Prev</button>
+            <span class="fc-counter" id="fc-counter">1 / X</span>
+            <button class="fc-btn" id="fc-next" onclick="nextCard()">Next ▶</button>
+            <div style="width: 2px; height: 24px; background: var(--border); margin: 0 0.5rem;"></div>
+            <button class="fc-btn" onclick="shuffleCards()" title="Shuffle Order">🔀</button>
+        </div>
+    </div>
+
+    <main id="grid-view">
+        <!-- Injected via JavaScript -->
+    </main>
+</div>
+
+<script>
+    // ---------------------------------------------------------
+    // Vocabulary Bank (Grade 12 Lesson 6)
+    // ---------------------------------------------------------
+    const vocabBank = [
+        // --- CORE VOCABULARY ---
+        { topic: "Core Vocabulary", word: "Extraordinary", phonetic: "/ɪkˈstrɔːdnri/", form: "Adjective", forms: "Adv: Extraordinarily", def: "Very unusual or remarkable.", translation: "Phi thường, đặc biệt", example: "She has an extraordinary talent for playing the piano." },
+        { topic: "Core Vocabulary", word: "Hardship", phonetic: "/ˈhɑːdʃɪp/", form: "Noun", forms: "N/A", def: "Severe suffering or privation.", translation: "Sự gian khổ, thử thách", example: "The refugees endured years of incredible hardship." },
+        { topic: "Core Vocabulary", word: "Poverty", phonetic: "/ˈpɒvəti/", form: "Noun", forms: "Adj: Poor", def: "The state of being extremely poor.", translation: "Sự nghèo đói", example: "Millions of people in the world still live in absolute poverty." },
+        { topic: "Core Vocabulary", word: "Confront", phonetic: "/kənˈfrʌnt/", form: "Verb", forms: "N: Confrontation", def: "To face, meet, or deal with a difficult situation or person.", translation: "Đối mặt, đương đầu", example: "He decided to confront his fears and speak in public." },
+        { topic: "Core Vocabulary", word: "Discrimination", phonetic: "/dɪˌskrɪmɪˈneɪʃn/", form: "Noun", forms: "V: Discriminate | Adj: Discriminatory", def: "The unjust or prejudicial treatment of different categories of people.", translation: "Sự phân biệt đối xử", example: "The law protects people from racial and gender discrimination." },
+        { topic: "Core Vocabulary", word: "Compelling", phonetic: "/kəmˈpelɪŋ/", form: "Adjective", forms: "V: Compel", def: "Evoking interest, attention, or admiration in a powerfully irresistible way.", translation: "Hấp dẫn, thuyết phục", example: "The novel tells a highly compelling story of survival." },
+        { topic: "Core Vocabulary", word: "Resilience", phonetic: "/rɪˈzɪliəns/", form: "Noun", forms: "Adj: Resilient", def: "The capacity to recover quickly from difficulties; toughness.", translation: "Sự kiên cường, sức bật", example: "Her resilience allowed her to overcome many obstacles in life." },
+        { topic: "Core Vocabulary", word: "Integrity", phonetic: "/ɪnˈteɡrəti/", form: "Noun", forms: "N/A", def: "The quality of being honest and having strong moral principles.", translation: "Sự chính trực, tính liêm chính", example: "He is a leader of the highest integrity and honesty." },
+        { topic: "Core Vocabulary", word: "Autobiography", phonetic: "/ˌɔːtəbaɪˈɒɡrəfi/", form: "Noun", forms: "Adj: Autobiographical", def: "An account of a person's life written by that person.", translation: "Cuốn tự truyện", example: "In his autobiography, he reveals the secrets behind his success." },
+        { topic: "Core Vocabulary", word: "Aspire", phonetic: "/əˈspaɪə(r)/", form: "Verb", forms: "N: Aspiration | Adj: Aspiring", def: "Direct one's hopes or ambitions towards achieving something.", translation: "Khao khát, thiết tha", example: "Many young athletes aspire to compete in the Olympic Games." },
+        { topic: "Core Vocabulary", word: "Determination", phonetic: "/dɪˌtɜːmɪˈneɪʃn/", form: "Noun", forms: "V: Determine | Adj: Determined", def: "Firmness of purpose; resoluteness.", translation: "Sự quyết tâm", example: "It takes a lot of hard work and determination to succeed." },
+        { topic: "Core Vocabulary", word: "Underprivileged", phonetic: "/ˌʌndəˈprɪvəlɪdʒd/", form: "Adjective", forms: "N: Privilege", def: "Not enjoying the same standard of living or rights as the majority of people in a society.", translation: "Thiệt thòi, không có đặc quyền", example: "The charity provides free education for underprivileged children." },
+        { topic: "Core Vocabulary", word: "Compassion", phonetic: "/kəmˈpæʃn/", form: "Noun", forms: "Adj: Compassionate", def: "Sympathetic pity and concern for the sufferings or misfortunes of others.", translation: "Lòng trắc ẩn, sự thương xót", example: "We should show compassion to those who are suffering." },
+        { topic: "Core Vocabulary", word: "Changemaker", phonetic: "/ˈtʃeɪndʒmeɪkə(r)/", form: "Noun", forms: "N/A", def: "Someone who takes creative action to solve a social problem.", translation: "Người tạo ra sự thay đổi", example: "She is a young changemaker fighting for environmental justice." },
+        { topic: "Core Vocabulary", word: "Burned out", phonetic: "/ˌbɜːnd ˈaʊt/", form: "Adjective", forms: "N: Burnout", def: "Ruined by overwork or exhaustion.", translation: "Kiệt sức, cháy sạch (năng lượng)", example: "After working 80 hours a week, she felt completely burned out." },
+        { topic: "Core Vocabulary", word: "Crisis", phonetic: "/ˈkraɪsɪs/", form: "Noun", forms: "Plural: Crises", def: "A time of intense difficulty, trouble, or danger.", translation: "Cuộc khủng hoảng", example: "The country is facing a severe economic crisis." },
+        { topic: "Core Vocabulary", word: "Matter", phonetic: "/ˈmætə(r)/", form: "Verb", forms: "N: Matter", def: "Be important or significant.", translation: "Có ý nghĩa, quan trọng", example: "It doesn't matter what other people think of you." },
+        { topic: "Core Vocabulary", word: "Authentic", phonetic: "/ɔːˈθentɪk/", form: "Adjective", forms: "N: Authenticity", def: "Of undisputed origin; genuine and real.", translation: "Đích thực, chân thật", example: "The restaurant serves authentic Italian cuisine." },
+        { topic: "Core Vocabulary", word: "Perseverance", phonetic: "/ˌpɜːsɪˈvɪərəns/", form: "Noun", forms: "V: Persevere | Adj: Persevering", def: "Persistence in doing something despite difficulty or delay in achieving success.", translation: "Sự bền bỉ, tính kiên nhẫn", example: "His perseverance finally paid off when he got the job." },
+        { topic: "Core Vocabulary", word: "Shape", phonetic: "/ʃeɪp/", form: "Verb", forms: "N: Shape", def: "Determine the nature of; have a great influence on.", translation: "Định hình, tạo hình", example: "Our childhood experiences greatly shape our adult personalities." },
+
+        // --- PHRASAL VERBS ---
+        { topic: "Phrasal Verbs", word: "Ask after", phonetic: "/ɑːsk ˈɑːftə(r)/", form: "Phrasal Verb", forms: "N/A", def: "Ask for news about someone.", translation: "Hỏi thăm (sức khỏe, tình hình)", example: "I met David yesterday and he was asking after you." },
+        { topic: "Phrasal Verbs", word: "Bring up", phonetic: "/brɪŋ ʌp/", form: "Phrasal Verb", forms: "N/A", def: "Look after a child until he or she becomes an adult.", translation: "Nuôi nấng", example: "She was brought up by her grandparents in a small village." },
+        { topic: "Phrasal Verbs", word: "Fall for", phonetic: "/fɔːl fɔː(r)/", form: "Phrasal Verb", forms: "N/A", def: "Fall in love with; or believe a lie/trick.", translation: "Phải lòng ai / Bị lừa", example: "He is so gullible, he will fall for any silly trick." },
+        { topic: "Phrasal Verbs", word: "Fall out (with)", phonetic: "/fɔːl aʊt/", form: "Phrasal Verb", forms: "N/A", def: "Have an argument with and stop being friends.", translation: "Cãi vã và tuyệt giao", example: "I fell out with my best friend over a misunderstanding." },
+        { topic: "Phrasal Verbs", word: "Get on (with)", phonetic: "/ɡet ɒn/", form: "Phrasal Verb", forms: "N/A", def: "Have a good relationship with.", translation: "Có quan hệ tốt, hòa thuận", example: "I have always got on very well with my neighbors." },
+        { topic: "Phrasal Verbs", word: "Grow up", phonetic: "/ɡrəʊ ʌp/", form: "Phrasal Verb", forms: "N/A", def: "Become older or an adult.", translation: "Lớn lên, trưởng thành", example: "I want to be a pilot when I finally grow up." },
+        { topic: "Phrasal Verbs", word: "Look down on", phonetic: "/lʊk daʊn ɒn/", form: "Phrasal Verb", forms: "N/A", def: "Think that you are better than someone.", translation: "Khinh thường, coi thường", example: "You should never look down on people who are less fortunate." },
+        { topic: "Phrasal Verbs", word: "Look up to", phonetic: "/lʊk ʌp tu/", form: "Phrasal Verb", forms: "N/A", def: "Admire and respect someone.", translation: "Kính trọng, ngưỡng mộ", example: "I really look up to my older sister for her dedication." },
+        { topic: "Phrasal Verbs", word: "Make up", phonetic: "/meɪk ʌp/", form: "Phrasal Verb", forms: "N/A", def: "Become friends again after an argument.", translation: "Làm hòa", example: "They argued heavily yesterday, but they quickly made up." },
+        { topic: "Phrasal Verbs", word: "Pass away", phonetic: "/pɑːs əˈweɪ/", form: "Phrasal Verb", forms: "N/A", def: "To die (used out of respect).", translation: "Qua đời, mất", example: "Her grandfather passed away peacefully in his sleep." },
+        { topic: "Phrasal Verbs", word: "Pick on", phonetic: "/pɪk ɒn/", form: "Phrasal Verb", forms: "N/A", def: "Keep treating someone badly or unfairly.", translation: "Bắt nạt, trêu chọc", example: "The older boys used to pick on him at school." },
+        { topic: "Phrasal Verbs", word: "Put down", phonetic: "/pʊt daʊn/", form: "Phrasal Verb", forms: "N/A", def: "Criticise, make someone feel stupid.", translation: "Hạ nhục, chê bai", example: "It is cruel to constantly put down your colleagues." },
+        { topic: "Phrasal Verbs", word: "Settle down", phonetic: "/ˈsetl daʊn/", form: "Phrasal Verb", forms: "N/A", def: "Become calm; or stay in one place/get married and live quietly.", translation: "Bình tĩnh lại / Ổn định cuộc sống", example: "After traveling for years, he decided to settle down and start a family." },
+        { topic: "Phrasal Verbs", word: "Stand up for", phonetic: "/stænd ʌp fɔː(r)/", form: "Phrasal Verb", forms: "N/A", def: "Support or defend someone or something in an argument or fight.", translation: "Bảo vệ, đứng lên bênh vực", example: "You must learn to stand up for yourself when others treat you unfairly." },
+        { topic: "Phrasal Verbs", word: "Take aback", phonetic: "/teɪk əˈbæk/", form: "Phrasal Verb", forms: "N/A", def: "Surprise someone (usually used in passive voice).", translation: "Làm ngạc nhiên, gây sửng sốt", example: "I was completely taken aback by his sudden resignation." },
+
+        // --- PATTERNS & FORMATIONS ---
+        { topic: "Patterns & Formations", word: "Agree", phonetic: "/əˈɡriː/", form: "Word Pattern", forms: "agree with/on/to sth; agree to do; agree that", def: "To have the same opinion, or accept a suggestion.", translation: "Đồng ý", example: "We finally agreed on a date for the upcoming meeting." },
+        { topic: "Patterns & Formations", word: "Allow", phonetic: "/əˈlaʊ/", form: "Word Pattern", forms: "allow sb to do; allow sth", def: "To give permission for someone to do something.", translation: "Cho phép", example: "The teacher does not allow students to use phones in class." },
+        { topic: "Patterns & Formations", word: "Approve", phonetic: "/əˈpruːv/", form: "Word Pattern", forms: "approve of sth/doing; approve sth", def: "To officially agree to or accept as satisfactory.", translation: "Tán thành, phê duyệt", example: "My parents do not approve of me staying out so late." },
+        { topic: "Patterns & Formations", word: "Ask", phonetic: "/ɑːsk/", form: "Word Pattern", forms: "ask sb; ask sb to do sth; ask about/for; ask if/whether", def: "To request an answer, information, or a favor.", translation: "Hỏi, yêu cầu", example: "She asked me to help her with the mathematics assignment." },
+        { topic: "Patterns & Formations", word: "Attack", phonetic: "/əˈtæk/", form: "Word Pattern", forms: "attack sth; attack sb for sth; an attack on sth", def: "To take aggressive action against.", translation: "Tấn công, công kích", example: "The newspaper fiercely attacked the politician for his controversial comments." },
+        { topic: "Patterns & Formations", word: "Ban", phonetic: "/bæn/", form: "Word Pattern", forms: "ban sb from sth/doing; ban sth", def: "To officially or legally prohibit.", translation: "Cấm", example: "The government has decided to ban smoking in all public parks." },
+        { topic: "Patterns & Formations", word: "Convince", phonetic: "/kənˈvɪns/", form: "Word Pattern", forms: "convince sb (of sth); convince sb to do; convince sb that", def: "To cause someone to believe firmly in the truth of something.", translation: "Thuyết phục", example: "I managed to convince my boss to give me a few days off." },
+        { topic: "Patterns & Formations", word: "Force", phonetic: "/fɔːs/", form: "Word Pattern", forms: "force sb to do sth; force sb into sth/doing", def: "To make someone do something against their will.", translation: "Ép buộc", example: "The heavy rain forced us to cancel our outdoor picnic." },
+        { topic: "Patterns & Formations", word: "Independent", phonetic: "/ˌɪndɪˈpendənt/", form: "Word Pattern", forms: "independent of/from sth", def: "Free from outside control; not depending on another.", translation: "Độc lập", example: "He wants to be financially independent of his parents." },
+        { topic: "Patterns & Formations", word: "Let", phonetic: "/let/", form: "Word Pattern", forms: "let sb do sth", def: "To not prevent or forbid; allow.", translation: "Để cho, cho phép", example: "Please let me know if you need any further assistance." },
+        { topic: "Patterns & Formations", word: "Object", phonetic: "/əbˈdʒekt/", form: "Word Pattern", forms: "object to sth/doing", def: "To say that you disagree with, disapprove of, or oppose something.", translation: "Phản đối", example: "Several residents objected to the construction of the new highway." },
+        { topic: "Patterns & Formations", word: "Pretend", phonetic: "/prɪˈtend/", form: "Word Pattern", forms: "pretend to be; pretend to do; pretend that", def: "To behave so as to make it appear that something is the case.", translation: "Giả vờ", example: "The children like to pretend that they are brave knights and dragons." },
+        { topic: "Patterns & Formations", word: "Rely", phonetic: "/rɪˈlaɪ/", form: "Word Pattern", forms: "rely on sth/sb", def: "To depend on with full trust or confidence.", translation: "Dựa vào, tin cậy vào", example: "You can always rely on her to deliver excellent work on time." },
+        { topic: "Patterns & Formations", word: "Able", phonetic: "/ˈeɪbl/", form: "Word Family", forms: "unable, (in)ability, disabled, disability", def: "Having the power, skill, means, or opportunity to do something.", translation: "Có khả năng", example: "His physical disability does not stop him from living a full life." },
+        { topic: "Patterns & Formations", word: "Achieve", phonetic: "/əˈtʃiːv/", form: "Word Family", forms: "achievement", def: "To successfully bring about or reach a desired objective.", translation: "Đạt được", example: "Winning the championship was his greatest personal achievement." },
+        { topic: "Patterns & Formations", word: "Argue", phonetic: "/ˈɑːɡjuː/", form: "Word Family", forms: "argument, argumentative", def: "To exchange or express diverging or opposite views, typically in a heated way.", translation: "Tranh cãi", example: "He is a very argumentative person who loves to debate." },
+        { topic: "Patterns & Formations", word: "Care", phonetic: "/keə(r)/", form: "Word Family", forms: "careful(ly), careless(ly), (un)caring", def: "To feel concern or interest; attach importance to something.", translation: "Sự quan tâm, cẩn thận", example: "It was very careless of you to leave the door unlocked." },
+        { topic: "Patterns & Formations", word: "Correspond", phonetic: "/ˌkɒrəˈspɒnd/", form: "Word Family", forms: "correspondence", def: "To communicate by exchanging letters.", translation: "Trao đổi thư từ, tương ứng", example: "We have kept up a regular correspondence for over ten years." },
+        { topic: "Patterns & Formations", word: "Friend", phonetic: "/frend/", form: "Word Family", forms: "friendship, (un)friendly", def: "A person whom one knows and with whom one has a bond.", translation: "Bạn bè", example: "Their strong friendship has lasted since they were in primary school." },
+        { topic: "Patterns & Formations", word: "Happy", phonetic: "/ˈhæpi/", form: "Word Family", forms: "unhappy, (un)happiness, (un)happily", def: "Feeling or showing pleasure or contentment.", translation: "Vui vẻ, hạnh phúc", example: "Money cannot buy true happiness and peace of mind." },
+        { topic: "Patterns & Formations", word: "Jealous", phonetic: "/ˈdʒeləs/", form: "Word Family", forms: "jealousy, jealously", def: "Feeling or showing envy of someone or their achievements.", translation: "Ghen tị", example: "Her intense jealousy ruined their previously close relationship." },
+        { topic: "Patterns & Formations", word: "Kind", phonetic: "/kaɪnd/", form: "Word Family", forms: "unkind, (un)kindness, kindly", def: "Having or showing a friendly, generous, and considerate nature.", translation: "Tốt bụng", example: "I will never forget the immense kindness she showed me." },
+        { topic: "Patterns & Formations", word: "Marry", phonetic: "/ˈmæri/", form: "Word Family", forms: "marriage, (un)married", def: "To join in marriage.", translation: "Kết hôn", example: "They have a very strong and happy marriage." },
+        { topic: "Patterns & Formations", word: "Nerve", phonetic: "/nɜːv/", form: "Word Family", forms: "nervous(ly), nervousness", def: "One's steadiness, courage, and sense of purpose when facing a demanding situation.", translation: "Thần kinh, sự lo lắng", example: "He tried to hide his obvious nervousness before the interview." },
+        { topic: "Patterns & Formations", word: "Obey", phonetic: "/əˈbeɪ/", form: "Word Family", forms: "disobey, (dis)obedient(ly), (dis)obedience", def: "To submit to the authority of someone or comply with a law.", translation: "Vâng lời, tuân theo", example: "The child was punished for his blatant disobedience." },
+        { topic: "Patterns & Formations", word: "Person", phonetic: "/ˈpɜːsn/", form: "Word Family", forms: "(im)personally, personality", def: "A human being regarded as an individual.", translation: "Con người, cá nhân", example: "She has a very bubbly and outgoing personality." },
+        { topic: "Patterns & Formations", word: "Polite", phonetic: "/pəˈlaɪt/", form: "Word Family", forms: "impolite, (im)politely, (im)politeness", def: "Having or showing behavior that is respectful and considerate.", translation: "Lịch sự", example: "It is considered extreme impoliteness to interrupt someone while speaking." },
+        { topic: "Patterns & Formations", word: "Relate", phonetic: "/rɪˈleɪt/", form: "Word Family", forms: "relative(ly), relation, relationship", def: "Make or show a connection between.", translation: "Liên hệ, liên quan", example: "A strong relationship is built on mutual trust and respect." },
+        { topic: "Patterns & Formations", word: "Willing", phonetic: "/ˈwɪlɪŋ/", form: "Word Family", forms: "unwilling, (un)willingness, (un)willingly", def: "Ready, eager, or prepared to do something.", translation: "Sẵn lòng", example: "He showed great willingness to help us with the difficult project." },
+
+        // --- COLLOCATIONS ---
+        { topic: "Collocations", word: "Approval", phonetic: "/əˈpruːvl/", form: "Collocation", forms: "show/give approval of/for sth; meet with sb’s approval", def: "The belief that someone or something is good or acceptable.", translation: "Sự tán thành", example: "His suggestion met with everyone's absolute approval." },
+        { topic: "Collocations", word: "Argument", phonetic: "/ˈɑːɡjumənt/", form: "Collocation", forms: "have an argument (with sb); win/lose an argument", def: "An exchange of diverging or opposite views.", translation: "Cuộc tranh luận, cãi vã", example: "He easily won the argument by presenting clear and logical evidence." },
+        { topic: "Collocations", word: "Care", phonetic: "/keə(r)/", form: "Collocation", forms: "take care (of sth/sb); care for/about sth/sb", def: "The provision of what is necessary for the health, welfare, and protection of someone.", translation: "Sự chăm sóc, quan tâm", example: "Please take good care of my house plants while I am away on holiday." },
+        { topic: "Collocations", word: "Courage", phonetic: "/ˈkʌrɪdʒ/", form: "Collocation", forms: "have the courage to do; it takes courage to do", def: "The ability to do something that frightens one.", translation: "Sự can đảm, dũng khí", example: "It takes a lot of courage to admit when you have made a mistake." },
+        { topic: "Collocations", word: "Disguise", phonetic: "/dɪsˈɡaɪz/", form: "Collocation", forms: "in disguise; wear a disguise; disguise yourself", def: "A means of altering one's appearance to conceal one's identity.", translation: "Sự ngụy trang, cải trang", example: "The famous prince loved to travel around the city in disguise." },
+        { topic: "Collocations", word: "Dream", phonetic: "/driːm/", form: "Collocation", forms: "have a dream; daydream; dream of/about doing", def: "A series of thoughts, images, and sensations occurring in a person's mind during sleep, or a cherished aspiration.", translation: "Giấc mơ, ước mơ", example: "She has always dreamed of becoming a commercial airline pilot." },
+        { topic: "Collocations", word: "Family", phonetic: "/ˈfæməli/", form: "Collocation", forms: "have/start a family; nuclear family; extended family", def: "A group of one or more parents and their children living together.", translation: "Gia đình", example: "They got married last year and are hoping to start a family soon." },
+        { topic: "Collocations", word: "Favour", phonetic: "/ˈfeɪvə(r)/", form: "Collocation", forms: "do/owe sb a favour; be in favour of", def: "An act of kindness beyond what is due or usual.", translation: "Đặc ân, sự giúp đỡ", example: "Could you please do me a massive favour and open the window?" },
+        { topic: "Collocations", word: "Friend", phonetic: "/frend/", form: "Collocation", forms: "make/become/be/stay friends (with sb); best friend", def: "A person whom one knows and with whom one has a bond.", translation: "Bạn bè", example: "Despite the distance, I really hope we can always stay good friends." },
+        { topic: "Collocations", word: "Love", phonetic: "/lʌv/", form: "Collocation", forms: "be/fall in love with sb", def: "An intense feeling of deep affection.", translation: "Tình yêu, phải lòng", example: "Many tourists instantly fall in love with the city after visiting it once." },
+        { topic: "Collocations", word: "Mood", phonetic: "/muːd/", form: "Collocation", forms: "in a good/bad mood; in the right/wrong mood; in the mood for sth", def: "A temporary state of mind or feeling.", translation: "Tâm trạng", example: "We ordered pizza because we just weren't in the mood for cooking." },
+        { topic: "Collocations", word: "Pity", phonetic: "/ˈpɪti/", form: "Collocation", forms: "pity sb; take pity on sb; feel pity for sb; it's a pity (that)", def: "The feeling of sorrow and compassion caused by the suffering of others.", translation: "Sự thương hại, điều đáng tiếc", example: "It is a huge pity that you cannot come to the celebration party." },
+        { topic: "Collocations", word: "Promise", phonetic: "/ˈprɒmɪs/", form: "Collocation", forms: "promise to do; give/make sb a promise; break a promise", def: "A declaration or assurance that one will do a particular thing.", translation: "Lời hứa", example: "He made his mother a solemn promise to study much harder this year." }
+    ];
+
+    // --- DOM Injection ---
+    function renderGrid() {
+        const grid = document.getElementById('grid-view');
+        grid.innerHTML = '';
+        vocabBank.forEach(item => {
+            const article = document.createElement('article');
+            article.className = 'vocab-card';
+            article.setAttribute('data-topic', item.topic);
+            
+            let formsDisplay = '';
+            if (item.topic === "Patterns & Formations" || item.topic === "Collocations") {
+                const formItems = item.forms.split(/[;,|]/).map(s => s.trim()).filter(s => s && s !== 'N/A');
+                formsDisplay = `
+                    <div class="structure-container">
+                        <span class="structure-label">${item.form} Structures</span>
+                        <div class="structure-tags">
+                            ${formItems.map(f => `<span class="structure-tag">${f}</span>`).join('')}
+                        </div>
+                    </div>
+                `;
+            } else {
+                formsDisplay = `
+                    <div class="word-families"><strong>Category:</strong> ${item.form}</div>
+                    <div class="word-families" style="background-color: var(--accent-light); border-color: #fbcfe8; color: var(--badge-text); margin-top: -0.5rem;"><strong>Notes/Forms:</strong> ${item.forms}</div>
+                `;
+            }
+            
+            article.innerHTML = `
+                <div class="word-header">
+                    <div class="word-main">
+                        <span class="word">${item.word}</span>
+                        <button class="audio-btn" onclick="playAudio('${item.word.replace(/'/g, "\\'")}')" title="Listen to pronunciation">
+                            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg>
+                        </button>
+                    </div>
+                    <div class="meta-info">
+                        <span class="phonetic">${item.phonetic}</span>
+                    </div>
+                </div>
+                ${formsDisplay}
+                <span class="topic-tag">${item.topic}</span>
+                <p class="definition"><strong>Meaning:</strong> ${item.def}</p>
+                <p class="translation"><strong>Vietnamese:</strong> ${item.translation}</p>
+                
+                <div class="example-box">
+                    <span>Usage Example</span>
+                    <span class="example-text" style="text-transform: none; letter-spacing: normal;">"${item.example}"</span>
+                </div>
+            `;
+            grid.appendChild(article);
+        });
+    }
+
+    // Initialize Grid
+    renderGrid();
+
+    // --- Audio Synthesis ---
+    let voices = [];
+    if ('speechSynthesis' in window) {
+        voices = window.speechSynthesis.getVoices();
+        window.speechSynthesis.onvoiceschanged = () => {
+            voices = window.speechSynthesis.getVoices();
+        };
+    }
+
+    function playAudio(text) {
+        if ('speechSynthesis' in window) {
+            window.speechSynthesis.cancel();
+            const utterance = new SpeechSynthesisUtterance(text);
+            utterance.lang = 'en-GB';
+            utterance.rate = 0.9;
+            
+            let femaleVoice = voices.find(voice => 
+                voice.name.includes('Female') || 
+                voice.name.includes('Samantha') || 
+                voice.name.includes('Victoria') || 
+                voice.name.includes('Zira') ||
+                voice.name.includes('Karen') ||
+                voice.name.includes('Tessa') ||
+                voice.name.includes('Fiona') ||
+                voice.name.includes('Moira') ||
+                voice.name.includes('Veena')
+            );
+            
+            if (!femaleVoice) {
+                femaleVoice = voices.find(voice => voice.lang.includes('en-GB') && !voice.name.includes('Male'));
+            }
+            
+            if (femaleVoice) {
+                utterance.voice = femaleVoice;
+            } else {
+                utterance.pitch = 1.3; 
+            }
+
+            window.speechSynthesis.speak(utterance);
+        } else {
+            alert("Sorry, your browser doesn't support text-to-speech pronunciation.");
+        }
+    }
+
+    function playAudioFromCard(event) {
+        event.stopPropagation();
+        const word = document.getElementById('fc-word').textContent;
+        playAudio(word);
+    }
+
+    // --- Topic Filtering ---
+    function filterTopic(topicName) {
+        const filterBtns = document.querySelectorAll('.filter-btn');
+        filterBtns.forEach(btn => btn.classList.remove('active'));
+        event.target.classList.add('active');
+
+        const allCards = document.querySelectorAll('.vocab-card');
+        allCards.forEach(card => {
+            if (topicName === 'all' || card.getAttribute('data-topic') === topicName) {
+                card.classList.remove('hidden');
+            } else {
+                card.classList.add('hidden');
+            }
+        });
+
+        if(document.getElementById('flashcard-view').style.display === 'flex') {
+             extractDataFromGrid(topicName);
+             currentCardIndex = 0;
+             updateFlashcardUI();
+        }
+    }
+
+    // --- View Toggling ---
+    function switchView(viewName) {
+        const gridView = document.getElementById('grid-view');
+        const flashcardView = document.getElementById('flashcard-view');
+        const btnGrid = document.getElementById('btn-grid');
+        const btnFlashcards = document.getElementById('btn-flashcards');
+
+        if (viewName === 'grid') {
+            gridView.style.display = 'grid';
+            flashcardView.style.display = 'none';
+            btnGrid.classList.add('active');
+            btnFlashcards.classList.remove('active');
+        } else {
+            gridView.style.display = 'none';
+            flashcardView.style.display = 'flex';
+            btnFlashcards.classList.add('active');
+            btnGrid.classList.remove('active');
+            
+            const activeFilter = document.querySelector('.filter-btn.active').textContent;
+            let topicName = 'all';
+            if (activeFilter.includes('Core')) topicName = 'Core Vocabulary';
+            if (activeFilter.includes('Phrasal')) topicName = 'Phrasal Verbs';
+            if (activeFilter.includes('Patterns')) topicName = 'Patterns & Formations';
+            if (activeFilter.includes('Collocations')) topicName = 'Collocations';
+            
+            extractDataFromGrid(topicName);
+            currentCardIndex = 0;
+            updateFlashcardUI();
+        }
+    }
+
+    // --- Flashcard Logic ---
+    let flashcardData = [];
+    let currentCardIndex = 0;
+    const flashcardScene = document.getElementById('flashcard-scene');
+
+    function extractDataFromGrid(topicName = 'all') {
+        flashcardData = [];
+        vocabBank.forEach(item => {
+            if (topicName === 'all' || item.topic === topicName) {
+                flashcardData.push(item);
+            }
+        });
+    }
+
+    function updateFlashcardUI() {
+        if (flashcardData.length === 0) return;
+        const data = flashcardData[currentCardIndex];
+        
+        flashcardScene.classList.remove('is-flipped');
+        
+        setTimeout(() => {
+            document.getElementById('fc-word').textContent = data.word;
+            document.getElementById('fc-phonetic').textContent = data.phonetic;
+            document.getElementById('fc-topic').textContent = data.topic;
+            
+            if (data.topic === "Patterns & Formations" || data.topic === "Collocations") {
+                const formItems = data.forms.split(/[;,|]/).map(s => s.trim()).filter(s => s && s !== 'N/A');
+                document.getElementById('fc-forms-container').innerHTML = `
+                    <div class="structure-container" style="width: 85%; margin-top: 1rem; margin-bottom: 0;">
+                        <span class="structure-label">${data.form} Structures</span>
+                        <div class="structure-tags" style="justify-content: center;">
+                            ${formItems.map(f => `<span class="structure-tag">${f}</span>`).join('')}
+                        </div>
+                    </div>
+                `;
+                document.getElementById('fc-forms').style.display = 'none';
+                document.getElementById('fc-related').style.display = 'none';
+            } else {
+                document.getElementById('fc-forms-container').innerHTML = '';
+                document.getElementById('fc-forms').style.display = 'block';
+                document.getElementById('fc-related').style.display = 'block';
+                document.getElementById('fc-forms').innerHTML = `<strong>Category:</strong> ${data.form}`;
+                document.getElementById('fc-related').innerHTML = `<strong>Notes/Forms:</strong> ${data.forms}`;
+            }
+            
+            document.getElementById('fc-definition').textContent = data.def;
+            document.getElementById('fc-translation').textContent = data.translation;
+            
+            const examplesHTML = `
+                <div class="example-box" style="margin-bottom: 0.5rem;">
+                    <span style="color: var(--accent);">Usage Example</span>
+                    <span class="example-text" style="text-transform: none; letter-spacing: normal;">"${data.example}"</span>
+                </div>
+            `;
+            document.getElementById('fc-example-container').innerHTML = examplesHTML;
+            
+            document.getElementById('fc-counter').textContent = `${currentCardIndex + 1} / ${flashcardData.length}`;
+            
+            document.getElementById('fc-prev').disabled = currentCardIndex === 0;
+            document.getElementById('fc-next').disabled = currentCardIndex === flashcardData.length - 1;
+        }, 150);
+    }
+
+    function flipCard() { flashcardScene.classList.toggle('is-flipped'); }
+    function nextCard() { if (currentCardIndex < flashcardData.length - 1) { currentCardIndex++; updateFlashcardUI(); } }
+    function prevCard() { if (currentCardIndex > 0) { currentCardIndex--; updateFlashcardUI(); } }
+    
+    function shuffleCards() {
+        for (let i = flashcardData.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [flashcardData[i], flashcardData[j]] = [flashcardData[j], flashcardData[i]];
+        }
+        currentCardIndex = 0;
+        updateFlashcardUI();
+    }
+</script>
+</body>
+</html>
