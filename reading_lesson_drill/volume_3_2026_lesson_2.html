@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grade 12 Volume 3 2026 - Lesson 2 Reading</title>
+    
+    <!-- Tailwind CSS for styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- React and ReactDOM -->
+    <script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
+    
+    <!-- Babel for in-browser JSX compilation -->
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+    <!-- Phosphor Icons for UI elements -->
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+
+    <style>
+        /* Custom scrollbar for better testing UI experience */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f5f9; 
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1; 
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8; 
+        }
+        
+        /* Highlight specific markers in text */
+        .marker {
+            font-weight: bold;
+            background-color: #e2e8f0;
+            padding: 0 4px;
+            border-radius: 4px;
+            margin: 0 2px;
+        }
+
+        .passage-content p {
+            margin-bottom: 1rem;
+            text-indent: 1.5rem;
+            line-height: 1.7;
+        }
+    </style>
+</head>
+<body class="bg-slate-100 text-slate-800 font-sans h-screen overflow-hidden">
+    <div id="root" class="h-full"></div>
+
+    <script type="text/babel">
+        const { useState, useEffect, useRef } = React;
+
+        // Data Structure holding all exercises, passages, and questions with evidence tracking tags
+        const testData = [
+            {
+                id: 'ex2',
+                title: 'EXERCISE 2: The Significance of Green Buildings',
+                content: `
+                    <p>Green buildings are designed to <span data-ev="ex2-q10">minimise environmental impact and enhance the well-being of occupants.</span> These buildings <span data-ev="ex2-q1 ex2-q7">incorporate</span> <span data-ev="ex2-q7">sustainable materials, energy-efficient technologies, and water-saving features</span>, making them more environmentally friendly than traditional buildings. Green building practices have gained attention as society increasingly recognises the importance of reducing greenhouse gas emissions, conserving resources, and promoting sustainable living. By adopting these practices, communities can contribute to a cleaner environment and a healthier future.</p>
+                    <p><span class="marker">[I]</span> One of the key benefits of green buildings is their energy efficiency. <span data-ev="ex2-q2"><span class="marker">[II]</span> Green buildings often use renewable energy sources, such as solar panels or wind turbines, to power their operations.</span> <span class="marker">[III]</span> Additionally, energy-efficient lighting and HVAC systems help reduce electricity consumption. By cutting down on energy usage, green buildings reduce both costs and carbon footprints, making them more sustainable in the long run. <span class="marker">[IV]</span> Water conservation is another focus of green buildings. <span data-ev="ex2-q3">These buildings are equipped with water-saving fixtures, such as low-flow faucets and dual-flush toilets, which reduce water consumption significantly. In some cases, green buildings also collect and reuse rainwater for non-potable purposes, such as irrigation and toilet flushing.</span> This approach helps <span data-ev="ex2-q4">alleviate</span> pressure on local water resources and reduces the environmental impact of water use.</p>
+                    <p><span data-ev="ex2-q6">Although green buildings offer many advantages, <span data-ev="ex2-q5">they</span> are often more expensive to construct due to the cost of sustainable materials and advanced technology. <span data-ev="ex2-q8">However, the long-term savings on energy and water bills can offset these initial costs.</span> In addition, green buildings tend to have higher property values and attract environmentally conscious tenants, which can be advantageous for property owners.</span></p>
+                    <p><span data-ev="ex2-q9">As more people become aware of the benefits of green buildings, demand for sustainable construction is expected to rise.</span> Green buildings have the potential to transform the construction industry, reduce environmental impact, and create healthier, more sustainable communities. By embracing these practices, society can help pave the way toward a more sustainable and resilient future.</p>
+                `,
+                questions: [
+                    { id: 'ex2-q1', text: 'The word incorporate in paragraph 1 could best be replaced by', options: { A: 'attach', B: 'enclose', C: 'insert', D: 'integrate' }, correct: 'D', explanation: 'In the context of the sentence, buildings "incorporate" (take in or contain as part of a whole) sustainable materials, meaning they "integrate" them into their design.' },
+                    { id: 'ex2-q2', text: 'Where in paragraph 2 does the following sentence best fit?\n"This practice also benefits the environment by reducing reliance on non-renewable resources."', options: { A: '[I]', B: '[III]', C: '[IV]', D: '[II]' }, correct: 'B', explanation: 'The sentence refers to "reducing reliance on non-renewable resources". This logically follows the sentence marked [II] which discusses using "renewable energy sources, such as solar panels or wind turbines". Therefore, it fits best in position [III].' },
+                    { id: 'ex2-q3', text: 'According to paragraph 3, which of the following is NOT a feature of green buildings aimed at conserving water?', options: { A: 'dual-flush toilets', B: 'rainwater collection', C: 'low-flow faucets', D: 'energy-efficient lighting' }, correct: 'D', explanation: 'Paragraph 2 (which discusses these features) mentions dual-flush toilets, low-flow faucets, and rainwater collection as water-saving fixtures. Energy-efficient lighting is mentioned earlier as an energy-saving feature, not for conserving water.' },
+                    { id: 'ex2-q4', text: 'The word alleviate in paragraph 3 is OPPOSITE in meaning to', options: { A: 'reduce', B: 'soften', C: 'ease', D: 'worsen' }, correct: 'D', explanation: '"Alleviate" means to make suffering, deficiency, or a problem less severe (ease, reduce). The opposite is to make it worse ("worsen").' },
+                    { id: 'ex2-q5', text: 'The word they in paragraph 4 refers to', options: { A: 'sustainable materials', B: 'property values', C: 'green buildings', D: 'construction costs' }, correct: 'C', explanation: 'In paragraph 3 (the reference text calls it par 4 conceptually), the sentence says: "Although green buildings offer many advantages, they are often more expensive...". "They" refers to the subject of the clause, which is "green buildings".' },
+                    { id: 'ex2-q6', text: 'Which of the following best summarizes the main idea of paragraph 4?', options: { A: 'Sustainable materials and technology have made green buildings affordable for most property owners.', B: 'Green buildings have higher upfront costs, but their benefits can outweigh these expenses over time.', C: 'Green buildings attract more environmentally conscious tenants due to their low construction costs.', D: 'Advanced technology which is used in green buildings reduces the need for property management.' }, correct: 'B', explanation: 'The paragraph discusses how green buildings are more expensive initially, but "long-term savings... can offset these initial costs" and they bring advantages like higher property values.' },
+                    { id: 'ex2-q7', text: 'Which of the following is TRUE according to the passage?', options: { A: 'Green buildings are designed with energy efficiency and water conservation.', B: 'Property values are generally lower for green buildings due to high construction costs.', C: 'Green buildings are less relevant to renewable energy sources and water conservation.', D: 'Traditional buildings are better suited for environmentally conscious tenants.' }, correct: 'A', explanation: 'The entire passage discusses how green buildings incorporate energy efficiency (renewable sources, lighting) and water conservation (fixtures, rainwater collection).' },
+                    { id: 'ex2-q8', text: 'Which of the following best paraphrases the underlined sentence in paragraph 5? ("However, the long-term savings on energy and water bills can offset these initial costs.")', options: { A: 'In the long run, the money saved on energy and water can make up for the upfront expenses.', B: 'Future savings on energy and water cannot help solve the problem of initial costs.', C: 'Though it costs less at first, the higher utility bills in the long run can balance things out.', D: 'Savings on energy and water bills for a short time can pay back the early investment.' }, correct: 'A', explanation: 'To "offset" means to counterbalance or make up for. Therefore, the long-term savings make up for the initial high construction expenses (upfront expenses).' },
+                    { id: 'ex2-q9', text: 'Which of the following can be inferred from the passage?', options: { A: 'As sustainability awareness grows, green buildings may become more common in construction.', B: 'Sustainable building practices have little impact on environmental protection and construction.', C: 'Because they are expensive, the construction of green buildings will be abandoned in the future.', D: 'Most green buildings are designed mainly to reduce costs rather than protect the environment.' }, correct: 'A', explanation: 'The final paragraph states: "As more people become aware... demand for sustainable construction is expected to rise. Green buildings have the potential to transform the construction industry..."' },
+                    { id: 'ex2-q10', text: 'Which of the following best summarises the passage?', options: { A: 'Green buildings focus primarily on reducing energy expenses but remain less effective in addressing broader issues like water and resource conservation.', B: 'Green buildings provide environmental benefits, but the need for constant maintenance and repairs limits their appeal for modern developers.', C: 'Green buildings minimize environmental impact and, despite high initial costs, offer long-term benefits that pave the way for a sustainable future.', D: 'Although green buildings lower energy costs, their high construction prices often make them an impractical choice for long-term investment.' }, correct: 'C', explanation: 'Option C accurately captures the main themes of the passage: minimizing environmental impact, the challenge of initial costs, the long-term benefits, and paving the way for the future.' }
+                ]
+            },
+            {
+                id: 'ex3',
+                title: 'EXERCISE 3: Green Energy',
+                content: `
+                    <p>As we continue to face the impacts of climate change, having a green environment has become increasingly important to the future of our society. To achieve this, the world is <span data-ev="ex3-q1">shifting towards</span> green energy, and two particular types of energy at the centre of this movement are solar power and wind power.</p>
+                    <p><span data-ev="ex3-q2"><span class="marker">[I]</span> Solar power is all about harnessing the energy of the sun by using solar panels to convert sunlight into usable electricity.</span> <span class="marker">[II]</span> Moreover, solar panels are perfect for installation on a small scale, such as in private homes, since <span data-ev="ex3-q3">they</span> require very little maintenance and have a long lifespan. <span class="marker">[III]</span> However, <span data-ev="ex3-q4">the ability to generate solar power depends on the time of day and weather conditions.</span> This means that solar panels are often less useful if they are installed in places where sunny weather is not typical. <span class="marker">[IV]</span> Wind power, on the other hand, involves converting the energy of the wind into electricity using large turbines. <span data-ev="ex3-q8">Wind power doesn't produce any greenhouse gases, but it is not ideal for private use since turbines require consistent care.</span> However, wind farms can be installed on a large scale and are able to produce electricity continuously regardless of the time of day. This means that if there were more investments in wind power, it could be a <span data-ev="ex3-q5">viable</span> way to provide energy for major cities and even for whole regions.</p>
+                    <p><span data-ev="ex3-q6 ex3-q7">Wind and solar power contribute significantly to a green environment by reducing our reliance on fossil fuels, helping us cut down on pollution and slow climate change.</span> <span data-ev="ex3-q6 ex3-q9">Additionally, using renewable energy sources helps promote spending on sustainable development by creating new career opportunities in the green energy sector.</span></p>
+                    <p><span data-ev="ex3-q10">For now, the biggest challenge of adopting green energy is the costs associated with installation and infrastructure, but the benefits unquestionably outweigh the downsides. If we want to stop the climate crisis and create a better and more sustainable future, green energy sources will undoubtedly be the key.</span></p>
+                `,
+                questions: [
+                    { id: 'ex3-q1', text: 'The phrase "shifting towards" in paragraph 1 could best be replaced by', options: { A: 'depending on', B: 'moving away from', C: 'turning to', D: 'suffering from' }, correct: 'C', explanation: '"Shifting towards" implies making a change in direction towards something new, which is synonymous with "turning to" green energy.' },
+                    { id: 'ex3-q2', text: 'Where in paragraph 2 does the following sentence best fit?\n"This highly efficient form of energy produces zero emissions, so it can significantly reduce our carbon footprint."', options: { A: '[III]', B: '[I]', C: '[IV]', D: '[II]' }, correct: 'D', explanation: 'The sentence expands on the basic definition of solar power. Sentence [I] defines solar power. Putting it at [II] provides the transition before "Moreover" introduces another benefit (installation scale).' },
+                    { id: 'ex3-q3', text: 'The word "they" in paragraph 2 refers to', options: { A: 'weather conditions', B: 'solar panels', C: 'private homes', D: 'emissions' }, correct: 'B', explanation: '"...since they require very little maintenance and have a long lifespan." This describes the solar panels mentioned earlier in the sentence.' },
+                    { id: 'ex3-q4', text: 'According to paragraph 2, which of the following is NOT an advantage of solar power?', options: { A: 'It requires little maintenance.', B: 'It is effective regardless of weather conditions.', C: 'It produces zero emissions.', D: 'It has a long lifespan.' }, correct: 'B', explanation: 'The text explicitly states: "the ability to generate solar power depends on the time of day and weather conditions," meaning it is NOT effective regardless of weather.' },
+                    { id: 'ex3-q5', text: 'The word "viable" in paragraph 3 is OPPOSITE in meaning to', options: { A: 'delectable', B: 'practical', C: 'unfeasible', D: 'ideal' }, correct: 'C', explanation: '"Viable" means capable of working successfully or feasible. The opposite is "unfeasible".' },
+                    { id: 'ex3-q6', text: 'Which of the following best summarises paragraph 4 (referencing the 3rd paragraph of text)?', options: { A: 'Substituting fossil fuels with wind and solar energy protects the planet by decreasing pollution and decelerating climate change.', B: 'Renewable energy adoption fuels sustainable economic growth by generating a wealth of new job opportunities within the green sector.', C: 'Maximizing fossil fuel dependency to combat pollution and climate change, wind and solar energy drive economic growth through creating new green career paths.', D: 'Wind and solar energy protect the environment by reducing fossil fuel pollution while simultaneously driving economic growth through new green career opportunities.' }, correct: 'D', explanation: 'The paragraph discusses both environmental benefits (reducing reliance on fossil fuels, cutting pollution) and economic benefits (creating career opportunities). Option D captures both.' },
+                    { id: 'ex3-q7', text: 'Which of the following is TRUE according to the passage?', options: { A: 'Wind power is ideal for private households due to easy maintenance.', B: 'Both wind and solar power help reduce pollution and combat climate change.', C: 'Green energy sources are currently more cost-effective than fossil fuels.', D: 'Solar panels are more effective in areas with frequent cloudy weather.' }, correct: 'B', explanation: 'Paragraph 3 directly states: "Wind and solar power contribute significantly to a green environment... helping us cut down on pollution and slow climate change."' },
+                    { id: 'ex3-q8', text: 'Which of the following best paraphrases the underlined sentence in paragraph 3? ("Wind power doesn\'t produce any greenhouse gases, but it is not ideal for private use since turbines require consistent care.")', options: { A: 'Wind power requires high maintenance and generates a massive amount of greenhouse gases.', B: 'Wind power is environmentally friendly and convenient for households.', C: 'Wind turbines are easy to maintain and therefore ideal for private use.', D: 'Wind power is sustainable but not suitable for private homes due to maintenance needs.' }, correct: 'D', explanation: 'Option D correctly captures both parts of the original sentence: it is sustainable (no greenhouse gases) but not suitable for private homes (not ideal for private use) because of maintenance needs (require consistent care).' },
+                    { id: 'ex3-q9', text: 'Which of the following can be inferred from the passage?', options: { A: 'Expanding renewable energy can create more jobs in the green energy sector.', B: 'Wind power is expected to become the main energy source for private homes in the future.', C: 'Solar panels are only effective in large-scale industrial settings.', D: 'The use of fossil fuels is likely to increase due to the challenges of green energy.' }, correct: 'A', explanation: 'The text states that using renewable energy helps promote sustainable development by "creating new career opportunities in the green energy sector."' },
+                    { id: 'ex3-q10', text: 'Which of the following best summarises the passage?', options: { A: 'The high cost associated with green energy sources makes them an impractical solution for addressing the ongoing climate crisis.', B: 'Despite their potential, solar and wind power are not reliable enough and may not be widely adopted in the future due to limitations in terms of cost, complexity, and reliability.', C: 'Wind power is a more suitable option for private use, while solar power can effectively support energy needs in large cities and urban areas.', D: 'Green energy sources like solar and wind power are essential for sustainable development and addressing climate change, despite some challenges in implementation.' }, correct: 'D', explanation: 'Option D hits all the main points: the importance of these energy sources for sustainability, their role in fighting climate change, and acknowledging the challenge of installation costs mentioned at the end.' }
+                ]
+            },
+            {
+                id: 'ex4',
+                title: 'EXERCISE 4: Ocean Tides',
+                content: `
+                    <p>Every drop of water in the ocean, even in the deepest parts, responds to the forces that create the tides. No other force that affects the sea is so strong. <span data-ev="ex4-q1">Compared with the tides, the waves created by the wind are surface movements felt no more than a hundred fathoms below the surface.</span> The currents also seldom involve more than the upper several hundred fathoms despite <span data-ev="ex4-q2">their</span> impressive sweep.</p>
+                    <p><span data-ev="ex4-q3">The tides are a response of the waters of the ocean to the pull of the Moon and the more distant Sun. In theory, there is a gravitational attraction between the water and even the outermost star of the universe.</span> In reality, however, the pull of remote stars is so slight as to be <span data-ev="ex4-q4">obliterated</span> by the control of the Moon and, to a lesser extent, the Sun.</p>
+                    <p><span data-ev="ex4-q7">Just as the Moon rises later each day by fifty minutes, on the average, so, in most places, the time of high tide is <span data-ev="ex4-q5">correspondingly</span> later each day.</span> And as the Moon waxes and wanes in its monthly cycle, so the height of the tide varies.</p>
+                    <p>The tidal movements are strongest when the Moon is a sliver in the sky, and when it is full. <span data-ev="ex4-q6 ex4-q8">These are the highest flood tides and the lowest ebb tides of the lunar month and are called the spring tides. At these times the Sun, Moon, and Earth are nearly in line</span> and the pull of the two heavenly bodies is added together to bring the water high on the beaches, to send its surf upward against the sea cliffs, and to draw a high tide into the harbors. <span data-ev="ex4-q8">Twice each month, at the quarters of the moon, when the Sun, Moon and Earth lie at the apexes of a triangular configuration and the pull of the Sun and Moon are opposed, the moderate tidal movements called neap tides occur.</span> Then the difference between high and low water is less than at any other time during the month.</p>
+                `,
+                questions: [
+                    { id: 'ex4-q1', text: 'Which of the following best paraphrases the underlined sentence in paragraph 1? ("Compared with the tides, the waves created by the wind are surface movements felt no more than a hundred fathoms below the surface.")', options: { A: 'Unlike tides, wind waves extend to depths exceeding 100 fathoms below the sea surface.', B: 'Unlike tides, wind waves are surface movements felt at depths of no more than 100 fathoms.', C: 'Unlike tides, wind waves remain surface movements extending to depths of 100 fathoms.', D: 'Compared with tides, wind waves are felt at depths of 100 fathoms below the sea surface.' }, correct: 'B', explanation: 'Option B accurately restates that wind waves are limited surface movements that do not exceed depths of 100 fathoms, contrasting them with the much stronger and deeper forces of tides.' },
+                    { id: 'ex4-q2', text: 'What does the word their in paragraph 1 refer to?', options: { A: 'tides', B: 'waves', C: 'fathoms', D: 'currents' }, correct: 'D', explanation: 'The sentence reads: "The currents also seldom involve more than the upper several hundred fathoms despite their impressive sweep." "Their" refers to the subject, the currents.' },
+                    { id: 'ex4-q3', text: 'Which of the following is NOT mentioned in paragraph 2 as a factor influencing ocean tides?', options: { A: 'The pull of the Moon', B: 'The pull of the Sun', C: 'The attraction of distant stars', D: 'The movement of ocean currents' }, correct: 'D', explanation: 'Paragraph 2 mentions the Moon, the Sun, and theoretically the outermost/remote stars. It does not mention ocean currents as a factor influencing tides (currents were discussed in paragraph 1).' },
+                    { id: 'ex4-q4', text: 'The word obliterated in paragraph 2 mostly means', options: { A: 'strengthened', B: 'cancelled', C: 'delayed', D: 'revealed' }, correct: 'B', explanation: 'The pull of remote stars is so slight that it is "obliterated" (wiped out, negated, or cancelled) by the much stronger gravitational control of the Moon and Sun.' },
+                    { id: 'ex4-q5', text: 'The word correspondingly, in paragraph 3 is OPPOSITE in meaning to', options: { A: 'independently', B: 'accordingly', C: 'similarly', D: 'proportionally' }, correct: 'A', explanation: '"Correspondingly" means in an analogous or equivalent way (similarly, accordingly). The opposite would be occurring without a relation or connection, hence "independently".' },
+                    { id: 'ex4-q6', text: 'Which of the following is TRUE according to the passage?', options: { A: 'Tidal forces are weaker than those created by wind.', B: 'Ocean currents usually affect the deepest parts of the sea.', C: 'Spring tides occur when the Sun, Moon, and Earth are nearly aligned.', D: 'Neap tides produce the greatest difference between high and low water.' }, correct: 'C', explanation: 'Paragraph 4 states: "These are the highest flood tides... called the spring tides. At these times the Sun, Moon, and Earth are nearly in line..."' },
+                    { id: 'ex4-q7', text: 'In which paragraph does the writer mention the daily change in the timing of high tides?', options: { A: 'Paragraph 1', B: 'Paragraph 2', C: 'Paragraph 3', D: 'Paragraph 4' }, correct: 'C', explanation: 'Paragraph 3 explicitly states: "the time of high tide is correspondingly later each day" by about fifty minutes.' },
+                    { id: 'ex4-q8', text: 'In which paragraph does the writer mention the difference between spring tides and neap tides?', options: { A: 'Paragraph 1', B: 'Paragraph 2', C: 'Paragraph 3', D: 'Paragraph 4' }, correct: 'D', explanation: 'Paragraph 4 is dedicated entirely to explaining spring tides (when bodies align) and neap tides (when they form a triangle).' }
+                ]
+            },
+            {
+                id: 'ex5',
+                title: 'EXERCISE 5: Green Living',
+                content: `
+                    <p>Green living, or eco-friendly living, involves adopting habits and practices that minimize environmental impact and promote sustainability. <span data-ev="ex5-q1">This</span> lifestyle encompasses various actions, from <span data-ev="ex5-q4">reducing waste and conserving energy</span> to choosing sustainable products and supporting eco-friendly initiatives.</p>
+                    <p>One of the most significant advantages of green living is its positive impact on the environment. By reducing waste, conserving resources, and minimizing pollution, individuals contribute to a healthier planet. <span data-ev="ex5-q7">For instance, using energy-efficient appliances and reducing water consumption can significantly lower one's carbon footprint.</span></p>
+                    <p>Adopting an eco-friendly lifestyle also offers health benefits. <span data-ev="ex5-q6">Living in cleaner environments with reduced pollution levels can lead to better "<span data-ev="ex5-q2">respiratory</span>" health and a lower risk of chronic diseases.</span> Additionally, consuming organic and locally sourced foods can provide better nutrition and reduce exposure to harmful chemicals. While some people initially think that green living requires a high investment, it actually leads to significant long-term savings. Energy-efficient homes and appliances reduce utility bills, and sustainable practices often result in less waste, leading to lower disposal costs. Moreover, supporting local and sustainable businesses can <span data-ev="ex5-q3">stimulate</span> the economy and create jobs.</p>
+                    <p><span data-ev="ex5-q5 ex5-q8">In conclusion, adopting a green lifestyle not only benefits the environment but also enhances personal health and offers economic advantages.</span> By making conscious choices and embracing sustainable practices, individuals can contribute to a more sustainable future for everyone.</p>
+                `,
+                questions: [
+                    { id: 'ex5-q1', text: 'The word "This" in paragraph 1 refers to', options: { A: 'habit', B: 'impact', C: 'environment', D: 'eco-friendly living' }, correct: 'D', explanation: '"This lifestyle encompasses..." The preceding sentence defines "Green living, or eco-friendly living", which constitutes the lifestyle being referred to.' },
+                    { id: 'ex5-q2', text: 'The word "respiratory" in paragraph 3 is SIMILAR in meaning to', options: { A: 'breathing', B: 'stomach', C: 'visual', D: 'mental' }, correct: 'A', explanation: '"Respiratory" relates to respiration, which is the act of breathing or the lungs.' },
+                    { id: 'ex5-q3', text: 'The word "stimulate" in paragraph 3 could be best replaced by', options: { A: 'drive', B: 'alleviate', C: 'hinder', D: 'oversee' }, correct: 'A', explanation: 'To "stimulate the economy" means to encourage its growth or activity. "Drive" is the closest synonym among the choices.' },
+                    { id: 'ex5-q4', text: 'According to the passage, all of the following are benefits of green living EXCEPT', options: { A: 'support for local businesses', B: 'improved respiratory health', C: 'reduced water consumption', D: 'higher energy consumption' }, correct: 'D', explanation: 'Green living involves "conserving energy", so "higher energy consumption" is completely contrary to the principles stated in the text.' },
+                    { id: 'ex5-q5', text: 'Which of the following is TRUE according to the passage?', options: { A: 'Supporting local businesses harms the environment.', B: 'Eco-friendly appliances do not save energy or money in the long term.', C: 'Green living is always expensive and unaffordable for most people.', D: 'Living sustainably provides both health and economic benefits.' }, correct: 'D', explanation: 'The passage outlines environmental benefits (paragraph 2), health benefits (paragraph 3), and economic benefits (paragraph 3 - long term savings, job creation).' },
+                    { id: 'ex5-q6', text: 'Which of the following best paraphrases the underlined sentence in paragraph 3? ("Living in cleaner environments with reduced pollution levels can lead to better respiratory health and a lower risk of chronic diseases.")', options: { A: 'Living in less polluted environments improves health and reduces disease risks.', B: 'Adopting eco-friendly lifestyles is the only way to improve respiratory health.', C: 'Cleaner surroundings ensure both respiratory and overall better health outcomes.', D: 'People benefit from cleaner environments by improving their health and well-being.' }, correct: 'A', explanation: 'Option A is a direct and accurate paraphrase. It captures "reduced pollution" (less polluted) and "better respiratory health/lower risk" (improves health and reduces disease risks) without making absolute claims like "only way" or "ensure".' },
+                    { id: 'ex5-q7', text: 'In which paragraph does the writer use specific examples to illustrate?', options: { A: 'Paragraph 1', B: 'Paragraph 2', C: 'Paragraph 3', D: 'Paragraph 4' }, correct: 'B', explanation: 'In Paragraph 2, the writer says: "For instance, using energy-efficient appliances and reducing water consumption..." giving explicit, concrete examples.' },
+                    { id: 'ex5-q8', text: 'In which paragraph does the writer make and clarify his main concluding point?', options: { A: 'Paragraph 1', B: 'Paragraph 2', C: 'Paragraph 3', D: 'Paragraph 4' }, correct: 'D', explanation: 'Paragraph 4 starts with "In conclusion" and synthesizes all the points made (environment, personal health, economic advantages) to clarify the overall thesis.' }
+                ]
+            }
+        ];
+
+        const App = () => {
+            const [currentExerciseIdx, setCurrentExerciseIdx] = useState(0);
+            const [answers, setAnswers] = useState({});
+            const [isSubmitted, setIsSubmitted] = useState(false);
+            const [score, setScore] = useState(0);
+            const [showSubmitConfirm, setShowSubmitConfirm] = useState(false);
+            
+            // New States for Highlighting and Evidence Tracing
+            const passageRef = useRef(null);
+            const [passageHTMLs, setPassageHTMLs] = useState(testData.map(ex => ex.content));
+            const [highlightMenu, setHighlightMenu] = useState(null);
+            const [activeEvidence, setActiveEvidence] = useState(null);
+
+            const currentExercise = testData[currentExerciseIdx];
+            const totalQuestions = testData.reduce((acc, ex) => acc + ex.questions.length, 0);
+
+            useEffect(() => {
+                const handleSelection = () => {
+                    const selection = window.getSelection();
+                    if (selection && selection.toString().trim().length > 0 && passageRef.current?.contains(selection.anchorNode)) {
+                        const range = selection.getRangeAt(0);
+                        const rect = range.getBoundingClientRect();
+                        setHighlightMenu({
+                            x: rect.left + (rect.width / 2),
+                            y: rect.top - 45 
+                        });
+                    } else {
+                        // Small delay to allow clicking the highlight button itself
+                        setTimeout(() => {
+                            const currentSel = window.getSelection();
+                            if (!currentSel || currentSel.toString().trim().length === 0) {
+                                setHighlightMenu(null);
+                            }
+                        }, 150);
+                    }
+                };
+                
+                document.addEventListener('selectionchange', handleSelection);
+                return () => document.removeEventListener('selectionchange', handleSelection);
+            }, []);
+
+            useEffect(() => {
+                // Clear old active evidence highlights
+                document.querySelectorAll('.evidence-active').forEach(el => {
+                    el.classList.remove('evidence-active', 'bg-pink-300/80', 'text-pink-950', 'ring-2', 'ring-pink-400', 'rounded', 'px-1', 'transition-all');
+                });
+
+                if (activeEvidence) {
+                    const elements = document.querySelectorAll(`[data-ev~="${activeEvidence}"]`);
+                    if (elements.length > 0) {
+                        elements.forEach(el => {
+                            el.classList.add('evidence-active', 'bg-pink-300/80', 'text-pink-950', 'ring-2', 'ring-pink-400', 'rounded', 'px-1', 'transition-all', 'duration-500');
+                        });
+                        // Scroll to the first evidence element found
+                        elements[0].scrollIntoView({ behavior: 'smooth', block: 'center' });
+                        
+                        // Automatically turn off the highlight after 5 seconds to reduce clutter
+                        setTimeout(() => {
+                           if(activeEvidence === activeEvidence) setActiveEvidence(null);
+                        }, 5000);
+                    }
+                }
+            }, [activeEvidence, currentExerciseIdx, passageHTMLs]); // Dependencies ensure it persists when switching tabs
+
+            const applyHighlight = () => {
+                const selection = window.getSelection();
+                if (!selection.rangeCount) return;
+                const range = selection.getRangeAt(0);
+                
+                try {
+                    const span = document.createElement('span');
+                    span.className = 'user-highlight bg-pink-200/60 border-b-2 border-pink-300 cursor-pointer transition-colors hover:bg-rose-200/80 rounded px-0.5';
+                    span.title = "Click to remove highlight";
+                    
+                    // Extract and insert to handle most single-paragraph wrapping needs
+                    span.appendChild(range.extractContents());
+                    range.insertNode(span);
+                    
+                    // Save the updated HTML back to state so it persists between tabs!
+                    const newHTMLs = [...passageHTMLs];
+                    newHTMLs[currentExerciseIdx] = passageRef.current.innerHTML;
+                    setPassageHTMLs(newHTMLs);
+                    
+                } catch (e) {
+                    console.error("Complex highlight crossing multiple paragraphs. Try highlighting smaller chunks.", e);
+                }
+                
+                selection.removeAllRanges();
+                setHighlightMenu(null);
+            };
+
+            const handlePassageClick = (e) => {
+                // If a user clicks an existing highlight, remove it
+                const highlightNode = e.target.closest('.user-highlight');
+                if (highlightNode) {
+                    const parent = highlightNode.parentNode;
+                    while (highlightNode.firstChild) {
+                        parent.insertBefore(highlightNode.firstChild, highlightNode);
+                    }
+                    parent.removeChild(highlightNode);
+                    
+                    // Save the updated HTML
+                    const newHTMLs = [...passageHTMLs];
+                    newHTMLs[currentExerciseIdx] = passageRef.current.innerHTML;
+                    setPassageHTMLs(newHTMLs);
+                }
+            };
+
+            const handleOptionSelect = (questionId, option) => {
+                if (isSubmitted) return;
+                setAnswers(prev => ({
+                    ...prev,
+                    [questionId]: option
+                }));
+            };
+
+            const handleSubmit = () => {
+                setShowSubmitConfirm(true);
+            };
+
+            const confirmSubmit = () => {
+                let correctCount = 0;
+                testData.forEach(ex => {
+                    ex.questions.forEach(q => {
+                        if (answers[q.id] === q.correct) {
+                            correctCount++;
+                        }
+                    });
+                });
+                setScore(correctCount);
+                setIsSubmitted(true);
+                setShowSubmitConfirm(false);
+            };
+
+            const answeredCount = Object.keys(answers).length;
+
+            return (
+                <div className="flex flex-col h-full bg-pink-50/30">
+                    {/* Header */}
+                    <header className="bg-white shadow-sm border-b px-6 py-4 flex items-center justify-between shrink-0 z-10">
+                        <div className="flex items-center gap-3">
+                            <i className="ph-fill ph-book-open text-pink-500 text-2xl"></i>
+                            <h1 className="font-bold text-lg text-slate-800">IELTS Chan Truong | Grade 12 - Vol 3 Lesson 2 Reading</h1>
+                        </div>
+                        <div className="flex items-center gap-6">
+                            <div className="text-sm font-medium text-slate-500 bg-pink-50 px-3 py-1 rounded-full border border-pink-100">
+                                Progress: <span className="text-pink-600 font-bold">{answeredCount}</span> / {totalQuestions}
+                            </div>
+                            {!isSubmitted ? (
+                                <button 
+                                    onClick={handleSubmit}
+                                    className="bg-pink-500 hover:bg-pink-600 text-white px-5 py-2 rounded-md font-semibold transition-colors shadow-sm flex items-center gap-2"
+                                >
+                                    <i className="ph-bold ph-check-circle"></i> Submit Test
+                                </button>
+                            ) : (
+                                <div className="bg-emerald-100 text-emerald-800 px-5 py-2 rounded-md font-bold border border-emerald-200">
+                                    Score: {score} / {totalQuestions} ({(score/totalQuestions*10).toFixed(1)} pts)
+                                </div>
+                            )}
+                        </div>
+                    </header>
+
+                    {/* Main Workspace */}
+                    <main className="flex-1 flex flex-col md:flex-row overflow-hidden">
+                        
+                        {/* Left Pane: Passage */}
+                        <div className="w-full md:w-1/2 h-1/2 md:h-full border-b md:border-b-0 md:border-r border-slate-200 bg-white flex flex-col relative">
+                            
+                            {/* Exercise Tabs */}
+                            <div className="flex overflow-x-auto border-b border-slate-200 bg-white shrink-0">
+                                {testData.map((ex, idx) => (
+                                    <button
+                                        key={ex.id}
+                                        onClick={() => setCurrentExerciseIdx(idx)}
+                                        className={`px-4 py-3 text-sm font-medium whitespace-nowrap border-b-2 transition-colors
+                                            ${currentExerciseIdx === idx 
+                                                ? 'border-pink-500 text-pink-600 bg-pink-50/50' 
+                                                : 'border-transparent text-slate-500 hover:text-slate-700 hover:bg-slate-50'
+                                            }`}
+                                    >
+                                        {ex.title.split(':')[0]}
+                                    </button>
+                                ))}
+                            </div>
+
+                            {/* Passage Content */}
+                            <div className="p-6 overflow-y-auto flex-1 custom-scrollbar relative">
+                                <h2 className="text-xl font-bold mb-4 text-slate-800">{currentExercise.title}</h2>
+                                <div 
+                                    ref={passageRef}
+                                    onClick={handlePassageClick}
+                                    className="passage-content text-slate-700 text-justify selection:bg-pink-300/40"
+                                    dangerouslySetInnerHTML={{ __html: passageHTMLs[currentExerciseIdx] }}
+                                ></div>
+                            </div>
+                        </div>
+
+                        {/* Right Pane: Questions */}
+                        <div className="w-full md:w-1/2 h-1/2 md:h-full bg-slate-50 flex flex-col relative">
+                            
+                            <div className="bg-white border-b border-slate-200 px-6 py-3 flex items-center justify-between shrink-0 shadow-sm z-10">
+                                <h3 className="font-semibold text-slate-700">Questions</h3>
+                                {isSubmitted && (
+                                    <span className="text-sm text-emerald-600 font-medium flex items-center gap-1">
+                                        <i className="ph-fill ph-info"></i> Review Mode Active
+                                    </span>
+                                )}
+                            </div>
+
+                            {/* Question Navigation Grid */}
+                            <div className="bg-pink-50/50 border-b border-pink-100 p-3 flex flex-wrap gap-2 shrink-0 justify-center">
+                                {currentExercise.questions.map((q, index) => {
+                                    const userAnswer = answers[q.id];
+                                    const isAnswered = !!userAnswer;
+                                    
+                                    let navBtnClass = "";
+                                    if (isSubmitted) {
+                                        if (userAnswer === q.correct) {
+                                            navBtnClass = "bg-emerald-500 text-white border-emerald-500 shadow-sm";
+                                        } else if (isAnswered) {
+                                            navBtnClass = "bg-rose-500 text-white border-rose-500 shadow-sm";
+                                        } else {
+                                            navBtnClass = "bg-rose-50 text-rose-500 border-rose-300"; // missed/unanswered
+                                        }
+                                    } else {
+                                        navBtnClass = isAnswered 
+                                            ? 'bg-pink-400 text-white border-pink-400 shadow-sm' 
+                                            : 'bg-white text-slate-500 border-slate-200 hover:border-pink-300';
+                                    }
+
+                                    return (
+                                        <button 
+                                            key={q.id}
+                                            onClick={() => {
+                                                const el = document.getElementById(`q-${q.id}`);
+                                                if(el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                                            }}
+                                            className={`w-8 h-8 rounded-md text-xs font-bold flex items-center justify-center transition-all border ${navBtnClass}`}
+                                        >
+                                            {index + 1}
+                                        </button>
+                                    )
+                                })}
+                            </div>
+
+                            <div className="p-6 overflow-y-auto flex-1 custom-scrollbar space-y-6 pb-24">
+                                {currentExercise.questions.map((q, index) => {
+                                    const userAnswer = answers[q.id];
+                                    const isCorrect = userAnswer === q.correct;
+                                    
+                                    return (
+                                        <div id={`q-${q.id}`} key={q.id} className={`bg-white rounded-lg border p-5 shadow-sm transition-all scroll-mt-6
+                                            ${isSubmitted ? (isCorrect ? 'border-emerald-300 bg-emerald-50/30' : 'border-rose-300 bg-rose-50/30') : 'border-slate-200 hover:border-pink-200'}
+                                        `}>
+                                            <div className="flex gap-3 mb-4">
+                                                <div className="w-8 h-8 shrink-0 bg-slate-100 text-slate-600 rounded-full flex items-center justify-center font-bold text-sm">
+                                                    {index + 1}
+                                                </div>
+                                                <p className="text-slate-800 font-medium pt-1 whitespace-pre-wrap">{q.text}</p>
+                                            </div>
+                                            
+                                            <div className="space-y-2 ml-11">
+                                                {Object.entries(q.options).map(([key, value]) => {
+                                                    const isSelected = userAnswer === key;
+                                                    const isThisCorrect = key === q.correct;
+                                                    
+                                                    let optionClass = "border-slate-200 hover:bg-slate-50 text-slate-700";
+                                                    let markerClass = "bg-slate-100 text-slate-500 border-slate-200";
+
+                                                    if (!isSubmitted) {
+                                                        if (isSelected) {
+                                                            optionClass = "border-pink-400 bg-pink-50 text-pink-900 ring-1 ring-pink-400";
+                                                            markerClass = "bg-pink-400 text-white border-pink-400";
+                                                        }
+                                                    } else {
+                                                        // Review Mode Logic
+                                                        if (isThisCorrect) {
+                                                            optionClass = "border-emerald-500 bg-emerald-50 text-emerald-900 ring-1 ring-emerald-500";
+                                                            markerClass = "bg-emerald-500 text-white border-emerald-500";
+                                                        } else if (isSelected && !isThisCorrect) {
+                                                            optionClass = "border-rose-400 bg-rose-50 text-rose-900";
+                                                            markerClass = "bg-rose-500 text-white border-rose-500";
+                                                        } else {
+                                                            optionClass = "border-slate-200 opacity-60";
+                                                        }
+                                                    }
+
+                                                    return (
+                                                        <label 
+                                                            key={key} 
+                                                            className={`flex items-start gap-3 p-3 rounded-md border cursor-pointer transition-all ${optionClass} ${isSubmitted ? 'cursor-default' : ''}`}
+                                                        >
+                                                            <input 
+                                                                type="radio" 
+                                                                name={q.id}
+                                                                value={key}
+                                                                checked={isSelected}
+                                                                onChange={() => handleOptionSelect(q.id, key)}
+                                                                disabled={isSubmitted}
+                                                                className="hidden"
+                                                            />
+                                                            <div className={`w-6 h-6 shrink-0 rounded text-sm font-bold flex items-center justify-center border mt-0.5 ${markerClass}`}>
+                                                                {key}
+                                                            </div>
+                                                            <span className="leading-snug pt-0.5">{value}</span>
+                                                            
+                                                            {/* Result Icons */}
+                                                            {isSubmitted && isThisCorrect && (
+                                                                <i className="ph-fill ph-check-circle text-emerald-500 text-xl ml-auto"></i>
+                                                            )}
+                                                            {isSubmitted && isSelected && !isThisCorrect && (
+                                                                <i className="ph-fill ph-x-circle text-rose-500 text-xl ml-auto"></i>
+                                                            )}
+                                                        </label>
+                                                    )
+                                                })}
+                                            </div>
+
+                                            {/* Explanation (Review Mode) */}
+                                            {isSubmitted && (
+                                                <div className="mt-5 ml-11 bg-pink-50/60 border border-pink-200 rounded-lg p-4 text-sm text-slate-700 shadow-sm">
+                                                    <div className="font-bold mb-2 flex items-center gap-1 text-pink-700">
+                                                        <i className="ph-fill ph-lightbulb"></i> Explanation
+                                                    </div>
+                                                    <p className="mb-3 leading-relaxed text-pink-900/90">{q.explanation}</p>
+                                                    <button 
+                                                        onClick={() => setActiveEvidence(q.id)}
+                                                        className="text-xs font-bold text-pink-700 bg-pink-100 hover:bg-pink-200 hover:shadow-sm px-4 py-2 rounded-full flex items-center gap-1.5 transition-all border border-pink-200 active:scale-95"
+                                                    >
+                                                        <i className="ph-bold ph-crosshair text-sm"></i> Trace Evidence in Passage
+                                                    </button>
+                                                </div>
+                                            )}
+                                        </div>
+                                    )
+                                })}
+                            </div>
+                        </div>
+                    </main>
+
+                    {/* Floating Highlight Menu */}
+                    {highlightMenu && (
+                        <button
+                            onClick={applyHighlight}
+                            style={{ 
+                                position: 'fixed', 
+                                left: `${highlightMenu.x}px`, 
+                                top: `${highlightMenu.y}px`,
+                                transform: 'translate(-50%, -100%)',
+                                zIndex: 1000
+                            }}
+                            className="bg-slate-800 text-white text-xs font-bold px-3 py-2 rounded-lg shadow-xl flex items-center gap-1.5 hover:bg-pink-500 transition-colors pointer-events-auto"
+                        >
+                            <i className="ph-bold ph-highlighter"></i> Highlight
+                            <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-2 h-2 bg-slate-800 rotate-45"></div>
+                        </button>
+                    )}
+
+                    {/* Submit Confirmation Modal */}
+                    {showSubmitConfirm && (
+                        <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/40 backdrop-blur-sm">
+                            <div className="bg-white rounded-2xl p-8 max-w-md w-full shadow-2xl mx-4">
+                                <h3 className="text-xl font-bold text-slate-800 mb-2 flex items-center gap-2">
+                                    <i className="ph-fill ph-warning-circle text-pink-500 text-2xl"></i> Submit Test?
+                                </h3>
+                                <p className="text-slate-600 mb-6">
+                                    You have answered <strong className="text-pink-600">{answeredCount}</strong> out of <strong>{totalQuestions}</strong> questions. 
+                                    Are you sure you want to submit your answers? You won't be able to change them afterwards.
+                                </p>
+                                <div className="flex justify-end gap-3">
+                                    <button 
+                                        onClick={() => setShowSubmitConfirm(false)}
+                                        className="px-5 py-2.5 rounded-xl font-medium text-slate-600 hover:bg-slate-100 transition-colors"
+                                    >
+                                        Keep Editing
+                                    </button>
+                                    <button 
+                                        onClick={confirmSubmit}
+                                        className="px-5 py-2.5 rounded-xl font-medium bg-pink-500 hover:bg-pink-600 text-white transition-colors shadow-sm"
+                                    >
+                                        Yes, Submit
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    )}
+                </div>
+            );
+        };
+
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<App />);
+    </script>
+</body>
+</html>
