@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grade 12 | Reading Vocab</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            /* Theme: Ocean Breeze & Soft Coral */
+            --primary: #0d9488; /* Teal 600 */
+            --primary-light: #ccfbf1; 
+            --primary-hover: #0f766e; 
+            --text-main: #334155;
+            --text-muted: #64748b;
+            --bg-body: #f8fafc; 
+            --card-bg: #ffffff;
+            --accent: #f43f5e; /* Rose/Coral */
+            --accent-light: #ffe4e6; 
+            --border: #5eead4;
+            --badge-bg: #ffe4e6; 
+            --badge-text: #9f1239; 
+            --success: #0284c7; /* Sky blue for translation */
+            
+            --font-headings: 'Cormorant Garamond', serif;
+            --font-body: 'Outfit', sans-serif;
+            --font-cursive: 'Caveat', cursive;
+            --font-ipa: Arial, Helvetica, sans-serif;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: var(--font-body); }
+
+        body { background-color: var(--bg-body); color: var(--text-main); line-height: 1.6; padding-bottom: 2rem; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 1rem; }
+        
+        .header-banner { background-color: var(--card-bg); color: var(--text-main); text-align: center; padding: 1.2rem; font-weight: 600; font-size: 1.1rem; letter-spacing: 0.15em; width: 100%; border-bottom: 2px solid var(--primary); margin-bottom: 2.5rem; text-transform: uppercase; font-family: var(--font-headings); }
+
+        header { text-align: center; margin-bottom: 2rem; }
+        h1 { color: var(--primary); font-size: 3rem; margin-bottom: 0.5rem; font-weight: 700; font-family: var(--font-headings); letter-spacing: 0.02em;}
+        .subtitle { color: var(--text-muted); font-size: 1.15rem; font-weight: 400; letter-spacing: 0.05em; }
+
+        .filter-controls { display: flex; justify-content: center; gap: 0.8rem; margin-bottom: 2rem; flex-wrap: wrap; }
+        .filter-btn { padding: 0.6rem 1.4rem; font-size: 0.95rem; font-weight: 500; background: var(--card-bg); color: var(--primary); border: 1px solid var(--border); border-radius: 50px; cursor: pointer; transition: all 0.3s ease; box-shadow: 0 2px 4px rgba(0,0,0,0.02);}
+        .filter-btn.active { background: var(--primary); color: white; border-color: var(--primary); box-shadow: 0 4px 12px rgba(13, 148, 136, 0.25); }
+        .filter-btn:hover:not(.active) { background: var(--primary-light); border-color: var(--primary); }
+
+        .search-container { text-align: center; margin-bottom: 1.5rem; width: 100%; display: flex; justify-content: center; padding: 0 1rem; }
+        .search-input { padding: 0.9rem 1.8rem; width: 100%; max-width: 500px; border: 2px solid var(--border); border-radius: 50px; font-size: 1.05rem; color: var(--text-main); outline: none; transition: all 0.3s ease; box-shadow: 0 4px 10px rgba(0,0,0,0.03); background: var(--card-bg); font-family: var(--font-body); }
+        .search-input:focus { border-color: var(--primary); box-shadow: 0 6px 20px rgba(13, 148, 136, 0.15); }
+
+        .view-controls { display: flex; justify-content: center; gap: 1rem; margin-bottom: 3rem; }
+        .view-btn { padding: 0.75rem 1.5rem; font-size: 1rem; font-weight: 500; background: var(--card-bg); color: var(--text-muted); border: 1px solid #e2e8f0; border-radius: 50px; cursor: pointer; transition: all 0.3s ease; display: flex; align-items: center; gap: 0.5rem; }
+        .view-btn.active { background: var(--accent); color: white; border-color: var(--accent); box-shadow: 0 4px 12px rgba(244, 63, 94, 0.25); }
+        .view-btn:hover:not(.active) { border-color: var(--accent); color: var(--accent); }
+
+        #grid-view { display: grid; grid-template-columns: repeat(auto-fill, minmax(360px, 1fr)); gap: 2rem; }
+        .vocab-card { background-color: var(--card-bg); border-radius: 20px; padding: 2rem; box-shadow: 0 10px 25px rgba(0, 0, 0, 0.03); border: 1px solid #f1f5f9; transition: transform 0.3s ease, box-shadow 0.3s ease; display: flex; flex-direction: column; }
+        .vocab-card:hover { transform: translateY(-5px); box-shadow: 0 15px 35px rgba(13, 148, 136, 0.1); border-color: var(--border); }
+        .vocab-card.hidden { display: none; }
+        
+        .word-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1rem; border-bottom: 1px solid var(--border); padding-bottom: 1rem; }
+        .word-main { display: flex; align-items: center; gap: 0.8rem; }
+        .word { font-size: 1.8rem; font-weight: 700; color: var(--primary); text-transform: capitalize; font-family: var(--font-headings); }
+        
+        .audio-btn { background: var(--primary-light); border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; width: 40px; height: 40px; border-radius: 50%; transition: all 0.2s ease; color: var(--primary); }
+        .audio-btn:hover { transform: scale(1.1); background-color: var(--primary); color: white; box-shadow: 0 4px 10px rgba(13, 148, 136, 0.3); }
+        
+        .meta-info { text-align: right; display: flex; flex-direction: column; align-items: flex-end; gap: 0.25rem; }
+        .phonetic { font-size: 1.05rem; color: var(--text-muted); font-style: italic; font-family: var(--font-ipa); letter-spacing: 0.02em; }
+        
+        /* Structure/Families */
+        .structure-container { margin: 0.5rem 0 1.2rem 0; padding: 1rem; background: var(--bg-body); border-radius: 12px; border: 1px dashed var(--primary); }
+        .structure-label { display: block; font-weight: 600; color: var(--accent); margin-bottom: 0.5rem; text-transform: uppercase; letter-spacing: 0.1em; font-size: 0.75rem; }
+        .structure-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+        .structure-tag { background: var(--card-bg); color: var(--primary); padding: 0.3rem 0.8rem; border-radius: 50px; font-size: 0.85rem; font-weight: 500; border: 1px solid var(--border); box-shadow: 0 2px 4px rgba(0,0,0,0.02); line-height: 1.2;}
+
+        .topic-tag { font-size: 0.75rem; color: var(--badge-text); background: var(--badge-bg); padding: 0.4rem 1rem; border-radius: 20px; font-weight: 600; margin-bottom: 1.2rem; display: inline-block; text-transform: uppercase; letter-spacing: 0.1em;}
+        
+        .definition { font-size: 1.1rem; margin-bottom: 0.5rem; color: var(--text-main); font-weight: 400; }
+        .definition strong { color: var(--primary); font-weight: 600;}
+        .translation { font-size: 1.05rem; color: var(--success); margin-bottom: 1.5rem; font-weight: 500; }
+
+        .example-box { background-color: var(--accent-light); padding: 1.5rem; border-radius: 16px; margin-top: auto; position: relative;}
+        .example-box::before { content: ''; position: absolute; left: 0; top: 10%; bottom: 10%; width: 4px; background-color: var(--accent); border-radius: 0 4px 4px 0;}
+        .example-box span { display: block; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.15em; color: var(--accent); margin-bottom: 0.5rem; font-weight: 600; }
+        
+        /* VERY LARGE CURSIVE FONT FOR EXAMPLES */
+        .example-text { font-family: var(--font-cursive); font-size: 3rem; color: #9f1239; line-height: 1.2; font-weight: 700;}
+
+        #flashcard-view { display: none; flex-direction: column; align-items: center; width: 100%; }
+        .flashcard-scene { width: 100%; max-width: 750px; height: 600px; perspective: 1000px; cursor: pointer; margin-bottom: 2.5rem; }
+        .flashcard-inner { width: 100%; height: 100%; position: relative; transition: transform 0.7s cubic-bezier(0.4, 0.2, 0.2, 1); transform-style: preserve-3d; }
+        .flashcard-scene.is-flipped .flashcard-inner { transform: rotateY(180deg); }
+        .flashcard-face { position: absolute; width: 100%; height: 100%; backface-visibility: hidden; border-radius: 30px; box-shadow: 0 20px 40px rgba(13, 148, 136, 0.1); border: 1px solid var(--border); background: var(--card-bg); padding: 3.5rem; display: flex; flex-direction: column; justify-content: center; align-items: center; overflow-y: auto; }
+        
+        .flashcard-front { text-align: center; }
+        .flashcard-front .word { font-size: 4rem; margin-bottom: 1.2rem; color: var(--primary); font-weight: 700; font-family: var(--font-headings);}
+        .flashcard-front .meta-row { display: flex; align-items: center; gap: 1.5rem; margin-bottom: 1rem; }
+        .flashcard-front .audio-btn { width: 55px; height: 55px; }
+        .flashcard-front .audio-btn svg { width: 28px; height: 28px; }
+        .flashcard-front .phonetic { font-size: 1.5rem; color: var(--text-muted); font-style: italic; font-family: var(--font-ipa); }
+        
+        .flashcard-back { transform: rotateY(180deg); background: var(--bg-body); align-items: flex-start; text-align: left; }
+        .flashcard-back h3 { color: var(--primary); font-size: 1.3rem; margin-bottom: 1rem; text-transform: uppercase; letter-spacing: 0.15em; font-weight: 700; font-family: var(--font-headings); }
+        .flashcard-back .definition { font-size: 1.3rem; margin-bottom: 0.8rem; color: var(--text-main); font-weight: 400;}
+        .flashcard-back .translation { font-size: 1.2rem; margin-bottom: 2rem; color: var(--success); font-weight: 500;}
+        .flashcard-back .example-box { width: 100%; padding: 1.5rem; border-radius: 16px; }
+        
+        .flashcard-hint { position: absolute; bottom: 1.5rem; font-size: 0.85rem; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.2em; font-weight: 500; }
+
+        .flashcard-controls { display: flex; align-items: center; gap: 1.5rem; background: var(--card-bg); padding: 1.2rem 3rem; border-radius: 50px; box-shadow: 0 10px 25px rgba(0,0,0,0.05); border: 1px solid #f1f5f9; }
+        .fc-btn { background: none; border: none; color: var(--primary); font-size: 1.1rem; font-weight: 600; cursor: pointer; padding: 0.8rem 1.8rem; border-radius: 25px; transition: all 0.2s; display: flex; align-items: center; gap: 0.5rem; }
+        .fc-btn:hover:not(:disabled) { background: var(--primary-light); color: var(--primary-hover); transform: translateY(-2px);}
+        .fc-btn:disabled { opacity: 0.3; cursor: not-allowed; transform: none;}
+        .fc-counter { font-weight: 600; font-size: 1.3rem; color: var(--accent); min-width: 90px; text-align: center; font-family: var(--font-headings); letter-spacing: 0.05em;}
+
+        @media (max-width: 768px) { 
+            h1 { font-size: 2.2rem; } 
+            #grid-view { grid-template-columns: 1fr; } 
+            .flashcard-scene { height: 650px; } 
+            .flashcard-front .word { font-size: 3rem; } 
+            .flashcard-back .definition { font-size: 1.15rem; }
+            .flashcard-face { padding: 2rem; }
+            .example-text { font-size: 2.4rem; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="header-banner">Grade 12 | Chan Truong</div>
+
+<div class="container">
+    <header>
+        <h1>Reading Vocabulary</h1>
+        <p class="subtitle">Wildlife, Architecture, Energy, Tides & Living</p>
+    </header>
+
+    <div class="search-container">
+        <input type="text" id="search-input" class="search-input" placeholder="🔍 Search vocabulary or meaning..." onkeyup="applyFilters()">
+    </div>
+
+    <div class="filter-controls" id="topic-filters">
+        <button class="filter-btn active" onclick="filterTopic('all')">All Terms</button>
+        <button class="filter-btn" onclick="filterTopic('Wildlife Conservation')">Wildlife</button>
+        <button class="filter-btn" onclick="filterTopic('Green Buildings')">Green Buildings</button>
+        <button class="filter-btn" onclick="filterTopic('Green Energy')">Green Energy</button>
+        <button class="filter-btn" onclick="filterTopic('Ocean Tides')">Ocean Tides</button>
+        <button class="filter-btn" onclick="filterTopic('Green Living')">Green Living</button>
+    </div>
+
+    <div class="view-controls">
+        <button class="view-btn active" id="btn-grid" onclick="switchView('grid')">📄 List View</button>
+        <button class="view-btn" id="btn-flashcards" onclick="switchView('flashcards')">🗂️ Flashcards</button>
+    </div>
+
+    <div id="flashcard-view">
+        <div class="flashcard-scene" id="flashcard-scene" onclick="flipCard()">
+            <div class="flashcard-inner">
+                <div class="flashcard-face flashcard-front">
+                    <h2 class="word" id="fc-word">Word</h2>
+                    <div class="meta-row">
+                        <span class="phonetic" id="fc-phonetic">/wɜːd/</span>
+                        <button class="audio-btn" id="fc-audio" onclick="playAudioFromCard(event)" title="Listen to pronunciation">
+                            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg>
+                        </button>
+                    </div>
+                    <div id="fc-forms-container" style="width: 100%; display: flex; justify-content: center;"></div>
+                    <span class="topic-tag" id="fc-topic" style="margin-top: 1rem;">Topic</span>
+                    <span class="flashcard-hint">Click card to flip</span>
+                </div>
+                <div class="flashcard-face flashcard-back">
+                    <h3>Meaning</h3>
+                    <p class="definition" id="fc-definition">Definition goes here.</p>
+                    <p class="translation" id="fc-translation">Vietnamese goes here.</p>
+                    <div id="fc-example-container" style="width: 100%; margin-top: 1.5rem;">
+                        <!-- Examples injected here -->
+                    </div>
+                    <span class="flashcard-hint" style="left: 50%; transform: translateX(-50%);">Click card to flip back</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="flashcard-controls">
+            <button class="fc-btn" id="fc-prev" onclick="prevCard()">◀ Prev</button>
+            <span class="fc-counter" id="fc-counter">1 / X</span>
+            <button class="fc-btn" id="fc-next" onclick="nextCard()">Next ▶</button>
+            <div style="width: 2px; height: 24px; background: var(--border); margin: 0 0.5rem;"></div>
+            <button class="fc-btn" onclick="shuffleCards()" title="Shuffle Order">🔀</button>
+        </div>
+    </div>
+
+    <main id="grid-view">
+        <!-- Injected via JavaScript -->
+    </main>
+</div>
+
+<script>
+    // ---------------------------------------------------------
+    // Vocabulary Bank (Grade 12 Reading Vocab)
+    // ---------------------------------------------------------
+    const vocabBank = [
+        // --- Reading 1: Wildlife Conservation ---
+        { topic: "Wildlife Conservation", word: "Endeavor", phonetic: "/ɪnˈdev.ər/", form: "Noun / Verb", forms: "N/A", def: "An attempt to achieve a goal; earnest and industrious effort.", translation: "Sự nỗ lực, cố gắng", example: "Protecting endangered species is a worthwhile endeavor for all humanity." },
+        { topic: "Wildlife Conservation", word: "Initiative", phonetic: "/ɪˈnɪʃ.ə.tɪv/", form: "Noun", forms: "V: Initiate", def: "A new plan or process to achieve something or solve a problem.", translation: "Sáng kiến, chương trình hành động", example: "The government launched a new initiative to protect local wildlife habitats." },
+        { topic: "Wildlife Conservation", word: "Mitigate", phonetic: "/ˈmɪt.ɪ.ɡeɪt/", form: "Verb", forms: "N: Mitigation", def: "Make less severe, serious, or painful.", translation: "Giảm nhẹ, làm dịu", example: "Conservationists plant trees to mitigate the effects of extreme climate change." },
+        { topic: "Wildlife Conservation", word: "Haven", phonetic: "/ˈheɪ.vən/", form: "Noun", forms: "N/A", def: "A place of safety or refuge.", translation: "Nơi trú ẩn, nơi an toàn", example: "The national park provides a safe haven for many rare bird species." },
+        { topic: "Wildlife Conservation", word: "Reintroduction", phonetic: "/ˌriː.ɪn.trəˈdʌk.ʃən/", form: "Noun", forms: "V: Reintroduce", def: "The action of putting a species of animal or plant back into a former habitat.", translation: "Sự tái du nhập (sinh vật)", example: "The successful reintroduction of wolves changed the entire ecosystem of the park." },
+        { topic: "Wildlife Conservation", word: "Brink", phonetic: "/brɪŋk/", form: "Noun", forms: "N/A", def: "The edge of something, often a dangerous or extreme situation.", translation: "Bờ vực", example: "Many majestic animals have been hunted to the brink of extinction." },
+        { topic: "Wildlife Conservation", word: "Monitor", phonetic: "/ˈmɒn.ɪ.tər/", form: "Verb", forms: "N: Monitor", def: "Observe and check the progress or quality of something over a period of time.", translation: "Giám sát, theo dõi", example: "Scientists closely monitor the migration patterns of sea turtles." },
+        { topic: "Wildlife Conservation", word: "Foster", phonetic: "/ˈfɒs.tər/", form: "Verb", forms: "N/A", def: "Encourage or promote the development of something.", translation: "Nuôi dưỡng, thúc đẩy", example: "Educational programs foster a deep respect for the natural environment." },
+        { topic: "Wildlife Conservation", word: "Satellite tracking", phonetic: "/ˈsæt.əl.aɪt ˈtræk.ɪŋ/", form: "Noun Phrase", forms: "N/A", def: "Using satellites to monitor the movement of animals or objects.", translation: "Theo dõi bằng vệ tinh", example: "Satellite tracking allows researchers to map the vast journeys of migrating whales." },
+        { topic: "Wildlife Conservation", word: "Drone surveillance", phonetic: "/drəʊn sɜːˈveɪ.ləns/", form: "Noun Phrase", forms: "N/A", def: "The use of unmanned aerial vehicles to gather information or observe an area.", translation: "Giám sát bằng máy bay không người lái", example: "Park rangers use drone surveillance to spot illegal poachers in remote areas." },
+        { topic: "Wildlife Conservation", word: "Informed decision-making", phonetic: "/ɪnˈfɔːmd dɪˈsɪʒ.ən ˈmeɪ.kɪŋ/", form: "Noun Phrase", forms: "N/A", def: "Making choices based on factual information and analysis.", translation: "Ra quyết định dựa trên thông tin", example: "Collecting accurate data is crucial for informed decision-making in conservation." },
+
+        // --- Reading 2: The Significance of Green Buildings ---
+        { topic: "Green Buildings", word: "Incorporate", phonetic: "/ɪnˈkɔː.pər.eɪt/", form: "Verb", forms: "N: Incorporation", def: "Take in or contain something as part of a whole; include.", translation: "Kết hợp, sáp nhập", example: "Modern architects often incorporate solar panels directly into the roof design." },
+        { topic: "Green Buildings", word: "Practice", phonetic: "/ˈpræk.tɪs/", form: "Noun", forms: "V: Practice", def: "The actual application or use of an idea, belief, or method.", translation: "Thực tiễn, thói quen, cách làm", example: "Green building practices are becoming the standard in modern urban development." },
+        { topic: "Green Buildings", word: "HVAC", phonetic: "/eɪtʃ viː eɪ ˈsiː/", form: "Noun", forms: "N/A", def: "Heating, ventilation, and air conditioning systems.", translation: "Hệ thống sưởi, thông gió và điều hòa", example: "Upgrading the HVAC system can significantly reduce a building's energy consumption." },
+        { topic: "Green Buildings", word: "Fixture", phonetic: "/ˈfɪks.tʃər/", form: "Noun", forms: "V: Fix", def: "A piece of equipment or furniture that is fixed in position in a building.", translation: "Thiết bị cố định (đèn, vòi nước)", example: "Installing low-flow plumbing fixtures helps conserve thousands of gallons of water." },
+        { topic: "Green Buildings", word: "Potable", phonetic: "/ˈpəʊ.tə.bəl/", form: "Adjective", forms: "N/A", def: "Safe to drink; drinkable.", translation: "Có thể uống được", example: "The building collects rainwater to use for toilets, saving valuable potable water." },
+        { topic: "Green Buildings", word: "Irrigation", phonetic: "/ˌɪr.ɪˈɡeɪ.ʃən/", form: "Noun", forms: "V: Irrigate", def: "The supply of water to land or crops to help growth.", translation: "Sự tưới tiêu", example: "Smart irrigation systems only water the gardens when the soil is actually dry." },
+        { topic: "Green Buildings", word: "Offset", phonetic: "/ˈɒf.set/", form: "Verb", forms: "N: Offset", def: "Counteract something by having an opposing force or effect.", translation: "Bù đắp, đền bù", example: "Planting a large rooftop garden can offset the building's carbon emissions." },
+        { topic: "Green Buildings", word: "Conscious", phonetic: "/ˈkɒn.ʃəs/", form: "Adjective", forms: "N: Consciousness", def: "Aware of and responding to one's surroundings or a specific issue.", translation: "Có ý thức, nhận thức được", example: "More companies are becoming environmentally conscious and reducing their waste." },
+        { topic: "Green Buildings", word: "Tenant", phonetic: "/ˈten.ənt/", form: "Noun", forms: "N: Tenancy", def: "A person who occupies land or property rented from a landlord.", translation: "Người thuê nhà, người mướn", example: "The building provides natural lighting, which greatly improves the health of its tenants." },
+        { topic: "Green Buildings", word: "Embrace", phonetic: "/ɪmˈbreɪs/", form: "Verb", forms: "N: Embrace", def: "Accept or support a belief, theory, or change willingly and enthusiastically.", translation: "Đón nhận, ủng hộ", example: "Cities around the world must quickly embrace sustainable architectural designs." },
+        { topic: "Green Buildings", word: "Pave the way for", phonetic: "/peɪv ðə weɪ fɔːr/", form: "Phrase", forms: "N/A", def: "Create the circumstances to enable something to happen.", translation: "Mở đường cho, dọn đường cho", example: "This successful eco-project will pave the way for greener cities in the future." },
+        { topic: "Green Buildings", word: "Upfront cost", phonetic: "/ʌpˈfrʌnt kɒst/", form: "Noun Phrase", forms: "N/A", def: "An amount of money paid before a particular piece of work or a service is done.", translation: "Chi phí trả trước, chi phí ban đầu", example: "Although the upfront cost of solar panels is high, they save money over time." },
+        { topic: "Green Buildings", word: "Outweigh", phonetic: "/ˌaʊtˈweɪ/", form: "Verb", forms: "N/A", def: "Be heavier, greater, or more significant than something else.", translation: "Vượt trội hơn, có tác dụng lớn hơn", example: "The long-term environmental benefits definitely outweigh the initial financial costs." },
+        { topic: "Green Buildings", word: "Make up for", phonetic: "/meɪk ʌp fɔːr/", form: "Phrasal Verb", forms: "N/A", def: "Compensate for something lost, missed, or deficient.", translation: "Bù đắp cho", example: "Lower monthly energy bills easily make up for the expensive installation." },
+        { topic: "Green Buildings", word: "Expense", phonetic: "/ɪkˈspens/", form: "Noun", forms: "Adj: Expensive", def: "The cost required for something; the money spent on something.", translation: "Chi phí, sự tiêu tốn", example: "Constructing a green building involves a considerable amount of capital expense." },
+
+        // --- Reading 3: Green Energy ---
+        { topic: "Green Energy", word: "Shift towards", phonetic: "/ʃɪft təˈwɔːdz/", form: "Phrase", forms: "N/A", def: "A change in position, direction, or tendency.", translation: "Sự chuyển hướng sang", example: "There is a global shift towards adopting clean, renewable energy sources." },
+        { topic: "Green Energy", word: "Harness", phonetic: "/ˈhɑː.nəs/", form: "Verb", forms: "N: Harness", def: "Control and make use of natural resources, especially to produce energy.", translation: "Khai thác, tận dụng", example: "Engineers have developed massive turbines to harness the power of ocean winds." },
+        { topic: "Green Energy", word: "Scale", phonetic: "/skeɪl/", form: "Noun", forms: "V: Scale", def: "The relative size, extent, or degree of something.", translation: "Quy mô, tỷ lệ", example: "Solar farms must be built on a massive scale to power an entire city." },
+        { topic: "Green Energy", word: "Lifespan", phonetic: "/ˈlaɪf.spæn/", form: "Noun", forms: "N/A", def: "The length of time for which a person, animal, or thing exists or functions.", translation: "Tuổi thọ, vòng đời", example: "Modern wind turbines are built with a lifespan of approximately twenty years." },
+        { topic: "Green Energy", word: "Viable", phonetic: "/ˈvaɪ.ə.bəl/", form: "Adjective", forms: "N: Viability", def: "Capable of working successfully; feasible.", translation: "Khả thi, có thể thực hiện được", example: "Hydrogen fuel cells are now considered a highly viable alternative to petrol engines." },
+        { topic: "Green Energy", word: "Unquestionably", phonetic: "/ʌnˈkwes.tʃə.nə.bli/", form: "Adverb", forms: "Adj: Unquestionable", def: "In a way that cannot be disputed or doubted.", translation: "Chắc chắn, không thể bàn cãi", example: "Transitioning to green energy is unquestionably the most urgent task of our century." },
+        { topic: "Green Energy", word: "Crisis", phonetic: "/ˈkraɪ.sɪs/", form: "Noun", forms: "Plural: Crises", def: "A time of intense difficulty, trouble, or danger.", translation: "Cuộc khủng hoảng", example: "The global energy crisis forces governments to invest heavily in renewables." },
+        { topic: "Green Energy", word: "Delectable", phonetic: "/dɪˈlek.tə.bəl/", form: "Adjective", forms: "N/A", def: "Highly attractive or pleasing; delicious (often used figuratively for ideas).", translation: "Hấp dẫn, tuyệt vời", example: "The promise of totally free, unlimited electricity is a delectable prospect for society." },
+
+        // --- Reading 4: Ocean Tides ---
+        { topic: "Ocean Tides", word: "Fathom", phonetic: "/ˈfæð.əm/", form: "Verb", forms: "N/A", def: "Understand a difficult problem or an enigmatic person after much thought.", translation: "Hiểu thấu, cặn kẽ", example: "Ancient sailors struggled to fathom the mysterious and powerful movements of the tides." },
+        { topic: "Ocean Tides", word: "Current", phonetic: "/ˈkʌr.ənt/", form: "Noun", forms: "Adj: Current", def: "A body of water or air moving in a definite direction.", translation: "Dòng chảy, dòng hải lưu", example: "The underwater turbines are driven by the extremely strong ocean currents." },
+        { topic: "Ocean Tides", word: "Gravitation", phonetic: "/ˌɡræv.ɪˈteɪ.ʃən/", form: "Noun", forms: "Adj: Gravitational", def: "Movement, or a tendency to move, towards a center of attractive force.", translation: "Lực hấp dẫn, sự hút", example: "The moon's gravitation pulls the oceans, creating the rhythmic rising of the tides." },
+        { topic: "Ocean Tides", word: "Obliterate", phonetic: "/əˈblɪt.ə.reɪt/", form: "Verb", forms: "N: Obliteration", def: "Destroy utterly; wipe out completely.", translation: "Xóa sạch, phá hủy hoàn toàn", example: "A massive tidal wave has the sheer power to obliterate a coastal village." },
+        { topic: "Ocean Tides", word: "Cliff", phonetic: "/klɪf/", form: "Noun", forms: "N/A", def: "A steep rock face, especially at the edge of the sea.", translation: "Vách đá, vách đá dựng đứng", example: "The relentless crashing of the waves slowly eroded the bottom of the tall cliff." },
+        { topic: "Ocean Tides", word: "Configuration", phonetic: "/kənˌfɪɡ.əˈreɪ.ʃən/", form: "Noun", forms: "V: Configure", def: "An arrangement of elements in a particular form, figure, or combination.", translation: "Cấu hình, hình thể, sự sắp xếp", example: "The unique configuration of the bay funnels the tide into a massive, powerful wave." },
+        { topic: "Ocean Tides", word: "Apex", phonetic: "/ˈeɪ.peks/", form: "Noun", forms: "N/A", def: "The top or highest part of something, especially one forming a point.", translation: "Đỉnh, chóp, đỉnh cao", example: "The water reaches the absolute apex of the high tide right before midnight." },
+
+        // --- Reading 5: Green Living ---
+        { topic: "Green Living", word: "Encompass", phonetic: "/ɪnˈkʌm.pəs/", form: "Verb", forms: "N/A", def: "Surround and have or hold within; include comprehensively.", translation: "Bao gồm, vây quanh", example: "True green living must encompass everything from recycling to choosing sustainable transport." },
+        { topic: "Green Living", word: "Respiratory", phonetic: "/rɪˈspɪr.ə.tər.i/", form: "Adjective", forms: "N: Respiration", def: "Relating to or affecting breathing and the lungs.", translation: "Thuộc về hô hấp", example: "Reducing urban smog will lead to far fewer respiratory diseases among citizens." },
+        { topic: "Green Living", word: "Appliance", phonetic: "/əˈplaɪ.əns/", form: "Noun", forms: "N/A", def: "A device or piece of equipment designed to perform a specific task.", translation: "Thiết bị, dụng cụ (điện gia dụng)", example: "Upgrading to a more energy-efficient appliance is an easy way to go green." },
+        { topic: "Green Living", word: "Utility bills", phonetic: "/juːˈtɪl.ə.ti bɪlz/", form: "Noun Phrase", forms: "N: Utility", def: "A document sent to a legal address requesting payment for a public service (water, electricity).", translation: "Hóa đơn tiện ích (điện, nước)", example: "Installing heavy insulation in your home will drastically lower your monthly utility bills." }
+    ];
+
+    function renderGrid() {
+        const grid = document.getElementById('grid-view');
+        grid.innerHTML = '';
+        vocabBank.forEach(item => {
+            const article = document.createElement('article');
+            article.className = 'vocab-card';
+            article.setAttribute('data-topic', item.topic);
+            
+            // Format forms clearly
+            let formsDisplay = `
+                <div class="structure-container">
+                    <span class="structure-label">Grammar & Word Family</span>
+                    <div class="structure-tags">
+                        <span class="structure-tag" style="background: var(--primary); color: white;">${item.form}</span>
+                        <span class="structure-tag">${item.forms}</span>
+                    </div>
+                </div>
+            `;
+            
+            article.innerHTML = `
+                <div class="word-header">
+                    <div class="word-main">
+                        <span class="word">${item.word}</span>
+                        <button class="audio-btn" onclick="playAudio('${item.word.replace(/'/g, "\\'")}')" title="Listen to pronunciation">
+                            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg>
+                        </button>
+                    </div>
+                    <div class="meta-info">
+                        <span class="phonetic">${item.phonetic}</span>
+                    </div>
+                </div>
+                ${formsDisplay}
+                <span class="topic-tag">${item.topic}</span>
+                <p class="definition"><strong>Meaning:</strong> ${item.def}</p>
+                <p class="translation"><strong>Vietnamese:</strong> ${item.translation}</p>
+                
+                <div class="example-box">
+                    <span>Usage Example</span>
+                    <span class="example-text" style="text-transform: none; letter-spacing: normal;">"${item.example}"</span>
+                </div>
+            `;
+            grid.appendChild(article);
+        });
+    }
+
+    // Initialize Grid
+    renderGrid();
+
+    let voices = [];
+    if ('speechSynthesis' in window) {
+        voices = window.speechSynthesis.getVoices();
+        window.speechSynthesis.onvoiceschanged = () => {
+            voices = window.speechSynthesis.getVoices();
+        };
+    }
+
+    function playAudio(text) {
+        if ('speechSynthesis' in window) {
+            window.speechSynthesis.cancel();
+            const utterance = new SpeechSynthesisUtterance(text);
+            utterance.lang = 'en-GB';
+            utterance.rate = 0.9;
+            
+            // Try to find a female voice profile
+            let femaleVoice = voices.find(voice => 
+                voice.name.includes('Female') || 
+                voice.name.includes('Samantha') || 
+                voice.name.includes('Victoria') || 
+                voice.name.includes('Zira') ||
+                voice.name.includes('Karen') ||
+                voice.name.includes('Tessa') ||
+                voice.name.includes('Fiona') ||
+                voice.name.includes('Moira') ||
+                voice.name.includes('Veena')
+            );
+            
+            // Fallback to any en-GB voice that isn't explicitly male
+            if (!femaleVoice) {
+                femaleVoice = voices.find(voice => voice.lang.includes('en-GB') && !voice.name.includes('Male'));
+            }
+            
+            if (femaleVoice) {
+                utterance.voice = femaleVoice;
+            } else {
+                utterance.pitch = 1.3; 
+            }
+
+            window.speechSynthesis.speak(utterance);
+        } else {
+            console.warn("Speech synthesis not supported in this browser.");
+        }
+    }
+
+    function playAudioFromCard(event) {
+        event.stopPropagation();
+        const word = document.getElementById('fc-word').textContent;
+        playAudio(word);
+    }
+
+    let currentTopic = 'all';
+
+    function filterTopic(topicName) {
+        const filterBtns = document.querySelectorAll('.filter-btn');
+        filterBtns.forEach(btn => btn.classList.remove('active'));
+        if (window.event && window.event.target && window.event.target.classList) {
+            window.event.target.classList.add('active');
+        }
+        currentTopic = topicName;
+        applyFilters();
+    }
+
+    function applyFilters() {
+        const query = document.getElementById('search-input').value.toLowerCase();
+        const allCards = document.querySelectorAll('.vocab-card');
+        
+        allCards.forEach(card => {
+            const word = card.querySelector('.word').textContent.toLowerCase();
+            const translation = card.querySelector('.translation').textContent.toLowerCase();
+            const topic = card.getAttribute('data-topic');
+            
+            const matchesTopic = (currentTopic === 'all' || topic === currentTopic);
+            const matchesSearch = (word.includes(query) || translation.includes(query));
+            
+            if (matchesTopic && matchesSearch) {
+                card.classList.remove('hidden');
+            } else {
+                card.classList.add('hidden');
+            }
+        });
+
+        if (document.getElementById('flashcard-view').style.display === 'flex') {
+             extractDataFromGrid();
+             currentCardIndex = 0;
+             updateFlashcardUI();
+        }
+    }
+
+    function switchView(viewName) {
+        const gridView = document.getElementById('grid-view');
+        const flashcardView = document.getElementById('flashcard-view');
+        const btnGrid = document.getElementById('btn-grid');
+        const btnFlashcards = document.getElementById('btn-flashcards');
+
+        if (viewName === 'grid') {
+            gridView.style.display = 'grid';
+            flashcardView.style.display = 'none';
+            btnGrid.classList.add('active');
+            btnFlashcards.classList.remove('active');
+        } else {
+            gridView.style.display = 'none';
+            flashcardView.style.display = 'flex';
+            btnFlashcards.classList.add('active');
+            btnGrid.classList.remove('active');
+            
+            applyFilters();
+        }
+    }
+
+    let flashcardData = [];
+    let currentCardIndex = 0;
+    const flashcardScene = document.getElementById('flashcard-scene');
+
+    function extractDataFromGrid() {
+        flashcardData = [];
+        const query = document.getElementById('search-input').value.toLowerCase();
+        vocabBank.forEach(item => {
+            const matchesTopic = (currentTopic === 'all' || item.topic === currentTopic);
+            const matchesSearch = item.word.toLowerCase().includes(query) || item.translation.toLowerCase().includes(query);
+            
+            if (matchesTopic && matchesSearch) {
+                flashcardData.push(item);
+            }
+        });
+    }
+
+    function updateFlashcardUI() {
+        if (flashcardData.length === 0) {
+            document.getElementById('fc-word').textContent = "No matches";
+            document.getElementById('fc-phonetic').textContent = "";
+            document.getElementById('fc-topic').textContent = "Try adjusting your search";
+            document.getElementById('fc-forms-container').innerHTML = "";
+            document.getElementById('fc-definition').textContent = "Could not find any vocabulary matching your search and filter criteria.";
+            document.getElementById('fc-translation').textContent = "";
+            document.getElementById('fc-example-container').innerHTML = "";
+            document.getElementById('fc-counter').textContent = "0 / 0";
+            document.getElementById('fc-prev').disabled = true;
+            document.getElementById('fc-next').disabled = true;
+            return;
+        }
+        
+        const data = flashcardData[currentCardIndex];
+        
+        flashcardScene.classList.remove('is-flipped');
+        
+        setTimeout(() => {
+            document.getElementById('fc-word').textContent = data.word;
+            document.getElementById('fc-phonetic').textContent = data.phonetic;
+            document.getElementById('fc-topic').textContent = data.topic;
+            
+            document.getElementById('fc-forms-container').innerHTML = `
+                <div class="structure-container" style="width: 85%; margin-top: 1rem; margin-bottom: 0;">
+                    <span class="structure-label">Grammar & Word Family</span>
+                    <div class="structure-tags" style="justify-content: center;">
+                        <span class="structure-tag" style="background: var(--primary); color: white;">${data.form}</span>
+                        <span class="structure-tag">${data.forms}</span>
+                    </div>
+                </div>
+            `;
+            
+            document.getElementById('fc-definition').textContent = data.def;
+            document.getElementById('fc-translation').textContent = data.translation;
+            
+            const examplesHTML = `
+                <div class="example-box" style="margin-bottom: 0.5rem;">
+                    <span style="color: var(--accent);">Usage Example</span>
+                    <span class="example-text" style="text-transform: none; letter-spacing: normal;">"${data.example}"</span>
+                </div>
+            `;
+            document.getElementById('fc-example-container').innerHTML = examplesHTML;
+            
+            document.getElementById('fc-counter').textContent = `${currentCardIndex + 1} / ${flashcardData.length}`;
+            
+            document.getElementById('fc-prev').disabled = currentCardIndex === 0;
+            document.getElementById('fc-next').disabled = currentCardIndex === flashcardData.length - 1;
+        }, 150);
+    }
+
+    function flipCard() { flashcardScene.classList.toggle('is-flipped'); }
+    function nextCard() { if (currentCardIndex < flashcardData.length - 1) { currentCardIndex++; updateFlashcardUI(); } }
+    function prevCard() { if (currentCardIndex > 0) { currentCardIndex--; updateFlashcardUI(); } }
+    
+    function shuffleCards() {
+        for (let i = flashcardData.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [flashcardData[i], flashcardData[j]] = [flashcardData[j], flashcardData[i]];
+        }
+        currentCardIndex = 0;
+        updateFlashcardUI();
+    }
+</script>
+</body>
+</html>
