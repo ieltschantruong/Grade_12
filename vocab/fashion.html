@@ -1,0 +1,2070 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sustainable Fashion | Vocabulary Builder</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500&family=Jost:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,600;0,800;1,600&display=swap" rel="stylesheet">
+<style>
+:root{
+  /* Theme: Soft Sage & Peach Atelier (fabric, linen, thread) */
+  --primary:#86b8a0;
+  --primary-light:#e6f2ec;
+  --primary-hover:#4a8a70;
+  --text-main:#3d4a44;
+  --text-muted:#74837b;
+  --bg-body:#fdf9f3;
+  --card-bg:#ffffff;
+  --accent:#f2a98b;
+  --accent-light:#fff0e8;
+  --accent-deep:#c9694a;
+  --border:#eadfd2;
+  --success:#d98a9b;
+  --shadow-sm:0 4px 8px rgba(120,100,80,.04);
+  --shadow-md:0 12px 28px rgba(134,184,160,.2);
+}
+*{box-sizing:border-box;margin:0;padding:0;font-family:'Jost',sans-serif}
+body{background:var(--bg-body);color:var(--text-main);line-height:1.6;padding-bottom:3rem;
+  background-image:radial-gradient(circle at 10% 0%,#fff0e8 0,transparent 35%),radial-gradient(circle at 95% 10%,#e6f2ec 0,transparent 35%);
+  background-attachment:fixed}
+.container{max-width:1200px;margin:0 auto;padding:0 1rem}
+.brand-banner{background:var(--card-bg);color:var(--primary-hover);text-align:center;padding:1rem;font-family:'Playfair Display',serif;font-weight:800;font-size:1.05rem;letter-spacing:.2em;border-bottom:2px dashed var(--accent);margin-bottom:2.5rem;text-transform:uppercase;box-shadow:var(--shadow-sm)}
+header{text-align:center;margin-bottom:2rem}
+h1{font-family:'Playfair Display',serif;font-weight:800;font-size:2.8rem;letter-spacing:-.02em;margin-bottom:.4rem}
+h1 em{color:var(--accent-deep);font-weight:600}
+.subtitle{color:var(--text-muted);font-size:1.1rem;font-weight:500}
+.stitch{display:flex;align-items:center;justify-content:center;gap:.8rem;margin:1rem auto 0;color:var(--accent);font-size:1.3rem}
+.stitch::before,.stitch::after{content:"";width:90px;border-top:2px dashed var(--accent);opacity:.7}
+
+.search-wrap{display:flex;justify-content:center;margin-bottom:1.5rem}
+#search{width:100%;max-width:440px;padding:.75rem 1.4rem;border-radius:50px;border:1px solid var(--border);background:var(--card-bg);font-size:1rem;color:var(--text-main);outline:none;box-shadow:var(--shadow-sm);transition:.2s}
+#search:focus{border-color:var(--primary);box-shadow:0 0 0 4px var(--primary-light)}
+
+.filter-controls{display:flex;justify-content:center;gap:.7rem;margin-bottom:1.8rem;flex-wrap:wrap}
+.filter-btn{padding:.55rem 1.3rem;font-size:.92rem;font-weight:600;background:var(--card-bg);color:var(--text-muted);border:1px solid var(--border);border-radius:50px;cursor:pointer;transition:all .3s ease;box-shadow:var(--shadow-sm)}
+.filter-btn .count{opacity:.65;font-weight:500;margin-left:.3rem;font-size:.8rem}
+.filter-btn.active{background:var(--primary);color:#fff;border-color:var(--primary);box-shadow:0 4px 12px rgba(134,184,160,.4)}
+.filter-btn:hover:not(.active){border-color:var(--primary);color:var(--primary-hover)}
+
+.view-controls{display:flex;justify-content:center;gap:1rem;margin-bottom:2.5rem}
+.view-btn{padding:.7rem 1.7rem;font-size:1rem;font-weight:600;background:var(--card-bg);color:var(--text-muted);border:1px solid var(--border);border-radius:14px;cursor:pointer;transition:all .3s ease;box-shadow:var(--shadow-sm)}
+.view-btn.active{background:var(--accent);color:#fff;border-color:var(--accent);box-shadow:0 4px 12px rgba(242,169,139,.45)}
+.view-btn:hover:not(.active){border-color:var(--accent);color:var(--accent-deep)}
+
+#grid-view{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:1.8rem}
+.vocab-card{background:var(--card-bg);border-radius:20px;padding:1.8rem;box-shadow:var(--shadow-sm);border:1px solid var(--border);transition:transform .3s,box-shadow .3s;display:flex;flex-direction:column;position:relative;overflow:hidden}
+.vocab-card::before{content:"";position:absolute;inset:7px;border:1.5px dashed var(--primary-light);border-radius:14px;pointer-events:none}
+.vocab-card:hover{transform:translateY(-6px);box-shadow:var(--shadow-md);border-color:var(--primary)}
+.vocab-card.hidden{display:none}
+.word-header{display:flex;justify-content:space-between;align-items:flex-start;gap:.8rem;margin-bottom:1rem;border-bottom:1px solid var(--primary-light);padding-bottom:.9rem}
+.word-main{display:flex;align-items:center;gap:.7rem}
+.word{font-size:1.45rem;font-weight:800;color:var(--primary-hover);font-family:'Playfair Display',serif;letter-spacing:-.01em;line-height:1.25}
+.audio-btn{flex:none;background:var(--bg-body);border:1px solid var(--border);cursor:pointer;padding:.4rem;border-radius:50%;transition:.2s;color:var(--primary-hover);display:flex;align-items:center;justify-content:center;width:36px;height:36px}
+.audio-btn:hover{transform:scale(1.1);background:var(--primary-light);border-color:var(--primary)}
+.phonetic{font-size:.95rem;color:var(--text-muted);font-family:Arial,Helvetica,sans-serif;font-weight:500;text-align:right}
+.word-families{background:var(--accent-light);padding:.55rem 1rem;border-radius:10px;font-size:.85rem;margin-bottom:1.1rem}
+.word-families strong{color:var(--accent-deep);font-weight:700}
+.topic-tag{font-size:.72rem;color:var(--primary-hover);background:var(--primary-light);padding:.3rem .8rem;border-radius:20px;font-weight:700;margin-bottom:1.1rem;display:inline-block;align-self:flex-start;text-transform:uppercase;letter-spacing:.05em}
+.definition{font-size:1.02rem;margin-bottom:.5rem;line-height:1.5}
+.definition strong{font-weight:700}
+.translation{font-size:1.02rem;color:var(--success);margin-bottom:1.3rem;font-weight:600}
+.example-box{background:var(--bg-body);padding:1.1rem 1.2rem;border-radius:12px;margin-top:auto;border-left:3px solid var(--accent)}
+.example-box span{display:block;font-size:.72rem;text-transform:uppercase;letter-spacing:.1em;color:var(--text-muted);margin-bottom:.3rem;font-weight:700}
+.example-text{font-family:'Caveat',cursive;font-size:1.45rem;line-height:1.35;letter-spacing:.02em}
+#empty{display:none;text-align:center;color:var(--text-muted);padding:3rem 0;font-size:1.1rem}
+
+#flashcard-view{display:none;flex-direction:column;align-items:center;width:100%}
+.flashcard-scene{width:100%;max-width:680px;height:500px;perspective:1000px;cursor:pointer;margin-bottom:2.5rem}
+.flashcard-inner{width:100%;height:100%;position:relative;transition:transform .6s cubic-bezier(.4,.2,.2,1);transform-style:preserve-3d}
+.flashcard-scene.is-flipped .flashcard-inner{transform:rotateY(180deg)}
+.flashcard-face{position:absolute;width:100%;height:100%;backface-visibility:hidden;border-radius:24px;box-shadow:var(--shadow-md);border:1px solid var(--border);background:var(--card-bg);padding:3rem;display:flex;flex-direction:column;justify-content:center;align-items:center;overflow-y:auto}
+.flashcard-face::before{content:"";position:absolute;inset:12px;border:2px dashed var(--accent);opacity:.45;border-radius:16px;pointer-events:none}
+.flashcard-front{text-align:center}
+.flashcard-front .word{font-size:3rem;margin-bottom:1.2rem;line-height:1.2}
+.meta-row{display:flex;align-items:center;justify-content:center;gap:1rem;margin-bottom:1rem}
+.flashcard-front .audio-btn{width:50px;height:50px;background:var(--primary-light);border:none}
+.flashcard-front .phonetic{font-size:1.25rem}
+.flashcard-back{transform:rotateY(180deg);align-items:flex-start;text-align:left}
+.flashcard-back h3{color:var(--text-muted);font-size:.85rem;margin-bottom:.5rem;text-transform:uppercase;letter-spacing:.1em;font-weight:700}
+.flashcard-back .definition{font-size:1.2rem;font-weight:500}
+.flashcard-back .translation{font-size:1.15rem}
+.flashcard-back .example-box{width:100%}
+.flashcard-hint{position:absolute;bottom:1.6rem;font-size:.78rem;color:var(--text-muted);text-transform:uppercase;letter-spacing:.15em;font-weight:600;opacity:.7}
+.flashcard-controls{display:flex;align-items:center;gap:1.2rem;background:var(--card-bg);padding:.9rem 2rem;border-radius:50px;box-shadow:var(--shadow-sm);border:1px solid var(--border)}
+.fc-btn{background:none;border:none;color:var(--text-muted);font-size:1rem;font-weight:700;cursor:pointer;padding:.5rem 1.1rem;border-radius:20px;transition:.2s;text-transform:uppercase;letter-spacing:.05em}
+.fc-btn:hover:not(:disabled){background:var(--primary-light);color:var(--primary-hover)}
+.fc-btn:disabled{opacity:.3;cursor:not-allowed}
+.fc-counter{font-weight:800;font-size:1.1rem;color:var(--primary-hover);min-width:90px;text-align:center}
+.divider{width:2px;height:24px;background:var(--border)}
+
+@media(max-width:768px){
+  h1{font-size:2rem}
+  #grid-view{grid-template-columns:1fr}
+  .flashcard-front .word{font-size:2.2rem}
+  .flashcard-back .definition{font-size:1.05rem}
+  .flashcard-face{padding:2rem}
+  .flashcard-controls{padding:.7rem 1rem;gap:.4rem}
+}
+</style>
+</head>
+<body>
+<div class="brand-banner">Vocabulary Atelier | Fashion</div>
+<div class="container">
+  <header>
+    <h1>Sustainable <em>Fashion</em></h1>
+    <p class="subtitle">Fast Fashion, Waste &amp; Bio-Materials Vocabulary Builder</p>
+    <div class="stitch">✂</div>
+  </header>
+
+  <div class="search-wrap"><input id="search" type="search" placeholder="Search a word or Vietnamese meaning…" oninput="applyFilters()"></div>
+  <div class="filter-controls" id="topic-filters"></div>
+
+  <div class="view-controls">
+    <button class="view-btn active" id="btn-grid" onclick="switchView('grid')">List View</button>
+    <button class="view-btn" id="btn-flashcards" onclick="switchView('flashcards')">Flashcards</button>
+  </div>
+
+  <div id="flashcard-view">
+    <div class="flashcard-scene" id="flashcard-scene" onclick="flipCard()">
+      <div class="flashcard-inner">
+        <div class="flashcard-face flashcard-front">
+          <h2 class="word" id="fc-word">Word</h2>
+          <div class="meta-row">
+            <span class="phonetic" id="fc-phonetic"></span>
+            <button class="audio-btn" onclick="playAudioFromCard(event)" title="Listen to pronunciation">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9v6h4l5 5V4L7 9H3z"></path><path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path><path d="M19.07 4.93a10 10 0 0 1 0 14.14"></path></svg>
+            </button>
+          </div>
+          <div class="word-families" id="fc-forms" style="margin-top:1rem;max-width:85%"></div>
+          <span class="topic-tag" id="fc-topic" style="margin-top:.8rem;align-self:center"></span>
+          <span class="flashcard-hint">Click card to flip</span>
+        </div>
+        <div class="flashcard-face flashcard-back">
+          <h3>Meaning</h3>
+          <p class="definition" id="fc-definition"></p>
+          <p class="translation" id="fc-translation"></p>
+          <div id="fc-example-container" style="width:100%;margin-top:1rem"></div>
+          <span class="flashcard-hint" style="left:50%;transform:translateX(-50%)">Click card to flip back</span>
+        </div>
+      </div>
+    </div>
+    <div class="flashcard-controls">
+      <button class="fc-btn" id="fc-prev" onclick="prevCard()">◀ Prev</button>
+      <span class="fc-counter" id="fc-counter">1 / 1</span>
+      <button class="fc-btn" id="fc-next" onclick="nextCard()">Next ▶</button>
+      <div class="divider"></div>
+      <button class="fc-btn" onclick="shuffleCards()" title="Shuffle order">🔀</button>
+    </div>
+  </div>
+
+  <main id="grid-view"></main>
+  <div id="empty">No words found. Try another search or topic.</div>
+</div>
+
+<script>
+const vocabBank = [
+{
+"topic": "Fast Fashion & Shopping",
+"word": "craftsmanship",
+"phonetic": "/ˈkræftsmənʃɪp/",
+"form": "Noun",
+"forms": "N: Craftsman, Craft",
+"def": "Skill and care in making things by hand to a high standard.",
+"translation": "tay nghề thủ công, sự khéo léo",
+"example": "A well-cut coat shows the craftsmanship that fast fashion rarely has time for."
+},
+{
+"topic": "Fast Fashion & Shopping",
+"word": "fast fashion",
+"phonetic": "/fæst ˈfæʃən/",
+"form": "Noun Phrase",
+"forms": "N/A",
+"def": "Cheap, trendy clothing mass-produced quickly to follow the latest styles.",
+"translation": "thời trang nhanh",
+"example": "Fast fashion lets shoppers wear a new outfit every week, but the planet pays for it."
+},
+{
+"topic": "Fast Fashion & Shopping",
+"word": "garment",
+"phonetic": "/ˈɡɑːrmənt/",
+"form": "Noun",
+"forms": "N/A",
+"def": "A single piece of clothing.",
+"translation": "quần áo, trang phục",
+"example": "Each garment in the shop is labelled with the country where it was sewn."
+},
+{
+"topic": "Fast Fashion & Shopping",
+"word": "overproduction",
+"phonetic": "/ˌoʊvərprəˈdʌkʃən/",
+"form": "Noun",
+"forms": "V: Overproduce",
+"def": "Making more goods than people actually need or will buy.",
+"translation": "sản xuất thừa",
+"example": "Overproduction leaves brands with racks of unsold dresses every season."
+},
+{
+"topic": "Fast Fashion & Shopping",
+"word": "overconsumption",
+"phonetic": "/ˌoʊvərkənˈsʌmpʃən/",
+"form": "Noun",
+"forms": "V: Overconsume",
+"def": "Buying and using far more than is necessary or sustainable.",
+"translation": "tiêu dùng quá mức",
+"example": "Social media encourages overconsumption by making every outfit look instantly outdated."
+},
+{
+"topic": "Fast Fashion & Shopping",
+"word": "bargain",
+"phonetic": "/ˈbɑːrɡɪn/",
+"form": "Noun",
+"forms": "Adj: Bargain",
+"def": "Something bought for much less than its usual or real value.",
+"translation": "món hời, giá rẻ",
+"example": "That sweater was such a bargain that I bought it in three colours."
+},
+{
+"topic": "Impact & Pollution",
+"word": "landfill",
+"phonetic": "/ˈlændfɪl/",
+"form": "Noun",
+"forms": "N/A",
+"def": "A site where waste is buried under the ground.",
+"translation": "bãi rác, bãi chôn lấp",
+"example": "Millions of tonnes of unwanted clothes end up in landfill every year."
+},
+{
+"topic": "Impact & Pollution",
+"word": "wage",
+"phonetic": "/weɪdʒ/",
+"form": "Noun",
+"forms": "N: Wager (diff.)",
+"def": "Regular payment made to a worker, often by the hour or week.",
+"translation": "tiền công",
+"example": "Many garment workers earn a wage that barely covers their rent."
+},
+{
+"topic": "Impact & Pollution",
+"word": "unrealistic deadline",
+"phonetic": "/ˌʌnriːəˈlɪstɪk ˈdedlaɪn/",
+"form": "Noun Phrase",
+"forms": "Adj: Unrealistic | N: Deadline",
+"def": "A time limit that is impossible to meet without cutting corners or overworking.",
+"translation": "thời hạn phi thực tế",
+"example": "Factories under unrealistic deadlines often force staff to work through the night."
+},
+{
+"topic": "Policy & Circularity",
+"word": "greenwashing",
+"phonetic": "/ˈɡriːnwɔːʃɪŋ/",
+"form": "Noun",
+"forms": "Adj: Green",
+"def": "Making a company or product seem more eco-friendly than it truly is.",
+"translation": "tẩy xanh (đánh lừa về môi trường)",
+"example": "The \"eco\" label turned out to be pure greenwashing, since nothing had changed."
+},
+{
+"topic": "Fast Fashion & Shopping",
+"word": "guilt",
+"phonetic": "/ɡɪlt/",
+"form": "Noun",
+"forms": "Adj: Guilty",
+"def": "An uncomfortable feeling that you have done something wrong.",
+"translation": "cảm giác tội lỗi",
+"example": "She felt a pang of guilt after throwing away a barely worn jacket."
+},
+{
+"topic": "Fast Fashion & Shopping",
+"word": "novelty",
+"phonetic": "/ˈnɑːvlti/",
+"form": "Noun",
+"forms": "Adj: Novel",
+"def": "The quality of being new, original or unusual.",
+"translation": "sự mới lạ",
+"example": "The novelty of a trend fades quickly, and so does the urge to wear it."
+},
+{
+"topic": "Policy & Circularity",
+"word": "reform",
+"phonetic": "/rɪˈfɔːrm/",
+"form": "Noun",
+"forms": "V: Reform",
+"def": "A change made to improve a system, law or practice.",
+"translation": "cải cách",
+"example": "Labour reform is needed to protect the people who sew our clothes."
+},
+{
+"topic": "Fast Fashion & Shopping",
+"word": "collaboration",
+"phonetic": "/kəˌlæbəˈreɪʃn/",
+"form": "Noun",
+"forms": "V: Collaborate",
+"def": "Work done jointly with another person or organisation, such as a designer partnership.",
+"translation": "sự hợp tác",
+"example": "The designer's collaboration with a high-street brand sold out within an hour."
+},
+{
+"topic": "Fast Fashion & Shopping",
+"word": "retailer",
+"phonetic": "/ˈriːteɪlər/",
+"form": "Noun",
+"forms": "N: Retail",
+"def": "A business that sells goods directly to the public.",
+"translation": "nhà bán lẻ",
+"example": "Online retailers can send a new collection to your door in just a few days."
+},
+{
+"topic": "Fast Fashion & Shopping",
+"word": "impulse buying",
+"phonetic": "/ˈɪmpʌls ˈbaɪɪŋ/",
+"form": "Noun Phrase",
+"forms": "N: Impulse",
+"def": "Purchasing something suddenly without planning, driven by a quick urge.",
+"translation": "mua sắm bốc đồng",
+"example": "Flash sales and countdown timers are designed to trigger impulse buying."
+},
+{
+"topic": "Policy & Circularity",
+"word": "regulation",
+"phonetic": "/ˌreɡjuˈleɪʃn/",
+"form": "Noun",
+"forms": "V: Regulate",
+"def": "An official rule made by a government or authority.",
+"translation": "quy định",
+"example": "New regulation requires brands to disclose where their fabrics are made."
+},
+{
+"topic": "Fast Fashion & Shopping",
+"word": "appeal",
+"phonetic": "/əˈpiːl/",
+"form": "Noun",
+"forms": "V: Appeal | Adj: Appealing",
+"def": "The quality that makes something attractive or interesting.",
+"translation": "sức hấp dẫn",
+"example": "The appeal of cheap clothes is hard to resist when money is tight."
+},
+{
+"topic": "Impact & Pollution",
+"word": "microfiber",
+"phonetic": "/ˈmaɪkroʊfaɪbər/",
+"form": "Noun",
+"forms": "N/A",
+"def": "An extremely fine synthetic fibre, often shed when synthetic clothes are washed.",
+"translation": "sợi vi mô",
+"example": "Each wash releases thousands of microfibers that end up in rivers and oceans."
+},
+{
+"topic": "Impact & Pollution",
+"word": "effluent",
+"phonetic": "/ˈefluənt/",
+"form": "Noun",
+"forms": "N/A",
+"def": "Liquid waste released from a factory into water.",
+"translation": "nước thải, chất thải lỏng",
+"example": "Untreated dye effluent has turned some rivers a different colour each day."
+},
+{
+"topic": "Fast Fashion & Shopping",
+"word": "surplus inventory",
+"phonetic": "/ˈsɜːrpləs ˈɪnvəntɔːri/",
+"form": "Noun Phrase",
+"forms": "Adj: Surplus | N: Inventory",
+"def": "Stock that a company has made but cannot sell.",
+"translation": "hàng tồn kho dư thừa",
+"example": "Rather than discounting it, some brands destroy their surplus inventory."
+},
+{
+"topic": "Impact & Pollution",
+"word": "landfill fodder",
+"phonetic": "/ˈlændfɪl ˈfɑːdər/",
+"form": "Noun Phrase",
+"forms": "N: Landfill",
+"def": "Items that are made with little durability and are bound to end up as rubbish.",
+"translation": "nguyên liệu cho bãi rác",
+"example": "A shirt that falls apart after two washes is simply landfill fodder."
+},
+{
+"topic": "Fast Fashion & Shopping",
+"word": "capsule \"conscious\" line",
+"phonetic": "/ˈkæpsl ˈkɑːnʃəs laɪn/",
+"form": "Noun Phrase",
+"forms": "N: Capsule, Consciousness",
+"def": "A small, limited collection marketed as environmentally aware.",
+"translation": "dòng \"ý thức\" theo mùa",
+"example": "The brand's capsule \"conscious\" line made up less than one percent of its output."
+},
+{
+"topic": "Impact & Pollution",
+"word": "throughput",
+"phonetic": "/ˈθruːpʊt/",
+"form": "Noun",
+"forms": "N/A",
+"def": "The amount of material or product processed in a given period.",
+"translation": "sản lượng, thông lượng",
+"example": "The factory boasts a throughput of ten thousand garments a day."
+},
+{
+"topic": "Impact & Pollution",
+"word": "degradation",
+"phonetic": "/ˌdeɡrəˈdeɪʃn/",
+"form": "Noun",
+"forms": "V: Degrade",
+"def": "The process of getting worse or breaking down, especially in quality or the environment.",
+"translation": "sự suy thoái",
+"example": "Soil degradation near cotton farms is getting worse every year."
+},
+{
+"topic": "Impact & Pollution",
+"word": "ecological inequity",
+"phonetic": "/ˌiːkəˈlɑːdʒɪkl ɪnˈekwəti/",
+"form": "Noun Phrase",
+"forms": "Adj: Ecological, Inequitable",
+"def": "Unfair sharing of environmental harm, where poorer places suffer most.",
+"translation": "bất bình đẳng sinh thái",
+"example": "Waste dumped in poorer countries is a clear case of ecological inequity."
+},
+{
+"topic": "Impact & Pollution",
+"word": "disposability",
+"phonetic": "/dɪˌspoʊzəˈbɪləti/",
+"form": "Noun",
+"forms": "Adj: Disposable",
+"def": "The quality of being designed to be thrown away after short use.",
+"translation": "tính dùng một lần",
+"example": "The disposability of cheap clothing has changed how we value what we wear."
+},
+{
+"topic": "Policy & Circularity",
+"word": "regulatory asymmetry",
+"phonetic": "/ˈreɡjələtɔːri əˈsɪmətri/",
+"form": "Noun Phrase",
+"forms": "Adj: Regulatory, Asymmetric",
+"def": "An uneven situation where different regions or firms face very different rules.",
+"translation": "sự bất đối xứng về quy định",
+"example": "Regulatory asymmetry lets brands move production to countries with weaker laws."
+},
+{
+"topic": "Impact & Pollution",
+"word": "extraction",
+"phonetic": "/ɪkˈstrækʃn/",
+"form": "Noun",
+"forms": "V: Extract",
+"def": "The removal of raw materials from the earth or nature.",
+"translation": "sự khai thác",
+"example": "The extraction of oil for polyester fibre is rarely visible to shoppers."
+},
+{
+"topic": "Impact & Pollution",
+"word": "climate volatility",
+"phonetic": "/ˈklaɪmət ˌvɑːləˈtɪləti/",
+"form": "Noun Phrase",
+"forms": "Adj: Volatile",
+"def": "Large, unpredictable swings in weather and climate patterns.",
+"translation": "biến động khí hậu",
+"example": "Climate volatility is damaging cotton harvests across the world."
+},
+{
+"topic": "Fast Fashion & Shopping",
+"word": "immediacy",
+"phonetic": "/ɪˈmiːdiəsi/",
+"form": "Noun",
+"forms": "Adj: Immediate",
+"def": "The quality of happening or being available right away.",
+"translation": "tính tức thời",
+"example": "Shoppers now expect the immediacy of same-day delivery."
+},
+{
+"topic": "Impact & Pollution",
+"word": "subcontracting lattice",
+"phonetic": "/səbˈkɑːntræktɪŋ ˈlætɪs/",
+"form": "Noun Phrase",
+"forms": "V: Subcontract",
+"def": "A tangled network of firms hiring other firms to do parts of the work.",
+"translation": "mạng lưới thầu phụ",
+"example": "A subcontracting lattice makes it nearly impossible to trace who made a shirt."
+},
+{
+"topic": "Impact & Pollution",
+"word": "oversight",
+"phonetic": "/ˈoʊvərsaɪt/",
+"form": "Noun",
+"forms": "V: Oversee",
+"def": "Supervision or monitoring; also a mistake caused by failing to notice something.",
+"translation": "sự giám sát",
+"example": "Weak oversight allows unsafe factories to keep running."
+},
+{
+"topic": "Impact & Pollution",
+"word": "externality",
+"phonetic": "/ˌekstɜːrˈnæləti/",
+"form": "Noun",
+"forms": "Adj: External",
+"def": "A cost of production, such as pollution, borne by others instead of the producer.",
+"translation": "yếu tố ngoại lai",
+"example": "Pollution is an externality that the price tag never shows."
+},
+{
+"topic": "Policy & Circularity",
+"word": "circularity",
+"phonetic": "/ˌsɜːrkjəˈlærəti/",
+"form": "Noun",
+"forms": "Adj: Circular",
+"def": "A system in which products and materials are reused, repaired and recycled.",
+"translation": "tính tuần hoàn",
+"example": "True circularity means that clothes are designed to be remade, not dumped."
+},
+{
+"topic": "Policy & Circularity",
+"word": "durable design",
+"phonetic": "/ˈdʊrəbl dɪˈzaɪn/",
+"form": "Noun Phrase",
+"forms": "Adj: Durable",
+"def": "Design that makes an item strong and long-lasting.",
+"translation": "thiết kế bền vững",
+"example": "Durable design, such as reinforced seams, helps a coat last for decades."
+},
+{
+"topic": "Policy & Circularity",
+"word": "recirculation",
+"phonetic": "/ˌriːsɜːrkjəˈleɪʃn/",
+"form": "Noun",
+"forms": "V: Recirculate",
+"def": "The return of used goods or materials back into use.",
+"translation": "tái lưu thông",
+"example": "Resale apps encourage the recirculation of good-quality clothes."
+},
+{
+"topic": "Fast Fashion & Shopping",
+"word": "marketing gloss",
+"phonetic": "/ˈmɑːrkɪtɪŋ ɡlɑːs/",
+"form": "Noun Phrase",
+"forms": "Adj: Glossy",
+"def": "A shiny, attractive surface image that hides a less impressive reality.",
+"translation": "lớp sơn tiếp thị (hào nhoáng bề ngoài)",
+"example": "Behind the marketing gloss, the supply chain was still highly polluting."
+},
+{
+"topic": "Policy & Circularity",
+"word": "reverse supply",
+"phonetic": "/rɪˈvɜːrs səˈplaɪ/",
+"form": "Noun Phrase",
+"forms": "Adj: Reverse",
+"def": "The flow of used products back from consumers to be reused or recycled.",
+"translation": "chuỗi cung ứng ngược",
+"example": "A strong reverse supply chain needs easy collection points for old clothes."
+},
+{
+"topic": "Policy & Circularity",
+"word": "fiber-to-fiber recycling",
+"phonetic": "/ˈfaɪbər tuː ˈfaɪbər riˈsaɪklɪŋ/",
+"form": "Noun Phrase",
+"forms": "V: Recycle",
+"def": "Recycling old textiles into new fibres, rather than into lower-value products.",
+"translation": "tái chế sợi thành sợi",
+"example": "Fiber-to-fiber recycling could turn an old T-shirt into a new one."
+},
+{
+"topic": "Impact & Pollution",
+"word": "torrent",
+"phonetic": "/ˈtɔːrənt/",
+"form": "Noun",
+"forms": "Adj: Torrential",
+"def": "A strong, fast flow of something, often water or, here, goods.",
+"translation": "dòng thác",
+"example": "A torrent of cheap clothes floods the market every week."
+},
+{
+"topic": "Impact & Pollution",
+"word": "low-grade blend",
+"phonetic": "/loʊ ɡreɪd blend/",
+"form": "Noun Phrase",
+"forms": "N: Grade, Blend",
+"def": "A mixed-fibre fabric of poor quality that is hard to recycle.",
+"translation": "vải pha cấp thấp",
+"example": "A low-grade blend of cotton and polyester is difficult to separate and recycle."
+},
+{
+"topic": "Policy & Circularity",
+"word": "reprocessing",
+"phonetic": "/riˈprɑːsesɪŋ/",
+"form": "Noun",
+"forms": "V: Reprocess",
+"def": "Treating used material again so it can be used once more.",
+"translation": "tái chế, xử lý lại",
+"example": "Reprocessing old wool into yarn saves energy and water."
+},
+{
+"topic": "Policy & Circularity",
+"word": "lag",
+"phonetic": "/læɡ/",
+"form": "Noun",
+"forms": "V: Lag",
+"def": "A delay between one event and another.",
+"translation": "sự chậm trễ",
+"example": "There is a lag between new laws being passed and factories actually changing."
+},
+{
+"topic": "Policy & Circularity",
+"word": "remediation",
+"phonetic": "/rɪˌmiːdiˈeɪʃn/",
+"form": "Noun",
+"forms": "V: Remediate",
+"def": "The act of cleaning up or fixing environmental damage.",
+"translation": "sự khắc phục",
+"example": "Remediation of polluted rivers can take decades and millions of dollars."
+},
+{
+"topic": "Policy & Circularity",
+"word": "jurisdiction",
+"phonetic": "/ˌdʒʊrɪsˈdɪkʃn/",
+"form": "Noun",
+"forms": "Adj: Jurisdictional",
+"def": "The area or authority within which a particular set of laws applies.",
+"translation": "khu vực pháp lý",
+"example": "Each jurisdiction has its own rules about chemical use in textiles."
+},
+{
+"topic": "Fast Fashion & Shopping",
+"word": "perpetual newness",
+"phonetic": "/pərˈpetʃuəl ˈnuːnəs/",
+"form": "Noun Phrase",
+"forms": "Adj: Perpetual, N: Newness",
+"def": "A constant stream of new products so that nothing ever feels current for long.",
+"translation": "sự mới lạ vĩnh viễn",
+"example": "Brands sell perpetual newness, so last month's trend already feels old."
+},
+{
+"topic": "Fast Fashion & Shopping",
+"word": "content pipeline",
+"phonetic": "/ˈkɑːntent ˈpaɪplaɪn/",
+"form": "Noun Phrase",
+"forms": "N: Content, Pipeline",
+"def": "A steady flow of posts, images and videos produced to keep audiences engaged.",
+"translation": "kênh nội dung",
+"example": "Influencers feed the content pipeline with endless \"haul\" videos."
+},
+{
+"topic": "Policy & Circularity",
+"word": "extended producer responsibility",
+"phonetic": "/ɪkˈstendɪd prəˈduːsər rɪˌspɑːnsəˈbɪləti/",
+"form": "Noun Phrase",
+"forms": "Abbr: EPR",
+"def": "A policy making manufacturers responsible for their products' entire life, including disposal.",
+"translation": "trách nhiệm mở rộng của nhà sản xuất",
+"example": "Extended producer responsibility means brands must pay to collect and recycle what they sell."
+},
+{
+"topic": "Policy & Circularity",
+"word": "eco-modulated fee",
+"phonetic": "/ˈiːkoʊ ˈmɑːdʒəleɪtɪd fiː/",
+"form": "Noun Phrase",
+"forms": "Adj: Eco-friendly",
+"def": "A fee that varies with how environmentally harmful a product is.",
+"translation": "phí điều tiết sinh thái",
+"example": "An eco-modulated fee makes a polyester dress cost more to produce than a durable one."
+},
+{
+"topic": "Policy & Circularity",
+"word": "right-to-repair",
+"phonetic": "/raɪt tuː rɪˈper/",
+"form": "Noun Phrase",
+"forms": "V: Repair",
+"def": "A legal right allowing owners to have their products fixed rather than replaced.",
+"translation": "quyền sửa chữa",
+"example": "Right-to-repair laws would make brands offer mending services and spare parts."
+},
+{
+"topic": "Policy & Circularity",
+"word": "enforcement gap",
+"phonetic": "/ɪnˈfɔːrsmənt ɡæp/",
+"form": "Noun Phrase",
+"forms": "V: Enforce",
+"def": "The difference between what the law says and what is actually applied.",
+"translation": "lỗ hổng thực thi",
+"example": "An enforcement gap lets some factories ignore pollution rules without penalty."
+},
+{
+"topic": "Policy & Circularity",
+"word": "jurisdictional patchwork",
+"phonetic": "/ˌdʒʊrɪsˈdɪkʃənl ˈpætʃwɜːrk/",
+"form": "Noun Phrase",
+"forms": "Adj: Jurisdictional",
+"def": "A mix of inconsistent rules across different regions that is hard to follow.",
+"translation": "sự chắp vá về quyền tài phán",
+"example": "A jurisdictional patchwork makes it hard for brands to follow one clear standard."
+},
+{
+"topic": "Policy & Circularity",
+"word": "aggregate volume",
+"phonetic": "/ˈæɡrɪɡət ˈvɑːljuːm/",
+"form": "Noun Phrase",
+"forms": "Adj: Aggregate",
+"def": "The total amount of something when everything is added together.",
+"translation": "khối lượng tổng thể",
+"example": "Even if each shirt is greener, the aggregate volume of production keeps rising."
+},
+{
+"topic": "Policy & Circularity",
+"word": "material footprint",
+"phonetic": "/məˈtɪriəl ˈfʊtprɪnt/",
+"form": "Noun Phrase",
+"forms": "N: Footprint",
+"def": "The total quantity of raw materials used to support a product or economy.",
+"translation": "dấu chân vật chất",
+"example": "Cutting our material footprint means buying fewer, better clothes."
+},
+{
+"topic": "Policy & Circularity",
+"word": "structural arithmetic",
+"phonetic": "/ˈstrʌktʃərəl əˈrɪθmətɪk/",
+"form": "Noun Phrase",
+"forms": "Adj: Structural",
+"def": "The simple, unavoidable maths of a system: more output means more impact.",
+"translation": "phép toán cấu trúc",
+"example": "The structural arithmetic is simple: more garments made means more waste."
+},
+{
+"topic": "Policy & Circularity",
+"word": "binding cap",
+"phonetic": "/ˈbaɪndɪŋ kæp/",
+"form": "Noun Phrase",
+"forms": "V: Bind",
+"def": "A legally enforceable limit on how much can be produced or emitted.",
+"translation": "giới hạn ràng buộc",
+"example": "A binding cap on output would force brands to slow production."
+},
+{
+"topic": "Policy & Circularity",
+"word": "credible emissions accounting",
+"phonetic": "/ˈkredəbl ɪˈmɪʃnz əˈkaʊntɪŋ/",
+"form": "Noun Phrase",
+"forms": "Adj: Credible | N: Emission",
+"def": "Honest, trustworthy measurement and reporting of greenhouse-gas output.",
+"translation": "kế toán phát thải đáng tin cậy",
+"example": "Investors want credible emissions accounting, not vague promises."
+},
+{
+"topic": "Policy & Circularity",
+"word": "net-greenwashing",
+"phonetic": "/net ˈɡriːnwɔːʃɪŋ/",
+"form": "Noun Phrase",
+"forms": "N: Greenwashing",
+"def": "Appearing environmentally positive overall while real harm continues.",
+"translation": "tẩy xanh ròng",
+"example": "Planting a few trees while expanding production is net-greenwashing."
+},
+{
+"topic": "Policy & Circularity",
+"word": "planetary salvation",
+"phonetic": "/ˈplænəteri sælˈveɪʃn/",
+"form": "Noun Phrase",
+"forms": "V: Save",
+"def": "A grand claim that a product or action will rescue the planet.",
+"translation": "sự cứu rỗi hành tinh",
+"example": "No single recycled T-shirt can promise planetary salvation."
+},
+{
+"topic": "Impact & Pollution",
+"word": "water draw",
+"phonetic": "/ˈwɔːtər drɔː/",
+"form": "Noun Phrase",
+"forms": "V: Draw",
+"def": "The amount of water taken from sources for a process.",
+"translation": "lượng nước sử dụng",
+"example": "Cotton farming has an enormous water draw in dry regions."
+},
+{
+"topic": "Impact & Pollution",
+"word": "chemical intensity",
+"phonetic": "/ˈkemɪkl ɪnˈtensəti/",
+"form": "Noun Phrase",
+"forms": "Adj: Intense",
+"def": "The amount of chemicals used in producing a unit of product.",
+"translation": "cường độ hóa chất",
+"example": "Denim finishing has a very high chemical intensity."
+},
+{
+"topic": "Impact & Pollution",
+"word": "fossil-fuel dependency",
+"phonetic": "/ˈfɑːsl fjuːəl dɪˈpendənsi/",
+"form": "Noun Phrase",
+"forms": "Adj: Dependent",
+"def": "Heavy reliance on coal, oil and gas for energy or materials.",
+"translation": "sự phụ thuộc vào nhiên liệu hóa thạch",
+"example": "Polyester ties fashion to fossil-fuel dependency from raw material to factory."
+},
+{
+"topic": "Fast Fashion & Shopping",
+"word": "breakneck turnover",
+"phonetic": "/ˈbreɪknek ˈtɜːrnoʊvər/",
+"form": "Noun Phrase",
+"forms": "Adj: Breakneck",
+"def": "Extremely fast replacement of products, trends or stock.",
+"translation": "tốc độ quay vòng chóng mặt",
+"example": "Breakneck turnover means styles can change in just a few weeks."
+},
+{
+"topic": "Policy & Circularity",
+"word": "coordinated regulatory resolve",
+"phonetic": "/koʊˈɔːrdɪneɪtɪd ˈreɡjələtɔːri rɪˈzɑːlv/",
+"form": "Noun Phrase",
+"forms": "Adj: Coordinated, Resolute",
+"def": "Governments acting together with firm determination to enforce rules.",
+"translation": "sự quyết tâm điều tiết phối hợp",
+"example": "Only coordinated regulatory resolve can stop brands moving pollution overseas."
+},
+{
+"topic": "Policy & Circularity",
+"word": "transparent metric",
+"phonetic": "/trænsˈpærənt ˈmetrɪk/",
+"form": "Noun Phrase",
+"forms": "Adj: Transparent",
+"def": "A clear, open measure that everyone can check and understand.",
+"translation": "chỉ số đo lường minh bạch",
+"example": "A transparent metric lets shoppers compare the true impact of two jackets."
+},
+{
+"topic": "Policy & Circularity",
+"word": "reorientation",
+"phonetic": "/ˌriːɔːriənˈteɪʃn/",
+"form": "Noun",
+"forms": "V: Reorient",
+"def": "A change in direction or main focus.",
+"translation": "sự định hướng lại",
+"example": "Fashion needs a reorientation from quantity to quality."
+},
+{
+"topic": "Fast Fashion & Shopping",
+"word": "volume-driven expansion",
+"phonetic": "/ˈvɑːljuːm ˈdrɪvn ɪkˈspænʃn/",
+"form": "Noun Phrase",
+"forms": "N: Volume",
+"def": "Business growth that depends on selling more and more units.",
+"translation": "mở rộng dựa trên khối lượng",
+"example": "Volume-driven expansion keeps profits high but pushes resource use even higher."
+},
+{
+"topic": "Impact & Pollution",
+"word": "ecological stability",
+"phonetic": "/ˌiːkəˈlɑːdʒɪkl stəˈbɪləti/",
+"form": "Noun Phrase",
+"forms": "Adj: Ecological, Stable",
+"def": "A condition where ecosystems stay balanced and healthy over time.",
+"translation": "sự ổn định sinh thái",
+"example": "Pollution from textile mills threatens the ecological stability of the river."
+},
+{
+"topic": "Policy & Circularity",
+"word": "inflation of claims",
+"phonetic": "/ɪnˈfleɪʃn əv kleɪmz/",
+"form": "Noun Phrase",
+"forms": "V: Inflate",
+"def": "Exaggerating how green or ethical a product is.",
+"translation": "sự phóng đại các tuyên bố",
+"example": "The inflation of claims on labels makes it hard to trust any \"eco\" tag."
+},
+{
+"topic": "Impact & Pollution",
+"word": "biophysical limit",
+"phonetic": "/ˌbaɪoʊˈfɪzɪkl ˈlɪmɪt/",
+"form": "Noun Phrase",
+"forms": "Adj: Biophysical",
+"def": "A natural boundary set by what the Earth's resources and systems can support.",
+"translation": "giới hạn sinh học-vật lý",
+"example": "Fashion's growth is beginning to hit a biophysical limit."
+},
+{
+"topic": "Policy & Circularity",
+"word": "backlash",
+"phonetic": "/ˈbæklæʃ/",
+"form": "Noun",
+"forms": "N/A",
+"def": "A strong negative reaction from the public to an action or trend.",
+"translation": "sự phản đối dữ dội",
+"example": "The brand faced a backlash after burning unsold stock."
+},
+{
+"topic": "Policy & Circularity",
+"word": "profound transformation",
+"phonetic": "/prəˈfaʊnd ˌtrænsfərˈmeɪʃn/",
+"form": "Noun Phrase",
+"forms": "Adj: Profound, V: Transform",
+"def": "A deep, far-reaching change in how something works.",
+"translation": "sự chuyển đổi sâu sắc",
+"example": "The industry needs a profound transformation, not a few small tweaks."
+},
+{
+"topic": "Materials & Biotech",
+"word": "biotech startup",
+"phonetic": "/ˈbaɪoʊtek ˈstɑːrtʌp/",
+"form": "Noun Phrase",
+"forms": "N: Biotechnology",
+"def": "A new company using biological science to develop products.",
+"translation": "startup công nghệ sinh học",
+"example": "A biotech startup in California grows leather alternatives from fungi."
+},
+{
+"topic": "Materials & Biotech",
+"word": "alternative",
+"phonetic": "/ɔːlˈtɜːrnətɪv/",
+"form": "Noun",
+"forms": "Adj: Alternative",
+"def": "Another option that can be chosen in place of the usual one.",
+"translation": "lựa chọn thay thế",
+"example": "Plant-based leather is an alternative to animal hide."
+},
+{
+"topic": "Materials & Biotech",
+"word": "textile",
+"phonetic": "/ˈtekstaɪl/",
+"form": "Noun",
+"forms": "Adj: Textile",
+"def": "Any woven or knitted cloth or fibre-based material.",
+"translation": "hàng dệt may",
+"example": "The textile industry is one of the biggest users of water."
+},
+{
+"topic": "Impact & Pollution",
+"word": "environmental impact",
+"phonetic": "/ɪnˌvaɪrənˈmentl ˈɪmpækt/",
+"form": "Noun Phrase",
+"forms": "Adj: Environmental",
+"def": "The effect an activity has on nature and ecosystems.",
+"translation": "tác động môi trường",
+"example": "Before buying, she checks the environmental impact of the fabric."
+},
+{
+"topic": "Impact & Pollution",
+"word": "vast amount",
+"phonetic": "/væst əˈmaʊnt/",
+"form": "Noun Phrase",
+"forms": "Adj: Vast",
+"def": "A very large quantity of something.",
+"translation": "lượng lớn",
+"example": "Making one pair of jeans uses a vast amount of water."
+},
+{
+"topic": "Impact & Pollution",
+"word": "harmful chemical",
+"phonetic": "/ˈhɑːrmfl ˈkemɪkl/",
+"form": "Noun Phrase",
+"forms": "Adj: Harmful",
+"def": "A substance that can damage people's health or the environment.",
+"translation": "hóa chất độc hại",
+"example": "Some dyes contain harmful chemicals that irritate the skin."
+},
+{
+"topic": "Materials & Biotech",
+"word": "mycelium",
+"phonetic": "/maɪˈsiːliəm/",
+"form": "Noun",
+"forms": "Adj: Mycelial",
+"def": "The thread-like root network of a fungus, used to grow materials.",
+"translation": "hệ sợi nấm",
+"example": "Mycelium can be grown into sheets that feel just like leather."
+},
+{
+"topic": "Materials & Biotech",
+"word": "root structure",
+"phonetic": "/ruːt ˈstrʌktʃər/",
+"form": "Noun Phrase",
+"forms": "N: Root",
+"def": "The network or shape of roots in a plant or fungus.",
+"translation": "cấu trúc rễ",
+"example": "The dense root structure of the fungus gives the material its strength."
+},
+{
+"topic": "Materials & Biotech",
+"word": "specialized laboratory",
+"phonetic": "/ˈspeʃəlaɪzd ləˈbɔːrətɔːri/",
+"form": "Noun Phrase",
+"forms": "V: Specialize",
+"def": "A lab equipped for one specific type of scientific work.",
+"translation": "phòng thí nghiệm chuyên dụng",
+"example": "The fabric is grown in a specialized laboratory under careful supervision."
+},
+{
+"topic": "Materials & Biotech",
+"word": "animal hide",
+"phonetic": "/ˈænɪml haɪd/",
+"form": "Noun Phrase",
+"forms": "N: Hide",
+"def": "The skin of an animal, used to make leather.",
+"translation": "da động vật",
+"example": "Traditional leather comes from animal hide, which raises ethical concerns."
+},
+{
+"topic": "Materials & Biotech",
+"word": "texture",
+"phonetic": "/ˈtekstʃər/",
+"form": "Noun",
+"forms": "Adj: Textured",
+"def": "The feel or surface quality of a material.",
+"translation": "kết cấu",
+"example": "The texture of the new fabric is soft yet slightly rough."
+},
+{
+"topic": "Materials & Biotech",
+"word": "durability",
+"phonetic": "/ˌdʊrəˈbɪləti/",
+"form": "Noun",
+"forms": "Adj: Durable",
+"def": "The ability to last a long time without wearing out.",
+"translation": "độ bền",
+"example": "The durability of this material is tested by bending it thousands of times."
+},
+{
+"topic": "Impact & Pollution",
+"word": "carbon emission",
+"phonetic": "/ˈkɑːrbən ɪˈmɪʃn/",
+"form": "Noun Phrase",
+"forms": "N: Carbon",
+"def": "Carbon dioxide released into the atmosphere by human activity.",
+"translation": "khí thải carbon",
+"example": "Switching materials can cut the carbon emission of a handbag significantly."
+},
+{
+"topic": "Materials & Biotech",
+"word": "controlled environment",
+"phonetic": "/kənˈtroʊld ɪnˈvaɪrənmənt/",
+"form": "Noun Phrase",
+"forms": "V: Control",
+"def": "A space where conditions such as heat and humidity are carefully regulated.",
+"translation": "môi trường được kiểm soát",
+"example": "The mushrooms grow in a controlled environment, free of pests."
+},
+{
+"topic": "Materials & Biotech",
+"word": "property",
+"phonetic": "/ˈprɑːpərti/",
+"form": "Noun",
+"forms": "N: Properties",
+"def": "A quality or feature of a material.",
+"translation": "đặc tính",
+"example": "One useful property of this fabric is that it repels water."
+},
+{
+"topic": "Materials & Biotech",
+"word": "fungus (pl. fungi)",
+"phonetic": "/ˈfʌŋɡəs/",
+"form": "Noun Phrase",
+"forms": "Adj: Fungal",
+"def": "A living organism such as a mushroom, mould or yeast.",
+"translation": "nấm",
+"example": "A fungus can turn agricultural waste into a leather-like material."
+},
+{
+"topic": "Materials & Biotech",
+"word": "varying thickness",
+"phonetic": "/ˈveriɪŋ ˈθɪknəs/",
+"form": "Noun Phrase",
+"forms": "Adj: Varying | N: Thick",
+"def": "Different levels of thickness within a material.",
+"translation": "độ dày khác nhau",
+"example": "The sheets come in varying thickness, from thin lining to heavy jacket leather."
+},
+{
+"topic": "Fast Fashion & Shopping",
+"word": "footwear",
+"phonetic": "/ˈfʊtwer/",
+"form": "Noun",
+"forms": "N/A",
+"def": "Anything worn on the feet, such as shoes, boots or sandals.",
+"translation": "giày dép",
+"example": "Sustainable footwear is now made from mushrooms and recycled ocean plastic."
+},
+{
+"topic": "Fast Fashion & Shopping",
+"word": "accessory",
+"phonetic": "/əkˈsesəri/",
+"form": "Noun",
+"forms": "N: Accessories",
+"def": "An extra item, such as a belt, bag or scarf, that completes an outfit.",
+"translation": "phụ kiện",
+"example": "A simple bag is the perfect accessory for a plain dress."
+},
+{
+"topic": "Materials & Biotech",
+"word": "bio-based material",
+"phonetic": "/ˈbaɪoʊ beɪst məˈtɪriəl/",
+"form": "Noun Phrase",
+"forms": "Adj: Bio-based",
+"def": "A material made fully or partly from living organisms or plants.",
+"translation": "vật liệu sinh học",
+"example": "Bio-based material from algae is being tested for sportswear."
+},
+{
+"topic": "Materials & Biotech",
+"word": "precise shape",
+"phonetic": "/prɪˈsaɪs ʃeɪp/",
+"form": "Noun Phrase",
+"forms": "Adj: Precise",
+"def": "An exact form that is accurate down to small details.",
+"translation": "hình dạng chính xác",
+"example": "The mycelium is grown into a precise shape, so there is no need for cutting."
+},
+{
+"topic": "Materials & Biotech",
+"word": "cutting and trimming",
+"phonetic": "/ˈkʌtɪŋ ənd ˈtrɪmɪŋ/",
+"form": "Noun Phrase",
+"forms": "V: Cut, Trim",
+"def": "Shaping fabric by cutting it and removing excess parts.",
+"translation": "cắt và tỉa",
+"example": "Cutting and trimming can waste up to a fifth of the fabric."
+},
+{
+"topic": "Materials & Biotech",
+"word": "bio-glue",
+"phonetic": "/ˈbaɪoʊ ɡluː/",
+"form": "Noun Phrase",
+"forms": "N: Glue",
+"def": "An adhesive made from natural, biological ingredients.",
+"translation": "keo sinh học",
+"example": "Bio-glue holds the layers together without harmful solvents."
+},
+{
+"topic": "Materials & Biotech",
+"word": "natural dye",
+"phonetic": "/ˈnætʃrəl daɪ/",
+"form": "Noun Phrase",
+"forms": "Adj: Natural",
+"def": "Colouring made from plants, minerals or insects, not from chemicals.",
+"translation": "thuốc nhuộm tự nhiên",
+"example": "A natural dye from avocado stones gives the cloth a soft pink tone."
+},
+{
+"topic": "Impact & Pollution",
+"word": "garment production",
+"phonetic": "/ˈɡɑːrmənt prəˈdʌkʃn/",
+"form": "Noun Phrase",
+"forms": "V: Produce",
+"def": "The process of manufacturing clothes.",
+"translation": "sản xuất quần áo",
+"example": "Garment production is moving to countries where labour is cheapest."
+},
+{
+"topic": "Impact & Pollution",
+"word": "supply chain",
+"phonetic": "/səˈplaɪ tʃeɪn/",
+"form": "Noun Phrase",
+"forms": "N/A",
+"def": "The network of people and processes that move a product from raw material to buyer.",
+"translation": "chuỗi cung ứng",
+"example": "A short supply chain makes it easier to check working conditions."
+},
+{
+"topic": "Impact & Pollution",
+"word": "toxic substance",
+"phonetic": "/ˈtɑːksɪk ˈsʌbstəns/",
+"form": "Noun Phrase",
+"forms": "Adj: Toxic",
+"def": "A poisonous material that can cause illness or damage.",
+"translation": "chất độc hại",
+"example": "Toxic substances in dyes can seep into the soil."
+},
+{
+"topic": "Impact & Pollution",
+"word": "waterway",
+"phonetic": "/ˈwɔːtərweɪ/",
+"form": "Noun",
+"forms": "N/A",
+"def": "A river, canal or other channel that boats or water can travel along.",
+"translation": "đường thủy, sông ngòi",
+"example": "Dye from the mill has polluted the local waterway for years."
+},
+{
+"topic": "Materials & Biotech",
+"word": "engineered bacterium (pl. bacteria)",
+"phonetic": "/ˌendʒɪˈnɪrd bækˈtɪriəm/",
+"form": "Noun Phrase",
+"forms": "V: Engineer",
+"def": "A bacterium whose genes have been modified to perform a special task.",
+"translation": "vi khuẩn được thiết kế kỹ thuật",
+"example": "An engineered bacterium can produce blue dye without toxic chemicals."
+},
+{
+"topic": "Materials & Biotech",
+"word": "vibrant pigment",
+"phonetic": "/ˈvaɪbrənt ˈpɪɡmənt/",
+"form": "Noun Phrase",
+"forms": "Adj: Vibrant",
+"def": "A strong, bright colouring substance.",
+"translation": "sắc tố rực rỡ",
+"example": "The scarf is dyed with a vibrant pigment made by microbes."
+},
+{
+"topic": "Impact & Pollution",
+"word": "harsh chemical",
+"phonetic": "/hɑːrʃ ˈkemɪkl/",
+"form": "Noun Phrase",
+"forms": "Adj: Harsh",
+"def": "A strong chemical that can be damaging or irritating.",
+"translation": "hóa chất khắc nghiệt",
+"example": "Many conventional dyes need harsh chemicals to fix the colour."
+},
+{
+"topic": "Materials & Biotech",
+"word": "circular system",
+"phonetic": "/ˈsɜːrkjələr ˈsɪstəm/",
+"form": "Noun Phrase",
+"forms": "Adj: Circular",
+"def": "A closed-loop way of using resources in which nothing is wasted.",
+"translation": "hệ thống tuần hoàn",
+"example": "In a circular system, a worn-out shirt becomes the raw material for a new one."
+},
+{
+"topic": "Materials & Biotech",
+"word": "bio-fabricated textile",
+"phonetic": "/ˈbaɪoʊ ˈfæbrɪkeɪtɪd ˈtekstaɪl/",
+"form": "Noun Phrase",
+"forms": "V: Fabricate",
+"def": "Fabric grown or made using living cells or biological processes.",
+"translation": "hàng dệt may sinh học",
+"example": "A bio-fabricated textile can be grown in a vat in a few days."
+},
+{
+"topic": "Materials & Biotech",
+"word": "synthetic alternative",
+"phonetic": "/sɪnˈθetɪk ɔːlˈtɜːrnətɪv/",
+"form": "Noun Phrase",
+"forms": "Adj: Synthetic",
+"def": "A man-made replacement for a natural material.",
+"translation": "lựa chọn thay thế tổng hợp",
+"example": "Faux leather is a synthetic alternative that often contains plastic."
+},
+{
+"topic": "Materials & Biotech",
+"word": "technological advancement",
+"phonetic": "/ˌteknəˈlɑːdʒɪkl ədˈvænsmənt/",
+"form": "Noun Phrase",
+"forms": "Adj: Technological, V: Advance",
+"def": "A new development or improvement in technology.",
+"translation": "tiến bộ công nghệ",
+"example": "Technological advancement is making sustainable fabrics cheaper to produce."
+},
+{
+"topic": "Policy & Circularity",
+"word": "stricter environmental regulation",
+"phonetic": "/ˈstrɪktər ɪnˌvaɪrənˈmentl ˌreɡjuˈleɪʃn/",
+"form": "Noun Phrase",
+"forms": "Adj: Strict",
+"def": "Tougher laws that protect nature and limit pollution.",
+"translation": "quy định môi trường nghiêm ngặt hơn",
+"example": "Stricter environmental regulation could force mills to clean their wastewater."
+},
+{
+"topic": "Materials & Biotech",
+"word": "wider adoption",
+"phonetic": "/ˈwaɪdər əˈdɑːpʃn/",
+"form": "Noun Phrase",
+"forms": "V: Adopt",
+"def": "More people or companies starting to use something.",
+"translation": "việc áp dụng rộng rãi hơn",
+"example": "Wider adoption of recycled fibres would cut demand for virgin plastic."
+},
+{
+"topic": "Materials & Biotech",
+"word": "biology-based manufacturing",
+"phonetic": "/baɪˈɑːlədʒi beɪst ˌmænjuˈfæktʃərɪŋ/",
+"form": "Noun Phrase",
+"forms": "N: Biology",
+"def": "Making products using living organisms or biological processes.",
+"translation": "sản xuất dựa trên sinh học",
+"example": "Biology-based manufacturing may replace chemical-heavy factories in the future."
+},
+{
+"topic": "Materials & Biotech",
+"word": "functionality",
+"phonetic": "/ˌfʌŋkʃəˈnæləti/",
+"form": "Noun",
+"forms": "Adj: Functional",
+"def": "How well something does its job; its practical features.",
+"translation": "chức năng",
+"example": "The jacket combines good looks with outstanding functionality."
+},
+{
+"topic": "Verbs",
+"word": "imitate",
+"phonetic": "/ˈɪmɪteɪt/",
+"form": "Verb",
+"forms": "N: Imitation",
+"def": "To copy the way something looks, sounds or behaves.",
+"translation": "bắt chước, mô phỏng",
+"example": "Many bio-leathers are designed to imitate the look of animal hide."
+},
+{
+"topic": "Verbs",
+"word": "discard",
+"phonetic": "/dɪˈskɑːrd/",
+"form": "Verb",
+"forms": "N/A",
+"def": "To throw something away because it is no longer wanted.",
+"translation": "vứt bỏ, loại bỏ",
+"example": "People discard clothes after wearing them only a handful of times."
+},
+{
+"topic": "Verbs",
+"word": "soothe",
+"phonetic": "/suːð/",
+"form": "Verb",
+"forms": "Adj: Soothing",
+"def": "To calm or ease a feeling such as worry or guilt.",
+"translation": "xoa dịu, làm dịu",
+"example": "Buying \"green\" products can soothe our guilt about consumption."
+},
+{
+"topic": "Verbs",
+"word": "enforce",
+"phonetic": "/ɪnˈfɔːrs/",
+"form": "Verb",
+"forms": "N: Enforcement",
+"def": "To make sure that people obey a law or rule.",
+"translation": "thực thi, áp đặt",
+"example": "Authorities must enforce rules against dumping dye into rivers."
+},
+{
+"topic": "Verbs",
+"word": "urge",
+"phonetic": "/ɜːrdʒ/",
+"form": "Verb",
+"forms": "N: Urge",
+"def": "To strongly encourage someone to do something.",
+"translation": "thúc giục, kêu gọi",
+"example": "Campaigners urge shoppers to buy fewer, better clothes."
+},
+{
+"topic": "Verbs",
+"word": "prioritize",
+"phonetic": "/praɪˈɔːrətaɪz/",
+"form": "Verb",
+"forms": "N: Priority",
+"def": "To treat something as more important than other things.",
+"translation": "ưu tiên",
+"example": "Brands should prioritize durability over speed."
+},
+{
+"topic": "Verbs",
+"word": "outweigh",
+"phonetic": "/ˌaʊtˈweɪ/",
+"form": "Verb",
+"forms": "N/A",
+"def": "To be greater or more important than something else.",
+"translation": "lớn hơn, vượt trội hơn",
+"example": "For many, the thrill of a cheap deal outweighs concern for the environment."
+},
+{
+"topic": "Verbs",
+"word": "leach",
+"phonetic": "/liːtʃ/",
+"form": "Verb",
+"forms": "N: Leaching",
+"def": "To drain out of a substance and seep into soil or water.",
+"translation": "rò rỉ, thải ra",
+"example": "Chemicals from discarded clothes can leach into groundwater."
+},
+{
+"topic": "Verbs",
+"word": "overwhelm",
+"phonetic": "/ˌoʊvərˈwelm/",
+"form": "Verb",
+"forms": "Adj: Overwhelming",
+"def": "To overpower or bury someone or something with too much of something.",
+"translation": "tràn ngập, áp đảo",
+"example": "Used clothing donations overwhelm charity shops and overseas markets."
+},
+{
+"topic": "Verbs",
+"word": "incinerate",
+"phonetic": "/ɪnˈsɪnəreɪt/",
+"form": "Verb",
+"forms": "N: Incinerator",
+"def": "To burn something completely, usually waste.",
+"translation": "đốt cháy",
+"example": "Some brands incinerate unsold stock instead of selling it cheaply."
+},
+{
+"topic": "Verbs",
+"word": "tout",
+"phonetic": "/taʊt/",
+"form": "Verb",
+"forms": "N/A",
+"def": "To promote something boldly, often to attract buyers.",
+"translation": "quảng cáo, ca ngợi",
+"example": "Companies tout their \"recycled\" ranges while ignoring their total output."
+},
+{
+"topic": "Verbs",
+"word": "swamp",
+"phonetic": "/swɑːmp/",
+"form": "Verb",
+"forms": "N: Swamp",
+"def": "To flood or overload with a huge amount of something.",
+"translation": "nhấn chìm",
+"example": "Cheap imports swamp local markets and ruin small tailors."
+},
+{
+"topic": "Verbs",
+"word": "perpetuate",
+"phonetic": "/pərˈpetʃueɪt/",
+"form": "Verb",
+"forms": "N: Perpetuation",
+"def": "To make a situation or problem continue.",
+"translation": "duy trì, làm tiếp diễn",
+"example": "Constant discounting perpetuates a cycle of overbuying."
+},
+{
+"topic": "Verbs",
+"word": "externalize",
+"phonetic": "/ɪkˈstɜːrnəlaɪz/",
+"form": "Verb",
+"forms": "N: Externalization",
+"def": "To push costs or harms onto others, such as the public or the environment.",
+"translation": "ngoại hóa (đẩy chi phí ra bên ngoài)",
+"example": "Companies externalize pollution costs to communities near the factory."
+},
+{
+"topic": "Verbs",
+"word": "outstrip",
+"phonetic": "/ˌaʊtˈstrɪp/",
+"form": "Verb",
+"forms": "N/A",
+"def": "To grow faster or become greater than something else.",
+"translation": "vượt qua, vượt xa",
+"example": "The speed of clothing production far outstrips the speed of recycling."
+},
+{
+"topic": "Verbs",
+"word": "shave off",
+"phonetic": "/ʃeɪv ɔːf/",
+"form": "Phrasal Verb",
+"forms": "N/A",
+"def": "To cut a small amount from a cost, time or quantity.",
+"translation": "cắt giảm",
+"example": "Factories shave off costs by using cheaper dyes and fewer safety checks."
+},
+{
+"topic": "Verbs",
+"word": "obscure",
+"phonetic": "/əbˈskjʊr/",
+"form": "Verb",
+"forms": "Adj: Obscure",
+"def": "To make something harder to see or understand.",
+"translation": "che khuất, làm mờ",
+"example": "Long supply chains obscure who actually made the garment."
+},
+{
+"topic": "Verbs",
+"word": "fetishize",
+"phonetic": "/ˈfetɪʃaɪz/",
+"form": "Verb",
+"forms": "N: Fetish",
+"def": "To treat something with exaggerated, almost obsessive admiration.",
+"translation": "tôn sùng",
+"example": "The industry fetishizes the new, always chasing the next big thing."
+},
+{
+"topic": "Verbs",
+"word": "counteract",
+"phonetic": "/ˌkaʊntərˈækt/",
+"form": "Verb",
+"forms": "N/A",
+"def": "To reduce or cancel out the effect of something.",
+"translation": "chống lại, đối kháng",
+"example": "Recycling programmes cannot counteract the sheer scale of overproduction."
+},
+{
+"topic": "Verbs",
+"word": "dilute",
+"phonetic": "/daɪˈluːt/",
+"form": "Verb",
+"forms": "Adj: Diluted",
+"def": "To weaken the strength or impact of something.",
+"translation": "làm loãng, giảm bớt",
+"example": "Vague promises dilute the impact of real sustainability efforts."
+},
+{
+"topic": "Verbs",
+"word": "cannibalize",
+"phonetic": "/ˈkænɪbəlaɪz/",
+"form": "Verb",
+"forms": "N: Cannibal",
+"def": "To harm one's own product or market by competing with oneself.",
+"translation": "ăn mòn, làm suy giảm",
+"example": "Rapid trend cycles cannibalize the value of last season's clothes."
+},
+{
+"topic": "Verbs",
+"word": "recalibrate",
+"phonetic": "/riˈkælɪbreɪt/",
+"form": "Verb",
+"forms": "N: Calibration",
+"def": "To adjust something carefully so that it works properly again.",
+"translation": "hiệu chỉnh lại",
+"example": "Brands must recalibrate their business models around durability."
+},
+{
+"topic": "Verbs",
+"word": "absorb",
+"phonetic": "/əbˈzɔːrb/",
+"form": "Verb",
+"forms": "N: Absorption",
+"def": "To take in a substance, cost or impact.",
+"translation": "hấp thụ",
+"example": "Poorer communities absorb most of the pollution from clothing factories."
+},
+{
+"topic": "Verbs",
+"word": "restrain",
+"phonetic": "/rɪˈstreɪn/",
+"form": "Verb",
+"forms": "N: Restraint",
+"def": "To hold something back or keep it under control.",
+"translation": "kiềm chế",
+"example": "Rules to restrain overproduction would help to protect resources."
+},
+{
+"topic": "Verbs",
+"word": "escalate",
+"phonetic": "/ˈeskəleɪt/",
+"form": "Verb",
+"forms": "N: Escalation",
+"def": "To grow or increase quickly in seriousness or amount.",
+"translation": "leo thang",
+"example": "Textile waste continues to escalate as sales rise."
+},
+{
+"topic": "Verbs",
+"word": "endure",
+"phonetic": "/ɪnˈdʊr/",
+"form": "Verb",
+"forms": "Adj: Enduring",
+"def": "To last for a long time or to suffer through something.",
+"translation": "tồn tại, kéo dài",
+"example": "Quality leather shoes endure for decades if well cared for."
+},
+{
+"topic": "Verbs",
+"word": "decouple",
+"phonetic": "/diˈkʌpl/",
+"form": "Verb",
+"forms": "N: Decoupling",
+"def": "To separate two things that were previously linked, such as growth and pollution.",
+"translation": "tách rời",
+"example": "The goal is to decouple profit from resource use."
+},
+{
+"topic": "Verbs",
+"word": "resemble",
+"phonetic": "/rɪˈzembl/",
+"form": "Verb",
+"forms": "N: Resemblance",
+"def": "To look like or be similar to something.",
+"translation": "giống với",
+"example": "Mushroom leather closely resembles the real thing."
+},
+{
+"topic": "Verbs",
+"word": "fine-tune",
+"phonetic": "/faɪn tuːn/",
+"form": "Verb",
+"forms": "Adj: Fine-tuned",
+"def": "To make small adjustments to improve something.",
+"translation": "tinh chỉnh",
+"example": "Scientists fine-tune the growing process to get the right thickness."
+},
+{
+"topic": "Verbs",
+"word": "adjust",
+"phonetic": "/əˈdʒʌst/",
+"form": "Verb",
+"forms": "N: Adjustment",
+"def": "To change something slightly to fit new conditions.",
+"translation": "điều chỉnh",
+"example": "Designers adjust the pattern so that less fabric is wasted."
+},
+{
+"topic": "Verbs",
+"word": "minimize",
+"phonetic": "/ˈmɪnɪmaɪz/",
+"form": "Verb",
+"forms": "Adj: Minimal",
+"def": "To reduce something to the smallest possible amount.",
+"translation": "giảm thiểu",
+"example": "Zero-waste patterns minimize the offcuts left after cutting."
+},
+{
+"topic": "Verbs",
+"word": "bond to",
+"phonetic": "/bɑːnd tuː/",
+"form": "Phrasal Verb",
+"forms": "N: Bond",
+"def": "To stick firmly to a surface or to another substance.",
+"translation": "bám vào, liên kết với",
+"example": "The natural coating bonds to the fibres without chemicals."
+},
+{
+"topic": "Verbs",
+"word": "redefine",
+"phonetic": "/ˌriːdɪˈfaɪn/",
+"form": "Verb",
+"forms": "N: Redefinition",
+"def": "To change the meaning or standards of something.",
+"translation": "định nghĩa lại",
+"example": "Lab-grown materials may redefine what we think of as luxury."
+},
+{
+"topic": "Adjectives & Adverbs",
+"word": "invisible",
+"phonetic": "/ɪnˈvɪzəbl/",
+"form": "Adjective",
+"forms": "N: Invisibility",
+"def": "Impossible to see or notice.",
+"translation": "vô hình",
+"example": "The pollution behind a cheap T-shirt is invisible to most shoppers."
+},
+{
+"topic": "Adjectives & Adverbs",
+"word": "toxic",
+"phonetic": "/ˈtɑːksɪk/",
+"form": "Adjective",
+"forms": "N: Toxin",
+"def": "Poisonous; harmful to people or the environment.",
+"translation": "độc hại",
+"example": "Toxic dye run-off has killed fish in nearby rivers."
+},
+{
+"topic": "Adjectives & Adverbs",
+"word": "severe",
+"phonetic": "/sɪˈvɪr/",
+"form": "Adjective",
+"forms": "N: Severity",
+"def": "Very serious, harsh or extreme.",
+"translation": "nghiêm trọng, khắc nghiệt",
+"example": "The industry faces severe criticism over water pollution."
+},
+{
+"topic": "Adjectives & Adverbs",
+"word": "vague",
+"phonetic": "/veɪɡ/",
+"form": "Adjective",
+"forms": "Adv: Vaguely",
+"def": "Not clear, specific or detailed.",
+"translation": "mơ hồ, không rõ ràng",
+"example": "The label made vague claims such as \"good for the planet\"."
+},
+{
+"topic": "Adjectives & Adverbs",
+"word": "unverifiable",
+"phonetic": "/ʌnˈverɪfaɪəbl/",
+"form": "Adjective",
+"forms": "V: Verify",
+"def": "Impossible to check or prove as true.",
+"translation": "không thể kiểm chứng",
+"example": "Unverifiable claims on labels make it hard for shoppers to trust brands."
+},
+{
+"topic": "Adjectives & Adverbs",
+"word": "profitable",
+"phonetic": "/ˈprɑːfɪtəbl/",
+"form": "Adjective",
+"forms": "N: Profit",
+"def": "Making money or giving a financial gain.",
+"translation": "sinh lời, có lợi nhuận",
+"example": "Fast fashion is profitable because costs are pushed onto others."
+},
+{
+"topic": "Adjectives & Adverbs",
+"word": "dispersed",
+"phonetic": "/dɪˈspɜːrst/",
+"form": "Adjective",
+"forms": "V: Disperse",
+"def": "Spread widely over a large area.",
+"translation": "phân tán, trải rộng",
+"example": "Production is dispersed across dozens of countries and hundreds of factories."
+},
+{
+"topic": "Adjectives & Adverbs",
+"word": "polyester-heavy",
+"phonetic": "/ˌpɑːliˈestər ˈhevi/",
+"form": "Adjective",
+"forms": "N: Polyester",
+"def": "Containing a large proportion of polyester.",
+"translation": "chứa nhiều polyester",
+"example": "Polyester-heavy collections shed microfibers in every wash."
+},
+{
+"topic": "Adjectives & Adverbs",
+"word": "systemic",
+"phonetic": "/sɪˈstemɪk/",
+"form": "Adjective",
+"forms": "N: System",
+"def": "Affecting the whole system, not just one part.",
+"translation": "mang tính hệ thống",
+"example": "Overproduction is a systemic problem, not just one brand's mistake."
+},
+{
+"topic": "Adjectives & Adverbs",
+"word": "cumulative",
+"phonetic": "/ˈkjuːmjəleɪtɪv/",
+"form": "Adjective",
+"forms": "Adv: Cumulatively",
+"def": "Increasing steadily as small amounts add up.",
+"translation": "tích lũy",
+"example": "The cumulative effect of millions of small purchases is huge."
+},
+{
+"topic": "Adjectives & Adverbs",
+"word": "substantive",
+"phonetic": "/səbˈstæntɪv/",
+"form": "Adjective",
+"forms": "Adv: Substantively",
+"def": "Real, meaningful and important rather than just symbolic.",
+"translation": "thực chất, quan trọng",
+"example": "Shoppers want substantive change, not just clever slogans."
+},
+{
+"topic": "Adjectives & Adverbs",
+"word": "chronically underfunded",
+"phonetic": "/ˈkrɑːnɪkli ˌʌndərˈfʌndɪd/",
+"form": "Adjective",
+"forms": "Adv: Chronically",
+"def": "Persistently lacking enough money over a long time.",
+"translation": "thiếu vốn trầm trọng",
+"example": "Inspection agencies are chronically underfunded, so factories are rarely checked."
+},
+{
+"topic": "Adjectives & Adverbs",
+"word": "institutionally fragmented",
+"phonetic": "/ˌɪnstɪˈtuːʃənəli ˈfræɡmentɪd/",
+"form": "Adjective",
+"forms": "N: Institution",
+"def": "Split among many separate organisations that fail to work together.",
+"translation": "bị phân mảnh về thể chế",
+"example": "An institutionally fragmented system makes global rules hard to enforce."
+},
+{
+"topic": "Adjectives & Adverbs",
+"word": "near-disposable",
+"phonetic": "/nɪr dɪˈspoʊzəbl/",
+"form": "Adjective",
+"forms": "Adj: Disposable",
+"def": "Almost cheap enough and flimsy enough to be thrown away after one use.",
+"translation": "gần như dùng một lần",
+"example": "A near-disposable top costs less than a sandwich."
+},
+{
+"topic": "Adjectives & Adverbs",
+"word": "incremental",
+"phonetic": "/ˌɪnkrəˈmentl/",
+"form": "Adjective",
+"forms": "N: Increment",
+"def": "Happening in small, gradual steps.",
+"translation": "tăng dần",
+"example": "Incremental improvements alone will not fix an industry built on volume."
+},
+{
+"topic": "Adjectives & Adverbs",
+"word": "outsized",
+"phonetic": "/ˈaʊtsaɪzd/",
+"form": "Adjective",
+"forms": "N: Size",
+"def": "Much larger than normal or expected.",
+"translation": "quá mức, lớn bất thường",
+"example": "Fashion has an outsized impact on water use for its economic size."
+},
+{
+"topic": "Adjectives & Adverbs",
+"word": "aspirational",
+"phonetic": "/ˌæspəˈreɪʃənl/",
+"form": "Adjective",
+"forms": "N: Aspiration",
+"def": "Inspiring people to want a better or more successful lifestyle.",
+"translation": "mang tính khát vọng, mong muốn",
+"example": "Luxury brands sell an aspirational image as much as the clothes themselves."
+},
+{
+"topic": "Adjectives & Adverbs",
+"word": "unaltered",
+"phonetic": "/ʌnˈɔːltərd/",
+"form": "Adjective",
+"forms": "V: Alter",
+"def": "Not changed in any way.",
+"translation": "không thay đổi",
+"example": "The business model remains unaltered, despite the green marketing."
+},
+{
+"topic": "Adjectives & Adverbs",
+"word": "superficial",
+"phonetic": "/ˌsuːpərˈfɪʃl/",
+"form": "Adjective",
+"forms": "Adv: Superficially",
+"def": "Existing only on the surface; not deep or thorough.",
+"translation": "bề ngoài, hời hợt",
+"example": "Adding one recycled button is only a superficial change."
+},
+{
+"topic": "Adjectives & Adverbs",
+"word": "lab-grown",
+"phonetic": "/læb ɡroʊn/",
+"form": "Adjective",
+"forms": "N: Laboratory",
+"def": "Produced in a laboratory rather than in nature or on a farm.",
+"translation": "được nuôi cấy trong phòng thí nghiệm",
+"example": "Lab-grown leather needs no cattle and far less land."
+},
+{
+"topic": "Adjectives & Adverbs",
+"word": "innovative",
+"phonetic": "/ˈɪnəveɪtɪv/",
+"form": "Adjective",
+"forms": "N: Innovation",
+"def": "Using new ideas, methods or technology.",
+"translation": "đổi mới, sáng tạo",
+"example": "Innovative start-ups are rethinking how fabric is made."
+},
+{
+"topic": "Adjectives & Adverbs",
+"word": "lightweight",
+"phonetic": "/ˈlaɪtweɪt/",
+"form": "Adjective",
+"forms": "N: Weight",
+"def": "Not heavy; having little weight.",
+"translation": "nhẹ",
+"example": "The jacket is lightweight but still very warm."
+},
+{
+"topic": "Adjectives & Adverbs",
+"word": "sturdy",
+"phonetic": "/ˈstɜːrdi/",
+"form": "Adjective",
+"forms": "Adv: Sturdily",
+"def": "Strongly built and not easily damaged.",
+"translation": "chắc chắn",
+"example": "These sturdy boots will withstand years of hard wear."
+},
+{
+"topic": "Adjectives & Adverbs",
+"word": "conventional",
+"phonetic": "/kənˈvenʃənl/",
+"form": "Adjective",
+"forms": "N: Convention",
+"def": "Following traditional or widely accepted methods.",
+"translation": "thông thường, truyền thống",
+"example": "Conventional cotton farming uses lots of pesticides."
+},
+{
+"topic": "Adjectives & Adverbs",
+"word": "biodegradable",
+"phonetic": "/ˌbaɪoʊdɪˈɡreɪdəbl/",
+"form": "Adjective",
+"forms": "N: Biodegradability",
+"def": "Able to break down naturally through bacteria or other living things.",
+"translation": "có thể phân hủy sinh học",
+"example": "Biodegradable fabrics return to the soil after use."
+},
+{
+"topic": "Adjectives & Adverbs",
+"word": "disproportionately",
+"phonetic": "/ˌdɪsprəˈpɔːrʃənətli/",
+"form": "Adverb",
+"forms": "Adj: Disproportionate",
+"def": "In a way that is too large or small compared with something else.",
+"translation": "một cách không tương xứng",
+"example": "Women are disproportionately employed in low-paid garment work."
+},
+{
+"topic": "Phrases",
+"word": "a fraction of",
+"phonetic": "/ə ˈfrækʃn əv/",
+"form": "Phrase",
+"forms": "N: Fraction",
+"def": "A very small part of the whole.",
+"translation": "một phần nhỏ của",
+"example": "Recycled fibres make up only a fraction of the clothes sold."
+},
+{
+"topic": "Phrases",
+"word": "sustainably made",
+"phonetic": "/səˈsteɪnəbli meɪd/",
+"form": "Phrase",
+"forms": "Adj: Sustainable",
+"def": "Produced in ways that do not exhaust resources or harm the planet.",
+"translation": "được sản xuất bền vững",
+"example": "She only buys sustainably made clothes, even if they cost more."
+},
+{
+"topic": "Phrases",
+"word": "ethically sourced",
+"phonetic": "/ˈeθɪkli sɔːrst/",
+"form": "Phrase",
+"forms": "Adj: Ethical",
+"def": "Obtained in ways that treat people and animals fairly.",
+"translation": "có nguồn gốc đạo đức",
+"example": "The brand promises ethically sourced cotton from fair-trade farms."
+},
+{
+"topic": "Phrases",
+"word": "at sb's / sth's expense",
+"phonetic": "/æt ... ɪkˈspens/",
+"form": "Phrase",
+"forms": "N: Expense",
+"def": "With harm or cost to someone or something else.",
+"translation": "với cái giá phải trả là...",
+"example": "Cheap fashion is often produced at the expense of workers' health."
+},
+{
+"topic": "Phrases",
+"word": "predicated on",
+"phonetic": "/ˈpredɪkeɪtɪd ɑːn/",
+"form": "Phrase",
+"forms": "V: Predicate",
+"def": "Based on or depending on a certain idea or condition.",
+"translation": "được xây dựng dựa trên",
+"example": "The business model is predicated on selling ever more clothes."
+}
+];
+
+const TOPICS = ['Fast Fashion & Shopping','Impact & Pollution','Policy & Circularity','Materials & Biotech','Verbs','Adjectives & Adverbs','Phrases'];
+let activeTopic = 'all';
+let flashcardData = [], currentCardIndex = 0;
+const flashcardScene = document.getElementById('flashcard-scene');
+const esc = s => s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/"/g,'&quot;');
+const speaker = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9v6h4l5 5V4L7 9H3z"></path><path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path><path d="M19.07 4.93a10 10 0 0 1 0 14.14"></path></svg>';
+
+function renderFilters(){
+  const box = document.getElementById('topic-filters');
+  const mk = (key,label,n) => `<button class="filter-btn${key===activeTopic?' active':''}" data-topic="${esc(key)}">${esc(label)}<span class="count">${n}</span></button>`;
+  box.innerHTML = mk('all','All Vocabulary',vocabBank.length) +
+    TOPICS.map(t => mk(t,t,vocabBank.filter(v=>v.topic===t).length)).join('');
+  box.querySelectorAll('.filter-btn').forEach(b => b.onclick = () => filterTopic(b.dataset.topic));
+}
+
+function renderGrid(){
+  const grid = document.getElementById('grid-view');
+  grid.innerHTML = '';
+  vocabBank.forEach((item,idx) => {
+    const a = document.createElement('article');
+    a.className = 'vocab-card';
+    a.dataset.idx = idx;
+    a.innerHTML = `
+      <div class="word-header">
+        <div class="word-main"><span class="word">${esc(item.word)}</span>
+          <button class="audio-btn" data-idx="${idx}" title="Listen to pronunciation">${speaker}</button></div>
+        <div class="meta-info"><span class="phonetic">${esc(item.phonetic)}</span></div>
+      </div>
+      <div class="word-families"><strong>Word Form:</strong> ${item.form} | <strong>Related:</strong> ${esc(item.forms)}</div>
+      <span class="topic-tag">${esc(item.topic)}</span>
+      <p class="definition"><strong>Definition:</strong> ${esc(item.def)}</p>
+      <p class="translation">${esc(item.translation)}</p>
+      <div class="example-box"><span>Example</span><div class="example-text">"${esc(item.example)}"</div></div>`;
+    grid.appendChild(a);
+  });
+  grid.querySelectorAll('.audio-btn').forEach(b => b.onclick = () => playAudio(vocabBank[b.dataset.idx].word.replace(/\s*\(.*?\)\s*/g,'')));
+}
+
+function matches(item){
+  const q = document.getElementById('search').value.trim().toLowerCase();
+  const topicOk = activeTopic==='all' || item.topic===activeTopic;
+  const qOk = !q || item.word.toLowerCase().includes(q) || item.translation.toLowerCase().includes(q) || item.def.toLowerCase().includes(q);
+  return topicOk && qOk;
+}
+
+function applyFilters(){
+  let shown = 0;
+  document.querySelectorAll('.vocab-card').forEach(c => {
+    const ok = matches(vocabBank[c.dataset.idx]);
+    c.classList.toggle('hidden', !ok);
+    if (ok) shown++;
+  });
+  document.getElementById('empty').style.display = shown ? 'none' : 'block';
+  if (document.getElementById('flashcard-view').style.display === 'flex') {
+    flashcardData = vocabBank.filter(matches);
+    currentCardIndex = 0;
+    updateFlashcardUI();
+  }
+}
+
+function filterTopic(t){
+  activeTopic = t;
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.toggle('active', b.dataset.topic===t));
+  applyFilters();
+}
+
+function switchView(v){
+  const grid = document.getElementById('grid-view'), fc = document.getElementById('flashcard-view');
+  document.getElementById('btn-grid').classList.toggle('active', v==='grid');
+  document.getElementById('btn-flashcards').classList.toggle('active', v!=='grid');
+  if (v==='grid'){ grid.style.display='grid'; fc.style.display='none'; applyFilters(); }
+  else { grid.style.display='none'; fc.style.display='flex'; document.getElementById('empty').style.display='none';
+         flashcardData = vocabBank.filter(matches); currentCardIndex = 0; updateFlashcardUI(); }
+}
+
+// --- Audio ---
+let voices = [];
+if ('speechSynthesis' in window){
+  voices = speechSynthesis.getVoices();
+  speechSynthesis.onvoiceschanged = () => { voices = speechSynthesis.getVoices(); };
+}
+function playAudio(text){
+  if (!('speechSynthesis' in window)){ alert("Sorry, your browser doesn't support text-to-speech."); return; }
+  speechSynthesis.cancel();
+  const u = new SpeechSynthesisUtterance(text);
+  u.lang = 'en-GB'; u.rate = .9;
+  const names = ['Female','Samantha','Victoria','Zira','Karen','Tessa','Fiona','Moira','Veena'];
+  let v = voices.find(x => names.some(n => x.name.includes(n))) ||
+          voices.find(x => x.lang.includes('en-GB') && !x.name.includes('Male'));
+  if (v) u.voice = v; else u.pitch = 1.3;
+  speechSynthesis.speak(u);
+}
+function playAudioFromCard(e){
+  e.stopPropagation();
+  playAudio(document.getElementById('fc-word').textContent.replace(/\s*\(.*?\)\s*/g,''));
+}
+
+// --- Flashcards ---
+function updateFlashcardUI(){
+  flashcardScene.classList.remove('is-flipped');
+  if (!flashcardData.length){
+    document.getElementById('fc-word').textContent = 'No cards';
+    ['fc-phonetic','fc-forms','fc-topic','fc-definition','fc-translation'].forEach(id => document.getElementById(id).textContent='');
+    document.getElementById('fc-example-container').innerHTML='';
+    document.getElementById('fc-counter').textContent='0 / 0';
+    document.getElementById('fc-prev').disabled = document.getElementById('fc-next').disabled = true;
+    return;
+  }
+  const d = flashcardData[currentCardIndex];
+  setTimeout(() => {
+    document.getElementById('fc-word').textContent = d.word;
+    document.getElementById('fc-phonetic').textContent = d.phonetic;
+    document.getElementById('fc-topic').textContent = d.topic;
+    document.getElementById('fc-definition').textContent = d.def;
+    document.getElementById('fc-translation').textContent = d.translation;
+    document.getElementById('fc-forms').innerHTML = `<strong>Form:</strong> ${d.form} | <strong>Related:</strong> ${esc(d.forms)}`;
+    document.getElementById('fc-example-container').innerHTML = `<div class="example-box"><span>Example</span><div class="example-text">"${esc(d.example)}"</div></div>`;
+    document.getElementById('fc-counter').textContent = `${currentCardIndex+1} / ${flashcardData.length}`;
+    document.getElementById('fc-prev').disabled = currentCardIndex===0;
+    document.getElementById('fc-next').disabled = currentCardIndex===flashcardData.length-1;
+  }, 150);
+}
+function flipCard(){ flashcardScene.classList.toggle('is-flipped'); }
+function nextCard(){ if (currentCardIndex < flashcardData.length-1){ currentCardIndex++; updateFlashcardUI(); } }
+function prevCard(){ if (currentCardIndex > 0){ currentCardIndex--; updateFlashcardUI(); } }
+function shuffleCards(){
+  for (let i=flashcardData.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [flashcardData[i],flashcardData[j]]=[flashcardData[j],flashcardData[i]]; }
+  currentCardIndex = 0; updateFlashcardUI();
+}
+document.addEventListener('keydown', e => {
+  if (document.getElementById('flashcard-view').style.display !== 'flex' || e.target.id==='search') return;
+  if (e.key==='ArrowRight') nextCard();
+  if (e.key==='ArrowLeft') prevCard();
+  if (e.key===' '){ e.preventDefault(); flipCard(); }
+});
+
+renderFilters();
+renderGrid();
+</script>
+</body>
+</html>
