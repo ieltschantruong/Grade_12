@@ -1,0 +1,797 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Lesson 5 | Relative Clauses &amp; Participles</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+  color-scheme:light;
+  --bg1:#f1f7ff; --bg2:#fff9e6;
+  --ink:#2f4156; --ink2:#5b7086; --line:rgba(90,130,180,.24);
+  --glass:rgba(255,255,255,.72); --glass-b:rgba(255,255,255,.85); --shadow:0 8px 28px rgba(120,160,215,.2);
+  --primary:#9ccaf2; --primary-text:#1d5c94; --primary-soft:rgba(156,202,242,.3); --primary-ink:#152f4a;
+  --lav:#fff0b8; --lav-ink:#7a5a08; --blob1:#cfe5fb; --blob2:#ffe8a6; --blob3:#ffd5da;
+  --ok:#2b7a50; --ok-bg:#dff5e6; --ok-line:#9ad8b0;
+  --bad:#b24a50; --bad-bg:#ffe5e8; --bad-line:#f4b4bb;
+  --skip:#85692a; --skip-bg:#fff2d4; --skip-line:#eed38d;
+  --field:rgba(255,255,255,.88); --field-line:#cddcee;
+  --font:'Inter',system-ui,-apple-system,'Segoe UI',sans-serif;
+  --serif:'Fraunces',Georgia,'Times New Roman',serif;
+}
+html{scroll-padding-top:calc(env(safe-area-inset-top,0px) + 5.5rem)}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:var(--font);color:var(--ink);min-height:100vh;background:linear-gradient(135deg,var(--bg1),#f9f9f2 55%,var(--bg2));overflow-x:hidden;line-height:1.5}
+.blob{position:fixed;border-radius:50%;filter:blur(90px);z-index:-1;opacity:.6;pointer-events:none}
+.b1{top:-12%;left:-10%;width:50vw;height:50vw;background:var(--blob1)}
+.b2{bottom:-12%;right:-10%;width:60vw;height:60vw;background:var(--blob2)}
+.b3{top:42%;left:60%;width:36vw;height:36vw;background:var(--blob3);opacity:.35}
+.glass{background:var(--glass);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border:1px solid var(--glass-b);border-radius:20px;box-shadow:var(--shadow)}
+.container{max-width:920px;margin:0 auto;padding:1.25rem 1.25rem 3rem}
+h1,h2,h3{font-family:var(--serif);font-weight:700;letter-spacing:-.01em}
+
+/* header */
+header.bar{display:flex;justify-content:space-between;align-items:center;gap:1rem;padding:.8rem 1.2rem;margin-bottom:1.5rem;position:sticky;top:calc(env(safe-area-inset-top,0px) + .6rem);z-index:50}
+.brand{display:flex;flex-direction:column;line-height:1.15;min-width:0}
+.brand b{font-family:var(--serif);font-size:1.08rem}
+.brand span{font-size:.78rem;color:var(--ink2)}
+.stats{display:flex;align-items:center;gap:.7rem;font-weight:600;font-size:.9rem}
+.pill{display:inline-flex;align-items:center;gap:.4rem;padding:.4rem .8rem;border-radius:999px;background:var(--field);border:1px solid var(--line)}
+.btn{font-family:inherit;font-weight:600;font-size:1rem;border:none;border-radius:999px;padding:.85rem 1.6rem;cursor:pointer;background:var(--primary);color:var(--primary-ink);transition:transform .15s,filter .15s}
+.btn:hover{filter:brightness(1.07);transform:translateY(-1px)}
+.btn.ghost{background:transparent;color:var(--ink);border:2px solid var(--primary)}
+.btn.small{padding:.45rem .95rem;font-size:.85rem}
+.btn:focus-visible,.opt:focus-within,input:focus-visible,select:focus-visible,summary:focus-visible,.chip:focus-visible,.tickbtn:focus-visible{outline:3px solid var(--primary-text);outline-offset:2px}
+
+.view{display:none}.view.active{display:block}
+@media (prefers-reduced-motion:no-preference){.view.active{animation:fade .35s ease}}
+@keyframes fade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+
+/* home */
+.hero{padding:2.2rem 2rem 1.6rem;margin-bottom:1.4rem}
+.hero h2{font-size:clamp(1.8rem,4.5vw,2.6rem);line-height:1.1;margin-bottom:.8rem}
+.hero p{color:var(--ink2);max-width:62ch}
+.sets{display:grid;grid-template-columns:1fr;gap:1.2rem}
+@media(min-width:760px){.sets{grid-template-columns:1fr 1fr}}
+
+.setcard{padding:1.6rem;display:flex;flex-direction:column;gap:.9rem}
+.setcard .tagline{display:inline-block;align-self:flex-start;font-size:.8rem;font-weight:600;padding:.25rem .7rem;border-radius:999px;background:var(--lav);color:var(--lav-ink)}
+.setcard h3{font-size:1.4rem;line-height:1.2}
+.setcard p{color:var(--ink2);font-size:.95rem}
+.secl{list-style:none;display:flex;flex-direction:column;gap:.15rem;font-size:.88rem;border-top:1px solid var(--line);padding-top:.7rem}
+.secl li{display:flex;justify-content:space-between;gap:1rem}
+.secl li span:last-child{color:var(--ink2);white-space:nowrap}
+.setcard .go{margin-top:auto;display:flex;gap:.6rem;flex-wrap:wrap;align-items:center}
+.resume{font-size:.82rem;color:var(--ink2)}
+
+/* quiz */
+.toolbar{padding:1rem 1.2rem;margin-bottom:1.2rem}
+.toolbar .row{display:flex;justify-content:space-between;align-items:center;gap:1rem;flex-wrap:wrap}
+.toolbar h2{font-size:1.15rem}
+.prog{height:6px;background:var(--line);border-radius:3px;overflow:hidden;margin:.8rem 0}
+.prog i{display:block;height:100%;width:0;background:var(--primary);transition:width .25s}
+.chips{display:flex;gap:.45rem;overflow-x:auto;padding-bottom:.3rem;scrollbar-width:thin}
+.chip{flex:0 0 auto;font-family:inherit;font-size:.8rem;font-weight:600;border:1px solid var(--line);background:var(--field);color:var(--ink);padding:.3rem .7rem;border-radius:999px;cursor:pointer}
+.chip.done{background:var(--ok-bg);border-color:var(--ok-line);color:var(--ok)}
+.sec{padding:1.5rem 1.4rem 1rem;margin-bottom:1.4rem}
+.sec-h{display:flex;gap:.9rem;align-items:baseline;margin-bottom:.35rem}
+.roman{font-family:var(--serif);font-size:1.55rem;color:var(--primary-text);min-width:2.3rem}
+.sec-h h3{font-size:1.2rem;line-height:1.25}
+.instr{color:var(--ink2);font-size:.93rem;margin:0 0 .7rem 3.2rem}
+details.note{margin:0 0 1rem 3.2rem;border:1px solid var(--line);border-radius:12px;background:var(--primary-soft);font-size:.9rem}
+details.note summary{cursor:pointer;padding:.5rem .9rem;font-weight:600;list-style:none}
+details.note summary::-webkit-details-marker{display:none}
+details.note summary::before{content:'+';display:inline-block;width:1.1rem;font-weight:700}
+details.note[open] summary::before{content:'–'}
+details.note .nb{padding:0 .9rem .8rem}
+details.note ul{margin:.3rem 0 0 1.1rem}
+details.note li{margin:.15rem 0}
+.passage{margin:0 0 1rem 0;padding:1rem 1.1rem;border:1px dashed var(--field-line);border-radius:14px;background:var(--field);line-height:2.15;font-size:.98rem}
+.passage h4{font-family:var(--serif);text-align:center;margin-bottom:.5rem}
+.shared{margin:0 0 1rem 3.2rem;padding:.8rem 1rem;border-radius:12px;background:var(--field);border:1px solid var(--line);font-size:.88rem;display:grid;gap:.25rem}
+.shared b{color:var(--primary-text);margin-right:.35rem}
+
+.q{display:flex;gap:.9rem;padding:1rem 0;border-top:1px solid var(--line)}
+.qn{flex:0 0 2.1rem;height:2.1rem;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.9rem;background:var(--lav);color:var(--lav-ink)}
+.qb{flex:1;min-width:0}
+.qt{font-size:1.04rem;line-height:1.85;font-weight:500}
+.kw{display:inline-block;font-size:.78rem;font-weight:700;padding:.05rem .55rem;border-radius:999px;border:1px solid var(--primary);color:var(--primary-text);margin-left:.4rem;vertical-align:middle}
+.blank,.wide{font-family:inherit;font-size:.98rem;color:var(--ink);background:var(--field);border:none;border-bottom:2px solid var(--field-line);border-radius:6px 6px 0 0;padding:.18rem .5rem;margin:0 .15rem;transition:border-color .15s}
+.blank{width:11.5ch;text-align:center}
+.blank:focus,.wide:focus{border-bottom-color:var(--primary);outline:none}
+.blank.filled,.wide.filled{border-bottom-color:var(--primary)}
+.line{display:flex;align-items:baseline;gap:.5rem;flex-wrap:wrap;margin-top:.45rem;font-weight:500}
+.line .wide{flex:1 1 220px;min-width:0;padding:.35rem .6rem}
+.opts{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:.55rem;margin-top:.7rem}
+.opt{display:flex;gap:.7rem;align-items:flex-start;padding:.65rem .85rem;background:var(--field);border:2px solid transparent;border-radius:12px;cursor:pointer;font-size:.97rem;transition:border-color .15s,background .15s}
+.opt:hover{border-color:var(--line)}
+.opt.sel{border-color:var(--primary);background:var(--primary-soft)}
+.opt input{position:absolute;opacity:0;pointer-events:none}
+.ltr{flex:0 0 1.5rem;height:1.5rem;border-radius:50%;border:2px solid var(--field-line);display:flex;align-items:center;justify-content:center;font-size:.75rem;font-weight:700}
+.opt.sel .ltr{background:var(--primary);border-color:var(--primary);color:var(--primary-ink)}
+select{font-family:inherit;font-size:.95rem;color:var(--ink);background:var(--field);border:2px solid var(--field-line);border-radius:10px;padding:.5rem .6rem;width:100%;margin-top:.5rem}
+select.filled{border-color:var(--primary)}
+.tickrow{display:flex;gap:.6rem;align-items:center;flex-wrap:wrap}
+.tickrow .qt{flex:1 1 320px;font-size:.98rem;line-height:1.6;order:2}
+.tickbox{display:flex;gap:.3rem;align-items:center;order:1}
+.tickbox .blank{width:8.5ch}
+.tickbtn{font-family:inherit;font-size:1rem;font-weight:700;width:2.2rem;height:2rem;border-radius:8px;border:1px solid var(--field-line);background:var(--field);color:var(--ink);cursor:pointer}
+.tickbtn.on{background:var(--ok-bg);border-color:var(--ok-line);color:var(--ok)}
+.actions{display:flex;justify-content:center;gap:.8rem;flex-wrap:wrap;margin:1.8rem 0 1rem}
+
+/* results */
+.summary{padding:2rem 1.5rem;text-align:center;margin-bottom:1.3rem}
+.summary h2{font-size:1.6rem;margin-bottom:1.1rem}
+.ring{width:150px;height:150px;border-radius:50%;margin:0 auto 1rem;display:flex;align-items:center;justify-content:center;background:conic-gradient(var(--ok-line) var(--pct),var(--line) 0);position:relative}
+.ring::before{content:'';position:absolute;inset:14px;border-radius:50%;background:var(--bg1)}
+.ring b{position:relative;font-family:var(--serif);font-size:2.3rem}
+.tally{display:flex;justify-content:center;gap:.6rem;flex-wrap:wrap;margin:.6rem 0 .2rem}
+.tally .pill b{font-size:1.05rem}
+.t-ok{color:var(--ok)}.t-bad{color:var(--bad)}.t-skip{color:var(--skip)}
+.secbars{padding:1.2rem 1.4rem;margin-bottom:1.2rem}
+.secbars h3{font-size:1.05rem;margin-bottom:.7rem}
+.sb{display:grid;grid-template-columns:2.4rem 1fr 3.6rem;gap:.6rem;align-items:center;padding:.3rem 0;cursor:pointer;border-radius:8px;font-size:.9rem}
+.sb:hover{background:var(--primary-soft)}
+.sb .bar{height:8px;border-radius:4px;background:var(--bad-line);overflow:hidden;position:relative}
+.sb .bar i{position:absolute;left:0;top:0;bottom:0;background:var(--ok-line)}
+.sb .nm{text-align:right;color:var(--ink2);font-variant-numeric:tabular-nums}
+.sb .rn{font-family:var(--serif);font-weight:700;color:var(--primary-text)}
+.filters{display:flex;gap:.5rem;flex-wrap:wrap;justify-content:center;margin-bottom:1.2rem}
+.filters .chip.active{background:var(--primary);color:var(--primary-ink);border-color:var(--primary)}
+.only-wrong .rc.correct{display:none}
+.only-right .rc:not(.correct){display:none}
+.rsec{margin:1.8rem 0 .7rem;display:flex;gap:.8rem;align-items:baseline}
+.rsec .roman{font-size:1.3rem}
+.rsec h3{font-size:1.1rem}
+.rsec small{margin-left:auto;color:var(--ink2);font-weight:600;white-space:nowrap}
+.rc{padding:1.15rem 1.3rem;margin-bottom:.9rem;border-left:7px solid var(--line)}
+.rc.correct{border-left-color:var(--ok-line)}
+.rc.wrong{border-left-color:var(--bad-line)}
+.rc.blank-ans{border-left-color:var(--skip-line)}
+.rc-top{display:flex;gap:.6rem;align-items:center;flex-wrap:wrap;margin-bottom:.7rem}
+.mark{font-size:.82rem;font-weight:700;padding:.2rem .7rem;border-radius:999px}
+.correct .mark{background:var(--ok-bg);color:var(--ok)}
+.wrong .mark{background:var(--bad-bg);color:var(--bad)}
+.blank-ans .mark{background:var(--skip-bg);color:var(--skip)}
+.rc-no{font-weight:700;color:var(--ink2);font-size:.85rem}
+.rule{margin-left:auto;font-size:.76rem;font-weight:600;padding:.15rem .6rem;border-radius:999px;background:var(--lav);color:var(--lav-ink)}
+.orig{font-weight:500;margin-bottom:.35rem}
+.ans{margin:.45rem 0;font-size:.97rem;line-height:1.7}
+.ans small{display:block;font-size:.75rem;font-weight:700;letter-spacing:.02em;color:var(--ink2);margin-bottom:.1rem}
+.fill{padding:.05rem .45rem;border-radius:6px;font-weight:600}
+.fill.ok,.fill.key{background:var(--ok-bg);color:var(--ok)}
+.fill.bad{background:var(--bad-bg);color:var(--bad);text-decoration:line-through;text-decoration-thickness:1.5px}
+.fill.none{background:var(--skip-bg);color:var(--skip);font-style:italic;font-weight:500}
+mark.x{background:var(--bad-bg);color:var(--bad);padding:0 .3rem;border-radius:5px;font-weight:700;text-decoration:line-through}
+.fixq b,.orig b{background:var(--bad-bg);color:var(--bad);border:1px dashed var(--bad-line);padding:0 .35rem;border-radius:6px}
+.alt{margin-top:.35rem;font-size:.85rem;color:var(--ink2)}
+.why{margin-top:.8rem;padding:.8rem 1rem;border-radius:10px;border-left:3px solid var(--primary);background:var(--primary-soft);font-size:.93rem;line-height:1.55}
+.why b:first-child{color:var(--primary-text)}
+
+/* modal */
+.mo{position:fixed;inset:0;background:rgba(60,90,140,.28);backdrop-filter:blur(4px);display:none;align-items:center;justify-content:center;z-index:200;padding:1rem}
+.mo.active{display:flex}
+.mc{max-width:440px;width:100%;padding:2rem 1.6rem;text-align:center}
+.mc h3{margin-bottom:.7rem;font-size:1.35rem}
+.mc p{color:var(--ink2);margin-bottom:1.4rem}
+.mc .actions{margin:0}
+
+@media(max-width:640px){
+  .container{padding:.8rem .8rem 2.5rem}
+  header.bar{padding:.65rem .8rem}
+  .brand span{display:none}
+  .hero{padding:1.5rem 1.2rem}
+  .instr,details.note,.shared{margin-left:0}
+  .sec{padding:1.2rem .9rem .6rem}
+  .q{gap:.65rem}
+  .rule{margin-left:0}
+}
+@media print{.blob,header.bar,.actions,.filters,.toolbar{display:none!important}.glass{box-shadow:none;background:#fff}}
+</style>
+</head>
+<body>
+<div class="blob b1"></div><div class="blob b2"></div><div class="blob b3"></div>
+
+<div class="container">
+  <header class="bar glass">
+    <div class="brand"><b>Lesson 5 · Relative Clauses &amp; Participles</b><span id="hdr-sub">Practice workbook</span></div>
+    <div class="stats">
+      <span class="pill" id="hdr-prog" style="display:none">0 / 0</span>
+      <span class="pill" title="Time"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg><span id="timer">00:00</span></span>
+      <button class="btn small ghost" id="btn-home" style="display:none" type="button">Home</button>
+    </div>
+  </header>
+
+  <!-- HOME -->
+  <main id="view-home" class="view active">
+    <section class="glass hero">
+      <h2>Relative clauses and participles</h2>
+      <p>Two practice sets on the same grammar. Set A reproduces every exercise from the lesson pages (Sections I–VI). Set B is new material for extra drilling. After you submit, each answer is marked and explained.</p>
+    </section>
+    <div class="sets" id="setcards"></div>
+  </main>
+
+  <!-- QUIZ -->
+  <main id="view-quiz" class="view">
+    <section class="glass toolbar">
+      <div class="row"><h2 id="quiz-title"></h2><span class="resume" id="quiz-count"></span></div>
+      <div class="prog"><i id="prog-bar"></i></div>
+      <nav class="chips" id="chips" aria-label="Jump to section"></nav>
+    </section>
+    <div id="quiz-body"></div>
+    <div class="actions"><button class="btn" id="btn-submit" type="button">Submit and see results</button></div>
+  </main>
+
+  <!-- RESULTS -->
+  <main id="view-results" class="view">
+    <section class="glass summary">
+      <h2 id="res-title">Results</h2>
+      <div class="ring" id="ring" style="--pct:0%"><b id="res-pct">0%</b></div>
+      <div class="tally">
+        <span class="pill t-ok"><b id="n-ok">0</b> correct</span>
+        <span class="pill t-bad"><b id="n-bad">0</b> incorrect</span>
+        <span class="pill t-skip"><b id="n-skip">0</b> not answered</span>
+        <span class="pill">Time <b id="res-time">00:00</b></span>
+      </div>
+    </section>
+    <section class="glass secbars"><h3>Score by section (tap to jump)</h3><div id="secbars"></div></section>
+    <div class="filters" role="group" aria-label="Filter answers">
+      <button class="chip active" data-f="all" type="button">All</button>
+      <button class="chip" data-f="wrong" type="button">Needs review</button>
+      <button class="chip" data-f="right" type="button">Correct</button>
+    </div>
+    <div id="res-body"></div>
+    <div class="actions">
+      <button class="btn" id="btn-retake" type="button">Retake this set</button>
+      <button class="btn ghost" id="btn-other" type="button">Try the other set</button>
+      
+      <button class="btn ghost" id="btn-home2" type="button">Home</button>
+    </div>
+  </main>
+</div>
+
+<div class="mo" id="modal" role="dialog" aria-modal="true" aria-labelledby="m-title">
+  <div class="glass mc">
+    <h3 id="m-title"></h3><p id="m-msg"></p>
+    <div class="actions"><button class="btn ghost" id="m-cancel" type="button">Cancel</button><button class="btn" id="m-ok" type="button">Confirm</button></div>
+  </div>
+</div>
+
+<script>
+/* =====================================================================
+   DATA
+   Item builders:  M = multiple choice, T = typed answer, S = select (match),
+   K = tick / extra-word line.  Answers are normalised before comparing.
+   ===================================================================== */
+const L = "ABCDEFGHIJ";
+const M = (q, opts, ans, rule, why) => ({kind:"mcq", q, opts, ans:[].concat(ans), rule, why});
+const T = (q, ans, rule, why, o) => Object.assign({kind:"text", q, ans, rule, why}, o||{});
+const S = (q, ans, rule, why) => ({kind:"sel", q, ans:[ans], rule, why});
+const K = (q, ans, rule, why) => ({kind:"tick", q, ans, rule, why});
+const FT = (q, ans, rule, why) => T(q, ans, rule, why, {fix:true, tickOK:true}); // tick or rewrite
+const F = (q, ans, rule, why) => T(q, ans, rule, why, {fix:true}); // spot & fix: bold part is wrong, type the corrected part
+
+/* ---------------------------- SET A ---------------------------------- */
+const NOTE_REL = `<ul>
+<li><b>which</b> things / animals · <b>who</b> people · <b>whom</b> object (formal; after a preposition) · <b>whose</b> possession · <b>when</b> times · <b>where</b> places · <b>why</b> reasons.</li>
+<li>If the pronoun is the <b>subject</b> of the relative clause, do not add another subject: <i>Jude Law, who always works hard</i> (not <s>who he</s>).</li>
+<li>Preposition + whom / which (<i>to whom, in which</i>) is formal; informally put the preposition at the end and use who / which / that.</li>
+<li><i>where</i> / <i>when</i> need no extra preposition: <i>the theatre where I first acted</i>.</li></ul>`;
+const NOTE_NDEF = `<ul>
+<li><b>Non-defining</b> clauses add extra information and are separated by <b>commas</b>.</li>
+<li>Use <b>which / who</b> (never <i>that</i>), and the pronoun cannot be left out.</li>
+<li><i>which</i> can refer to a whole sentence: <i>We got tickets, which was very lucky.</i></li></ul>`;
+const NOTE_DEF = `<ul>
+<li><b>Defining</b> clauses say which one we mean: no commas.</li>
+<li><i>that</i> can replace which / who, and the pronoun can be left out when it is the <b>object</b>: <i>the DVD (that) I told you about</i>.</li></ul>`;
+const NOTE_PART = `<ul>
+<li><b>Present participle</b> (-ing): after prepositions / conjunctions, reasons, simultaneous actions, replacing active relative clauses.</li>
+<li><b>Perfect participle</b> (having + past participle): an earlier action or a reason: <i>Having finished, I left.</i></li>
+<li><b>Past participle</b>: passive meaning: <i>the person chosen</i>, <i>Made to wait, he got annoyed.</i></li>
+<li>The participle and the main clause must have the <b>same subject</b>.</li></ul>`;
+
+const SET_A = {
+  key:"A", title:"Set A · Textbook practice", tagline:"From the lesson pages",
+  blurb:"The six exercises printed in Lesson 5, in order. Typed answers accept sensible variants; the key shows the book-style answer first.",
+  sections:[
+  {roman:"I", title:"Circle the correct word", instr:"Circle the correct word.", note:NOTE_REL+NOTE_NDEF, items:[
+    M("The minister, ___ was appointed just last week, made no comment on the situation.", ["which","who"], "B", "who for people", "<b>who</b> refers to a person (the minister)."),
+    M("Isn’t that the spot ___ the accident happened last night?", ["which","where"], "B", "where for places", "<b>where</b> = a place; no preposition is needed."),
+    M("The human brain, ___ weighs about 1400 grammes, is ten times the size of a baboon’s.", ["which","who"], "A", "which for things", "A brain is a thing → <b>which</b>."),
+    M("There are several reasons ___ I don’t want to see Michael tonight.", ["which","why"], "B", "why for reasons", "<i>reasons <b>why</b>…</i>"),
+    M("This is the office ___ I work.", ["which","where"], "B", "where for places", "<b>where</b> I work (<i>which</i> would need <i>in</i>)."),
+    M("The new girl in our class, ___ name is Alexandra, seems really nice.", ["who’s","whose"], "B", "whose = possession", "<b>whose</b> name = her name. <i>Who’s</i> = who is."),
+    M("The Titanic, ___ people said was unsinkable, sank on her maiden voyage.", ["which","that"], "A", "non-defining → which", "Non-defining clauses (commas) cannot use <i>that</i>."),
+    M("All the people to ___ the e-mail was sent replied.", ["who","whom"], "B", "preposition + whom", "After a preposition we use <b>whom</b>."),
+    M("April 1st, ___ we play tricks on people, is known as April Fools’ Day.", ["which","when"], "B", "when for times", "<b>when</b> refers to a time (a day)."),
+    M("Harry Hill, ___ new series starts next week, is one of my favourite comedians.", ["who","whose"], "B", "whose = possession", "<b>whose</b> new series = his new series."),
+    M("A very popular breed of dog is the German Shepherd, ___ is often used as a guard dog.", ["which","who"], "A", "which for animals", "An ordinary animal → <b>which</b>."),
+    M("Blackpool Tower, ___ was modelled on the Eiffel Tower, is a very well-known landmark.", ["which","that"], "A", "non-defining → which", "<b>which</b>; <i>that</i> is not used after a comma."),
+  ]},
+  {roman:"II", title:"Tick or rewrite", instr:"If a word in bold is correct, put a tick (✓). If it is incorrect, rewrite it correctly.", note:NOTE_REL+NOTE_NDEF+NOTE_DEF, items:[
+    FT("November 5th was the day <b>which</b> Guy Fawkes tried to blow up Parliament.", ["when"], "when for times", "A day is a time → <b>when</b>."),
+    FT("There were none of my favourite biscuits left when I had a cup of tea, <b>that</b> was really annoying.", ["which"], "non-defining → which", "After a comma (and referring to the whole situation) we need <b>which</b>."),
+    FT("I’ve just got a new webcam <b>that</b> takes really clear pictures.", ["✓"], "defining that", "Correct: <i>that</i> is fine in a defining clause."),
+    FT("The Godfather was made by Francis Ford Coppola, <b>who’s</b> daughter is also a film director.", ["whose"], "whose = possession", "<b>whose</b> daughter (not <i>who is</i>)."),
+    FT("Can you think of any reason <b>which</b> Cathy should be angry with me?", ["why"], "why for reasons", "<i>reason <b>why</b></i>."),
+    FT("Here’s a photo of the hotel <b>where</b> we stayed in when we were in Beijing.", ["which","that"], "preposition at the end", "With the preposition <i>in</i> at the end we use <b>which / that</b>; <i>where</i> already includes the preposition."),
+    FT("How do you think the first man <b>whom</b> walked on the moon felt?", ["who","that"], "subject → who", "<i>Man</i> is the subject of <i>walked</i>, so <b>who</b>, not <i>whom</i>."),
+    FT("This is the first occasion on <b>which</b> the leaders of these two countries have met.", ["✓"], "preposition + which", "Correct (formal): <i>on which</i>."),
+    FT("He is a person for <b>who</b> very few people feel much sympathy.", ["whom"], "preposition + whom", "After a preposition → <b>for whom</b>."),
+    FT("The moment <b>which</b> the hero suddenly appears from behind a tree is the best moment in the whole film.", ["when"], "when for times", "<i>The moment <b>when</b>…</i>"),
+    FT("I met a man <b>which</b> had a dog with only three legs.", ["who","that"], "who for people", "A person → <b>who</b> (or <i>that</i>)."),
+    FT("My new school, <b>who</b> I moved to about a month ago, seems like quite a friendly place.", ["which"], "non-defining → which", "A school is a thing → <b>which</b> (commas, so not <i>that</i>)."),
+  ]},
+  {roman:"III", title:"Choose the correct answer", instr:"Choose the correct answer.", note:NOTE_REL+NOTE_DEF, items:[
+    M("‘Who’s that over there?’ ‘Oh, it’s our new teacher, ___ started work today!’", ["that","who he","which he","who"], "D", "who = subject", "<b>who</b> is the subject of <i>started</i>; no extra <i>he</i>."),
+    M("‘Which CD did you get Marcus in the end?’ ‘I got him the one ___ said he really wanted to hear.’", ["that","who he","which","which he"], "D", "object pronoun + new subject", "<b>which he</b> said he wanted: <i>which</i> is the object and <i>he</i> is the subject of <i>said</i>."),
+    M("‘Who did you send a Valentine’s card to?’ ‘I’m not telling you, but it was someone ___ name begins with “B”.’", ["which","who her","whose","whose her"], "C", "whose = possession", "<b>whose</b> alone replaces <i>her</i>."),
+    M("‘Have you seen Jason Green’s latest film?’ ‘Is that the one in ___ he joins the FBI?’", ["which he","that he","whom he","which"], "D", "preposition + which", "<b>in which</b> he joins… (the pronoun is not the subject, but <i>he</i> is already given)."),
+    M("‘Why do you like Tania so much?’ ‘Well, she’s one of the few people to ___ I can really talk.’", ["which","whom","that","who"], "B", "preposition + whom", "<b>to whom</b>: a person after a preposition."),
+    M("‘Why don’t we go to Lionel’s for dinner tonight?’ ‘Is that the new restaurant ___ has just opened on the other side of town?’", ["which","that it","where","which it"], "A", "which = subject", "<b>which</b> is the subject of <i>has opened</i>."),
+    M("‘Could you lend me some money?’ ‘I’d like you to give me one good reason ___ I should.’", ["that","why","which","who"], "B", "why for reasons", "<i>reason <b>why</b></i>."),
+    M("‘What do you want to do this summer?’ ‘I think we should go somewhere ___ has plenty of sun and sand!’", ["who","where","when","that"], "D", "that = subject", "<b>that</b> is the subject of <i>has</i>; <i>where</i> would need another subject."),
+  ]},
+  {roman:"IV", title:"Circle the correct word or phrase", instr:"Circle the correct word or phrase.", note:NOTE_PART, items:[
+    M("Before ___ Harriet, I never knew what real love was.", ["meeting","met"], "A", "preposition + -ing", "After <i>before</i> we use <b>meeting</b>."),
+    M("I’m sure that after ___ your exam, you’ll feel a lot better.", ["passing","passed"], "A", "preposition + -ing", "<b>passing</b> follows the preposition <i>after</i>."),
+    M("Having ___ the letter, Peter printed it.", ["finishing","finished"], "B", "having + past participle", "Perfect participle: <b>having finished</b>."),
+    M("___ through the window, I saw a strange man at the door.", ["Looking","Looked"], "A", "simultaneous actions", "Two actions at the same time → <b>Looking</b>."),
+    M("I cooked dinner and, ___ that, I sat down to watch TV.", ["doing","having done"], "B", "actions in sequence", "The first action is finished before the second → <b>having done</b>."),
+    M("___ a noise outside, Janice went to investigate.", ["Hearing","Heard"], "A", "reason / same time (active)", "Janice hears (active) → <b>Hearing</b>."),
+    M("___ my notes, I couldn’t revise properly for the test.", ["Having lost","Losing"], "A", "earlier action as reason", "The loss happened first → <b>Having lost</b>."),
+    M("___ quite intelligent, Matt hopes to get into a good university.", ["Having been","Being"], "B", "reason (present state)", "A present state → <b>Being</b>."),
+    M("___ the start of the film, I decided not to bother watching the rest of it.", ["Having missed","Missing"], "A", "earlier action as reason", "Missing the start happened first → <b>Having missed</b>."),
+    M("After ___ her bed, Cherie had a shower.", ["making","made"], "A", "preposition + -ing", "<b>making</b> after <i>after</i>."),
+  ]},
+  {roman:"V", title:"Same meaning", instr:"Complete the sentences so that the meaning remains the same.", note:NOTE_PART, items:[
+    T("I suddenly remembered where I’d left my keys when I was waiting for the bus.", ["for the bus i suddenly remembered where i'd left my keys","for the bus i suddenly remembered where i had left my keys"], "present participle (same time)", "<b>Waiting for the bus, I suddenly remembered where I’d left my keys.</b>", {pre:"Waiting"}),
+    T("I slipped because I was trying to run in the rain.", ["to run in the rain i slipped"], "present participle (reason)", "<b>Trying to run in the rain, I slipped.</b>", {pre:"Trying"}),
+    T("I felt quite sorry for Tim when I saw him cry.", ["tim cry i felt quite sorry for him","him cry i felt quite sorry for tim"], "present participle (same time)", "<b>Seeing Tim cry, I felt quite sorry for him.</b>", {pre:"Seeing"}),
+    T("John was depressed because he knew he was going to fail the exam.", ["he was going to fail the exam john was depressed"], "present participle (reason)", "<b>Knowing he was going to fail the exam, John was depressed.</b>", {pre:"Knowing"}),
+    T("The reason I’m quite good at basketball is that I’m quite tall.", ["quite tall i'm quite good at basketball","quite tall i am quite good at basketball"], "being (reason)", "<b>Being quite tall, I’m quite good at basketball.</b>", {pre:"Being"}),
+    T("Georgia didn’t know any Japanese, so she used a phrase book when she was there.", ["knowing any japanese georgia used a phrase book when she was there"], "not + participle", "<b>Not knowing any Japanese, Georgia used a phrase book when she was there.</b>", {pre:"Not"}),
+    T("Ed can afford three holidays abroad each year because he has a lot of money.", ["a lot of money ed can afford three holidays abroad each year"], "having (reason)", "<b>Having a lot of money, Ed can afford three holidays abroad each year.</b>", {pre:"Having"}),
+    T("Maria began to worry when she realised she was lost.", ["she was lost maria began to worry","she was lost maria began worrying"], "present participle (same time)", "<b>Realising she was lost, Maria began to worry.</b>", {pre:"Realising"}),
+  ]},
+  {roman:"VI", title:"Tick or extra word", instr:"If a line is correct, put a tick (✓) next to the number. If there is an extra word in a line, write it next to the number. Passage: <i>Easy Money</i>.", note:NOTE_REL+NOTE_PART, type:"lines", items:[
+    K("‘Hello, viewers, and welcome to Easy Money, the game show [[who]] you", "who", "no extra subject / pronoun", "<b>who</b> is extra: <i>the game show you voted the best on TV</i> (the pronoun is omitted)."),
+    K("voted the best on TV! Now, remember yesterday when our current champion,", "✓", "Correct line", "Correct. Nothing extra."),
+    K("Pat Barber, having [[been]] won ten thousand euros, decided to carry on? Well,", "been", "having + past participle", "<b>been</b> is extra: <i>having won</i> (active)."),
+    K("she’s here tonight and she’s going for the star prize, which [[it]] is a brand new", "it", "no extra subject", "<b>it</b> is extra: <i>which is a brand new sports car</i>."),
+    K("sports car! That’s right. Having got [[her]] this far, if Pat can answer three more", "her", "participle + same subject", "<b>her</b> is extra: <i>Having got this far</i>."),
+    K("questions correctly, then she could be driving home in this car, ladies and", "✓", "Correct line", "Correct. Nothing extra."),
+    K("gentlemen. Having not seen the programme before, you will know just how", "✓", "Correct line", "Correct: <i>Having not seen</i> (or <i>Not having seen</i>)."),
+    K("difficult [[which]] it can be. I know Pat’s a little nervous, but I’m sure she’ll be", "which", "extra relative pronoun", "<b>which</b> is extra: <i>just how difficult it can be</i>."),
+    K("fine and there’s one person for whom tonight is very special and that’s Pat’s", "✓", "Correct line", "Correct: <i>for whom</i> (preposition + whom)."),
+    K("husband, Frank, who [[he]] is sitting in the audience. So, let’s play Easy Money!", "he", "no extra subject", "<b>he</b> is extra: <i>Frank, who is sitting in the audience</i>."),
+  ]},
+  ]
+};
+
+const SET_B = {
+  key:"B", title:"Set B · Extra drill", tagline:"New questions",
+  blurb:"Fresh practice on relative clauses and participles: choosing pronouns, defining vs non-defining, participle forms and transformations. Good for a second round or for retesting weak spots.",
+  sections:[
+  {roman:"I", title:"Relative pronouns: choose", instr:"Choose the correct answer.", note:NOTE_REL, items:[
+    M("The woman ___ lives upstairs is a pilot.", ["which","who","whose","whom"], "B", "who = subject (person)", "A person and the subject → <b>who</b>."),
+    M("That’s the shop ___ I bought my shoes.", ["where","who","whose","which"], "A", "where for places", "<b>where</b> = in which."),
+    M("I know a man ___ brother is a footballer.", ["who","whose","which","whom"], "B", "whose = possession", "<b>whose</b> brother."),
+    M("The reason ___ she left is a secret.", ["which","when","why","where"], "C", "why for reasons", "<i>reason <b>why</b></i>."),
+    M("Do you remember the summer ___ we went to Spain?", ["which","when","where","why"], "B", "when for times", "<b>when</b> = a time."),
+    M("My cousin, ___ lives in Canada, is visiting us.", ["that","which","who","whom"], "C", "non-defining who", "Commas → <b>who</b> (not <i>that</i>)."),
+    M("The book ___ I lent you is very old.", ["who","whose","where","that"], "D", "that (defining, object)", "<b>that</b> (or <i>which</i>) for a thing."),
+    M("She is the teacher to ___ I owe everything.", ["who","whom","which","whose"], "B", "preposition + whom", "<b>to whom</b>."),
+    M("My laptop, ___ I bought last year, has broken.", ["that","which","who","where"], "B", "non-defining which", "Commas → <b>which</b>."),
+    M("The people ___ car was stolen called the police.", ["who","whom","whose","which"], "C", "whose = possession", "<b>whose</b> car."),
+    M("That’s the street ___ the accident happened.", ["which","where","who","whose"], "B", "where for places", "<b>where</b> the accident happened."),
+    M("He passed the test, ___ surprised everyone.", ["that","what","which","who"], "C", "which = whole clause", "<b>which</b> refers to the whole fact that he passed."),
+    M("The film in ___ she plays a spy is brilliant.", ["that","which","what","where"], "B", "preposition + which", "<b>in which</b>."),
+    M("Is this the person ___ you were talking about?", ["whose","who","where","which"], "B", "who (informal object)", "Informally <b>who</b> (formal: <i>about whom</i>)."),
+    M("Which sentence is correct?", ["My brother, that lives in Rome, is a chef.","My brother, who lives in Rome, is a chef.","My brother, who he lives in Rome, is a chef.","My brother who, lives in Rome is a chef."], "B", "non-defining who", "Commas and <b>who</b>; no extra <i>he</i>."),
+    M("Which sentence is INCORRECT?", ["The girl who sits next to me is Ann.","The girl that sits next to me is Ann.","The girl who she sits next to me is Ann.","The girl sitting next to me is Ann."], "C", "no extra subject", "<i>who she</i> repeats the subject."),
+  ]},
+  {roman:"II", title:"Tick or rewrite", instr:"If the word in bold is correct, put a tick (✓). If it is incorrect, rewrite it correctly.", note:NOTE_REL+NOTE_NDEF, items:[
+    FT("The man <b>which</b> lives next door is a doctor.", ["who","that"], "who for people", "A person → <b>who</b> (or <i>that</i>)."),
+    FT("That’s the café <b>who</b> we met in.", ["which","that"], "which for things", "A place with a final preposition → <b>which / that</b>."),
+    FT("My sister, <b>that</b> lives in Paris, is a nurse.", ["who"], "non-defining who", "Commas → <b>who</b>."),
+    FT("I have a friend <b>which</b> speaks five languages.", ["who","that"], "who for people", "<b>who</b> / <i>that</i>."),
+    FT("She is the woman <b>whose</b> I told you about.", ["who","whom","that"], "object pronoun", "<i>I told you about her</i> → <b>who / whom / that</b>."),
+    FT("This is the house <b>where</b> I grew up in.", ["which","that"], "where vs which", "With <i>in</i> at the end → <b>which / that</b>."),
+    FT("He was late, <b>what</b> annoyed me.", ["which"], "which = whole clause", "<b>which</b> refers to the whole situation."),
+    FT("Do you know the reason <b>when</b> he left?", ["why"], "why for reasons", "<i>reason <b>why</b></i>."),
+    FT("The boy <b>who’s</b> bike was stolen is upset.", ["whose"], "whose = possession", "<b>whose</b> bike."),
+    FT("Monday is the day <b>why</b> I go swimming.", ["when"], "when for times", "<b>when</b>."),
+    FT("The car <b>that</b> I bought was cheap.", ["✓"], "defining that", "Correct."),
+    FT("Mr Brown, <b>that</b> teaches maths, is ill.", ["who"], "non-defining who", "Commas → <b>who</b>."),
+    FT("The girl <b>to whom</b> I spoke was helpful.", ["✓"], "preposition + whom", "Correct (formal)."),
+    FT("The day <b>which</b> we met was sunny.", ["when"], "when for times", "<b>when</b> we met."),
+  ]},
+  {roman:"III", title:"Defining and non-defining: choose", instr:"Choose the correct answer.", note:NOTE_NDEF+NOTE_DEF, items:[
+    M("Which sentence is correct?", ["Mount Everest, that is in Nepal, is very high.","Mount Everest, which is in Nepal, is very high.","Mount Everest which is in Nepal, is very high.","Mount Everest, which it is in Nepal, is very high."], "B", "non-defining which", "Commas on both sides and <b>which</b>."),
+    M("In which sentence can we leave out the relative pronoun?", ["The man who lives here is rich.","The book which I read was good.","My aunt, who is a nurse, is kind.","The house which stands on the hill is old."], "B", "omitting an object pronoun", "Only an <b>object</b> pronoun in a defining clause can be omitted: <i>The book I read</i>."),
+    M("Which sentence is correct?", ["The book that I read it was good.","The book that I read was good.","The book what I read was good.","The book I read it was good."], "B", "no extra object", "<i>that</i> already replaces <i>it</i>."),
+    M("I missed the bus, ___ made me late.", ["that","which","what","who"], "B", "which = whole clause", "<b>which</b> refers to the whole event."),
+    M("Which sentence is correct?", ["This is the DVD that I told you about.","This is the DVD, that I told you about.","This is the DVD who I told you about.","This is the DVD what I told you about."], "A", "defining that", "Defining: no comma, <b>that</b> is possible."),
+    M("Which sentence is correct?", ["The theatre where I first acted in is near here.","The theatre where I first acted is near here.","The theatre which I first acted is near here.","The theatre what I first acted in is near here."], "B", "where: no extra preposition", "<i>where</i> already includes <i>in</i>."),
+    M("Which sentence is correct?", ["We got tickets, which was lucky.","We got tickets, that was lucky.","We got tickets, what was lucky.","We got tickets which, was lucky."], "A", "which = whole clause", "<b>which</b> (after a comma) = getting tickets."),
+    M("A non-defining relative clause…", ["is separated by commas","can use that","cannot use which","is essential to the meaning"], "A", "non-defining = commas", "It adds extra information and has commas."),
+    M("Which sentence is correct?", ["Do you know the year in which it was built?","Do you know the year in that it was built?","Do you know the year when in it was built?","Do you know the year which in it was built?"], "A", "preposition + which", "<b>in which</b> (formal)."),
+    M("Which sentence is correct?", ["Do you know the year when it was built?","Do you know the year when it was built in?","Do you know the year which it was built?","Do you know the year why it was built?"], "A", "when: no preposition", "<b>when</b>, with no <i>in</i> at the end."),
+    M("Which sentence is correct?", ["The man to who I spoke was rude.","The man to whom I spoke was rude.","The man whom I spoke was rude.","The man to that I spoke was rude."], "B", "preposition + whom", "<b>to whom</b>."),
+    M("In “Tom, who is my boss, called”, the clause is…", ["defining","non-defining","a participle clause","a question"], "B", "non-defining", "Commas and extra information: non-defining."),
+  ]},
+  {roman:"IV", title:"Participles: choose", instr:"Choose the correct answer.", note:NOTE_PART, items:[
+    M("___ the news, she burst into tears.", ["Hear","Hearing","Having hearing","To hearing"], "B", "present participle", "<b>Hearing</b>."),
+    M("___ dinner, we watched a film.", ["Having had","Having","Had having","Have had"], "A", "perfect participle", "<b>Having had</b> = after we had eaten."),
+    M("___ very tired, he went to bed early.", ["Been","Being","Be","Having being"], "B", "being (reason)", "<b>Being</b> tired."),
+    M("After ___ the report, I sent it.", ["write","written","writing","wrote"], "C", "preposition + -ing", "<b>writing</b>."),
+    M("___ in a hurry, she forgot her keys.", ["Being","Been","Having being","Be"], "A", "being (reason)", "<b>Being</b> in a hurry."),
+    M("The man ___ the car is my uncle.", ["drive","driving","driven","drove"], "B", "participle replaces relative clause", "<b>driving</b> = who is driving."),
+    M("The letter ___ yesterday was important.", ["sending","sent","having sent","send"], "B", "past participle (passive)", "<b>sent</b> = which was sent."),
+    M("___ the film before, I knew the ending.", ["Seeing","Having seen","Saw","Seen having"], "B", "perfect participle", "<b>Having seen</b>: earlier action, a reason."),
+    M("Before ___ the house, check the gas.", ["leave","left","leaving","to leaving"], "C", "preposition + -ing", "<b>leaving</b>."),
+    M("___ to wait, the actor got annoyed.", ["Make","Making","Made","Having make"], "C", "past participle (passive)", "<b>Made</b> to wait = he was made to wait."),
+    M("Which sentence is correct?", ["Walking home, a car hit me.","Walking home, I was hit by a car.","Walking home, the car hit me.","I walking home, a car hit me."], "B", "same subject", "The person walking must be the subject of the main clause."),
+    M("Which sentence is INCORRECT?", ["Having eaten, we left.","Eating lunch, the phone rang.","Feeling ill, she stayed home.","After eating, we left."], "B", "same subject", "The phone was not eating lunch."),
+    M("___ the exam, he celebrated.", ["Having passed","Passing having","Having passing","To pass"], "A", "perfect participle", "<b>Having passed</b>."),
+    M("The girl ___ by the teacher was Ann.", ["choosing","chosen","choose","having chose"], "B", "past participle (passive)", "<b>chosen</b> = who was chosen."),
+  ]},
+  {roman:"V", title:"Same meaning", instr:"Complete the sentences so that the meaning remains the same.", note:NOTE_PART, items:[
+    T("While I was walking to work, I saw an accident.", ["to work i saw an accident"], "present participle", "<b>Walking to work, I saw an accident.</b>", {pre:"Walking"}),
+    T("Because he was tired, he went to bed.", ["tired he went to bed"], "being (reason)", "<b>Being tired, he went to bed.</b>", {pre:"Being"}),
+    T("After she had finished her homework, she watched TV.", ["finished her homework she watched tv"], "perfect participle", "<b>Having finished her homework, she watched TV.</b>", {pre:"Having"}),
+    T("As I didn’t know the way, I asked a policeman.", ["knowing the way i asked a policeman"], "not + participle", "<b>Not knowing the way, I asked a policeman.</b>", {pre:"Not"}),
+    T("As she realised it was late, she hurried home.", ["it was late she hurried home"], "present participle", "<b>Realising it was late, she hurried home.</b>", {pre:"Realising"}),
+    T("Before he left the house, he locked the door.", ["leaving the house he locked the door"], "before + -ing", "<b>Before leaving the house, he locked the door.</b>", {pre:"Before"}),
+    T("Because I had lost my phone, I couldn’t call you.", ["lost my phone i couldn't call you"], "perfect participle", "<b>Having lost my phone, I couldn’t call you.</b>", {pre:"Having"}),
+    T("The man who is standing by the door is my uncle.", ["standing by the door is my uncle"], "participle replaces relative clause", "<b>The man standing by the door is my uncle.</b>", {pre:"The man"}),
+    T("The cake which was baked by my mum was delicious.", ["baked by my mum was delicious"], "past participle replaces relative clause", "<b>The cake baked by my mum was delicious.</b>", {pre:"The cake"}),
+    T("After she had seen the doctor, she felt better.", ["seen the doctor she felt better"], "perfect participle", "<b>Having seen the doctor, she felt better.</b>", {pre:"Having"}),
+  ]},
+  {roman:"VI", title:"Participle forms", instr:"Complete using the correct participle form of the verb in brackets.", note:NOTE_PART, items:[
+    T("{} (walk) along the beach, we found a shell.", ["walking"], "present participle", "<b>Walking</b> (same time)."),
+    T("{} (see) the film before, I knew the ending.", ["having seen"], "perfect participle", "<b>Having seen</b>."),
+    T("{} (be) tired, she went home.", ["being"], "being (reason)", "<b>Being</b>."),
+    T("After {} (have) lunch, we went out.", ["having","having had"], "after + -ing", "<b>having</b> (or <i>having had</i>)."),
+    T("{} (finish) the letter, Peter posted it.", ["having finished"], "perfect participle", "<b>Having finished</b>."),
+    T("The woman {} (stand) at the door is my aunt.", ["standing"], "participle replaces relative clause", "<b>standing</b> = who is standing."),
+    T("The window {} (break) last night has been fixed.", ["broken"], "past participle", "<b>broken</b> = which was broken."),
+    T("{} (not / know) the answer, she guessed.", ["not knowing"], "not + participle", "<b>Not knowing</b>."),
+    T("Before {} (go) out, turn off the lights.", ["going"], "before + -ing", "<b>going</b>."),
+    T("{} (lose) his keys, he couldn’t get in.", ["having lost"], "perfect participle", "<b>Having lost</b>."),
+    T("The people {} (live) next door are noisy.", ["living"], "participle replaces relative clause", "<b>living</b> = who live."),
+    T("{} (make) to work late, he got angry.", ["made"], "past participle (passive)", "<b>Made</b> = he was made to work late."),
+    T("She went out, {} (leave) the door open.", ["leaving"], "present participle", "<b>leaving</b> (a simultaneous / resulting action)."),
+    T("By {} (practise) every day, you will improve.", ["practising","practicing"], "preposition + -ing", "<b>practising</b> after <i>by</i>."),
+  ]},
+  {roman:"VII", title:"One word per gap", instr:"Write one word in each gap.", note:NOTE_REL+NOTE_PART, items:[
+    T("The man {} car was stolen called the police.", ["whose"], "whose", "<b>whose</b> car."),
+    T("That is the reason {} I left.", ["why"], "why", "<i>reason <b>why</b></i>."),
+    T("Do you know the day {} he arrives?", ["when"], "when", "<b>when</b> = time."),
+    T("This is the park {} we first met.", ["where"], "where", "<b>where</b> = place."),
+    T("My boss, {} is very kind, gave me a day off.", ["who"], "who", "<b>who</b> (non-defining, person)."),
+    T("The person to {} I spoke was rude.", ["whom"], "preposition + whom", "<b>whom</b> after <i>to</i>."),
+    T("I lost my phone, {} was annoying.", ["which"], "which = whole clause", "<b>which</b>."),
+    T("She told me something {} I couldn’t believe.", ["that","which"], "that / which", "<b>that / which</b> (defining, thing)."),
+    T("The film, {} I saw twice, is brilliant.", ["which"], "which", "Non-defining → <b>which</b>."),
+    T("Is that the woman {} husband is a pilot?", ["whose"], "whose", "<b>whose</b> husband."),
+    T("Having {} the letter, Peter printed it.", ["finished","written","typed"], "having + past participle", "<b>finished</b> (also <i>written / typed</i>)."),
+    T("{} lost, we asked for directions.", ["being","feeling"], "being / feeling (reason)", "<b>Being</b> lost."),
+  ]},
+  {roman:"VIII", title:"Tick or extra word", instr:"If a line is correct, put a tick (✓). If there is an extra word in a line, write it. Passage: <i>A bad day</i>.", note:NOTE_REL+NOTE_PART, type:"lines", items:[
+    K("Last Monday I missed the bus which I normally catch. Having", "✓", "Correct line", "Correct."),
+    K("waited for twenty minutes, I decided to walk. Walking", "✓", "Correct line", "Correct."),
+    K("along the road, I met my neighbour, who [[she]] was going", "she", "no extra subject", "<b>she</b> is extra: <i>who was going</i>."),
+    K("to the same office. We talked about the manager whose", "✓", "Correct line", "Correct: <i>whose</i> continues on the next line."),
+    K("car had broken down. Not knowing [[it]] what to do,", "it", "extra word", "<b>it</b> is extra: <i>Not knowing what to do</i>."),
+    K("he had called a taxi, which [[it]] arrived late. Being", "it", "no extra subject", "<b>it</b> is extra: <i>which arrived late</i>."),
+    K("late himself, he was in a terrible mood. In the end,", "✓", "Correct line", "Correct: <i>Being late himself, …</i>"),
+    K("we got to the office at ten, when the meeting had already", "✓", "Correct line", "Correct."),
+    K("started. That was the day on which I decided to buy a", "✓", "Correct line", "Correct: <i>the day on which</i>."),
+    K("bike, which was a [[a]] great idea!", "a", "extra word", "The second <b>a</b> is extra."),
+  ]},
+  ]
+};
+
+const SETS = {A:SET_A, B:SET_B};
+/* assign ids and local numbers */
+Object.values(SETS).forEach(set=>{
+  let n=0; set.total=0;
+  set.sections.forEach((s,si)=>{ s.si=si; s.items.forEach((it,i)=>{ it.id=set.key+(++n); it.no=it.gap||(i+1); it.sec=si; }); set.total+=s.items.length; });
+});
+const itemsOf = set => set.sections.flatMap(s=>s.items);
+
+/* ---------------------------- helpers -------------------------------- */
+const $ = id => document.getElementById(id);
+const esc = s => String(s==null?"":s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+function lsGet(k){try{return localStorage.getItem(k)}catch(e){return null}}
+function lsSet(k,v){try{localStorage.setItem(k,v)}catch(e){}}
+function lsDel(k){try{localStorage.removeItem(k)}catch(e){}}
+function fmt(t){return String(Math.floor(t/60)).padStart(2,"0")+":"+String(t%60).padStart(2,"0")}
+
+function norm(s){
+  s = String(s==null?"":s).toLowerCase().replace(/[’‘`´]/g,"'");
+  s = s.replace(/\bcannot\b/g,"can't").replace(/\bcan not\b/g,"can't").replace(/\bwill not\b/g,"won't");
+  s = s.replace(/\b(did|do|does|was|were|is|are|had|has|have|would|could|should|must|might|need)\s+not\b/g,"$1n't");
+  s = s.replace(/criticiz/g,"criticis").replace(/cancell?ed/g,"canceled");
+  return s.replace(/[.,;:!?"“”()\[\]]/g," ").replace(/\s+/g," ").trim();
+}
+const TICKS = ["✓","✔","√","v","tick","correct","ok","right","yes","c"];
+function stripPre(u,it){
+  const list = it.strip || (it.pre ? [it.pre] : []);
+  list.forEach(p=>{ p=norm(p); if(!p) return; if(u===p) u=""; else if(u.startsWith(p+" ")) u=u.slice(p.length+1); });
+  return u;
+}
+function blanksOf(it){ // array of accepted-lists, one per blank
+  if(it.kind!=="text") return null;
+  return Array.isArray(it.ans[0]) ? it.ans : [it.ans];
+}
+function grade(it, val){
+  if(it.kind==="mcq"||it.kind==="sel") return !val ? "blank" : (it.ans.includes(val)?"correct":"wrong");
+  if(it.kind==="tick"){
+    const u = norm(val||""); if(!u) return "blank";
+    const got = TICKS.includes(u) ? "✓" : u;
+    return got===norm(it.ans) || (it.ans==="✓" && got==="✓") ? "correct" : "wrong";
+  }
+  const bl = blanksOf(it), vs = Array.isArray(val)?val:[val];
+  if(!vs.some(v=>norm(v))) return "blank";
+  const ok = bl.every((acc,i)=>{ const u=stripPre(norm(vs[i]||""),it); return acc.some(a=>{ if(a==="✓") return TICKS.includes(u); a=norm(a); return a===u || (it.fix && u.endsWith(" "+a)); }); });
+  return ok ? "correct":"wrong";
+}
+function answered(it,val){
+  if(val==null) return false;
+  return Array.isArray(val) ? val.some(v=>String(v).trim()) : String(val).trim()!=="";
+}
+
+/* ---------------------------- state ---------------------------------- */
+const S_ = {set:null, answers:{}, elapsed:0, timer:null, done:false};
+function sKey(k,s){return "l5:"+k+":"+s}
+function saveState(){ lsSet(sKey(S_.set.key,"a"),JSON.stringify(S_.answers)); lsSet(sKey(S_.set.key,"t"),String(S_.elapsed)); }
+function loadSaved(key){
+  let a={}; try{a=JSON.parse(lsGet(sKey(key,"a"))||"{}")}catch(e){a={}}
+  return {answers:a, elapsed:parseInt(lsGet(sKey(key,"t"))||"0",10)||0};
+}
+function startTimer(){
+  clearInterval(S_.timer);
+  S_.timer=setInterval(()=>{S_.elapsed++; $("timer").textContent=fmt(S_.elapsed); if(S_.elapsed%5===0) saveState();},1000);
+}
+function show(v){
+  document.querySelectorAll(".view").forEach(x=>x.classList.remove("active"));
+  $("view-"+v).classList.add("active"); window.scrollTo(0,0);
+  $("btn-home").style.display = v==="home" ? "none":"";
+  $("hdr-prog").style.display = v==="quiz" ? "":"none";
+  if(v==="home"){ clearInterval(S_.timer); $("hdr-sub").textContent="Practice workbook"; }
+}
+
+/* ---------------------------- home ----------------------------------- */
+function renderHome(){
+  $("setcards").innerHTML = Object.values(SETS).map(set=>{
+    const sv = loadSaved(set.key), n = Object.values(sv.answers).filter(v=>answered(null,v)||(v!=null&&String(v)!=="")).length;
+    const secs = set.sections.map(s=>`<li><span><b>${s.roman}.</b> ${s.title}</span><span>${s.items.length} Q</span></li>`).join("");
+    return `<article class="glass setcard">
+      <span class="tagline">${esc(set.tagline)}</span>
+      <h3>${esc(set.title)}</h3>
+      <p>${esc(set.blurb)}</p>
+      <ul class="secl">${secs}</ul>
+      <div class="go"><button class="btn" data-start="${set.key}" type="button">${n?"Resume":"Start"} (${set.total} questions)</button>
+      ${n?`<span class="resume">${n} answered · saved in this browser</span>`:""}</div>
+    </article>`;
+  }).join("");
+}
+
+/* ---------------------------- quiz render ---------------------------- */
+function blankInput(it,b,val,cls){
+  return `<input class="${cls||"blank"} ${val?"filled":""}" type="text" data-id="${it.id}" data-b="${b}" value="${esc(val||"")}" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="Answer ${it.no}">`;
+}
+function itemHTML(it, sec){
+  const v = S_.answers[it.id];
+  let body="";
+  if(it.kind==="mcq"){
+    const tx = it.q.replace(/___/g,'<span style="display:inline-block;min-width:3.2em;border-bottom:2px solid var(--field-line)"></span>');
+    body = `<div class="qt">${tx}</div><div class="opts" role="radiogroup">`+
+      it.opts.map((o,i)=>`<label class="opt ${v===L[i]?"sel":""}"><input type="radio" name="q${it.id}" value="${L[i]}" data-id="${it.id}" ${v===L[i]?"checked":""}><span class="ltr">${L[i]}</span><span>${esc(o)}</span></label>`).join("")+`</div>`;
+  } else if(it.kind==="sel"){
+    const opts = sec.shared.map((o,i)=>`<option value="${L[i]}" ${v===L[i]?"selected":""}>${L[i]}. ${esc(o)}</option>`).join("");
+    body = `<div class="qt">${esc(it.q)} …</div><select data-id="${it.id}" class="${v?"filled":""}" aria-label="Ending for ${esc(it.q)}"><option value="">Choose the ending…</option>${opts}</select>`;
+  } else if(it.kind==="tick"){
+    const isTick = v==="✓";
+    body = `<div class="tickrow"><div class="tickbox"><button type="button" class="tickbtn ${isTick?"on":""}" data-tick="${it.id}" title="Line is correct" aria-label="Mark line ${it.no} as correct">✓</button>${blankInput(it,0,isTick?"":(v||""))}</div><div class="qt">${esc(it.q.replace(/\[\[|\]\]/g,""))}</div></div>`;
+  } else if(it.fix){
+    const vals = Array.isArray(v)?v:[];
+    body = `<div class="qt fixq">${it.q}</div><div class="line"><span>${it.tickOK?"✎ Type ✓ (or “tick”) if correct; if wrong, the corrected phrase:":"✎ Corrected form of the bold part:"}</span>${blankInput(it,0,vals[0],"wide")}</div>`;
+  } else if(it.pre!==undefined){
+    const vals = Array.isArray(v)?v:[];
+    const kw = it.kw ? `<span class="kw">${esc(it.kw)}</span>`:"";
+    body = `<div class="qt">${it.q}${kw}</div><div class="line"><span>→ ${esc(it.pre)}</span>${blankInput(it,0,vals[0],"wide")}${it.post?`<span>${esc(it.post)}</span>`:""}</div>`;
+  } else {
+    const parts = it.q.split("{}"), vals = Array.isArray(v)?v:[];
+    body = `<div class="qt">`+parts.map((p,i)=> p + (i<parts.length-1 ? blankInput(it,i,vals[i]) : "")).join("")+`</div>`;
+  }
+  return `<div class="q" id="q-${it.id}"><div class="qn">${it.no}</div><div class="qb">${body}</div></div>`;
+}
+function sectionHTML(sec){
+  let h = `<section class="glass sec" id="sec-${sec.si}"><div class="sec-h"><span class="roman">${sec.roman}</span><h3>${sec.title}</h3></div><p class="instr">${sec.instr}</p>`;
+  if(sec.note) h += `<details class="note"><summary>Quick rule reminder</summary><div class="nb">${sec.note}</div></details>`;
+  if(sec.type==="passage"){
+    const html = esc(sec.passage).replace(/\{(\d+)\}/g,(m,n)=>{ const it=sec.items[n-1]; const v=(S_.answers[it.id]||[])[0]||""; return `<span style="white-space:nowrap"><sup style="font-size:.72em;font-weight:700;color:var(--primary-text)">${n}</sup>${blankInput(it,0,v)}</span>`; });
+    h += `<div class="passage"><h4>${esc(sec.ptitle)}</h4>${html}</div>`;
+    return h+`</section>`;
+  }
+  if(sec.type==="lines") h += `<div class="passage" style="line-height:1.5;padding:.4rem 1rem"><h4 style="margin-top:.5rem">${sec.instr.match(/<i>(.*?)<\/i>/)?sec.instr.match(/<i>(.*?)<\/i>/)[1]:""}</h4></div>`;
+  if(sec.shared) h += `<div class="shared">`+sec.shared.map((o,i)=>`<div><b>${L[i]}</b>${esc(o)}</div>`).join("")+`</div>`;
+  h += sec.items.map(it=>itemHTML(it,sec)).join("");
+  return h+`</section>`;
+}
+function startSet(key, fresh){
+  const set = SETS[key]; S_.set=set; S_.done=false;
+  const sv = loadSaved(key);
+  S_.answers = fresh?{}:sv.answers; S_.elapsed = fresh?0:sv.elapsed;
+  if(fresh){lsDel(sKey(key,"a")); lsDel(sKey(key,"t"));}
+  $("quiz-title").textContent = set.title;
+  $("hdr-sub").textContent = set.title;
+  $("quiz-body").innerHTML = set.sections.map(sectionHTML).join("");
+  $("timer").textContent = fmt(S_.elapsed);
+  show("quiz"); updateProgress(); startTimer();
+}
+function updateProgress(){
+  const set=S_.set, its=itemsOf(set);
+  const n = its.filter(it=>answered(it,S_.answers[it.id])).length;
+  $("hdr-prog").textContent = n+" / "+its.length;
+  $("quiz-count").textContent = n+" of "+its.length+" answered";
+  $("prog-bar").style.width = (n/its.length*100)+"%";
+  $("chips").innerHTML = set.sections.map(s=>{
+    const done = s.items.every(it=>answered(it,S_.answers[it.id]));
+    return `<button type="button" class="chip ${done?"done":""}" data-jump="sec-${s.si}">${s.roman}${done?" ✓":""}</button>`;
+  }).join("");
+}
+
+/* ---------------------------- events --------------------------------- */
+document.addEventListener("click",e=>{
+  const st=e.target.closest("[data-start]"); if(st){ startSet(st.dataset.start,false); return; }
+  const jp=e.target.closest("[data-jump]"); if(jp){ const el=$(jp.dataset.jump); if(el) el.scrollIntoView({behavior:"smooth",block:"start"}); return; }
+  const tk=e.target.closest("[data-tick]");
+  if(tk){
+    const id=tk.dataset.tick, was=S_.answers[id]==="✓";
+    S_.answers[id]= was ? "" : "✓";
+    const row=$("q-"+id); row.querySelector(".tickbtn").classList.toggle("on",!was);
+    const inp=row.querySelector("input.blank"); inp.value=""; inp.classList.remove("filled");
+    saveState(); updateProgress(); return;
+  }
+  const sb=e.target.closest(".sb"); if(sb){ const el=$(sb.dataset.go); if(el) el.scrollIntoView({behavior:"smooth",block:"start"}); return; }
+  const fl=e.target.closest("[data-f]");
+  if(fl){
+    document.querySelectorAll("[data-f]").forEach(b=>b.classList.toggle("active",b===fl));
+    const rb=$("res-body"); rb.classList.remove("only-wrong","only-right");
+    if(fl.dataset.f==="wrong") rb.classList.add("only-wrong");
+    if(fl.dataset.f==="right") rb.classList.add("only-right");
+  }
+});
+document.addEventListener("input",e=>{
+  const t=e.target; if(!t.matches("input.blank,input.wide")) return;
+  const it=itemsOf(S_.set).find(x=>x.id===t.dataset.id); if(!it) return;
+  if(it.kind==="tick"){ S_.answers[it.id]=t.value; $("q-"+it.id).querySelector(".tickbtn").classList.remove("on"); }
+  else { const arr=Array.isArray(S_.answers[it.id])?S_.answers[it.id]:[]; arr[+t.dataset.b]=t.value; S_.answers[it.id]=arr; }
+  t.classList.toggle("filled",!!t.value.trim());
+  saveState(); updateProgress();
+});
+document.addEventListener("change",e=>{
+  const t=e.target;
+  if(t.matches('input[type=radio]')){
+    S_.answers[t.dataset.id]=t.value;
+    t.closest(".opts").querySelectorAll(".opt").forEach(o=>o.classList.toggle("sel",o.contains(t)&&t.checked));
+    saveState(); updateProgress();
+  } else if(t.matches("select[data-id]")){
+    S_.answers[t.dataset.id]=t.value; t.classList.toggle("filled",!!t.value); saveState(); updateProgress();
+  }
+});
+
+/* modal */
+function modal(title,msg,ok){
+  $("m-title").textContent=title; $("m-msg").textContent=msg;
+  const m=$("modal"); m.classList.add("active");
+  $("m-ok").onclick=()=>{m.classList.remove("active"); ok();};
+  $("m-cancel").onclick=()=>m.classList.remove("active");
+  $("m-ok").focus();
+}
+
+/* ---------------------------- results -------------------------------- */
+function optText(it,sec,k){ return it.kind==="mcq" ? it.opts[L.indexOf(k)] : sec.shared[L.indexOf(k)]; }
+function joinPost(post){ return post ? (/^[,.;]/.test(post)?"":" ")+esc(post) : ""; }
+function sentence(it, sec, vals, cls){
+  // vals: array of display strings (one per blank). cls: ok|bad|key|none
+  const f = (s)=> s ? `<span class="fill ${cls}">${esc(s)}</span>` : `<span class="fill none">no answer</span>`;
+  if(it.kind==="text"){
+    if(it.fix){ const v0=vals[0]; if(v0==="✓"||(v0&&TICKS.includes(norm(v0)))) return it.q+' <span class="fill '+cls+'">✓ correct as it is</span>'; return it.q.replace(/<b>.*?<\/b>/, f(v0)); }
+    if(it.pre!==undefined) return `<div>→ ${esc(it.pre)} ${f(vals[0])}${joinPost(it.post)}</div>`;
+    return it.q.split("{}").map((p,i,a)=>p+(i<a.length-1?f(vals[i]):"")).join("");
+  }
+  if(it.kind==="mcq"){
+    if(/___/.test(it.q)) return it.q.replace(/___/,f(vals[0]));
+    return `${it.q}<div>→ ${f(vals[0])}</div>`;
+  }
+  if(it.kind==="sel") return `${esc(it.q)} ${f(vals[0])}`;
+  return "";
+}
+function lineHTML(it){ // tick line with extra word marked
+  return esc(it.q).replace(/\[\[(.*?)\]\]/g,'<mark class="x">$1</mark>');
+}
+function resultCard(it, sec, val, st){
+  const cls = st==="correct"?"correct": st==="wrong"?"wrong":"blank-ans";
+  const tag = st==="correct"?"✓ Correct": st==="wrong"?"✗ Incorrect":"○ Not answered";
+  let top = `<div class="rc-top"><span class="rc-no">${sec.roman}.${it.no}</span><span class="mark">${tag}</span><span class="rule">${esc(it.rule)}</span></div>`;
+  let mid="", alt="";
+  if(it.kind==="tick"){
+    const u=norm(val||""), got=!u?"":(TICKS.includes(u)?"✓":u);
+    const mine = !u ? `<span class="fill none">no answer</span>` : got==="✓" ? `<span class="fill ${st==="correct"?"ok":"bad"}">✓ line is correct</span>` : `<span class="fill ${st==="correct"?"ok":"bad"}">extra word: ${esc(val)}</span>`;
+    const key = it.ans==="✓" ? `<span class="fill key">✓ line is correct</span>` : `<span class="fill key">extra word: ${esc(it.ans)}</span>`;
+    mid = `<div class="orig">${lineHTML(it)}</div><div class="ans"><small>YOUR ANSWER</small>${mine}</div>` + (st!=="correct"?`<div class="ans"><small>CORRECT ANSWER</small>${key}</div>`:"");
+  } else {
+    let mineVals, keyVals;
+    if(it.kind==="text"){
+      const bl=blanksOf(it); const vs=Array.isArray(val)?val:[];
+      mineVals = bl.map((_,i)=>(vs[i]||"").trim()); keyVals = bl.map(a=>a[0]);
+      const extra = bl.flatMap(a=>a.slice(1));
+      if(extra.length) alt = `<div class="alt">Also accepted: ${extra.map(a=>"<i>"+esc(a)+"</i>").join(" · ")}</div>`;
+    } else {
+      const key=it.ans[0]; keyVals=[L.indexOf(key)>=0? optText(it,sec,key):""];
+      mineVals=[val? optText(it,sec,val):""];
+      if(it.ans.length>1) alt = `<div class="alt">Also acceptable: <i>${it.ans.slice(1).map(k=>esc(optText(it,sec,k))).join(" / ")}</i></div>`;
+    }
+    const letterMine = (it.kind!=="text" && val) ? ` <small style="display:inline;letter-spacing:0">(${val})</small>`:"";
+    const letterKey = it.kind!=="text" ? ` <small style="display:inline;letter-spacing:0">(${it.ans[0]})</small>`:"";
+    const showOrig = it.kind==="text" && (it.pre!==undefined||it.fix) ? `<div class="orig">${it.q}${it.kw?`<span class="kw">${esc(it.kw)}</span>`:""}</div>`:"";
+    mid = showOrig +
+      `<div class="ans"><small>YOUR ANSWER</small>${sentence(it,sec,mineVals, st==="correct"?"ok": st==="wrong"?"bad":"none")}${letterMine}</div>` +
+      (st!=="correct" ? `<div class="ans"><small>CORRECT ANSWER</small>${sentence(it,sec,keyVals,"key")}${letterKey}</div>` : "") + alt;
+  }
+  return `<article class="glass rc ${cls}" id="r-${it.id}">${top}${mid}<div class="why"><b>Why:</b> ${it.why}</div></article>`;
+}
+function showResults(){
+  clearInterval(S_.timer); S_.done=true;
+  const set=S_.set; let ok=0,bad=0,skip=0; const per=set.sections.map(()=>({ok:0,n:0}));
+  let html="";
+  set.sections.forEach(sec=>{
+    let secHtml="";
+    sec.items.forEach(it=>{
+      const val=S_.answers[it.id], st=grade(it,val);
+      per[sec.si].n++; if(st==="correct"){ok++;per[sec.si].ok++;} else if(st==="wrong") bad++; else skip++;
+      secHtml += resultCard(it,sec,val,st);
+    });
+    html += `<div class="rsec" id="rs-${sec.si}"><span class="roman">${sec.roman}</span><h3>${sec.title}</h3><small>${per[sec.si].ok} / ${per[sec.si].n}</small></div>`+secHtml;
+  });
+  const total=ok+bad+skip, pct=Math.round(ok/total*100);
+  $("res-title").textContent = set.title+" · results";
+  $("res-pct").textContent=pct+"%"; $("ring").style.setProperty("--pct",pct+"%");
+  $("n-ok").textContent=ok; $("n-bad").textContent=bad; $("n-skip").textContent=skip; $("res-time").textContent=fmt(S_.elapsed);
+  $("secbars").innerHTML = set.sections.map((s,i)=>`<div class="sb" data-go="rs-${i}" role="button" tabindex="0"><span class="rn">${s.roman}</span><span class="bar"><i style="width:${per[i].ok/per[i].n*100}%"></i></span><span class="nm">${per[i].ok}/${per[i].n}</span></div>`).join("");
+  $("res-body").className=""; document.querySelectorAll("[data-f]").forEach(b=>b.classList.toggle("active",b.dataset.f==="all"));
+  $("res-body").innerHTML=html;
+  lsDel(sKey(set.key,"a")); lsDel(sKey(set.key,"t"));
+  show("results");
+}
+function submit(){
+  const its=itemsOf(S_.set), n=its.filter(it=>answered(it,S_.answers[it.id])).length;
+  if(n<its.length) modal("Submit with blanks?",`You have answered ${n} of ${its.length} questions. Unanswered items will be marked and explained too.`,showResults);
+  else showResults();
+}
+
+/* nav buttons */
+$("btn-submit").onclick=submit;
+$("btn-home").onclick=()=>{ if(S_.set&&!S_.done) saveState(); clearInterval(S_.timer); renderHome(); show("home"); };
+$("btn-home2").onclick=()=>{ renderHome(); show("home"); };
+$("btn-retake").onclick=()=>modal("Retake this set?","Your current results will be cleared and the set restarts from question 1.",()=>startSet(S_.set.key,true));
+
+$("btn-other").onclick=()=>startSet(S_.set.key==="A"?"B":"A",false);
+document.addEventListener("keydown",e=>{ if((e.key==="Enter"||e.key===" ")&&e.target.classList&&e.target.classList.contains("sb")){e.preventDefault();e.target.click();} });
+window.addEventListener("pagehide",()=>{ if(S_.set&&!S_.done&&$("view-quiz").classList.contains("active")) saveState(); });
+renderHome();
+</script>
+</body>
+</html>

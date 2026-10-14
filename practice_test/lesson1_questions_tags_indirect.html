@@ -1,0 +1,814 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Lesson 1 | Questions, Tags &amp; Indirect Questions</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+  color-scheme:light;
+  --bg1:#fff5f8; --bg2:#f3faf3;
+  --ink:#43323f; --ink2:#765f6d; --line:rgba(190,110,140,.22);
+  --glass:rgba(255,255,255,.72); --glass-b:rgba(255,255,255,.85); --shadow:0 8px 28px rgba(220,150,175,.2);
+  --primary:#f4b9cc; --primary-text:#a2325d; --primary-soft:rgba(244,185,204,.32); --primary-ink:#4a1730;
+  --lav:#d8efdc; --lav-ink:#2f6a43; --blob1:#fcd3e2; --blob2:#d3ecd7; --blob3:#fff0c2;
+  --ok:#2b7a50; --ok-bg:#dff5e6; --ok-line:#9ad8b0;
+  --bad:#b24a50; --bad-bg:#ffe5e8; --bad-line:#f4b4bb;
+  --skip:#85692a; --skip-bg:#fff2d4; --skip-line:#eed38d;
+  --field:rgba(255,255,255,.88); --field-line:#efd5de;
+  --font:'Inter',system-ui,-apple-system,'Segoe UI',sans-serif;
+  --serif:'Fraunces',Georgia,'Times New Roman',serif;
+}
+html{scroll-padding-top:calc(env(safe-area-inset-top,0px) + 5.5rem)}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:var(--font);color:var(--ink);min-height:100vh;background:linear-gradient(135deg,var(--bg1),#fbf8f6 55%,var(--bg2));overflow-x:hidden;line-height:1.5}
+.blob{position:fixed;border-radius:50%;filter:blur(90px);z-index:-1;opacity:.6;pointer-events:none}
+.b1{top:-12%;left:-10%;width:50vw;height:50vw;background:var(--blob1)}
+.b2{bottom:-12%;right:-10%;width:60vw;height:60vw;background:var(--blob2)}
+.b3{top:42%;left:60%;width:36vw;height:36vw;background:var(--blob3);opacity:.35}
+.glass{background:var(--glass);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border:1px solid var(--glass-b);border-radius:20px;box-shadow:var(--shadow)}
+.container{max-width:920px;margin:0 auto;padding:1.25rem 1.25rem 3rem}
+h1,h2,h3{font-family:var(--serif);font-weight:700;letter-spacing:-.01em}
+
+/* header */
+header.bar{display:flex;justify-content:space-between;align-items:center;gap:1rem;padding:.8rem 1.2rem;margin-bottom:1.5rem;position:sticky;top:calc(env(safe-area-inset-top,0px) + .6rem);z-index:50}
+.brand{display:flex;flex-direction:column;line-height:1.15;min-width:0}
+.brand b{font-family:var(--serif);font-size:1.08rem}
+.brand span{font-size:.78rem;color:var(--ink2)}
+.stats{display:flex;align-items:center;gap:.7rem;font-weight:600;font-size:.9rem}
+.pill{display:inline-flex;align-items:center;gap:.4rem;padding:.4rem .8rem;border-radius:999px;background:var(--field);border:1px solid var(--line)}
+.btn{font-family:inherit;font-weight:600;font-size:1rem;border:none;border-radius:999px;padding:.85rem 1.6rem;cursor:pointer;background:var(--primary);color:var(--primary-ink);transition:transform .15s,filter .15s}
+.btn:hover{filter:brightness(1.07);transform:translateY(-1px)}
+.btn.ghost{background:transparent;color:var(--ink);border:2px solid var(--primary)}
+.btn.small{padding:.45rem .95rem;font-size:.85rem}
+.btn:focus-visible,.opt:focus-within,input:focus-visible,select:focus-visible,summary:focus-visible,.chip:focus-visible,.tickbtn:focus-visible{outline:3px solid var(--primary-text);outline-offset:2px}
+
+.view{display:none}.view.active{display:block}
+@media (prefers-reduced-motion:no-preference){.view.active{animation:fade .35s ease}}
+@keyframes fade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+
+/* home */
+.hero{padding:2.2rem 2rem 1.6rem;margin-bottom:1.4rem}
+.hero h2{font-size:clamp(1.8rem,4.5vw,2.6rem);line-height:1.1;margin-bottom:.8rem}
+.hero p{color:var(--ink2);max-width:62ch}
+.sets{display:grid;grid-template-columns:1fr;gap:1.2rem}
+@media(min-width:760px){.sets{grid-template-columns:1fr 1fr}}
+
+.setcard{padding:1.6rem;display:flex;flex-direction:column;gap:.9rem}
+.setcard .tagline{display:inline-block;align-self:flex-start;font-size:.8rem;font-weight:600;padding:.25rem .7rem;border-radius:999px;background:var(--lav);color:var(--lav-ink)}
+.setcard h3{font-size:1.4rem;line-height:1.2}
+.setcard p{color:var(--ink2);font-size:.95rem}
+.secl{list-style:none;display:flex;flex-direction:column;gap:.15rem;font-size:.88rem;border-top:1px solid var(--line);padding-top:.7rem}
+.secl li{display:flex;justify-content:space-between;gap:1rem}
+.secl li span:last-child{color:var(--ink2);white-space:nowrap}
+.setcard .go{margin-top:auto;display:flex;gap:.6rem;flex-wrap:wrap;align-items:center}
+.resume{font-size:.82rem;color:var(--ink2)}
+
+/* quiz */
+.toolbar{padding:1rem 1.2rem;margin-bottom:1.2rem}
+.toolbar .row{display:flex;justify-content:space-between;align-items:center;gap:1rem;flex-wrap:wrap}
+.toolbar h2{font-size:1.15rem}
+.prog{height:6px;background:var(--line);border-radius:3px;overflow:hidden;margin:.8rem 0}
+.prog i{display:block;height:100%;width:0;background:var(--primary);transition:width .25s}
+.chips{display:flex;gap:.45rem;overflow-x:auto;padding-bottom:.3rem;scrollbar-width:thin}
+.chip{flex:0 0 auto;font-family:inherit;font-size:.8rem;font-weight:600;border:1px solid var(--line);background:var(--field);color:var(--ink);padding:.3rem .7rem;border-radius:999px;cursor:pointer}
+.chip.done{background:var(--ok-bg);border-color:var(--ok-line);color:var(--ok)}
+.sec{padding:1.5rem 1.4rem 1rem;margin-bottom:1.4rem}
+.sec-h{display:flex;gap:.9rem;align-items:baseline;margin-bottom:.35rem}
+.roman{font-family:var(--serif);font-size:1.55rem;color:var(--primary-text);min-width:2.3rem}
+.sec-h h3{font-size:1.2rem;line-height:1.25}
+.instr{color:var(--ink2);font-size:.93rem;margin:0 0 .7rem 3.2rem}
+details.note{margin:0 0 1rem 3.2rem;border:1px solid var(--line);border-radius:12px;background:var(--primary-soft);font-size:.9rem}
+details.note summary{cursor:pointer;padding:.5rem .9rem;font-weight:600;list-style:none}
+details.note summary::-webkit-details-marker{display:none}
+details.note summary::before{content:'+';display:inline-block;width:1.1rem;font-weight:700}
+details.note[open] summary::before{content:'–'}
+details.note .nb{padding:0 .9rem .8rem}
+details.note ul{margin:.3rem 0 0 1.1rem}
+details.note li{margin:.15rem 0}
+.passage{margin:0 0 1rem 0;padding:1rem 1.1rem;border:1px dashed var(--field-line);border-radius:14px;background:var(--field);line-height:2.15;font-size:.98rem}
+.passage h4{font-family:var(--serif);text-align:center;margin-bottom:.5rem}
+.shared{margin:0 0 1rem 3.2rem;padding:.8rem 1rem;border-radius:12px;background:var(--field);border:1px solid var(--line);font-size:.88rem;display:grid;gap:.25rem}
+.shared b{color:var(--primary-text);margin-right:.35rem}
+
+.q{display:flex;gap:.9rem;padding:1rem 0;border-top:1px solid var(--line)}
+.qn{flex:0 0 2.1rem;height:2.1rem;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.9rem;background:var(--lav);color:var(--lav-ink)}
+.qb{flex:1;min-width:0}
+.qt{font-size:1.04rem;line-height:1.85;font-weight:500}
+.kw{display:inline-block;font-size:.78rem;font-weight:700;padding:.05rem .55rem;border-radius:999px;border:1px solid var(--primary);color:var(--primary-text);margin-left:.4rem;vertical-align:middle}
+.blank,.wide{font-family:inherit;font-size:.98rem;color:var(--ink);background:var(--field);border:none;border-bottom:2px solid var(--field-line);border-radius:6px 6px 0 0;padding:.18rem .5rem;margin:0 .15rem;transition:border-color .15s}
+.blank{width:11.5ch;text-align:center}
+.blank:focus,.wide:focus{border-bottom-color:var(--primary);outline:none}
+.blank.filled,.wide.filled{border-bottom-color:var(--primary)}
+.line{display:flex;align-items:baseline;gap:.5rem;flex-wrap:wrap;margin-top:.45rem;font-weight:500}
+.line .wide{flex:1 1 220px;min-width:0;padding:.35rem .6rem}
+.opts{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:.55rem;margin-top:.7rem}
+.opt{display:flex;gap:.7rem;align-items:flex-start;padding:.65rem .85rem;background:var(--field);border:2px solid transparent;border-radius:12px;cursor:pointer;font-size:.97rem;transition:border-color .15s,background .15s}
+.opt:hover{border-color:var(--line)}
+.opt.sel{border-color:var(--primary);background:var(--primary-soft)}
+.opt input{position:absolute;opacity:0;pointer-events:none}
+.ltr{flex:0 0 1.5rem;height:1.5rem;border-radius:50%;border:2px solid var(--field-line);display:flex;align-items:center;justify-content:center;font-size:.75rem;font-weight:700}
+.opt.sel .ltr{background:var(--primary);border-color:var(--primary);color:var(--primary-ink)}
+select{font-family:inherit;font-size:.95rem;color:var(--ink);background:var(--field);border:2px solid var(--field-line);border-radius:10px;padding:.5rem .6rem;width:100%;margin-top:.5rem}
+select.filled{border-color:var(--primary)}
+.tickrow{display:flex;gap:.6rem;align-items:center;flex-wrap:wrap}
+.tickrow .qt{flex:1 1 320px;font-size:.98rem;line-height:1.6;order:2}
+.tickbox{display:flex;gap:.3rem;align-items:center;order:1}
+.tickbox .blank{width:8.5ch}
+.tickbtn{font-family:inherit;font-size:1rem;font-weight:700;width:2.2rem;height:2rem;border-radius:8px;border:1px solid var(--field-line);background:var(--field);color:var(--ink);cursor:pointer}
+.tickbtn.on{background:var(--ok-bg);border-color:var(--ok-line);color:var(--ok)}
+.actions{display:flex;justify-content:center;gap:.8rem;flex-wrap:wrap;margin:1.8rem 0 1rem}
+
+/* results */
+.summary{padding:2rem 1.5rem;text-align:center;margin-bottom:1.3rem}
+.summary h2{font-size:1.6rem;margin-bottom:1.1rem}
+.ring{width:150px;height:150px;border-radius:50%;margin:0 auto 1rem;display:flex;align-items:center;justify-content:center;background:conic-gradient(var(--ok-line) var(--pct),var(--line) 0);position:relative}
+.ring::before{content:'';position:absolute;inset:14px;border-radius:50%;background:var(--bg1)}
+.ring b{position:relative;font-family:var(--serif);font-size:2.3rem}
+.tally{display:flex;justify-content:center;gap:.6rem;flex-wrap:wrap;margin:.6rem 0 .2rem}
+.tally .pill b{font-size:1.05rem}
+.t-ok{color:var(--ok)}.t-bad{color:var(--bad)}.t-skip{color:var(--skip)}
+.secbars{padding:1.2rem 1.4rem;margin-bottom:1.2rem}
+.secbars h3{font-size:1.05rem;margin-bottom:.7rem}
+.sb{display:grid;grid-template-columns:2.4rem 1fr 3.6rem;gap:.6rem;align-items:center;padding:.3rem 0;cursor:pointer;border-radius:8px;font-size:.9rem}
+.sb:hover{background:var(--primary-soft)}
+.sb .bar{height:8px;border-radius:4px;background:var(--bad-line);overflow:hidden;position:relative}
+.sb .bar i{position:absolute;left:0;top:0;bottom:0;background:var(--ok-line)}
+.sb .nm{text-align:right;color:var(--ink2);font-variant-numeric:tabular-nums}
+.sb .rn{font-family:var(--serif);font-weight:700;color:var(--primary-text)}
+.filters{display:flex;gap:.5rem;flex-wrap:wrap;justify-content:center;margin-bottom:1.2rem}
+.filters .chip.active{background:var(--primary);color:var(--primary-ink);border-color:var(--primary)}
+.only-wrong .rc.correct{display:none}
+.only-right .rc:not(.correct){display:none}
+.rsec{margin:1.8rem 0 .7rem;display:flex;gap:.8rem;align-items:baseline}
+.rsec .roman{font-size:1.3rem}
+.rsec h3{font-size:1.1rem}
+.rsec small{margin-left:auto;color:var(--ink2);font-weight:600;white-space:nowrap}
+.rc{padding:1.15rem 1.3rem;margin-bottom:.9rem;border-left:7px solid var(--line)}
+.rc.correct{border-left-color:var(--ok-line)}
+.rc.wrong{border-left-color:var(--bad-line)}
+.rc.blank-ans{border-left-color:var(--skip-line)}
+.rc-top{display:flex;gap:.6rem;align-items:center;flex-wrap:wrap;margin-bottom:.7rem}
+.mark{font-size:.82rem;font-weight:700;padding:.2rem .7rem;border-radius:999px}
+.correct .mark{background:var(--ok-bg);color:var(--ok)}
+.wrong .mark{background:var(--bad-bg);color:var(--bad)}
+.blank-ans .mark{background:var(--skip-bg);color:var(--skip)}
+.rc-no{font-weight:700;color:var(--ink2);font-size:.85rem}
+.rule{margin-left:auto;font-size:.76rem;font-weight:600;padding:.15rem .6rem;border-radius:999px;background:var(--lav);color:var(--lav-ink)}
+.orig{font-weight:500;margin-bottom:.35rem}
+.ans{margin:.45rem 0;font-size:.97rem;line-height:1.7}
+.ans small{display:block;font-size:.75rem;font-weight:700;letter-spacing:.02em;color:var(--ink2);margin-bottom:.1rem}
+.fill{padding:.05rem .45rem;border-radius:6px;font-weight:600}
+.fill.ok,.fill.key{background:var(--ok-bg);color:var(--ok)}
+.fill.bad{background:var(--bad-bg);color:var(--bad);text-decoration:line-through;text-decoration-thickness:1.5px}
+.fill.none{background:var(--skip-bg);color:var(--skip);font-style:italic;font-weight:500}
+mark.x{background:var(--bad-bg);color:var(--bad);padding:0 .3rem;border-radius:5px;font-weight:700;text-decoration:line-through}
+.fixq b,.orig b{background:var(--bad-bg);color:var(--bad);border:1px dashed var(--bad-line);padding:0 .35rem;border-radius:6px}
+.alt{margin-top:.35rem;font-size:.85rem;color:var(--ink2)}
+.why{margin-top:.8rem;padding:.8rem 1rem;border-radius:10px;border-left:3px solid var(--primary);background:var(--primary-soft);font-size:.93rem;line-height:1.55}
+.why b:first-child{color:var(--primary-text)}
+
+/* modal */
+.mo{position:fixed;inset:0;background:rgba(140,60,90,.25);backdrop-filter:blur(4px);display:none;align-items:center;justify-content:center;z-index:200;padding:1rem}
+.mo.active{display:flex}
+.mc{max-width:440px;width:100%;padding:2rem 1.6rem;text-align:center}
+.mc h3{margin-bottom:.7rem;font-size:1.35rem}
+.mc p{color:var(--ink2);margin-bottom:1.4rem}
+.mc .actions{margin:0}
+
+@media(max-width:640px){
+  .container{padding:.8rem .8rem 2.5rem}
+  header.bar{padding:.65rem .8rem}
+  .brand span{display:none}
+  .hero{padding:1.5rem 1.2rem}
+  .instr,details.note,.shared{margin-left:0}
+  .sec{padding:1.2rem .9rem .6rem}
+  .q{gap:.65rem}
+  .rule{margin-left:0}
+}
+@media print{.blob,header.bar,.actions,.filters,.toolbar{display:none!important}.glass{box-shadow:none;background:#fff}}
+</style>
+</head>
+<body>
+<div class="blob b1"></div><div class="blob b2"></div><div class="blob b3"></div>
+
+<div class="container">
+  <header class="bar glass">
+    <div class="brand"><b>Lesson 1 · Questions, Tags &amp; Indirect Questions</b><span id="hdr-sub">Practice workbook</span></div>
+    <div class="stats">
+      <span class="pill" id="hdr-prog" style="display:none">0 / 0</span>
+      <span class="pill" title="Time"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg><span id="timer">00:00</span></span>
+      <button class="btn small ghost" id="btn-home" style="display:none" type="button">Home</button>
+    </div>
+  </header>
+
+  <!-- HOME -->
+  <main id="view-home" class="view active">
+    <section class="glass hero">
+      <h2>Questions, question tags and indirect questions</h2>
+      <p>Two practice sets on the same grammar. Set A reproduces every exercise from the lesson pages (Sections I–VII). Set B is new material for extra drilling. After you submit, each answer is marked and explained.</p>
+    </section>
+    <div class="sets" id="setcards"></div>
+  </main>
+
+  <!-- QUIZ -->
+  <main id="view-quiz" class="view">
+    <section class="glass toolbar">
+      <div class="row"><h2 id="quiz-title"></h2><span class="resume" id="quiz-count"></span></div>
+      <div class="prog"><i id="prog-bar"></i></div>
+      <nav class="chips" id="chips" aria-label="Jump to section"></nav>
+    </section>
+    <div id="quiz-body"></div>
+    <div class="actions"><button class="btn" id="btn-submit" type="button">Submit and see results</button></div>
+  </main>
+
+  <!-- RESULTS -->
+  <main id="view-results" class="view">
+    <section class="glass summary">
+      <h2 id="res-title">Results</h2>
+      <div class="ring" id="ring" style="--pct:0%"><b id="res-pct">0%</b></div>
+      <div class="tally">
+        <span class="pill t-ok"><b id="n-ok">0</b> correct</span>
+        <span class="pill t-bad"><b id="n-bad">0</b> incorrect</span>
+        <span class="pill t-skip"><b id="n-skip">0</b> not answered</span>
+        <span class="pill">Time <b id="res-time">00:00</b></span>
+      </div>
+    </section>
+    <section class="glass secbars"><h3>Score by section (tap to jump)</h3><div id="secbars"></div></section>
+    <div class="filters" role="group" aria-label="Filter answers">
+      <button class="chip active" data-f="all" type="button">All</button>
+      <button class="chip" data-f="wrong" type="button">Needs review</button>
+      <button class="chip" data-f="right" type="button">Correct</button>
+    </div>
+    <div id="res-body"></div>
+    <div class="actions">
+      <button class="btn" id="btn-retake" type="button">Retake this set</button>
+      <button class="btn ghost" id="btn-other" type="button">Try the other set</button>
+      
+      <button class="btn ghost" id="btn-home2" type="button">Home</button>
+    </div>
+  </main>
+</div>
+
+<div class="mo" id="modal" role="dialog" aria-modal="true" aria-labelledby="m-title">
+  <div class="glass mc">
+    <h3 id="m-title"></h3><p id="m-msg"></p>
+    <div class="actions"><button class="btn ghost" id="m-cancel" type="button">Cancel</button><button class="btn" id="m-ok" type="button">Confirm</button></div>
+  </div>
+</div>
+
+<script>
+/* =====================================================================
+   DATA
+   Item builders:  M = multiple choice, T = typed answer, S = select (match),
+   K = tick / extra-word line.  Answers are normalised before comparing.
+   ===================================================================== */
+const L = "ABCDEFGHIJ";
+const M = (q, opts, ans, rule, why) => ({kind:"mcq", q, opts, ans:[].concat(ans), rule, why});
+const T = (q, ans, rule, why, o) => Object.assign({kind:"text", q, ans, rule, why}, o||{});
+const S = (q, ans, rule, why) => ({kind:"sel", q, ans:[ans], rule, why});
+const K = (q, ans, rule, why) => ({kind:"tick", q, ans, rule, why});
+const FT = (q, ans, rule, why) => T(q, ans, rule, why, {fix:true, tickOK:true}); // tick or rewrite
+const F = (q, ans, rule, why) => T(q, ans, rule, why, {fix:true}); // spot & fix: bold part is wrong, type the corrected part
+
+/* ---------------------------- SET A ---------------------------------- */
+const NOTE_Q = `<ul>
+<li><b>be</b> (main or auxiliary), <b>have</b> (auxiliary) and <b>modals</b> go before the subject: <i>Are you tired? Is he working? Has she finished? Could you help me?</i></li>
+<li>All other verbs (and <i>have</i> as a main verb) use <b>do / does / did</b>: <i>Do you have enough time? Did they leave?</i></li>
+<li><b>Subject questions</b> (who / what / which + verb) have no <i>do</i>: <i>Who asked you?</i> · <b>Object questions</b> use <i>do</i>: <i>Who did you ask?</i></li></ul>`;
+const NOTE_TAG = `<ul>
+<li>Positive sentence → negative tag; negative sentence → positive tag. Negative words (<i>no, never, nobody, hardly, little</i>) count as negative → positive tag.</li>
+<li><i>be</i> / auxiliaries / modals repeat in the tag: <i>She is beautiful, isn’t she? People should recycle, shouldn’t they?</i></li>
+<li>Other verbs use do / does / did. <i>Let’s…</i> → <b>shall we?</b> Imperatives → <b>will / would / could you?</b></li>
+<li><b>I am</b> → <b>aren’t I?</b> · <b>I am not</b> → <b>am I?</b> · <b>everyone / no one / someone</b> → plural verb + <b>they</b> · <b>there</b> is repeated: <i>…, is there?</i></li></ul>`;
+const NOTE_IND = `<ul>
+<li>Indirect questions are more polite: <i>introductory phrase + clause with normal word order</i>: <i>Could you tell me what time it is?</i></li>
+<li>No question word order and no <i>do / does / did</i> in the second part: <i>I would like to know when the next train leaves.</i></li>
+<li>Yes/no questions → <b>if / whether</b>: <i>I wonder if you have read this book.</i></li></ul>`;
+
+const SET_A = {
+  key:"A", title:"Set A · Textbook practice", tagline:"From the lesson pages",
+  blurb:"The seven exercises printed in Lesson 1, in order. Typed answers accept sensible variants; the key shows the book-style answer first.",
+  sections:[
+  {roman:"I", title:"Choose the correct answer", instr:"Choose the correct answer.", note:NOTE_Q, items:[
+    M("Oh, I’m sorry! ___ disturbing you?", ["Do I","Have I","Should I","Am I"], "D", "be as auxiliary", "<b>Am I</b> disturbing you? (present continuous question)"),
+    M("Did Dorothy ___ you about the meeting on Friday?", ["told","tell","has told","tells"], "B", "did + base form", "After <i>did</i> we use the base form: <b>tell</b>."),
+    M("___ hot when you were in Spain?", ["Was it","It was","Did it","It made"], "A", "be as main verb", "<b>Was it</b> hot…? <i>Be</i> goes before the subject."),
+    M("Tony, ___ got time to call Mrs Roberts?", ["do you have","you have","are you","have you"], "D", "have as auxiliary", "<i>…have you got time</i>: <b>have you</b>."),
+    M("When your boss arrived, ___ finished the report?", ["you had","did you have","had you","were you"], "C", "had as auxiliary", "<b>had you</b> finished? (past perfect question)"),
+    M("I know Jane’s pretty, but ___ seen someone spend so much time in front of the mirror?", ["do you ever","you have never","have you ever","ever have you"], "C", "have as auxiliary", "<b>have you ever</b> seen…?"),
+    M("It’s raining, so ___ cancel the concert?", ["will they","they will","do they will","are they"], "A", "modal questions", "Modals go before the subject: <b>will they</b> cancel…?"),
+    M("___ pass me the salt, please?", ["You could","Are you","You are","Could you"], "D", "modal request", "<b>Could you</b> pass me…?"),
+    M("Sir, ___ repeat what the homework is, please?", ["do you","are you","you","can you"], "D", "modal request", "<b>can you</b> repeat…?"),
+    M("___ the couple you met in France last year staying at the same hotel?", ["Did","Have","Were","Could"], "C", "be as auxiliary", "<b>Were</b> the couple staying…? (past continuous)"),
+    M("I know how to pronounce controversy, but what ___?", ["does it mean","it means","is it mean","means it"], "A", "do + subject", "<b>does it mean</b>: <i>mean</i> needs <i>does</i>."),
+    M("It’s a great idea, but ___ work?", ["are you think","do you think it will","you think","you do think"], "B", "do you think + will", "<b>do you think it will</b> work?"),
+  ]},
+  {roman:"II", title:"Circle the correct phrase", instr:"Choose the correct phrase. (Subject questions have no <i>did</i>; object questions do.)", note:NOTE_Q, items:[
+    M("‘Who ___ to the party?’ ‘Maria, but she told me she couldn’t come!’", ["asked you","did you ask"], "A", "subject question", "Maria asked <i>me</i> → <b>Who asked you</b> (who is the subject)."),
+    M("‘Who ___ at the supermarket?’ ‘Just Ben, but I don’t think he saw me!’", ["saw you","did you see"], "B", "object question", "You saw Ben → <b>Who did you see</b> (who is the object)."),
+    M("‘What ___ the impression that Greg was depressed?’ ‘Oh, I don’t know. He just seemed a bit down.’", ["gave you","did you give"], "A", "subject question", "<b>What gave you</b> the impression…"),
+    M("‘Who ___ had stolen the money?’ ‘Jenny, but she believed me when I told her I hadn’t done it.’", ["thought you","did you think"], "B", "do you think + subject", "You thought Jenny → <b>Who did you think</b> had stolen…"),
+    M("‘Which programme ___ the most?’ ‘Well, I learned a lot from Extreme History!’", ["taught you","did you teach"], "A", "subject question", "<b>Which programme taught you</b> the most?"),
+    M("‘Who ___ this book from?’ ‘Tracy, and I need to give it back to her tomorrow!’", ["borrowed you","did you borrow"], "B", "object question", "<b>Who did you borrow</b> this book from?"),
+    M("‘What ___ to this part of the world?’ ‘Work, really, and I’ve always loved this country!’", ["brought you","did you bring"], "A", "subject question", "<b>What brought you</b> here?"),
+    M("‘Who ___ of starting the fight?’ ‘He says that John started it by calling him names!’", ["accused George","did George accuse"], "B", "object question", "George accused John → <b>Who did George accuse</b>…"),
+    M("‘Which person ___ the most?’ ‘I think I would say my grandmother because she’s worked hard all her life!’", ["admires you","do you admire"], "B", "object question", "<b>Which person do you admire</b> the most?"),
+    M("‘Who ___ your secret?’ ‘I’m not sure, but I think Simone probably told him!’", ["told Dave","did Dave tell"], "A", "subject question", "Simone told Dave → <b>Who told Dave</b> your secret?"),
+  ]},
+  {roman:"III", title:"Match to make sentences", instr:"Match the beginnings (1–8) with the question tags (A–H).", note:NOTE_TAG,
+   shared:["don’t you?","didn’t you?","will you?","haven’t you?","do you?","did you?","weren’t you?","aren’t you?"], items:[
+    S("You’ve sent that letter I gave you,", "D", "present perfect → haven’t you", "<i>have</i> is the auxiliary, positive → negative tag: <b>haven’t you?</b>"),
+    S("You catch the bus to school,", "A", "present simple → don’t you", "<b>don’t you?</b>"),
+    S("You won’t tell anyone about this,", "C", "negative → positive tag", "<i>won’t</i> is negative → <b>will you?</b>"),
+    S("You’re a friend of Charlie’s,", "H", "be → aren’t you", "<b>aren’t you?</b>"),
+    S("You were living in Hong Kong then,", "G", "past continuous → weren’t you", "<b>weren’t you?</b>"),
+    S("You never work more than you have to,", "E", "negative word → positive tag", "<i>never</i> is negative → <b>do you?</b>"),
+    S("You made no effort to make friends with Darren,", "F", "negative word → positive tag", "<i>no effort</i> is negative → <b>did you?</b>"),
+    S("You got Jimmy a cap for his birthday,", "B", "past simple → didn’t you", "<b>didn’t you?</b>"),
+  ]},
+  {roman:"IV", title:"Early humans and the weather", instr:"Write one word in each gap. Passage: <i>Early humans and the weather</i>.", note:NOTE_Q, type:"passage", ptitle:"Early humans and the weather",
+   passage:"{1} you think you understand the weather? For early humans, the weather was a constant source of questions. {2} is it raining? What {3} this storm mean? Where {4} the wind go when it blows? People came up with many explanations for the weather, usually involving gods or ancestors. {5} you explain what a rainbow is? The Cherokee people of America believed that it was the hem of the sun god’s coat. The weather has also been used to explain other things. What would you say if someone asked you {6} kangaroos come from? You’d probably say Australia, but {7} did the Aborigines explain these strange animals? They told a story about a great storm. A group of Aboriginal hunters watched in amazement as the wind blew large creatures over their heads. {8} could they be? Finally, the wind died down and the kangaroos landed on the ground. The storm had brought them a new animal to hunt.",
+   items:[
+    T("{} you think you understand the weather?", ["do"], "question with do", "<b>Do</b> you think…?"),
+    T("{} is it raining?", ["why"], "question word", "<b>Why</b> is it raining?"),
+    T("What {} this storm mean?", ["does"], "do-support", "<b>does</b> this storm mean?"),
+    T("Where {} the wind go when it blows?", ["does"], "do-support", "<b>does</b> the wind go…?"),
+    T("{} you explain what a rainbow is?", ["can","could"], "modal question", "<b>Can / Could</b> you explain…?"),
+    T("…asked you {} kangaroos come from?", ["where"], "indirect question word", "<i>asked you <b>where</b> kangaroos come from</i> (normal word order)."),
+    T("…but {} did the Aborigines explain these strange animals?", ["how"], "question word", "<b>how</b> did they explain…?"),
+    T("{} could they be?", ["what"], "question word", "<b>What</b> could they be?"),
+   ].map((it,i)=>{ it.gap=i+1; return it; })},
+  {roman:"V", title:"Question tags", instr:"Complete the question tags.", note:NOTE_TAG, items:[
+    T("Get me some chewing gum when you go to the shop, {} you?", ["will","would","could"], "imperative → will / would / could", "<b>will / would / could</b> you?"),
+    T("Let’s watch that new DVD you bought today, {} we?", ["shall"], "Let’s → shall we", "<b>shall</b> we?"),
+    T("There’s not really much point waiting, {} there?", ["is"], "there + negative → positive", "<i>not really</i> is negative, and <i>there</i> is repeated: <b>is</b> there?"),
+    T("Tonia will put us up for the weekend, {} she?", ["won't"], "will → won’t", "<b>won’t</b> she?"),
+    T("Nobody seems to like Jessica, {} they?", ["do"], "nobody → do they", "<i>Nobody</i> → plural <i>they</i>, positive tag: <b>do</b> they?"),
+    T("I’m not making much sense now, {} I?", ["am"], "I am not → am I", "<b>am</b> I?"),
+    T("Let’s go because it’s getting late, {} it?", ["isn't"], "it is → isn’t it", "The tag follows <i>it’s getting late</i>: <b>isn’t</b> it?"),
+    T("If you borrow my coat, don’t get it dirty, {} you?", ["will"], "negative imperative → will you", "<b>will</b> you?"),
+    T("Bill should be here by now, {} he?", ["shouldn't"], "should → shouldn’t", "<b>shouldn’t</b> he?"),
+    T("I’m making you feel uncomfortable, {} I?", ["aren't"], "I am → aren’t I", "<b>aren’t</b> I?"),
+    T("Someone left the door open, {} they?", ["didn't"], "someone → they", "<i>Someone</i> → <b>didn’t</b> they?"),
+    T("Nobody knows about this, {} they?", ["do"], "nobody → do they", "<b>do</b> they?"),
+  ]},
+  {roman:"VI", title:"Key word transformations", instr:"Complete each second sentence using the word given, so that it has a similar meaning to the first sentence. Write between two and five words in each gap.", note:NOTE_IND, items:[
+    T("When does Tina get back from Berlin?", ["you know when tina gets"], "Do you know… + normal order", "<b>you know when Tina gets</b> back from Berlin?", {kw:"know", pre:"Do", post:"back from Berlin?"}),
+    T("What time does the film start tonight?", ["what time the film starts"], "indirect question", "<b>what time the film starts</b> tonight?", {kw:"starts", pre:"Could you tell me", post:"tonight?"}),
+    T("Is service included in the price?", ["know if service is included","know whether service is included"], "if / whether", "<b>know if / whether service is included</b>.", {kw:"know", pre:"I would like to", post:"in the price."}),
+    T("What is the salary?", ["let me know what"], "Could you let me know…", "<b>let me know what</b> the salary is?", {kw:"let", pre:"Could you", post:"the salary is?"}),
+    T("Have you been to Brussels before?", ["wonder if you have been","wonder whether you have been","wonder if you've been","wonder whether you've been"], "I wonder if…", "<b>wonder if you have been</b> to Brussels before.", {kw:"wonder", pre:"I", post:"to Brussels before.", strip:["i"]}),
+    T("Did Gail pass her exam?", ["if gail passed","whether gail passed"], "if / whether", "<b>if / whether Gail passed</b> her exam?", {kw:"passed", pre:"Do you know", post:"her exam?"}),
+    T("I wonder if you know where Mary went after the party last night.", ["did mary go"], "direct question", "Direct question: <b>did Mary go</b> after the party last night?", {kw:"go", pre:"Where", post:"after the party last night?"}),
+    T("I would like to know how many days holiday we get each year.", ["are we given"], "direct question", "<b>are we given</b> each year?", {kw:"given", pre:"How many days holiday", post:"each year?"}),
+  ]},
+  {roman:"VII", title:"Extra word", instr:"Type the extra word in each sentence.", note:NOTE_IND+NOTE_TAG, items:[
+    K("Do you have much free time these days or are you [[be]] quite busy?", "be", "extra word", "<b>be</b> is extra: <i>…or are you quite busy?</i>"),
+    K("I would like to know [[it]] when I can expect my order to be delivered.", "it", "extra word", "<b>it</b> is extra: <i>I would like to know when…</i>"),
+    K("Do you think [[whether]] you could possibly let me know how soon you will have the work finished?", "whether", "extra word", "<b>whether</b> is extra: <i>Do you think you could…?</i>"),
+    K("I wonder if you know who [[it]] is responsible for cleaning the building.", "it", "extra word", "<b>it</b> is extra: <i>who is responsible</i>."),
+    K("Tell Roger who [[did]] you see when you were at the police station the other day.", "did", "indirect: no do-support", "<b>did</b> is extra: <i>Tell Roger who you saw…</i>"),
+    K("Did Dad mention who he sold [[him]] the car to?", "him", "extra word", "<b>him</b> is extra: <i>who he sold the car to</i>."),
+    K("You shouldn’t leave your homework to the very last minute if you want to get a good mark, should [[not]] you?", "not", "question tag", "<b>not</b> is extra: the tag is <i>should you?</i> (positive after a negative)."),
+    K("I wonder [[it]] if you know where I can buy something to eat.", "it", "extra word", "<b>it</b> is extra: <i>I wonder if you know…</i>"),
+  ]},
+  ]
+};
+
+const SET_B = {
+  key:"B", title:"Set B · Extra drill", tagline:"New questions",
+  blurb:"Fresh practice on questions, question tags and indirect questions: question forms, subject vs object questions, tags, polite transformations and common errors. Good for a second round or for retesting weak spots.",
+  sections:[
+  {roman:"I", title:"Question forms: choose", instr:"Choose the correct answer.", note:NOTE_Q, items:[
+    M("___ I on time?", ["Do","Am","Have","Does"], "B", "be as main verb", "<b>Am</b> I on time?"),
+    M("___ you tired?", ["Are","Do","Have","Does"], "A", "be as main verb", "<b>Are</b> you tired?"),
+    M("___ he got any money?", ["Is","Does","Has","Do"], "C", "have as auxiliary", "<b>Has</b> he got…?"),
+    M("___ she need anything?", ["Do","Is","Does","Has"], "C", "other verbs → do / does", "<b>Does</b> she need…?"),
+    M("___ we wait here?", ["Should","Do","Are","Have"], "A", "modal question", "<b>Should</b> we wait?"),
+    M("___ book is this?", ["Who","Whose","Whom","Which"], "B", "whose = possession", "<b>Whose</b> book…?"),
+    M("To ___ did you speak?", ["who","whom","whose","what"], "B", "preposition + whom", "<b>To whom</b> did you speak?"),
+    M("___ is the weather like?", ["What","How","Which","Who"], "A", "what … like", "<b>What</b> is the weather like?"),
+    M("When ___ Terry starting work?", ["does","is","do","has"], "B", "be as auxiliary", "<b>is</b> Terry starting…?"),
+    M("Why ___ they leave?", ["are","did","have","were do"], "B", "did + base form", "<b>did</b> they leave?"),
+    M("___ the children going on a picnic?", ["Do","Are","Have","Does"], "B", "be as auxiliary", "<b>Are</b> the children going…?"),
+    M("___ you have enough time?", ["Are","Have","Do","Has"], "C", "have as main verb → do", "<b>Do</b> you have enough time?"),
+    M("___ she be here soon?", ["Does","Is","Will","Has"], "C", "modal question", "<b>Will</b> she be here soon?"),
+    M("How long ___ you lived here?", ["do","are","have","did"], "C", "have as auxiliary", "<b>have</b> you lived here?"),
+    M("___ you help me, please?", ["Could","Are","Do","Have"], "A", "modal request", "<b>Could</b> you help me?"),
+    M("Who ___ the rubbish out?", ["is taking","does take","is he taking","taking is"], "A", "subject question", "<b>Who is taking</b> the rubbish out? (no extra subject)"),
+    M("What ___ you doing when I called?", ["did","were","do","have"], "B", "be as auxiliary", "<b>were</b> you doing…?"),
+    M("Which question is correct?", ["Do you can swim?","Can you swim?","You can swim?","Are you can swim?"], "B", "modal question", "<b>Can you swim?</b>"),
+  ]},
+  {roman:"II", title:"Subject or object question?", instr:"Choose the correct phrase.", note:NOTE_Q, items:[
+    M("‘Who ___ last night?’ ‘My sister phoned me.’", ["phoned you","did you phone"], "A", "subject question", "<b>Who phoned you</b> (who is the subject)."),
+    M("‘Who ___ first?’ ‘I called Ben first.’", ["called you","did you call"], "B", "object question", "<b>Who did you call</b> first?"),
+    M("‘What ___ so much?’ ‘The news upset me.’", ["upset you","did you upset"], "A", "subject question", "<b>What upset you</b> so much?"),
+    M("‘Who ___ to the wedding?’ ‘I invited my cousins.’", ["invited you","did you invite"], "B", "object question", "<b>Who did you invite</b>?"),
+    M("‘Which team ___ in the final?’ ‘We beat the Reds.’", ["beat you","did you beat"], "B", "object question", "<b>Which team did you beat</b>?"),
+    M("‘Who ___ the news?’ ‘Mia told me.’", ["told you","did you tell"], "A", "subject question", "<b>Who told you</b> the news?"),
+    M("‘What ___ most?’ ‘The price surprised me.’", ["surprised you","did you surprise"], "A", "subject question", "<b>What surprised you</b> most?"),
+    M("‘Who ___ as captain?’ ‘They chose Ali.’", ["chose them","did they choose"], "B", "object question", "<b>Who did they choose</b> as captain?"),
+    M("‘Which exercise ___ most?’ ‘The long run helped me.’", ["helped you","did you help"], "A", "subject question", "<b>Which exercise helped you</b> most?"),
+    M("‘Who ___ to?’ ‘I wrote to the council.’", ["wrote to you","did you write to"], "B", "object question", "<b>Who did you write to</b>?"),
+  ]},
+  {roman:"III", title:"Complete the question tags", instr:"Complete the question tags.", note:NOTE_TAG, items:[
+    T("She is beautiful, {} she?", ["isn't"], "be → isn’t", "<b>isn’t</b> she?"),
+    T("You haven’t lost my CD, {} you?", ["have"], "negative → positive", "<b>have</b> you?"),
+    T("We are having the lesson early tomorrow, {} we?", ["aren't"], "be → aren’t", "<b>aren’t</b> we?"),
+    T("People should recycle things, {} they?", ["shouldn't"], "modal → shouldn’t", "<b>shouldn’t</b> they?"),
+    T("Tom has a lovely voice, {} he?", ["hasn't","doesn't"], "have as main verb", "<b>hasn’t / doesn’t</b> he?"),
+    T("You play the guitar, {} you?", ["don't"], "present simple → don’t", "<b>don’t</b> you?"),
+    T("Frank lives in Germany now, {} he?", ["doesn't"], "present simple → doesn’t", "<b>doesn’t</b> he?"),
+    T("Your friends really enjoyed themselves at the party, {} they?", ["didn't"], "past simple → didn’t", "<b>didn’t</b> they?"),
+    T("Let’s get a DVD tonight, {} we?", ["shall"], "Let’s → shall we", "<b>shall</b> we?"),
+    T("Pass me that book, {} you?", ["will","would","could"], "imperative", "<b>will / would / could</b> you?"),
+    T("Don’t forget tonight, {} you?", ["will"], "negative imperative", "<b>will</b> you?"),
+    T("I’m the best student in the class, {} I?", ["aren't"], "I am → aren’t I", "<b>aren’t</b> I?"),
+    T("I’m not very tall, {} I?", ["am"], "I am not → am I", "<b>am</b> I?"),
+    T("Everyone’s going to be there, {} they?", ["aren't"], "everyone → they", "<b>aren’t</b> they?"),
+    T("No one wants to come, {} they?", ["do"], "no one → positive tag", "<b>do</b> they?"),
+    T("Someone’s been in here, {} they?", ["haven't"], "someone → they", "<b>haven’t</b> they?"),
+    T("We never enjoy our holiday, {} we?", ["do"], "never → positive tag", "<b>do</b> we?"),
+    T("There’s no point calling Tim now, {} there?", ["is"], "there is repeated", "<b>is</b> there?"),
+  ]},
+  {roman:"IV", title:"Question tags: choose", instr:"Choose the correct answer.", note:NOTE_TAG, items:[
+    M("He can swim, ___ he?", ["can","can’t","doesn’t","isn’t"], "B", "modal → can’t", "<b>can’t</b> he?"),
+    M("They aren’t coming, ___ they?", ["aren’t","are","do","don’t"], "B", "negative → positive", "<b>are</b> they?"),
+    M("She has been working hard, ___ she?", ["hasn’t","doesn’t","isn’t","wasn’t"], "A", "auxiliary has", "<b>hasn’t</b> she?"),
+    M("You never eat meat, ___ you?", ["don’t","do","aren’t","didn’t"], "B", "never → positive tag", "<b>do</b> you?"),
+    M("Hardly anybody came, ___ they?", ["didn’t","did","weren’t","was"], "B", "hardly → positive tag", "<b>did</b> they?"),
+    M("Nobody called, ___ they?", ["didn’t","did","does","won’t"], "B", "nobody → they", "<b>did</b> they?"),
+    M("There was a lot of noise, ___ there?", ["wasn’t","didn’t","was","weren’t"], "A", "there is repeated", "<b>wasn’t</b> there?"),
+    M("I’m late, ___ I?", ["am not","aren’t","amn’t","isn’t"], "B", "I am → aren’t I", "<b>aren’t</b> I?"),
+    M("Let’s have lunch, ___ we?", ["do","shall","will","shan’t"], "B", "Let’s → shall we", "<b>shall</b> we?"),
+    M("Open the window, ___ you?", ["don’t","will","aren’t","haven’t"], "B", "imperative → will you", "<b>will</b> you?"),
+  ]},
+  {roman:"V", title:"Indirect questions", instr:"Make the question indirect. Complete the second sentence.", note:NOTE_IND, items:[
+    T("What time is it?", ["what time it is"], "normal word order", "<b>Could you tell me what time it is?</b>", {pre:"Could you tell me"}),
+    T("Where is the station?", ["where the station is"], "normal word order", "<b>Do you know where the station is?</b>", {pre:"Do you know"}),
+    T("How much does this cost?", ["how much this costs"], "no do-support", "<b>I wonder if you could tell me how much this costs.</b>", {pre:"I wonder if you could tell me"}),
+    T("When does the shop open?", ["when the shop opens"], "no do-support", "<b>Could you let me know when the shop opens?</b>", {pre:"Could you let me know"}),
+    T("Who is that man?", ["who that man is"], "normal word order", "<b>Do you know who that man is?</b>", {pre:"Do you know"}),
+    T("Is this seat free?", ["if this seat is free","whether this seat is free"], "yes/no → if / whether", "<b>I wonder if this seat is free.</b>", {pre:"I wonder"}),
+    T("Does the bus stop here?", ["if the bus stops here","whether the bus stops here"], "yes/no → if / whether", "<b>Could you tell me if the bus stops here?</b>", {pre:"Could you tell me"}),
+    T("Why did she leave?", ["why she left"], "no did", "<b>Do you know why she left?</b>", {pre:"Do you know"}),
+    T("What is your company going to do about it?", ["what your company is going to do about it"], "normal word order", "<b>I would like to know what your company is going to do about it.</b>", {pre:"I would like to know"}),
+    T("Have you finished?", ["if you have finished","whether you have finished","if you've finished","whether you've finished"], "yes/no → if / whether", "<b>I wonder if you have finished.</b>", {pre:"I wonder"}),
+    T("How long does the film last?", ["how long the film lasts"], "no do-support", "<b>Could you tell me how long the film lasts?</b>", {pre:"Could you tell me"}),
+    T("Can I park here?", ["if i can park here","whether i can park here"], "yes/no → if / whether", "<b>Could you tell me if I can park here?</b>", {pre:"Could you tell me"}),
+    T("Where did you buy it?", ["where you bought it"], "no did", "<b>I would like to know where you bought it.</b>", {pre:"I would like to know"}),
+    T("Which platform does the train leave from?", ["which platform the train leaves from"], "no do-support", "<b>Could you tell me which platform the train leaves from?</b>", {pre:"Could you tell me"}),
+  ]},
+  {roman:"VI", title:"Indirect questions: choose", instr:"Choose the correct answer.", note:NOTE_IND, items:[
+    M("Could you tell me where ___?", ["is the bank","the bank is","does the bank be","the bank does"], "B", "normal word order", "<b>the bank is</b>."),
+    M("Do you know what time ___?", ["is it","it is","does it be","it does"], "B", "normal word order", "<b>it is</b>."),
+    M("Which sentence is correct?", ["I would like to know when does the train leave.","I would like to know when the train leaves.","I would like to know when the train does leave.","I would like to know when leaves the train."], "B", "normal word order", "<b>when the train leaves</b>."),
+    M("Could you tell me ___ the museum is open on Mondays?", ["that","if","what","is"], "B", "yes/no → if", "<b>if / whether</b>."),
+    M("Do you know ___ she went?", ["where","if","that","does"], "A", "wh- word", "<b>where</b> she went."),
+    M("I wonder ___ you could help me.", ["that","if","does","what"], "B", "yes/no → if", "<b>if</b> you could help me."),
+    M("Could you let me know how much ___?", ["does it cost","it costs","it cost does","costs does it"], "B", "no do-support", "<b>it costs</b>."),
+    M("Which sentence is INCORRECT?", ["Could you tell me who she is?","Do you know where he lives?","I wonder if you know what time is it.","I would like to know why they left."], "C", "normal word order", "<i>what time <b>it is</b></i>."),
+    M("Which question is more polite?", ["Where is the toilet?","Do you know where the toilet is?","Where the toilet is?","Tell me where the toilet."], "B", "indirect = polite", "<b>Do you know where the toilet is?</b>"),
+    M("Could you tell me ___ the answer is?", ["what","whether","if","that"], "A", "wh- word", "<b>what</b> the answer is."),
+  ]},
+  {roman:"VII", title:"Tick or rewrite", instr:"If the phrase in bold is correct, put a tick (✓). If it is incorrect, rewrite it correctly.", note:NOTE_Q+NOTE_TAG+NOTE_IND, items:[
+    FT("<b>Do you can</b> swim?", ["can you"], "modal question", "<b>Can you</b> swim?"),
+    FT("<b>Does</b> he got any money?", ["has"], "have got → has he", "<b>Has</b> he got any money?"),
+    FT("To <b>who</b> did you speak?", ["whom"], "preposition + whom", "<b>To whom</b> did you speak?"),
+    FT("What <b>you are</b> doing?", ["are you"], "question order", "What <b>are you</b> doing?"),
+    FT("Who <b>did break</b> the window?", ["broke"], "subject question", "<b>Who broke</b> the window? (no <i>did</i>)"),
+    FT("She is clever, <b>is she</b>?", ["isn't she"], "positive → negative tag", "<b>isn’t she</b>?"),
+    FT("You haven’t finished, <b>haven’t you</b>?", ["have you"], "negative → positive tag", "<b>have you</b>?"),
+    FT("Let’s go out, <b>will we</b>?", ["shall we"], "Let’s → shall we", "<b>shall we</b>?"),
+    FT("Could you tell me where <b>is the station</b>?", ["the station is"], "normal word order", "where <b>the station is</b>."),
+    FT("I wonder <b>that</b> you know the answer.", ["if","whether"], "yes/no → if / whether", "<b>if / whether</b>."),
+    FT("Do you know what time <b>does the film start</b>?", ["the film starts"], "normal word order", "what time <b>the film starts</b>."),
+    FT("I’d like to know <b>what your name is</b>.", ["✓"], "normal word order", "Correct."),
+  ]},
+  {roman:"VIII", title:"One word per gap", instr:"Write one word in each gap.", note:NOTE_Q+NOTE_TAG+NOTE_IND, items:[
+    T("{} you have enough time?", ["do"], "have as main verb", "<b>Do</b> you have…?"),
+    T("{} she arrived yet?", ["has"], "present perfect question", "<b>Has</b> she arrived?"),
+    T("{} I wait here?", ["should"], "modal question", "<b>Should</b> I wait?"),
+    T("Why {} they leave early?", ["did"], "did + base form", "Why <b>did</b> they leave?"),
+    T("She’s tired, {} she?", ["isn't"], "question tag", "<b>isn’t</b> she?"),
+    T("Let’s start, {} we?", ["shall"], "Let’s → shall we", "<b>shall</b> we?"),
+    T("Could you tell me what time {} starts?", ["it"], "normal word order", "what time <b>it</b> starts."),
+    T("I wonder {} you know where he lives.", ["if","whether"], "yes/no → if / whether", "<b>if / whether</b>."),
+    T("Do you know {} that woman is?", ["who"], "indirect question", "<b>who</b> that woman is."),
+    T("I would like to know how much it {}.", ["costs"], "no do-support", "<b>costs</b> (not <i>does it cost</i>)."),
+  ]},
+  {roman:"IX", title:"Extra word", instr:"Type the extra word in each sentence.", note:NOTE_IND+NOTE_TAG, items:[
+    K("Could you tell me [[that]] what time the shop opens?", "that", "extra word", "<b>that</b> is extra: <i>Could you tell me what time…</i>"),
+    K("Do you know where [[is]] the nearest bank is?", "is", "no question order", "<b>is</b> is extra: <i>where the nearest bank is</i>."),
+    K("I wonder [[if]] whether you could help me.", "if", "if OR whether", "<b>if</b> is extra: use either <i>if</i> or <i>whether</i>."),
+    K("What [[did]] time does the train leave?", "did", "extra auxiliary", "<b>did</b> is extra: <i>What time does the train leave?</i>"),
+    K("Could you [[to]] let me know your address?", "to", "modal + base form", "<b>to</b> is extra: <i>Could you let me know…?</i>"),
+    K("Do you know where she [[does]] lives?", "does", "no do-support", "<b>does</b> is extra: <i>where she lives</i>."),
+    K("You haven’t seen my keys, [[not]] have you?", "not", "question tag", "<b>not</b> is extra: <i>…, have you?</i>"),
+    K("I would like to know [[to]] what time it starts.", "to", "extra word", "<b>to</b> is extra: <i>I would like to know what time it starts.</i>"),
+  ]},
+  ]
+};
+
+const SETS = {A:SET_A, B:SET_B};
+/* assign ids and local numbers */
+Object.values(SETS).forEach(set=>{
+  let n=0; set.total=0;
+  set.sections.forEach((s,si)=>{ s.si=si; s.items.forEach((it,i)=>{ it.id=set.key+(++n); it.no=it.gap||(i+1); it.sec=si; }); set.total+=s.items.length; });
+});
+const itemsOf = set => set.sections.flatMap(s=>s.items);
+
+/* ---------------------------- helpers -------------------------------- */
+const $ = id => document.getElementById(id);
+const esc = s => String(s==null?"":s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+function lsGet(k){try{return localStorage.getItem(k)}catch(e){return null}}
+function lsSet(k,v){try{localStorage.setItem(k,v)}catch(e){}}
+function lsDel(k){try{localStorage.removeItem(k)}catch(e){}}
+function fmt(t){return String(Math.floor(t/60)).padStart(2,"0")+":"+String(t%60).padStart(2,"0")}
+
+function norm(s){
+  s = String(s==null?"":s).toLowerCase().replace(/[’‘`´]/g,"'");
+  s = s.replace(/\bcannot\b/g,"can't").replace(/\bcan not\b/g,"can't").replace(/\bwill not\b/g,"won't");
+  s = s.replace(/\b(did|do|does|was|were|is|are|had|has|have|would|could|should|must|might|need)\s+not\b/g,"$1n't");
+  s = s.replace(/criticiz/g,"criticis").replace(/cancell?ed/g,"canceled");
+  return s.replace(/[.,;:!?"“”()\[\]]/g," ").replace(/\s+/g," ").trim();
+}
+const TICKS = ["✓","✔","√","v","tick","correct","ok","right","yes","c"];
+function stripPre(u,it){
+  const list = it.strip || (it.pre ? [it.pre] : []);
+  list.forEach(p=>{ p=norm(p); if(!p) return; if(u===p) u=""; else if(u.startsWith(p+" ")) u=u.slice(p.length+1); });
+  return u;
+}
+function blanksOf(it){ // array of accepted-lists, one per blank
+  if(it.kind!=="text") return null;
+  return Array.isArray(it.ans[0]) ? it.ans : [it.ans];
+}
+function grade(it, val){
+  if(it.kind==="mcq"||it.kind==="sel") return !val ? "blank" : (it.ans.includes(val)?"correct":"wrong");
+  if(it.kind==="tick"){
+    const u = norm(val||""); if(!u) return "blank";
+    const got = TICKS.includes(u) ? "✓" : u;
+    return got===norm(it.ans) || (it.ans==="✓" && got==="✓") ? "correct" : "wrong";
+  }
+  const bl = blanksOf(it), vs = Array.isArray(val)?val:[val];
+  if(!vs.some(v=>norm(v))) return "blank";
+  const ok = bl.every((acc,i)=>{ const u=stripPre(norm(vs[i]||""),it); return acc.some(a=>{ if(a==="✓") return TICKS.includes(u); a=norm(a); return a===u || (it.fix && u.endsWith(" "+a)); }); });
+  return ok ? "correct":"wrong";
+}
+function answered(it,val){
+  if(val==null) return false;
+  return Array.isArray(val) ? val.some(v=>String(v).trim()) : String(val).trim()!=="";
+}
+
+/* ---------------------------- state ---------------------------------- */
+const S_ = {set:null, answers:{}, elapsed:0, timer:null, done:false};
+function sKey(k,s){return "l1:"+k+":"+s}
+function saveState(){ lsSet(sKey(S_.set.key,"a"),JSON.stringify(S_.answers)); lsSet(sKey(S_.set.key,"t"),String(S_.elapsed)); }
+function loadSaved(key){
+  let a={}; try{a=JSON.parse(lsGet(sKey(key,"a"))||"{}")}catch(e){a={}}
+  return {answers:a, elapsed:parseInt(lsGet(sKey(key,"t"))||"0",10)||0};
+}
+function startTimer(){
+  clearInterval(S_.timer);
+  S_.timer=setInterval(()=>{S_.elapsed++; $("timer").textContent=fmt(S_.elapsed); if(S_.elapsed%5===0) saveState();},1000);
+}
+function show(v){
+  document.querySelectorAll(".view").forEach(x=>x.classList.remove("active"));
+  $("view-"+v).classList.add("active"); window.scrollTo(0,0);
+  $("btn-home").style.display = v==="home" ? "none":"";
+  $("hdr-prog").style.display = v==="quiz" ? "":"none";
+  if(v==="home"){ clearInterval(S_.timer); $("hdr-sub").textContent="Practice workbook"; }
+}
+
+/* ---------------------------- home ----------------------------------- */
+function renderHome(){
+  $("setcards").innerHTML = Object.values(SETS).map(set=>{
+    const sv = loadSaved(set.key), n = Object.values(sv.answers).filter(v=>answered(null,v)||(v!=null&&String(v)!=="")).length;
+    const secs = set.sections.map(s=>`<li><span><b>${s.roman}.</b> ${s.title}</span><span>${s.items.length} Q</span></li>`).join("");
+    return `<article class="glass setcard">
+      <span class="tagline">${esc(set.tagline)}</span>
+      <h3>${esc(set.title)}</h3>
+      <p>${esc(set.blurb)}</p>
+      <ul class="secl">${secs}</ul>
+      <div class="go"><button class="btn" data-start="${set.key}" type="button">${n?"Resume":"Start"} (${set.total} questions)</button>
+      ${n?`<span class="resume">${n} answered · saved in this browser</span>`:""}</div>
+    </article>`;
+  }).join("");
+}
+
+/* ---------------------------- quiz render ---------------------------- */
+function blankInput(it,b,val,cls){
+  return `<input class="${cls||"blank"} ${val?"filled":""}" type="text" data-id="${it.id}" data-b="${b}" value="${esc(val||"")}" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="Answer ${it.no}">`;
+}
+function itemHTML(it, sec){
+  const v = S_.answers[it.id];
+  let body="";
+  if(it.kind==="mcq"){
+    const tx = it.q.replace(/___/g,'<span style="display:inline-block;min-width:3.2em;border-bottom:2px solid var(--field-line)"></span>');
+    body = `<div class="qt">${tx}</div><div class="opts" role="radiogroup">`+
+      it.opts.map((o,i)=>`<label class="opt ${v===L[i]?"sel":""}"><input type="radio" name="q${it.id}" value="${L[i]}" data-id="${it.id}" ${v===L[i]?"checked":""}><span class="ltr">${L[i]}</span><span>${esc(o)}</span></label>`).join("")+`</div>`;
+  } else if(it.kind==="sel"){
+    const opts = sec.shared.map((o,i)=>`<option value="${L[i]}" ${v===L[i]?"selected":""}>${L[i]}. ${esc(o)}</option>`).join("");
+    body = `<div class="qt">${esc(it.q)} …</div><select data-id="${it.id}" class="${v?"filled":""}" aria-label="Ending for ${esc(it.q)}"><option value="">Choose the ending…</option>${opts}</select>`;
+  } else if(it.kind==="tick"){
+    const isTick = v==="✓";
+    body = `<div class="tickrow"><div class="tickbox"><button type="button" class="tickbtn ${isTick?"on":""}" data-tick="${it.id}" title="Line is correct" aria-label="Mark line ${it.no} as correct">✓</button>${blankInput(it,0,isTick?"":(v||""))}</div><div class="qt">${esc(it.q.replace(/\[\[|\]\]/g,""))}</div></div>`;
+  } else if(it.fix){
+    const vals = Array.isArray(v)?v:[];
+    body = `<div class="qt fixq">${it.q}</div><div class="line"><span>${it.tickOK?"✎ Type ✓ (or “tick”) if correct; if wrong, the corrected phrase:":"✎ Corrected form of the bold part:"}</span>${blankInput(it,0,vals[0],"wide")}</div>`;
+  } else if(it.pre!==undefined){
+    const vals = Array.isArray(v)?v:[];
+    const kw = it.kw ? `<span class="kw">${esc(it.kw)}</span>`:"";
+    body = `<div class="qt">${it.q}${kw}</div><div class="line"><span>→ ${esc(it.pre)}</span>${blankInput(it,0,vals[0],"wide")}${it.post?`<span>${esc(it.post)}</span>`:""}</div>`;
+  } else {
+    const parts = it.q.split("{}"), vals = Array.isArray(v)?v:[];
+    body = `<div class="qt">`+parts.map((p,i)=> p + (i<parts.length-1 ? blankInput(it,i,vals[i]) : "")).join("")+`</div>`;
+  }
+  return `<div class="q" id="q-${it.id}"><div class="qn">${it.no}</div><div class="qb">${body}</div></div>`;
+}
+function sectionHTML(sec){
+  let h = `<section class="glass sec" id="sec-${sec.si}"><div class="sec-h"><span class="roman">${sec.roman}</span><h3>${sec.title}</h3></div><p class="instr">${sec.instr}</p>`;
+  if(sec.note) h += `<details class="note"><summary>Quick rule reminder</summary><div class="nb">${sec.note}</div></details>`;
+  if(sec.type==="passage"){
+    const html = esc(sec.passage).replace(/\{(\d+)\}/g,(m,n)=>{ const it=sec.items[n-1]; const v=(S_.answers[it.id]||[])[0]||""; return `<span style="white-space:nowrap"><sup style="font-size:.72em;font-weight:700;color:var(--primary-text)">${n}</sup>${blankInput(it,0,v)}</span>`; });
+    h += `<div class="passage"><h4>${esc(sec.ptitle)}</h4>${html}</div>`;
+    return h+`</section>`;
+  }
+  if(sec.type==="lines") h += `<div class="passage" style="line-height:1.5;padding:.4rem 1rem"><h4 style="margin-top:.5rem">${sec.instr.match(/<i>(.*?)<\/i>/)?sec.instr.match(/<i>(.*?)<\/i>/)[1]:""}</h4></div>`;
+  if(sec.shared) h += `<div class="shared">`+sec.shared.map((o,i)=>`<div><b>${L[i]}</b>${esc(o)}</div>`).join("")+`</div>`;
+  h += sec.items.map(it=>itemHTML(it,sec)).join("");
+  return h+`</section>`;
+}
+function startSet(key, fresh){
+  const set = SETS[key]; S_.set=set; S_.done=false;
+  const sv = loadSaved(key);
+  S_.answers = fresh?{}:sv.answers; S_.elapsed = fresh?0:sv.elapsed;
+  if(fresh){lsDel(sKey(key,"a")); lsDel(sKey(key,"t"));}
+  $("quiz-title").textContent = set.title;
+  $("hdr-sub").textContent = set.title;
+  $("quiz-body").innerHTML = set.sections.map(sectionHTML).join("");
+  $("timer").textContent = fmt(S_.elapsed);
+  show("quiz"); updateProgress(); startTimer();
+}
+function updateProgress(){
+  const set=S_.set, its=itemsOf(set);
+  const n = its.filter(it=>answered(it,S_.answers[it.id])).length;
+  $("hdr-prog").textContent = n+" / "+its.length;
+  $("quiz-count").textContent = n+" of "+its.length+" answered";
+  $("prog-bar").style.width = (n/its.length*100)+"%";
+  $("chips").innerHTML = set.sections.map(s=>{
+    const done = s.items.every(it=>answered(it,S_.answers[it.id]));
+    return `<button type="button" class="chip ${done?"done":""}" data-jump="sec-${s.si}">${s.roman}${done?" ✓":""}</button>`;
+  }).join("");
+}
+
+/* ---------------------------- events --------------------------------- */
+document.addEventListener("click",e=>{
+  const st=e.target.closest("[data-start]"); if(st){ startSet(st.dataset.start,false); return; }
+  const jp=e.target.closest("[data-jump]"); if(jp){ const el=$(jp.dataset.jump); if(el) el.scrollIntoView({behavior:"smooth",block:"start"}); return; }
+  const tk=e.target.closest("[data-tick]");
+  if(tk){
+    const id=tk.dataset.tick, was=S_.answers[id]==="✓";
+    S_.answers[id]= was ? "" : "✓";
+    const row=$("q-"+id); row.querySelector(".tickbtn").classList.toggle("on",!was);
+    const inp=row.querySelector("input.blank"); inp.value=""; inp.classList.remove("filled");
+    saveState(); updateProgress(); return;
+  }
+  const sb=e.target.closest(".sb"); if(sb){ const el=$(sb.dataset.go); if(el) el.scrollIntoView({behavior:"smooth",block:"start"}); return; }
+  const fl=e.target.closest("[data-f]");
+  if(fl){
+    document.querySelectorAll("[data-f]").forEach(b=>b.classList.toggle("active",b===fl));
+    const rb=$("res-body"); rb.classList.remove("only-wrong","only-right");
+    if(fl.dataset.f==="wrong") rb.classList.add("only-wrong");
+    if(fl.dataset.f==="right") rb.classList.add("only-right");
+  }
+});
+document.addEventListener("input",e=>{
+  const t=e.target; if(!t.matches("input.blank,input.wide")) return;
+  const it=itemsOf(S_.set).find(x=>x.id===t.dataset.id); if(!it) return;
+  if(it.kind==="tick"){ S_.answers[it.id]=t.value; $("q-"+it.id).querySelector(".tickbtn").classList.remove("on"); }
+  else { const arr=Array.isArray(S_.answers[it.id])?S_.answers[it.id]:[]; arr[+t.dataset.b]=t.value; S_.answers[it.id]=arr; }
+  t.classList.toggle("filled",!!t.value.trim());
+  saveState(); updateProgress();
+});
+document.addEventListener("change",e=>{
+  const t=e.target;
+  if(t.matches('input[type=radio]')){
+    S_.answers[t.dataset.id]=t.value;
+    t.closest(".opts").querySelectorAll(".opt").forEach(o=>o.classList.toggle("sel",o.contains(t)&&t.checked));
+    saveState(); updateProgress();
+  } else if(t.matches("select[data-id]")){
+    S_.answers[t.dataset.id]=t.value; t.classList.toggle("filled",!!t.value); saveState(); updateProgress();
+  }
+});
+
+/* modal */
+function modal(title,msg,ok){
+  $("m-title").textContent=title; $("m-msg").textContent=msg;
+  const m=$("modal"); m.classList.add("active");
+  $("m-ok").onclick=()=>{m.classList.remove("active"); ok();};
+  $("m-cancel").onclick=()=>m.classList.remove("active");
+  $("m-ok").focus();
+}
+
+/* ---------------------------- results -------------------------------- */
+function optText(it,sec,k){ return it.kind==="mcq" ? it.opts[L.indexOf(k)] : sec.shared[L.indexOf(k)]; }
+function joinPost(post){ return post ? (/^[,.;]/.test(post)?"":" ")+esc(post) : ""; }
+function sentence(it, sec, vals, cls){
+  // vals: array of display strings (one per blank). cls: ok|bad|key|none
+  const f = (s)=> s ? `<span class="fill ${cls}">${esc(s)}</span>` : `<span class="fill none">no answer</span>`;
+  if(it.kind==="text"){
+    if(it.fix){ const v0=vals[0]; if(v0==="✓"||(v0&&TICKS.includes(norm(v0)))) return it.q+' <span class="fill '+cls+'">✓ correct as it is</span>'; return it.q.replace(/<b>.*?<\/b>/, f(v0)); }
+    if(it.pre!==undefined) return `<div>→ ${esc(it.pre)} ${f(vals[0])}${joinPost(it.post)}</div>`;
+    return it.q.split("{}").map((p,i,a)=>p+(i<a.length-1?f(vals[i]):"")).join("");
+  }
+  if(it.kind==="mcq"){
+    if(/___/.test(it.q)) return it.q.replace(/___/,f(vals[0]));
+    return `${it.q}<div>→ ${f(vals[0])}</div>`;
+  }
+  if(it.kind==="sel") return `${esc(it.q)} ${f(vals[0])}`;
+  return "";
+}
+function lineHTML(it){ // tick line with extra word marked
+  return esc(it.q).replace(/\[\[(.*?)\]\]/g,'<mark class="x">$1</mark>');
+}
+function resultCard(it, sec, val, st){
+  const cls = st==="correct"?"correct": st==="wrong"?"wrong":"blank-ans";
+  const tag = st==="correct"?"✓ Correct": st==="wrong"?"✗ Incorrect":"○ Not answered";
+  let top = `<div class="rc-top"><span class="rc-no">${sec.roman}.${it.no}</span><span class="mark">${tag}</span><span class="rule">${esc(it.rule)}</span></div>`;
+  let mid="", alt="";
+  if(it.kind==="tick"){
+    const u=norm(val||""), got=!u?"":(TICKS.includes(u)?"✓":u);
+    const mine = !u ? `<span class="fill none">no answer</span>` : got==="✓" ? `<span class="fill ${st==="correct"?"ok":"bad"}">✓ line is correct</span>` : `<span class="fill ${st==="correct"?"ok":"bad"}">extra word: ${esc(val)}</span>`;
+    const key = it.ans==="✓" ? `<span class="fill key">✓ line is correct</span>` : `<span class="fill key">extra word: ${esc(it.ans)}</span>`;
+    mid = `<div class="orig">${lineHTML(it)}</div><div class="ans"><small>YOUR ANSWER</small>${mine}</div>` + (st!=="correct"?`<div class="ans"><small>CORRECT ANSWER</small>${key}</div>`:"");
+  } else {
+    let mineVals, keyVals;
+    if(it.kind==="text"){
+      const bl=blanksOf(it); const vs=Array.isArray(val)?val:[];
+      mineVals = bl.map((_,i)=>(vs[i]||"").trim()); keyVals = bl.map(a=>a[0]);
+      const extra = bl.flatMap(a=>a.slice(1));
+      if(extra.length) alt = `<div class="alt">Also accepted: ${extra.map(a=>"<i>"+esc(a)+"</i>").join(" · ")}</div>`;
+    } else {
+      const key=it.ans[0]; keyVals=[L.indexOf(key)>=0? optText(it,sec,key):""];
+      mineVals=[val? optText(it,sec,val):""];
+      if(it.ans.length>1) alt = `<div class="alt">Also acceptable: <i>${it.ans.slice(1).map(k=>esc(optText(it,sec,k))).join(" / ")}</i></div>`;
+    }
+    const letterMine = (it.kind!=="text" && val) ? ` <small style="display:inline;letter-spacing:0">(${val})</small>`:"";
+    const letterKey = it.kind!=="text" ? ` <small style="display:inline;letter-spacing:0">(${it.ans[0]})</small>`:"";
+    const showOrig = it.kind==="text" && (it.pre!==undefined||it.fix) ? `<div class="orig">${it.q}${it.kw?`<span class="kw">${esc(it.kw)}</span>`:""}</div>`:"";
+    mid = showOrig +
+      `<div class="ans"><small>YOUR ANSWER</small>${sentence(it,sec,mineVals, st==="correct"?"ok": st==="wrong"?"bad":"none")}${letterMine}</div>` +
+      (st!=="correct" ? `<div class="ans"><small>CORRECT ANSWER</small>${sentence(it,sec,keyVals,"key")}${letterKey}</div>` : "") + alt;
+  }
+  return `<article class="glass rc ${cls}" id="r-${it.id}">${top}${mid}<div class="why"><b>Why:</b> ${it.why}</div></article>`;
+}
+function showResults(){
+  clearInterval(S_.timer); S_.done=true;
+  const set=S_.set; let ok=0,bad=0,skip=0; const per=set.sections.map(()=>({ok:0,n:0}));
+  let html="";
+  set.sections.forEach(sec=>{
+    let secHtml="";
+    sec.items.forEach(it=>{
+      const val=S_.answers[it.id], st=grade(it,val);
+      per[sec.si].n++; if(st==="correct"){ok++;per[sec.si].ok++;} else if(st==="wrong") bad++; else skip++;
+      secHtml += resultCard(it,sec,val,st);
+    });
+    html += `<div class="rsec" id="rs-${sec.si}"><span class="roman">${sec.roman}</span><h3>${sec.title}</h3><small>${per[sec.si].ok} / ${per[sec.si].n}</small></div>`+secHtml;
+  });
+  const total=ok+bad+skip, pct=Math.round(ok/total*100);
+  $("res-title").textContent = set.title+" · results";
+  $("res-pct").textContent=pct+"%"; $("ring").style.setProperty("--pct",pct+"%");
+  $("n-ok").textContent=ok; $("n-bad").textContent=bad; $("n-skip").textContent=skip; $("res-time").textContent=fmt(S_.elapsed);
+  $("secbars").innerHTML = set.sections.map((s,i)=>`<div class="sb" data-go="rs-${i}" role="button" tabindex="0"><span class="rn">${s.roman}</span><span class="bar"><i style="width:${per[i].ok/per[i].n*100}%"></i></span><span class="nm">${per[i].ok}/${per[i].n}</span></div>`).join("");
+  $("res-body").className=""; document.querySelectorAll("[data-f]").forEach(b=>b.classList.toggle("active",b.dataset.f==="all"));
+  $("res-body").innerHTML=html;
+  lsDel(sKey(set.key,"a")); lsDel(sKey(set.key,"t"));
+  show("results");
+}
+function submit(){
+  const its=itemsOf(S_.set), n=its.filter(it=>answered(it,S_.answers[it.id])).length;
+  if(n<its.length) modal("Submit with blanks?",`You have answered ${n} of ${its.length} questions. Unanswered items will be marked and explained too.`,showResults);
+  else showResults();
+}
+
+/* nav buttons */
+$("btn-submit").onclick=submit;
+$("btn-home").onclick=()=>{ if(S_.set&&!S_.done) saveState(); clearInterval(S_.timer); renderHome(); show("home"); };
+$("btn-home2").onclick=()=>{ renderHome(); show("home"); };
+$("btn-retake").onclick=()=>modal("Retake this set?","Your current results will be cleared and the set restarts from question 1.",()=>startSet(S_.set.key,true));
+
+$("btn-other").onclick=()=>startSet(S_.set.key==="A"?"B":"A",false);
+document.addEventListener("keydown",e=>{ if((e.key==="Enter"||e.key===" ")&&e.target.classList&&e.target.classList.contains("sb")){e.preventDefault();e.target.click();} });
+window.addEventListener("pagehide",()=>{ if(S_.set&&!S_.done&&$("view-quiz").classList.contains("active")) saveState(); });
+renderHome();
+</script>
+</body>
+</html>

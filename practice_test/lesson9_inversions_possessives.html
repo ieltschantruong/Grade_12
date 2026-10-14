@@ -1,0 +1,850 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Lesson 9 | Inversions &amp; Possessives</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+  color-scheme:light;
+  --bg1:#f2fbf6; --bg2:#fff5ea;
+  --ink:#31473d; --ink2:#5f766a; --line:rgba(80,140,110,.22);
+  --glass:rgba(255,255,255,.72); --glass-b:rgba(255,255,255,.85); --shadow:0 8px 28px rgba(120,175,145,.2);
+  --primary:#9ad8bd; --primary-text:#1f745a; --primary-soft:rgba(154,216,189,.3); --primary-ink:#17382b;
+  --lav:#ffe5d0; --lav-ink:#8a4a1f; --blob1:#ffd9bd; --blob2:#c6eedd; --blob3:#fff0b3;
+  --ok:#2b7a4f; --ok-bg:#e2f6d9; --ok-line:#a8d98f;
+  --bad:#b24a50; --bad-bg:#ffe5e8; --bad-line:#f4b4bb;
+  --skip:#85692a; --skip-bg:#fff2d4; --skip-line:#eed38d;
+  --field:rgba(255,255,255,.88); --field-line:#cfe4d8;
+  --font:'Inter',system-ui,-apple-system,'Segoe UI',sans-serif;
+  --serif:'Fraunces',Georgia,'Times New Roman',serif;
+}
+html{scroll-padding-top:calc(env(safe-area-inset-top,0px) + 5.5rem)}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:var(--font);color:var(--ink);min-height:100vh;background:linear-gradient(135deg,var(--bg1),#fbfbef 55%,var(--bg2));overflow-x:hidden;line-height:1.5}
+.blob{position:fixed;border-radius:50%;filter:blur(90px);z-index:-1;opacity:.6;pointer-events:none}
+.b1{top:-12%;left:-10%;width:50vw;height:50vw;background:var(--blob1)}
+.b2{bottom:-12%;right:-10%;width:60vw;height:60vw;background:var(--blob2)}
+.b3{top:42%;left:60%;width:36vw;height:36vw;background:var(--blob3);opacity:.35}
+.glass{background:var(--glass);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border:1px solid var(--glass-b);border-radius:20px;box-shadow:var(--shadow)}
+.container{max-width:920px;margin:0 auto;padding:1.25rem 1.25rem 3rem}
+h1,h2,h3{font-family:var(--serif);font-weight:700;letter-spacing:-.01em}
+
+/* header */
+header.bar{display:flex;justify-content:space-between;align-items:center;gap:1rem;padding:.8rem 1.2rem;margin-bottom:1.5rem;position:sticky;top:calc(env(safe-area-inset-top,0px) + .6rem);z-index:50}
+.brand{display:flex;flex-direction:column;line-height:1.15;min-width:0}
+.brand b{font-family:var(--serif);font-size:1.08rem}
+.brand span{font-size:.78rem;color:var(--ink2)}
+.stats{display:flex;align-items:center;gap:.7rem;font-weight:600;font-size:.9rem}
+.pill{display:inline-flex;align-items:center;gap:.4rem;padding:.4rem .8rem;border-radius:999px;background:var(--field);border:1px solid var(--line)}
+.btn{font-family:inherit;font-weight:600;font-size:1rem;border:none;border-radius:999px;padding:.85rem 1.6rem;cursor:pointer;background:var(--primary);color:var(--primary-ink);transition:transform .15s,filter .15s}
+.btn:hover{filter:brightness(1.07);transform:translateY(-1px)}
+.btn.ghost{background:transparent;color:var(--ink);border:2px solid var(--primary)}
+.btn.small{padding:.45rem .95rem;font-size:.85rem}
+.btn:focus-visible,.opt:focus-within,input:focus-visible,select:focus-visible,summary:focus-visible,.chip:focus-visible,.tickbtn:focus-visible{outline:3px solid var(--primary-text);outline-offset:2px}
+
+.view{display:none}.view.active{display:block}
+@media (prefers-reduced-motion:no-preference){.view.active{animation:fade .35s ease}}
+@keyframes fade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+
+/* home */
+.hero{padding:2.2rem 2rem 1.6rem;margin-bottom:1.4rem}
+.hero h2{font-size:clamp(1.8rem,4.5vw,2.6rem);line-height:1.1;margin-bottom:.8rem}
+.hero p{color:var(--ink2);max-width:62ch}
+.sets{display:grid;grid-template-columns:1fr;gap:1.2rem}
+@media(min-width:760px){.sets{grid-template-columns:1fr 1fr}}
+
+.setcard{padding:1.6rem;display:flex;flex-direction:column;gap:.9rem}
+.setcard .tagline{display:inline-block;align-self:flex-start;font-size:.8rem;font-weight:600;padding:.25rem .7rem;border-radius:999px;background:var(--lav);color:var(--lav-ink)}
+.setcard h3{font-size:1.4rem;line-height:1.2}
+.setcard p{color:var(--ink2);font-size:.95rem}
+.secl{list-style:none;display:flex;flex-direction:column;gap:.15rem;font-size:.88rem;border-top:1px solid var(--line);padding-top:.7rem}
+.secl li{display:flex;justify-content:space-between;gap:1rem}
+.secl li span:last-child{color:var(--ink2);white-space:nowrap}
+.setcard .go{margin-top:auto;display:flex;gap:.6rem;flex-wrap:wrap;align-items:center}
+.resume{font-size:.82rem;color:var(--ink2)}
+
+/* quiz */
+.toolbar{padding:1rem 1.2rem;margin-bottom:1.2rem}
+.toolbar .row{display:flex;justify-content:space-between;align-items:center;gap:1rem;flex-wrap:wrap}
+.toolbar h2{font-size:1.15rem}
+.prog{height:6px;background:var(--line);border-radius:3px;overflow:hidden;margin:.8rem 0}
+.prog i{display:block;height:100%;width:0;background:var(--primary);transition:width .25s}
+.chips{display:flex;gap:.45rem;overflow-x:auto;padding-bottom:.3rem;scrollbar-width:thin}
+.chip{flex:0 0 auto;font-family:inherit;font-size:.8rem;font-weight:600;border:1px solid var(--line);background:var(--field);color:var(--ink);padding:.3rem .7rem;border-radius:999px;cursor:pointer}
+.chip.done{background:var(--ok-bg);border-color:var(--ok-line);color:var(--ok)}
+.sec{padding:1.5rem 1.4rem 1rem;margin-bottom:1.4rem}
+.sec-h{display:flex;gap:.9rem;align-items:baseline;margin-bottom:.35rem}
+.roman{font-family:var(--serif);font-size:1.55rem;color:var(--primary-text);min-width:2.3rem}
+.sec-h h3{font-size:1.2rem;line-height:1.25}
+.instr{color:var(--ink2);font-size:.93rem;margin:0 0 .7rem 3.2rem}
+details.note{margin:0 0 1rem 3.2rem;border:1px solid var(--line);border-radius:12px;background:var(--primary-soft);font-size:.9rem}
+details.note summary{cursor:pointer;padding:.5rem .9rem;font-weight:600;list-style:none}
+details.note summary::-webkit-details-marker{display:none}
+details.note summary::before{content:'+';display:inline-block;width:1.1rem;font-weight:700}
+details.note[open] summary::before{content:'–'}
+details.note .nb{padding:0 .9rem .8rem}
+details.note ul{margin:.3rem 0 0 1.1rem}
+details.note li{margin:.15rem 0}
+.passage{margin:0 0 1rem 0;padding:1rem 1.1rem;border:1px dashed var(--field-line);border-radius:14px;background:var(--field);line-height:2.15;font-size:.98rem}
+.passage h4{font-family:var(--serif);text-align:center;margin-bottom:.5rem}
+.shared{margin:0 0 1rem 3.2rem;padding:.8rem 1rem;border-radius:12px;background:var(--field);border:1px solid var(--line);font-size:.88rem;display:grid;gap:.25rem}
+.shared b{color:var(--primary-text);margin-right:.35rem}
+
+.q{display:flex;gap:.9rem;padding:1rem 0;border-top:1px solid var(--line)}
+.qn{flex:0 0 2.1rem;height:2.1rem;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.9rem;background:var(--lav);color:var(--lav-ink)}
+.qb{flex:1;min-width:0}
+.qt{font-size:1.04rem;line-height:1.85;font-weight:500}
+.kw{display:inline-block;font-size:.78rem;font-weight:700;padding:.05rem .55rem;border-radius:999px;border:1px solid var(--primary);color:var(--primary-text);margin-left:.4rem;vertical-align:middle}
+.blank,.wide{font-family:inherit;font-size:.98rem;color:var(--ink);background:var(--field);border:none;border-bottom:2px solid var(--field-line);border-radius:6px 6px 0 0;padding:.18rem .5rem;margin:0 .15rem;transition:border-color .15s}
+.blank{width:11.5ch;text-align:center}
+.blank:focus,.wide:focus{border-bottom-color:var(--primary);outline:none}
+.blank.filled,.wide.filled{border-bottom-color:var(--primary)}
+.line{display:flex;align-items:baseline;gap:.5rem;flex-wrap:wrap;margin-top:.45rem;font-weight:500}
+.line .wide{flex:1 1 220px;min-width:0;padding:.35rem .6rem}
+.opts{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:.55rem;margin-top:.7rem}
+.opt{display:flex;gap:.7rem;align-items:flex-start;padding:.65rem .85rem;background:var(--field);border:2px solid transparent;border-radius:12px;cursor:pointer;font-size:.97rem;transition:border-color .15s,background .15s}
+.opt:hover{border-color:var(--line)}
+.opt.sel{border-color:var(--primary);background:var(--primary-soft)}
+.opt input{position:absolute;opacity:0;pointer-events:none}
+.ltr{flex:0 0 1.5rem;height:1.5rem;border-radius:50%;border:2px solid var(--field-line);display:flex;align-items:center;justify-content:center;font-size:.75rem;font-weight:700}
+.opt.sel .ltr{background:var(--primary);border-color:var(--primary);color:var(--primary-ink)}
+select{font-family:inherit;font-size:.95rem;color:var(--ink);background:var(--field);border:2px solid var(--field-line);border-radius:10px;padding:.5rem .6rem;width:100%;margin-top:.5rem}
+select.filled{border-color:var(--primary)}
+.tickrow{display:flex;gap:.6rem;align-items:center;flex-wrap:wrap}
+.tickrow .qt{flex:1 1 320px;font-size:.98rem;line-height:1.6;order:2}
+.tickbox{display:flex;gap:.3rem;align-items:center;order:1}
+.tickbox .blank{width:8.5ch}
+.tickbtn{font-family:inherit;font-size:1rem;font-weight:700;width:2.2rem;height:2rem;border-radius:8px;border:1px solid var(--field-line);background:var(--field);color:var(--ink);cursor:pointer}
+.tickbtn.on{background:var(--ok-bg);border-color:var(--ok-line);color:var(--ok)}
+.actions{display:flex;justify-content:center;gap:.8rem;flex-wrap:wrap;margin:1.8rem 0 1rem}
+
+/* results */
+.summary{padding:2rem 1.5rem;text-align:center;margin-bottom:1.3rem}
+.summary h2{font-size:1.6rem;margin-bottom:1.1rem}
+.ring{width:150px;height:150px;border-radius:50%;margin:0 auto 1rem;display:flex;align-items:center;justify-content:center;background:conic-gradient(var(--ok-line) var(--pct),var(--line) 0);position:relative}
+.ring::before{content:'';position:absolute;inset:14px;border-radius:50%;background:var(--bg1)}
+.ring b{position:relative;font-family:var(--serif);font-size:2.3rem}
+.tally{display:flex;justify-content:center;gap:.6rem;flex-wrap:wrap;margin:.6rem 0 .2rem}
+.tally .pill b{font-size:1.05rem}
+.t-ok{color:var(--ok)}.t-bad{color:var(--bad)}.t-skip{color:var(--skip)}
+.secbars{padding:1.2rem 1.4rem;margin-bottom:1.2rem}
+.secbars h3{font-size:1.05rem;margin-bottom:.7rem}
+.sb{display:grid;grid-template-columns:2.4rem 1fr 3.6rem;gap:.6rem;align-items:center;padding:.3rem 0;cursor:pointer;border-radius:8px;font-size:.9rem}
+.sb:hover{background:var(--primary-soft)}
+.sb .bar{height:8px;border-radius:4px;background:var(--bad-line);overflow:hidden;position:relative}
+.sb .bar i{position:absolute;left:0;top:0;bottom:0;background:var(--ok-line)}
+.sb .nm{text-align:right;color:var(--ink2);font-variant-numeric:tabular-nums}
+.sb .rn{font-family:var(--serif);font-weight:700;color:var(--primary-text)}
+.filters{display:flex;gap:.5rem;flex-wrap:wrap;justify-content:center;margin-bottom:1.2rem}
+.filters .chip.active{background:var(--primary);color:var(--primary-ink);border-color:var(--primary)}
+.only-wrong .rc.correct{display:none}
+.only-right .rc:not(.correct){display:none}
+.rsec{margin:1.8rem 0 .7rem;display:flex;gap:.8rem;align-items:baseline}
+.rsec .roman{font-size:1.3rem}
+.rsec h3{font-size:1.1rem}
+.rsec small{margin-left:auto;color:var(--ink2);font-weight:600;white-space:nowrap}
+.rc{padding:1.15rem 1.3rem;margin-bottom:.9rem;border-left:7px solid var(--line)}
+.rc.correct{border-left-color:var(--ok-line)}
+.rc.wrong{border-left-color:var(--bad-line)}
+.rc.blank-ans{border-left-color:var(--skip-line)}
+.rc-top{display:flex;gap:.6rem;align-items:center;flex-wrap:wrap;margin-bottom:.7rem}
+.mark{font-size:.82rem;font-weight:700;padding:.2rem .7rem;border-radius:999px}
+.correct .mark{background:var(--ok-bg);color:var(--ok)}
+.wrong .mark{background:var(--bad-bg);color:var(--bad)}
+.blank-ans .mark{background:var(--skip-bg);color:var(--skip)}
+.rc-no{font-weight:700;color:var(--ink2);font-size:.85rem}
+.rule{margin-left:auto;font-size:.76rem;font-weight:600;padding:.15rem .6rem;border-radius:999px;background:var(--lav);color:var(--lav-ink)}
+.orig{font-weight:500;margin-bottom:.35rem}
+.ans{margin:.45rem 0;font-size:.97rem;line-height:1.7}
+.ans small{display:block;font-size:.75rem;font-weight:700;letter-spacing:.02em;color:var(--ink2);margin-bottom:.1rem}
+.fill{padding:.05rem .45rem;border-radius:6px;font-weight:600}
+.fill.ok,.fill.key{background:var(--ok-bg);color:var(--ok)}
+.fill.bad{background:var(--bad-bg);color:var(--bad);text-decoration:line-through;text-decoration-thickness:1.5px}
+.fill.none{background:var(--skip-bg);color:var(--skip);font-style:italic;font-weight:500}
+mark.x{background:var(--bad-bg);color:var(--bad);padding:0 .3rem;border-radius:5px;font-weight:700;text-decoration:line-through}
+.fixq b,.orig b{background:var(--bad-bg);color:var(--bad);border:1px dashed var(--bad-line);padding:0 .35rem;border-radius:6px}
+.alt{margin-top:.35rem;font-size:.85rem;color:var(--ink2)}
+.why{margin-top:.8rem;padding:.8rem 1rem;border-radius:10px;border-left:3px solid var(--primary);background:var(--primary-soft);font-size:.93rem;line-height:1.55}
+.why b:first-child{color:var(--primary-text)}
+
+/* modal */
+.mo{position:fixed;inset:0;background:rgba(60,110,90,.28);backdrop-filter:blur(4px);display:none;align-items:center;justify-content:center;z-index:200;padding:1rem}
+.mo.active{display:flex}
+.mc{max-width:440px;width:100%;padding:2rem 1.6rem;text-align:center}
+.mc h3{margin-bottom:.7rem;font-size:1.35rem}
+.mc p{color:var(--ink2);margin-bottom:1.4rem}
+.mc .actions{margin:0}
+
+@media(max-width:640px){
+  .container{padding:.8rem .8rem 2.5rem}
+  header.bar{padding:.65rem .8rem}
+  .brand span{display:none}
+  .hero{padding:1.5rem 1.2rem}
+  .instr,details.note,.shared{margin-left:0}
+  .sec{padding:1.2rem .9rem .6rem}
+  .q{gap:.65rem}
+  .rule{margin-left:0}
+}
+@media print{.blob,header.bar,.actions,.filters,.toolbar{display:none!important}.glass{box-shadow:none;background:#fff}}
+</style>
+</head>
+<body>
+<div class="blob b1"></div><div class="blob b2"></div><div class="blob b3"></div>
+
+<div class="container">
+  <header class="bar glass">
+    <div class="brand"><b>Lesson 9 · Inversions &amp; Possessives</b><span id="hdr-sub">Practice workbook</span></div>
+    <div class="stats">
+      <span class="pill" id="hdr-prog" style="display:none">0 / 0</span>
+      <span class="pill" title="Time"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg><span id="timer">00:00</span></span>
+      <button class="btn small ghost" id="btn-home" style="display:none" type="button">Home</button>
+    </div>
+  </header>
+
+  <!-- HOME -->
+  <main id="view-home" class="view active">
+    <section class="glass hero">
+      <h2>Inversions and possessives</h2>
+      <p>Two practice sets on the same grammar. Set A reproduces every exercise from the lesson pages (Sections I–X). Set B is new material for extra drilling. After you submit, each answer is marked and explained.</p>
+    </section>
+    <div class="sets" id="setcards"></div>
+  </main>
+
+  <!-- QUIZ -->
+  <main id="view-quiz" class="view">
+    <section class="glass toolbar">
+      <div class="row"><h2 id="quiz-title"></h2><span class="resume" id="quiz-count"></span></div>
+      <div class="prog"><i id="prog-bar"></i></div>
+      <nav class="chips" id="chips" aria-label="Jump to section"></nav>
+    </section>
+    <div id="quiz-body"></div>
+    <div class="actions"><button class="btn" id="btn-submit" type="button">Submit and see results</button></div>
+  </main>
+
+  <!-- RESULTS -->
+  <main id="view-results" class="view">
+    <section class="glass summary">
+      <h2 id="res-title">Results</h2>
+      <div class="ring" id="ring" style="--pct:0%"><b id="res-pct">0%</b></div>
+      <div class="tally">
+        <span class="pill t-ok"><b id="n-ok">0</b> correct</span>
+        <span class="pill t-bad"><b id="n-bad">0</b> incorrect</span>
+        <span class="pill t-skip"><b id="n-skip">0</b> not answered</span>
+        <span class="pill">Time <b id="res-time">00:00</b></span>
+      </div>
+    </section>
+    <section class="glass secbars"><h3>Score by section (tap to jump)</h3><div id="secbars"></div></section>
+    <div class="filters" role="group" aria-label="Filter answers">
+      <button class="chip active" data-f="all" type="button">All</button>
+      <button class="chip" data-f="wrong" type="button">Needs review</button>
+      <button class="chip" data-f="right" type="button">Correct</button>
+    </div>
+    <div id="res-body"></div>
+    <div class="actions">
+      <button class="btn" id="btn-retake" type="button">Retake this set</button>
+      <button class="btn ghost" id="btn-other" type="button">Try the other set</button>
+      
+      <button class="btn ghost" id="btn-home2" type="button">Home</button>
+    </div>
+  </main>
+</div>
+
+<div class="mo" id="modal" role="dialog" aria-modal="true" aria-labelledby="m-title">
+  <div class="glass mc">
+    <h3 id="m-title"></h3><p id="m-msg"></p>
+    <div class="actions"><button class="btn ghost" id="m-cancel" type="button">Cancel</button><button class="btn" id="m-ok" type="button">Confirm</button></div>
+  </div>
+</div>
+
+<script>
+/* =====================================================================
+   DATA
+   Item builders:  M = multiple choice, T = typed answer, S = select (match),
+   K = tick / extra-word line.  Answers are normalised before comparing.
+   ===================================================================== */
+const L = "ABCDEFGHIJ";
+const M = (q, opts, ans, rule, why) => ({kind:"mcq", q, opts, ans:[].concat(ans), rule, why});
+const T = (q, ans, rule, why, o) => Object.assign({kind:"text", q, ans, rule, why}, o||{});
+const S = (q, ans, rule, why) => ({kind:"sel", q, ans:[ans], rule, why});
+const K = (q, ans, rule, why) => ({kind:"tick", q, ans, rule, why});
+const FT = (q, ans, rule, why) => T(q, ans, rule, why, {fix:true, tickOK:true}); // tick or rewrite
+const F = (q, ans, rule, why) => T(q, ans, rule, why, {fix:true}); // spot & fix: bold part is wrong, type the corrected part
+
+/* ---------------------------- SET A ---------------------------------- */
+const NOTE_INV = `<ul>
+<li><b>Negative adverbial at the start</b> (never, rarely, seldom, hardly, no sooner, not only, under no circumstances, at no time / point, little, not until, only …) → <b>question order</b>: auxiliary + subject + verb.</li>
+<li><i>No sooner had I … <u>than</u></i> / <i>Hardly had I … <u>when</u></i>.</li>
+<li><i>Little</i> goes with verbs of thought (realise, know, suspect): <i>Little did I know</i>.</li>
+<li>After <i>not until / only + clause</i>, invert the <b>main</b> clause: <i>Not until I had finished <u>was I</u> allowed to go out.</i></li></ul>`;
+const NOTE_OTHER = `<ul>
+<li><b>So + aux + subject</b> agrees with a positive statement; <b>neither / nor + aux + subject</b> agrees with a negative one.</li>
+<li><i>So / such + … + aux + subject</i>: <i>So late was it that…</i></li>
+<li><i>as + aux + subject</i>: <i>…, as were the rest of the staff.</i></li>
+<li>Conditionals: <i>Were we…</i>, <i>Had I known…</i></li></ul>`;
+const NOTE_POSS = `<ul>
+<li>Singular noun / name / irregular plural: <b>’s</b> (<i>Sarah’s, women’s</i>). Regular plural in -s: just <b>’</b> (<i>the workers’</i>).</li>
+<li>Names in -s: <i>Charles’s</i> or <i>Charles’</i>. Phrases: ’s at the end of the whole phrase (<i>Jack and Jill’s</i>).</li>
+<li>Determiners (my, your, his, her, its, our, their) + noun; pronouns (mine, yours, his, hers, ours, theirs) replace the noun. <b>No apostrophe</b> in possessive pronouns.</li>
+<li><i>its</i> = possessive; <i>it’s</i> = it is / it has.</li></ul>`;
+
+const SET_A = {
+  key:"A", title:"Set A · Textbook practice", tagline:"From the lesson pages",
+  blurb:"The ten exercises printed in Lesson 9, in order. Typed answers accept sensible variants; the key shows the book-style answer first.",
+  sections:[
+  {roman:"I", title:"When or than", instr:"Write <i>when</i> or <i>than</i> in each gap.", note:NOTE_INV, items:[
+    T("Hardly had we started {} the fire alarm went.", ["when"], "hardly … when", "<i>Hardly had + subject + past participle … <b>when</b></i>."),
+    T("No sooner had we set off {} my brother needed the toilet.", ["than"], "no sooner … than", "<i>No sooner had … <b>than</b></i>."),
+    T("No sooner were the animals caught {} they escaped again.", ["than"], "no sooner … than", "<i>No sooner … <b>than</b></i> (passive: <i>were the animals caught</i>)."),
+    T("Hardly had I closed my eyes {} I dropped off to sleep.", ["when"], "hardly … when", "<i>Hardly … <b>when</b></i>."),
+    T("No sooner do I do the washing {} there’s another pile to be done.", ["than"], "no sooner … than", "<i>No sooner … <b>than</b></i>."),
+    T("Hardly were we in position {} the bomb went off.", ["when"], "hardly … when", "<i>Hardly … <b>when</b></i>."),
+  ]},
+  {roman:"II", title:"Choose the correct answer", instr:"Choose the correct answer.", note:NOTE_INV, items:[
+    M("No sooner ___ down than the phone rang.", ["I had sat","do I sit","had I sat","was I sitting"], "C", "no sooner + had + subject", "<i>No sooner <b>had I sat</b> down than…</i>: inversion with the past perfect."),
+    M("Never ___ a greater day in the history of mankind.", ["did there be","was there","there was","there has been"], "B", "never + inversion", "<i>Never <b>was there</b> a greater day</i>: <i>there</i> is the subject, so <i>was</i> comes first."),
+    M("At no time ___ that he was the killer.", ["I didn’t suspect","was I suspect","I had suspected","did I suspect"], "D", "at no time + did + subject", "<i>At no time <b>did I suspect</b></i>: the negative is already in the opening phrase, so the verb is positive."),
+    M("Little ___ that I knew his secret.", ["did John know","John did know","was John know","John knew"], "A", "little + did + subject", "<i>Little <b>did John know</b></i> (= he did not know at all)."),
+    M("Not until ___ her did I realise how beautiful she was.", ["I saw","did I see","was I saw","saw I"], "A", "not until + clause (no inversion)", "In the <i>not until</i> clause the order is normal (<b>I saw</b> her); the <i>main</i> clause inverts (<i>did I realise</i>)."),
+    M("Not only ___ my keys, I’ve lost my wallet, too.", ["I have lost","are I lost","I did lose","have I lost"], "D", "not only + inversion", "<i>Not only <b>have I lost</b> my keys</i>."),
+    M("Rarely ___ about the environment enough to give up their car.", ["do people care","people care","are people care","care people"], "A", "rarely + do + subject", "<i>Rarely <b>do people care</b></i>: present simple needs <i>do</i>."),
+    M("Only when ___ may vehicles cross the train tracks.", ["is the green light on","the green light is on","did the green light be on","on is the green light"], "B", "only when + clause", "After <i>only when</i> the clause keeps normal order (<b>the green light is on</b>); the main clause inverts (<i>may vehicles cross</i>)."),
+    M("Seldom ___ such a rude person!", ["have I met","I have met","did I met","am I meeting"], "A", "seldom + have + subject", "<i>Seldom <b>have I met</b></i>: present perfect inverted."),
+    M("Only after doing his chores ___ to go to meet his friends.", ["Jason was allowed","did Jason allow","was I allowed Jason","was Jason allowed"], "D", "only after + inversion", "<i>Only after doing his chores <b>was Jason allowed</b></i>: passive, inverted."),
+  ]},
+  {roman:"III", title:"Tick or rewrite", instr:"If the word or phrase in bold is correct, put a tick (✓). If it is incorrect, rewrite it correctly.", note:NOTE_INV, items:[
+    FT("Hardly <b>Tom had opened</b> the door when the dog ran out into the street.", ["had tom opened"], "hardly + inversion", "After <i>hardly</i> the auxiliary comes first: <b>had Tom opened</b>."),
+    FT("Only when <b>I read</b> the book did I realise why it was so special.", ["✓"], "only when + clause", "Correct. The <i>only when</i> clause keeps normal order; the main clause is inverted (<i>did I realise</i>)."),
+    FT("Not only <b>you passed</b> the exam, but you also got an A!", ["did you pass"], "not only + inversion", "<i>Not only <b>did you pass</b></i>: do-support + base form."),
+    FT("Not until <b>do I see</b> Greg next week will I know whether he got the job.", ["i see"], "not until + clause", "The <i>not until</i> clause is not inverted: <b>I see</b>. The main clause is (<i>will I know</i>)."),
+    FT("No sooner <b>had we found</b> our seats than the film began.", ["✓"], "no sooner + had", "Correct: <i>No sooner had we found … than</i>."),
+    FT("At no point while the race is taking place <b>members of the public are not allowed</b> onto the track.", ["are members of the public allowed"], "at no point + inversion", "Invert after the negative phrase and drop the second negative: <b>are members of the public allowed</b>."),
+    FT("Under no circumstances <b>do the equipment to be used</b> without supervision.", ["is the equipment to be used"], "under no circumstances + inversion", "<i>The equipment</i> is singular and the verb is <i>be</i>: <b>is the equipment to be used</b>."),
+    FT("Little <b>I thought</b> that one day my best friend would become prime minister.", ["did i think"], "little + did + subject", "<i>Little <b>did I think</b></i>."),
+    FT("Never <b>did I be</b> so pleased to see someone else succeed.", ["have i been","was i"], "never + inversion", "<i>Never <b>have I been</b></i> (or <i>was I</i>); <i>did + be</i> is not possible."),
+    FT("Hardly <b>I had put</b> the baby to bed when she started crying.", ["had i put"], "hardly + inversion", "<i>Hardly <b>had I put</b></i>."),
+  ]},
+  {roman:"IV", title:"Hacker!", instr:"Complete using the correct form of the words in brackets. Passage: <i>Hacker!</i>", note:NOTE_INV, type:"passage", ptitle:"Hacker!",
+   passage:"No sooner {1} (I / start) working at Taylorforth Nielsen, the computer company, than I realised it was the perfect opportunity for my hobby: hacking! Don’t get me wrong. At no point {2} (I / have) ever stolen anything. I do it for the challenge. Not only {3} (I / like) proving I can do it, but sometimes {4} (it / help) a company to build a better security system. Rarely {5} (they / see) it like that, of course. I decided I would see if I could break into the Grand Bank system. Little {6} (I / realise) what was waiting for me. The second day of working there, hardly {7} (everyone else / leave) when I started to try simple passwords. Seldom {8} (this / is) enough, though. You usually have to work much harder than that. Not until midnight {9} (I / get) access to the Grand Bank system. Hardly {10} (I / have) time to look around the system when the door to my office flew open and three men rushed in. Only when {11} (they / show) me their ID {12} (I / realise) that it was the police. They had been expecting something like this and had traced my computer! Not only {13} (I / be fired), but {14} (they / keep) all my computer records, too. Maybe it’s time to find another hobby.",
+   items:[
+    T("No sooner {} (I / start) working … than I realised…", ["had i started"], "no sooner + had + subject", "<i>No sooner <b>had I started</b></i>."),
+    T("At no point {} (I / have) ever stolen anything.", ["have i"], "at no point + have + subject", "<i>At no point <b>have I</b> ever stolen</i> anything (present perfect inverted)."),
+    T("Not only {} (I / like) proving I can do it…", ["do i like"], "not only + do + subject", "Present simple needs <i>do</i>: <b>do I like</b>."),
+    T("…but sometimes {} (it / help) a company…", ["it helps","does it help"], "no inversion after sometimes", "<i>Sometimes</i> is not a negative adverbial, so normal order: <b>it helps</b>."),
+    T("Rarely {} (they / see) it like that, of course.", ["do they see"], "rarely + do + subject", "<i>Rarely <b>do they see</b></i>."),
+    T("Little {} (I / realise) what was waiting for me.", ["did i realise","did i realize"], "little + did + subject", "<i>Little <b>did I realise</b></i> (= I did not realise at all)."),
+    T("…hardly {} (everyone else / leave) when I started…", ["had everyone else left"], "hardly + had + subject", "<i>Hardly <b>had everyone else left</b> when…</i>"),
+    T("Seldom {} (this / is) enough, though.", ["is this"], "seldom + verb be + subject", "With <i>be</i> just swap: <i>Seldom <b>is this</b> enough</i>."),
+    T("Not until midnight {} (I / get) access…", ["do i get"], "not until + inversion", "<i>Not until midnight <b>do I get</b></i>."),
+    T("Hardly {} (I / have) time to look around…", ["had i had"], "hardly + had + subject", "<i>Hardly <b>had I had</b> time</i>: past perfect of <i>have</i>."),
+    T("Only when {} (they / show) me their ID…", ["they showed"], "only when + clause", "The <i>only when</i> clause keeps normal order: <b>they showed</b>."),
+    T("…{} (I / realise) that it was the police.", ["did i realise","did i realize"], "only when … + inversion", "The main clause inverts: <b>did I realise</b>."),
+    T("Not only {} (I / be fired)…", ["was i fired"], "not only + was + subject", "Passive, past simple: <b>was I fired</b>."),
+    T("…but {} (they / keep) all my computer records, too.", ["did they keep"], "not only … but + did", "The second part also inverts: <b>did they keep</b>."),
+   ].map((it,i)=>{ it.gap=i+1; return it; })},
+  {roman:"V", title:"Same meaning", instr:"Complete the sentences so that the meaning remains the same.", note:NOTE_INV, items:[
+    T("Photographs are not permitted under any circumstances.", ["no circumstances are photographs permitted","no circumstances are photographs allowed"], "under no circumstances", "<b>Under no circumstances are photographs permitted.</b>", {pre:"Under"}),
+    T("We’ve never faced such a serious problem as this.", ["have we faced such a serious problem as this"], "never + have + subject", "<b>Never have we faced such a serious problem as this.</b>", {pre:"Never"}),
+    T("I only realised it was Vanessa when she removed her hat.", ["when she removed her hat did i realise it was vanessa","when she removed her hat did i realize it was vanessa"], "only when + inversion", "<b>Only when she removed her hat did I realise it was Vanessa.</b>", {pre:"Only"}),
+    T("The audience didn’t laugh at any point during the show.", ["no point during the show did the audience laugh","no time during the show did the audience laugh"], "at no point", "<b>At no point during the show did the audience laugh.</b>", {pre:"At"}),
+    T("As soon as Patrick had finished the e-mail, he sent it.", ["sooner had patrick finished the e-mail than he sent it","sooner had patrick finished the email than he sent it"], "no sooner … than", "<b>No sooner had Patrick finished the e-mail than he sent it.</b>", {pre:"No"}),
+    T("It wasn’t clear who was going to win the match until the last few minutes.", ["until the last few minutes was it clear who was going to win the match"], "not until + inversion", "<b>Not until the last few minutes was it clear who was going to win the match.</b>", {pre:"Not"}),
+    T("Dennis passed his driving test and had an accident almost immediately afterwards.", ["had dennis passed his driving test when he had an accident"], "hardly … when", "<b>Hardly had Dennis passed his driving test when he had an accident.</b>", {pre:"Hardly"}),
+    T("I didn’t learn the result of the match until I read the evening paper.", ["when i read the evening paper did i learn the result of the match","after i read the evening paper did i learn the result of the match"], "only when + inversion", "<b>Only when I read the evening paper did I learn the result of the match.</b>", {pre:"Only"}),
+    T("The president will not resign under any circumstances.", ["no circumstances will the president resign"], "under no circumstances", "<b>Under no circumstances will the president resign.</b>", {pre:"Under"}),
+    T("The accused showed no emotion at any time during the trial.", ["no time during the trial did the accused show any emotion","no time during the trial did the accused show emotion","no point during the trial did the accused show any emotion","no point during the trial did the accused show emotion"], "at no time", "<b>At no time during the trial did the accused show any emotion.</b>", {pre:"At"}),
+  ]},
+  {roman:"VI", title:"Complete the responses", instr:"Complete the responses to these statements with <i>so, neither</i> or <i>nor</i> + auxiliary + subject.", note:NOTE_OTHER, items:[
+    T("‘I wish I had more money.’", ["do i"], "so + aux + subject", "Positive statement (present) → <b>So do I.</b>", {pre:"So", post:"."}),
+    T("‘We never seem to spend much time together in my family.’", ["do we"], "neither + aux + subject", "Negative idea (<i>never</i>) → <b>Neither do we.</b>", {pre:"Neither", post:"."}),
+    T("‘I’m not going to Jacob’s party next Sunday.’", ["am i"], "nor + aux + subject", "Negative with <i>be</i> → <b>Nor am I.</b>", {pre:"Nor", post:"."}),
+    T("‘I didn’t do my homework last night.’", ["did i"], "nor + aux + subject", "Past simple negative → <b>Nor did I.</b>", {pre:"Nor", post:"."}),
+    T("‘I’ll be on holiday this time next week.’", ["will i"], "so + aux + subject", "Positive, future → <b>So will I.</b>", {pre:"So", post:"."}),
+    T("‘I had no idea Chris was getting married.’", ["did i","had i"], "neither + aux + subject", "<i>No idea</i> is negative → <b>Neither did I.</b> (<i>had I</i> is also possible).", {pre:"Neither", post:"."}),
+    T("‘I should really get more exercise.’", ["should i"], "so + modal + subject", "Repeat the modal: <b>So should I.</b>", {pre:"So", post:"."}),
+  ]},
+  {roman:"VII", title:"One word per gap", instr:"Write one word in each gap.", note:NOTE_OTHER, items:[
+    T("Such a long way {} it that we decided to go by train.", ["was"], "such + inversion", "<i>Such a long way <b>was</b> it that…</i>"),
+    T("So badly {} I play chess that I almost never agree to have a game.", ["do"], "so + do + subject", "<i>So badly <b>do</b> I play…</i>: present simple needs <i>do</i>."),
+    T("Pupils are expected to behave politely, as {} members of staff.", ["do"], "as + aux + subject", "<i>…as <b>do</b> members of staff</i> (= members of staff are expected to behave politely too; here <i>do</i> replaces <i>behave</i>)."),
+    T("So tired {} I that I decided to lie down for a while.", ["was"], "so + was + subject", "<i>So tired <b>was</b> I that…</i>"),
+    T("Such a threat to society {} you that I have no choice but to send you to prison.", ["are"], "such + are + subject", "<i>Such a threat to society <b>are</b> you…</i>: the verb agrees with <i>you</i>."),
+    T("So cold {} it last winter that all our pipes froze.", ["was"], "so + was + subject", "<i>So cold <b>was</b> it…</i>"),
+    T("Calculators are banned from the examining room, as {} dictionaries and handheld computers.", ["are"], "as + are + subject", "<i>…as <b>are</b> dictionaries…</i>: plural subject."),
+    T("I have been having very strange dreams lately, as {} my twin sister.", ["has"], "as + has + subject", "<i>…as <b>has</b> my twin sister</i> (present perfect continuous, short form)."),
+  ]},
+  {roman:"VIII", title:"Form possessives", instr:"Form possessives from the nouns given. Include the whole noun phrase (e.g. <i>Billy’s</i>).", note:NOTE_POSS, items:[
+    T("(Billy): {} opinion", ["billy's"], "’s + singular name", "Singular name → <b>Billy’s</b>."),
+    T("(my mum): {} cooking", ["my mum's"], "’s + singular noun", "<b>my mum’s</b> cooking."),
+    T("(our next door neighbours): {} cat", ["our next door neighbours'","our next-door neighbours'"], "regular plural + ’", "Regular plural in -s → <b>our next door neighbours’</b> cat."),
+    T("(George the Fifth): {} daughter", ["george the fifth's"], "’s at end of phrase", "The ’s goes at the end of the whole phrase: <b>George the Fifth’s</b>."),
+    T("(people): {} prejudices", ["people's"], "irregular plural + ’s", "<i>People</i> does not end in -s → <b>people’s</b>."),
+    T("(the Greenes): {} holiday home", ["the greenes'","greenes'"], "plural family name + ’", "Plural in -s → <b>the Greenes’</b> holiday home."),
+    T("(women): {} magazines", ["women's"], "irregular plural + ’s", "<b>women’s</b> magazines."),
+    T("(the boss): {} car", ["the boss's","the boss'"], "singular noun in -s", "<b>the boss’s</b> car (<i>the boss’</i> is also acceptable)."),
+    T("(Jack and Jill): {} wedding", ["jack and jill's"], "’s at end of phrase", "Shared possession: <b>Jack and Jill’s</b> wedding."),
+    T("(students): {} marks", ["students'"], "regular plural + ’", "<b>students’</b> marks."),
+    T("(children): {} shoes", ["children's"], "irregular plural + ’s", "<b>children’s</b> shoes."),
+    T("(politicians): {} promises", ["politicians'"], "regular plural + ’", "<b>politicians’</b> promises."),
+  ]},
+  {roman:"IX", title:"Words in the box", instr:"Complete using the words in the box. Use each word only once.<br><b>her · hers · it’s · its · mine · my · their · theirs</b>", note:NOTE_POSS, items:[
+    T("Tell Michelle that it’s my problem, not {} .", ["hers"], "possessive pronoun", "No noun follows, so a pronoun: <b>hers</b>."),
+    T("Are you sure this isn’t {}, because it looks just like the one I was given for Christmas?", ["mine"], "possessive pronoun", "<b>mine</b> = my one (no noun after it)."),
+    T("Thanks for the offer, but I think I’ll use {} own money.", ["my"], "possessive determiner", "Before <i>own money</i> we need a determiner: <b>my</b>."),
+    T("I saw a wallet on the floor next to a couple of tourists and asked them if it was {} .", ["theirs"], "possessive pronoun", "<b>theirs</b> (= their wallet); no apostrophe."),
+    T("Remind your sister to bring {} book to the lesson tomorrow.", ["her"], "possessive determiner", "<b>her</b> + noun."),
+    T("I’m not sure, but I think {} Mark’s bag, isn’t it?", ["it's"], "it’s = it is", "<b>It’s</b> = <i>it is</i>."),
+    T("Could you make sure that your children don’t leave {} toys in my garden again, please?", ["their"], "possessive determiner", "<b>their</b> + noun."),
+    T("What secrets do you think the Moon might be hiding within {} craters?", ["its"], "its (possessive)", "<b>its</b> = of the Moon; no apostrophe."),
+  ]},
+  {roman:"X", title:"Tick or extra word", instr:"If a line is correct, put a tick (✓) next to the number. If there is an extra word in a line, write it next to the number. Passage: <i>First day at work</i>.", note:NOTE_INV+NOTE_POSS, type:"lines", items:[
+    K("Well, Trisha, that’s my [[own]] first day at my new job out of the way. I wasn’t", "own", "extra word", "<b>own</b> is the extra word: <i>that’s my first day at my new job out of the way</i>."),
+    K("sure what to expect, but it turned out okay. My manager was really nice,", "✓", "Correct line", "Correct. Nothing extra."),
+    K("much nicer than [[yours]] boss sounds from your letter. No sooner had I arrived", "yours", "determiner vs pronoun", "<b>yours</b> is the extra word: <i>nicer than your boss sounds</i> (the printed line has both <i>yours</i> and <i>boss</i>)."),
+    K("at work [[did]] than he made me a cup of tea! It was a really pleasant surprise.", "did", "no sooner had … than", "<b>did</b> is extra. After <i>than</i> the order is normal: <i>No sooner had I arrived at work than he made me a cup of tea.</i> (The printed line reads <i>than did he make</i>.)"),
+    K("Not only did he do that, but he was also kind enough to explain to me how", "✓", "Correct line", "Correct: <i>Not only did he do that, but he was also kind…</i>"),
+    K("everything worked. The office is really modern and its comfortable. The other", "✓", "Correct line", "Nothing extra in this line (the contraction <i>it’s comfortable</i> is meant)."),
+    K("people all have their own desks, but [[mine]] desk still hasn’t been delivered, so", "mine", "determiner vs pronoun", "<b>mine</b> is extra: <i>but my desk…</i> (the line has both <i>mine</i> and <i>desk</i>)."),
+    K("I am sharing with someone else for now. Little did I realise when I took", "✓", "Correct line", "Correct. <i>Little did I realise</i> is the right inversion."),
+    K("the job that I was going to enjoy [[it]] so much. I have finally found a job that I", "it", "extra pronoun", "<b>it</b> is extra: <i>…I was going to enjoy so much</i>."),
+    K("am happy in, and so [[have]] will you, I’m sure. Hope tomorrow’s as much fun!", "have", "so + aux + subject", "<b>have</b> is extra: <i>and so will you</i>."),
+  ]},
+  ]
+};
+
+const SET_B = {
+  key:"B", title:"Set B · Extra drill", tagline:"New questions",
+  blurb:"Fresh practice on the same grammar points: inversion, so / neither / nor, such / so, and possessives. Good for a second round or for retesting weak spots.",
+  sections:[
+  {roman:"I", title:"Inversion: choose", instr:"Choose the correct answer.", note:NOTE_INV, items:[
+    M("Never ___ such a beautiful sunset.", ["I have seen","have I seen","did I see have","I saw"], "B", "never + have + subject", "<i>Never <b>have I seen</b></i>: present perfect inverted."),
+    M("Hardly ___ the room when the lights went out.", ["he had entered","had he entered","did he enter","he entered"], "B", "hardly + had + subject", "<i>Hardly <b>had he entered</b> … when…</i>"),
+    M("Not only ___ late, but he also forgot his notes.", ["he arrived","arrived he","did he arrive","he did arrive"], "C", "not only + did + subject", "Past simple needs <i>did</i>: <b>did he arrive</b>."),
+    M("Under no circumstances ___ the emergency exit.", ["you should block","should you block","you block","do you should block"], "B", "under no circumstances + modal", "Modals invert directly: <b>should you block</b>."),
+    M("Little ___ that the meeting had been cancelled.", ["they knew","did they know","knew they","they did know"], "B", "little + did + subject", "<i>Little <b>did they know</b></i>."),
+    M("Seldom ___ such generosity.", ["we have witnessed","have we witnessed","we witnessed","did we witnessed"], "B", "seldom + have + subject", "<i>Seldom <b>have we witnessed</b></i>."),
+    M("No sooner had the film started ___ the power failed.", ["when","than","that","then"], "B", "no sooner … than", "<i>No sooner … <b>than</b></i>."),
+    M("Only when the doors opened ___ inside.", ["the crowd rushed","did the crowd rush","rushed the crowd","the crowd did rush"], "B", "only when + clause, then inversion", "The <i>only when</i> clause is normal; the main clause inverts: <b>did the crowd rush</b>."),
+    M("Rarely ___ so quickly.", ["a company grows","does a company grow","grows a company","a company does grow"], "B", "rarely + does + subject", "<i>Rarely <b>does a company grow</b></i>."),
+    M("At no point ___ any sign of danger.", ["we saw","did we see","we did see","saw we"], "B", "at no point + did + subject", "<i>At no point <b>did we see</b></i>."),
+    M("Not until the next morning ___ what had happened.", ["she realised","did she realise","realised she","she did realise"], "B", "not until + inversion", "<i>Not until the next morning <b>did she realise</b></i>."),
+    M("Only by working together ___ solve the problem.", ["we can","can we","we could","do we can"], "B", "only by + -ing + inversion", "<i>Only by working together <b>can we</b> solve…</i>"),
+    M("Hardly ___ I sat down when the phone rang.", ["have","had","did","was"], "B", "hardly + had", "<i>Hardly <b>had</b> I sat down…</i>"),
+    M("In no way ___ responsible for the accident.", ["am I","I am","I was","do I be"], "A", "in no way + am + subject", "<i>In no way <b>am I</b> responsible</i>: <i>be</i> just swaps with the subject."),
+    M("Not since 1990 ___ such a storm.", ["we have seen","have we seen","we saw","did we saw"], "B", "not since + inversion", "<i>Not since 1990 <b>have we seen</b></i>."),
+    M("Which sentence is INCORRECT?", ["Never have I felt so happy.","Rarely does he complain.","Seldom they go abroad.","Little did she know."], "C", "inversion needed", "<i>Seldom <b>do they go</b> abroad</i>: the negative adverbial at the start requires inversion."),
+  ]},
+  {roman:"II", title:"Verb forms with inversion", instr:"Complete using the words in brackets, in the correct order.", note:NOTE_INV, items:[
+    T("Never {} (I / see) such a mess.", ["have i seen"], "never + have + subject", "<i>Never <b>have I seen</b></i>."),
+    T("Hardly {} (she / finish) the report when the boss called.", ["had she finished"], "hardly + had + subject", "<b>had she finished</b>."),
+    T("No sooner {} (we / arrive) than it began to rain.", ["had we arrived"], "no sooner + had + subject", "<b>had we arrived</b>."),
+    T("Not only {} (he / forget) the tickets, but he lost his passport, too.", ["did he forget"], "not only + did + subject", "<b>did he forget</b> (base form after <i>did</i>)."),
+    T("Rarely {} (they / eat) out.", ["do they eat"], "rarely + do + subject", "<b>do they eat</b>."),
+    T("Little {} (she / suspect) that he was lying.", ["did she suspect"], "little + did + subject", "<b>did she suspect</b>."),
+    T("Under no circumstances {} (staff / leave) the door unlocked.", ["should staff leave","must staff leave"], "under no circumstances + modal", "<b>should / must staff leave</b>."),
+    T("Not until the end of the film {} (I / realise) who the killer was.", ["did i realise","did i realize"], "not until + did + subject", "<b>did I realise</b>."),
+    T("Only after the exam {} (we / feel) relaxed.", ["did we feel"], "only after + did + subject", "<b>did we feel</b>."),
+    T("Seldom {} (the trains / run) on time.", ["do the trains run"], "seldom + do + subject", "<b>do the trains run</b>."),
+    T("At no time {} (the manager / mention) the problem.", ["did the manager mention"], "at no time + did + subject", "<b>did the manager mention</b>."),
+    T("Not only {} (the flights / cancel), but the hotel was also full.", ["were the flights cancelled"], "not only + passive", "Passive: <b>were the flights cancelled</b>."),
+  ]},
+  {roman:"III", title:"Tick or rewrite", instr:"If the word or phrase in bold is correct, put a tick (✓). If it is incorrect, rewrite it correctly.", note:NOTE_INV, items:[
+    FT("Never <b>I have</b> been so embarrassed.", ["have i"], "never + inversion", "<i>Never <b>have I</b> been…</i>"),
+    FT("Rarely <b>they go</b> abroad on holiday.", ["do they go"], "rarely + do + subject", "<b>do they go</b>."),
+    FT("Only when I got home <b>did I notice</b> the missing keys.", ["✓"], "only when + clause", "Correct: main clause inverted after the <i>only when</i> clause."),
+    FT("Hardly <b>she had left</b> when the post arrived.", ["had she left"], "hardly + had + subject", "<b>had she left</b>."),
+    FT("No sooner had he sat down <b>when</b> the music started.", ["than"], "no sooner … than", "<i>No sooner … <b>than</b></i>."),
+    FT("Not only <b>he is</b> clever, but he is also kind.", ["is he"], "not only + inversion", "<b>is he</b> clever."),
+    FT("Under no circumstances <b>you must</b> open this door.", ["must you"], "under no circumstances + modal", "<b>must you</b> open."),
+    FT("Little <b>she knew</b> what was waiting for her.", ["did she know"], "little + did + subject", "<b>did she know</b>."),
+    FT("Not until I had finished <b>was I</b> allowed to leave.", ["✓"], "not until + clause", "Correct: normal order in the clause, inversion in the main clause."),
+    FT("Seldom <b>has she been</b> so angry.", ["✓"], "seldom + has + subject", "Correct."),
+    FT("Only after the meeting <b>I realised</b> my mistake.", ["did i realise","did i realize"], "only after + inversion", "<b>did I realise</b>."),
+    FT("At no point <b>I was told</b> the truth.", ["was i told"], "at no point + was + subject", "<b>was I told</b>."),
+  ]},
+  {roman:"IV", title:"Same meaning", instr:"Complete the sentences so that the meaning remains the same.", note:NOTE_INV, items:[
+    T("I have never seen such a crowd.", ["have i seen such a crowd"], "never + have + subject", "<b>Never have I seen such a crowd.</b>", {pre:"Never"}),
+    T("She rarely complains about the food.", ["does she complain about the food"], "rarely + does + subject", "<b>Rarely does she complain about the food.</b>", {pre:"Rarely"}),
+    T("We had hardly sat down when the show started.", ["had we sat down when the show started"], "hardly … when", "<b>Hardly had we sat down when the show started.</b>", {pre:"Hardly"}),
+    T("He had no sooner left than it started to rain.", ["sooner had he left than it started to rain"], "no sooner … than", "<b>No sooner had he left than it started to rain.</b>", {pre:"No"}),
+    T("You mustn’t touch this button under any circumstances.", ["no circumstances must you touch this button","no circumstances should you touch this button"], "under no circumstances", "<b>Under no circumstances must you touch this button.</b>", {pre:"Under"}),
+    T("They didn’t realise the danger until night fell.", ["until night fell did they realise the danger","until night fell did they realize the danger"], "not until + inversion", "<b>Not until night fell did they realise the danger.</b>", {pre:"Not"}),
+    T("He was not only rude, but also unkind.", ["was he rude but also unkind"], "not only + was + subject", "<b>Not only was he rude, but also unkind.</b>", {pre:"Not only"}),
+    T("I didn’t know at all that she was ill.", ["did i know that she was ill","did i know she was ill"], "little + did + subject", "<b>Little did I know that she was ill.</b>", {pre:"Little"}),
+    T("We seldom go to the theatre.", ["do we go to the theatre"], "seldom + do + subject", "<b>Seldom do we go to the theatre.</b>", {pre:"Seldom"}),
+    T("I will only agree if you apologise.", ["if you apologise will i agree","if you apologize will i agree","when you apologise will i agree"], "only if + inversion", "<b>Only if you apologise will I agree.</b>", {pre:"Only"}),
+    T("She at no time admitted her mistake.", ["no time did she admit her mistake","no point did she admit her mistake"], "at no time", "<b>At no time did she admit her mistake.</b>", {pre:"At"}),
+    T("I had never heard such nonsense.", ["had i heard such nonsense"], "never + had + subject", "<b>Never had I heard such nonsense.</b>", {pre:"Never"}),
+  ]},
+  {roman:"V", title:"Responses with so / neither / nor", instr:"Complete the responses with <i>so, neither</i> or <i>nor</i> + auxiliary + subject.", note:NOTE_OTHER, items:[
+    T("‘I love chocolate.’", ["do i"], "so + aux + subject", "<b>So do I.</b>", {pre:"So", post:"."}),
+    T("‘I can’t swim.’", ["can i"], "neither + modal + subject", "<b>Neither can I.</b>", {pre:"Neither", post:"."}),
+    T("‘I’ve already eaten.’", ["have i"], "so + have + subject", "<b>So have I.</b>", {pre:"So", post:"."}),
+    T("‘I didn’t enjoy the film.’", ["did i"], "neither + did + subject", "<b>Neither did I.</b>", {pre:"Neither", post:"."}),
+    T("‘I’m exhausted.’", ["am i"], "so + am + subject", "<b>So am I.</b>", {pre:"So", post:"."}),
+    T("‘I won’t be late.’", ["will i"], "nor + will + subject", "<b>Nor will I.</b>", {pre:"Nor", post:"."}),
+    T("‘I haven’t seen it yet.’", ["have i"], "neither + have + subject", "<b>Neither have I.</b>", {pre:"Neither", post:"."}),
+    T("‘I would love to go.’", ["would i"], "so + would + subject", "<b>So would I.</b>", {pre:"So", post:"."}),
+    T("‘I don’t like spiders.’", ["do i"], "nor + do + subject", "<b>Nor do I.</b>", {pre:"Nor", post:"."}),
+    T("‘I was born in May.’", ["was i"], "so + was + subject", "<b>So was I.</b>", {pre:"So", post:"."}),
+  ]},
+  {roman:"VI", title:"So, such, as and conditionals: choose", instr:"Choose the correct answer.", note:NOTE_OTHER, items:[
+    M("So difficult ___ the exam that nobody finished.", ["it was","was it","did it be","it did"], "B", "so + adj + was + subject", "<i>So difficult <b>was it</b> that…</i>"),
+    M("Such ___ his anger that he left the room.", ["was","did","had","were"], "A", "such + was + noun", "<i>Such <b>was</b> his anger that…</i>"),
+    M("___ I known about the delay, I would have left earlier.", ["If","Had","Have","Did"], "B", "had + subject (conditional)", "<b>Had I known</b> = If I had known."),
+    M("___ the weather better, we would go to the beach.", ["Was","Were","If were","Had"], "B", "were + subject (conditional)", "<b>Were the weather</b> better = If the weather were better."),
+    M("She doesn’t eat meat, and ___ her brother.", ["neither does","so does","neither do","nor is"], "A", "neither + does + subject", "<b>Neither does</b> her brother."),
+    M("‘I’ve never been to Japan.’ ‘___.’", ["So have I","Neither have I","Neither I have","Nor I have"], "B", "neither + have + subject", "<b>Neither have I.</b>"),
+    M("‘I’m starving.’ ‘___.’", ["So I am","So am I","Neither am I","So do I"], "B", "so + am + subject", "<b>So am I.</b>"),
+    M("So loudly ___ that the neighbours complained.", ["they sang","did they sing","sang they","they did sing"], "B", "so + adverb + did + subject", "<i>So loudly <b>did they sing</b></i>."),
+    M("___ the doctor arrived sooner, the patient might have survived.", ["If","Had","Were","Did"], "B", "had + subject (conditional)", "<b>Had the doctor arrived</b> = If the doctor had arrived."),
+    M("Employees must wear ID, as ___ visitors.", ["must","do","must do","are"], "A", "as + modal + subject", "<i>…as <b>must</b> visitors</i>: repeat the modal before the subject."),
+  ]},
+  {roman:"VII", title:"Possessives: choose", instr:"Choose the correct answer.", note:NOTE_POSS, items:[
+    M("The manager is out. That is the ___ office.", ["managers’","manager’s","managers","managers’s"], "B", "’s + singular noun", "One manager → <b>manager’s</b>."),
+    M("The ___ toys were all over the floor.", ["childrens’","children’s","childrens","children’"], "B", "irregular plural + ’s", "<i>Children</i> does not end in -s → <b>children’s</b>."),
+    M("Our company is proud of ___ reputation.", ["it’s","its","its’","their’s"], "B", "its (no apostrophe)", "<b>its</b> = possessive; <i>it’s</i> = it is / it has."),
+    M("I think this umbrella is ___.", ["your’s","yours’","yours","you’re"], "C", "possessive pronoun", "<b>yours</b>: no apostrophe."),
+    M("She is a colleague of ___.", ["me","my","mine","mines"], "C", "of + possessive pronoun", "<i>a colleague of <b>mine</b></i>."),
+    M("The Smith family live next door. ___ garden is beautiful.", ["The Smith’s","The Smiths’","The Smiths","Smiths’s"], "B", "plural family name + ’", "Regular plural → <b>The Smiths’</b>."),
+    M("I’ll see you in ten ___ time.", ["minutes","minute’s","minutes’","minutes’s"], "C", "time expression + ’", "<i>ten <b>minutes’</b> time</i>."),
+    M("Which is correct?", ["The Queen of England’s palace.","The Queen’s of England palace.","The Queen’s palace of England.","The Queens’ of England palace."], "A", "’s at end of phrase", "The ’s goes at the end of the whole phrase."),
+    M("‘Whose is this bag?’ ‘It’s ___.’", ["her","hers","her’s","hers’"], "B", "possessive pronoun", "<b>hers</b>, no apostrophe."),
+    M("The cat licked ___ paw.", ["it’s","its","its’","it"], "B", "its (no apostrophe)", "<b>its</b> paw."),
+  ]},
+  {roman:"VIII", title:"Form possessives", instr:"Form possessives from the nouns given. Include the whole noun phrase.", note:NOTE_POSS, items:[
+    T("(the teacher): {} desk", ["the teacher's"], "’s + singular", "<b>the teacher’s</b> desk."),
+    T("(the teachers): {} room", ["the teachers'"], "regular plural + ’", "<b>the teachers’</b> room."),
+    T("(Mr Jones): {} car", ["mr jones's","mr jones'"], "names in -s", "<b>Mr Jones’s</b> or <b>Mr Jones’</b>."),
+    T("(my parents): {} house", ["my parents'"], "regular plural + ’", "<b>my parents’</b> house."),
+    T("(men): {} clothes", ["men's"], "irregular plural + ’s", "<b>men’s</b> clothes."),
+    T("(the dog): {} bowl", ["the dog's"], "’s + singular", "<b>the dog’s</b> bowl (animals take ’s)."),
+    T("(Tom and Anna): {} flat", ["tom and anna's"], "’s at end of phrase", "<b>Tom and Anna’s</b> flat."),
+    T("(the Queen of Spain): {} dress", ["the queen of spain's"], "’s at end of phrase", "<b>the Queen of Spain’s</b> dress."),
+    T("(the babies): {} cots", ["the babies'"], "regular plural + ’", "<b>the babies’</b> cots."),
+    T("(an hour): {} delay", ["an hour's"], "time expression + ’s", "<b>an hour’s</b> delay."),
+  ]},
+  {roman:"IX", title:"One word per gap", instr:"Write one word in each gap.", note:NOTE_INV+NOTE_OTHER+NOTE_POSS, items:[
+    T("Hardly had I opened the door {} the dog rushed in.", ["when"], "hardly … when", "<i>Hardly … <b>when</b></i>."),
+    T("No sooner had she left {} he called.", ["than"], "no sooner … than", "<i>No sooner … <b>than</b></i>."),
+    T("Not until Friday {} I find out.", ["did"], "not until + did + subject", "<i>Not until Friday <b>did</b> I find out</i>."),
+    T("Little {} they know what lay ahead.", ["did"], "little + did + subject", "<i>Little <b>did</b> they know</i>."),
+    T("Mary has finished and so {} I.", ["have"], "so + have + subject", "<i>so <b>have</b> I</i>."),
+    T("I don’t like it and neither {} my brother.", ["does"], "neither + does + subject", "<i>neither <b>does</b> my brother</i>."),
+    T("These keys aren’t {}; they must be Ann’s.", ["mine"], "possessive pronoun", "<b>mine</b> (no noun follows)."),
+    T("The dog wagged {} tail.", ["its"], "its (no apostrophe)", "<b>its</b> tail."),
+  ]},
+  {roman:"X", title:"Tick or extra word", instr:"If a line is correct, put a tick (✓). If there is an extra word in a line, write it. Passage: <i>The long flight</i>.", note:NOTE_INV, type:"lines", items:[
+    K("Last month I flew to Australia for the first time. Never", "✓", "Correct line", "Correct. <i>Never</i> continues on the next line."),
+    K("before had I felt so tired. No sooner had we taken", "✓", "Correct line", "Correct: <i>Never before had I felt…</i>"),
+    K("off than [[when]] the pilot announced a delay. Little did we", "when", "no sooner … than", "<b>when</b> is extra: <i>No sooner … than</i>, not both."),
+    K("know that the delay would last five hours. Not only", "✓", "Correct line", "Correct."),
+    K("was the food terrible, but the seats were [[being]] also", "being", "extra word", "<b>being</b> is extra: <i>the seats were also uncomfortable</i>."),
+    K("uncomfortable. Only when we landed did I [[did]] feel", "did", "only when + inversion", "<b>did</b> is extra: <i>Only when we landed did I feel better.</i>"),
+    K("better. My friend’s luggage had gone missing, and so had mine.", "✓", "Correct line", "Correct: <i>so had mine</i>."),
+    K("Seldom have I been [[so]] so glad to see a bed!", "so", "extra word", "The second <b>so</b> is extra: <i>Seldom have I been so glad…</i>"),
+  ]},
+  ]
+};
+
+const SETS = {A:SET_A, B:SET_B};
+/* assign ids and local numbers */
+Object.values(SETS).forEach(set=>{
+  let n=0; set.total=0;
+  set.sections.forEach((s,si)=>{ s.si=si; s.items.forEach((it,i)=>{ it.id=set.key+(++n); it.no=it.gap||(i+1); it.sec=si; }); set.total+=s.items.length; });
+});
+const itemsOf = set => set.sections.flatMap(s=>s.items);
+
+/* ---------------------------- helpers -------------------------------- */
+const $ = id => document.getElementById(id);
+const esc = s => String(s==null?"":s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+function lsGet(k){try{return localStorage.getItem(k)}catch(e){return null}}
+function lsSet(k,v){try{localStorage.setItem(k,v)}catch(e){}}
+function lsDel(k){try{localStorage.removeItem(k)}catch(e){}}
+function fmt(t){return String(Math.floor(t/60)).padStart(2,"0")+":"+String(t%60).padStart(2,"0")}
+
+function norm(s){
+  s = String(s==null?"":s).toLowerCase().replace(/[’‘`´]/g,"'");
+  s = s.replace(/\bcannot\b/g,"can't").replace(/\bcan not\b/g,"can't").replace(/\bwill not\b/g,"won't");
+  s = s.replace(/\b(did|do|does|was|were|is|are|had|has|have|would|could|should|must|might|need)\s+not\b/g,"$1n't");
+  s = s.replace(/criticiz/g,"criticis").replace(/cancell?ed/g,"canceled");
+  return s.replace(/[.,;:!?"“”()\[\]]/g," ").replace(/\s+/g," ").trim();
+}
+const TICKS = ["✓","✔","√","v","tick","correct","ok","right","yes","c"];
+function stripPre(u,it){
+  const list = it.strip || (it.pre ? [it.pre] : []);
+  list.forEach(p=>{ p=norm(p); if(!p) return; if(u===p) u=""; else if(u.startsWith(p+" ")) u=u.slice(p.length+1); });
+  return u;
+}
+function blanksOf(it){ // array of accepted-lists, one per blank
+  if(it.kind!=="text") return null;
+  return Array.isArray(it.ans[0]) ? it.ans : [it.ans];
+}
+function grade(it, val){
+  if(it.kind==="mcq"||it.kind==="sel") return !val ? "blank" : (it.ans.includes(val)?"correct":"wrong");
+  if(it.kind==="tick"){
+    const u = norm(val||""); if(!u) return "blank";
+    const got = TICKS.includes(u) ? "✓" : u;
+    return got===norm(it.ans) || (it.ans==="✓" && got==="✓") ? "correct" : "wrong";
+  }
+  const bl = blanksOf(it), vs = Array.isArray(val)?val:[val];
+  if(!vs.some(v=>norm(v))) return "blank";
+  const ok = bl.every((acc,i)=>{ const u=stripPre(norm(vs[i]||""),it); return acc.some(a=>{ if(a==="✓") return TICKS.includes(u); a=norm(a); return a===u || (it.fix && u.endsWith(" "+a)); }); });
+  return ok ? "correct":"wrong";
+}
+function answered(it,val){
+  if(val==null) return false;
+  return Array.isArray(val) ? val.some(v=>String(v).trim()) : String(val).trim()!=="";
+}
+
+/* ---------------------------- state ---------------------------------- */
+const S_ = {set:null, answers:{}, elapsed:0, timer:null, done:false};
+function sKey(k,s){return "l9:"+k+":"+s}
+function saveState(){ lsSet(sKey(S_.set.key,"a"),JSON.stringify(S_.answers)); lsSet(sKey(S_.set.key,"t"),String(S_.elapsed)); }
+function loadSaved(key){
+  let a={}; try{a=JSON.parse(lsGet(sKey(key,"a"))||"{}")}catch(e){a={}}
+  return {answers:a, elapsed:parseInt(lsGet(sKey(key,"t"))||"0",10)||0};
+}
+function startTimer(){
+  clearInterval(S_.timer);
+  S_.timer=setInterval(()=>{S_.elapsed++; $("timer").textContent=fmt(S_.elapsed); if(S_.elapsed%5===0) saveState();},1000);
+}
+function show(v){
+  document.querySelectorAll(".view").forEach(x=>x.classList.remove("active"));
+  $("view-"+v).classList.add("active"); window.scrollTo(0,0);
+  $("btn-home").style.display = v==="home" ? "none":"";
+  $("hdr-prog").style.display = v==="quiz" ? "":"none";
+  if(v==="home"){ clearInterval(S_.timer); $("hdr-sub").textContent="Practice workbook"; }
+}
+
+/* ---------------------------- home ----------------------------------- */
+function renderHome(){
+  $("setcards").innerHTML = Object.values(SETS).map(set=>{
+    const sv = loadSaved(set.key), n = Object.values(sv.answers).filter(v=>answered(null,v)||(v!=null&&String(v)!=="")).length;
+    const secs = set.sections.map(s=>`<li><span><b>${s.roman}.</b> ${s.title}</span><span>${s.items.length} Q</span></li>`).join("");
+    return `<article class="glass setcard">
+      <span class="tagline">${esc(set.tagline)}</span>
+      <h3>${esc(set.title)}</h3>
+      <p>${esc(set.blurb)}</p>
+      <ul class="secl">${secs}</ul>
+      <div class="go"><button class="btn" data-start="${set.key}" type="button">${n?"Resume":"Start"} (${set.total} questions)</button>
+      ${n?`<span class="resume">${n} answered · saved in this browser</span>`:""}</div>
+    </article>`;
+  }).join("");
+}
+
+/* ---------------------------- quiz render ---------------------------- */
+function blankInput(it,b,val,cls){
+  return `<input class="${cls||"blank"} ${val?"filled":""}" type="text" data-id="${it.id}" data-b="${b}" value="${esc(val||"")}" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="Answer ${it.no}">`;
+}
+function itemHTML(it, sec){
+  const v = S_.answers[it.id];
+  let body="";
+  if(it.kind==="mcq"){
+    const tx = it.q.replace(/___/g,'<span style="display:inline-block;min-width:3.2em;border-bottom:2px solid var(--field-line)"></span>');
+    body = `<div class="qt">${tx}</div><div class="opts" role="radiogroup">`+
+      it.opts.map((o,i)=>`<label class="opt ${v===L[i]?"sel":""}"><input type="radio" name="q${it.id}" value="${L[i]}" data-id="${it.id}" ${v===L[i]?"checked":""}><span class="ltr">${L[i]}</span><span>${esc(o)}</span></label>`).join("")+`</div>`;
+  } else if(it.kind==="sel"){
+    const opts = sec.shared.map((o,i)=>`<option value="${L[i]}" ${v===L[i]?"selected":""}>${L[i]}. ${esc(o)}</option>`).join("");
+    body = `<div class="qt">${esc(it.q)} …</div><select data-id="${it.id}" class="${v?"filled":""}" aria-label="Ending for ${esc(it.q)}"><option value="">Choose the ending…</option>${opts}</select>`;
+  } else if(it.kind==="tick"){
+    const isTick = v==="✓";
+    body = `<div class="tickrow"><div class="tickbox"><button type="button" class="tickbtn ${isTick?"on":""}" data-tick="${it.id}" title="Line is correct" aria-label="Mark line ${it.no} as correct">✓</button>${blankInput(it,0,isTick?"":(v||""))}</div><div class="qt">${esc(it.q.replace(/\[\[|\]\]/g,""))}</div></div>`;
+  } else if(it.fix){
+    const vals = Array.isArray(v)?v:[];
+    body = `<div class="qt fixq">${it.q}</div><div class="line"><span>${it.tickOK?"✎ Type ✓ (or “tick”) if correct; if wrong, the corrected phrase:":"✎ Corrected form of the bold part:"}</span>${blankInput(it,0,vals[0],"wide")}</div>`;
+  } else if(it.pre!==undefined){
+    const vals = Array.isArray(v)?v:[];
+    const kw = it.kw ? `<span class="kw">${esc(it.kw)}</span>`:"";
+    body = `<div class="qt">${it.q}${kw}</div><div class="line"><span>→ ${esc(it.pre)}</span>${blankInput(it,0,vals[0],"wide")}${it.post?`<span>${esc(it.post)}</span>`:""}</div>`;
+  } else {
+    const parts = it.q.split("{}"), vals = Array.isArray(v)?v:[];
+    body = `<div class="qt">`+parts.map((p,i)=> p + (i<parts.length-1 ? blankInput(it,i,vals[i]) : "")).join("")+`</div>`;
+  }
+  return `<div class="q" id="q-${it.id}"><div class="qn">${it.no}</div><div class="qb">${body}</div></div>`;
+}
+function sectionHTML(sec){
+  let h = `<section class="glass sec" id="sec-${sec.si}"><div class="sec-h"><span class="roman">${sec.roman}</span><h3>${sec.title}</h3></div><p class="instr">${sec.instr}</p>`;
+  if(sec.note) h += `<details class="note"><summary>Quick rule reminder</summary><div class="nb">${sec.note}</div></details>`;
+  if(sec.type==="passage"){
+    const html = esc(sec.passage).replace(/\{(\d+)\}/g,(m,n)=>{ const it=sec.items[n-1]; const v=(S_.answers[it.id]||[])[0]||""; return `<span style="white-space:nowrap"><sup style="font-size:.72em;font-weight:700;color:var(--primary-text)">${n}</sup>${blankInput(it,0,v)}</span>`; });
+    h += `<div class="passage"><h4>${esc(sec.ptitle)}</h4>${html}</div>`;
+    return h+`</section>`;
+  }
+  if(sec.type==="lines") h += `<div class="passage" style="line-height:1.5;padding:.4rem 1rem"><h4 style="margin-top:.5rem">${sec.instr.match(/<i>(.*?)<\/i>/)?sec.instr.match(/<i>(.*?)<\/i>/)[1]:""}</h4></div>`;
+  if(sec.shared) h += `<div class="shared">`+sec.shared.map((o,i)=>`<div><b>${L[i]}</b>${esc(o)}</div>`).join("")+`</div>`;
+  h += sec.items.map(it=>itemHTML(it,sec)).join("");
+  return h+`</section>`;
+}
+function startSet(key, fresh){
+  const set = SETS[key]; S_.set=set; S_.done=false;
+  const sv = loadSaved(key);
+  S_.answers = fresh?{}:sv.answers; S_.elapsed = fresh?0:sv.elapsed;
+  if(fresh){lsDel(sKey(key,"a")); lsDel(sKey(key,"t"));}
+  $("quiz-title").textContent = set.title;
+  $("hdr-sub").textContent = set.title;
+  $("quiz-body").innerHTML = set.sections.map(sectionHTML).join("");
+  $("timer").textContent = fmt(S_.elapsed);
+  show("quiz"); updateProgress(); startTimer();
+}
+function updateProgress(){
+  const set=S_.set, its=itemsOf(set);
+  const n = its.filter(it=>answered(it,S_.answers[it.id])).length;
+  $("hdr-prog").textContent = n+" / "+its.length;
+  $("quiz-count").textContent = n+" of "+its.length+" answered";
+  $("prog-bar").style.width = (n/its.length*100)+"%";
+  $("chips").innerHTML = set.sections.map(s=>{
+    const done = s.items.every(it=>answered(it,S_.answers[it.id]));
+    return `<button type="button" class="chip ${done?"done":""}" data-jump="sec-${s.si}">${s.roman}${done?" ✓":""}</button>`;
+  }).join("");
+}
+
+/* ---------------------------- events --------------------------------- */
+document.addEventListener("click",e=>{
+  const st=e.target.closest("[data-start]"); if(st){ startSet(st.dataset.start,false); return; }
+  const jp=e.target.closest("[data-jump]"); if(jp){ const el=$(jp.dataset.jump); if(el) el.scrollIntoView({behavior:"smooth",block:"start"}); return; }
+  const tk=e.target.closest("[data-tick]");
+  if(tk){
+    const id=tk.dataset.tick, was=S_.answers[id]==="✓";
+    S_.answers[id]= was ? "" : "✓";
+    const row=$("q-"+id); row.querySelector(".tickbtn").classList.toggle("on",!was);
+    const inp=row.querySelector("input.blank"); inp.value=""; inp.classList.remove("filled");
+    saveState(); updateProgress(); return;
+  }
+  const sb=e.target.closest(".sb"); if(sb){ const el=$(sb.dataset.go); if(el) el.scrollIntoView({behavior:"smooth",block:"start"}); return; }
+  const fl=e.target.closest("[data-f]");
+  if(fl){
+    document.querySelectorAll("[data-f]").forEach(b=>b.classList.toggle("active",b===fl));
+    const rb=$("res-body"); rb.classList.remove("only-wrong","only-right");
+    if(fl.dataset.f==="wrong") rb.classList.add("only-wrong");
+    if(fl.dataset.f==="right") rb.classList.add("only-right");
+  }
+});
+document.addEventListener("input",e=>{
+  const t=e.target; if(!t.matches("input.blank,input.wide")) return;
+  const it=itemsOf(S_.set).find(x=>x.id===t.dataset.id); if(!it) return;
+  if(it.kind==="tick"){ S_.answers[it.id]=t.value; $("q-"+it.id).querySelector(".tickbtn").classList.remove("on"); }
+  else { const arr=Array.isArray(S_.answers[it.id])?S_.answers[it.id]:[]; arr[+t.dataset.b]=t.value; S_.answers[it.id]=arr; }
+  t.classList.toggle("filled",!!t.value.trim());
+  saveState(); updateProgress();
+});
+document.addEventListener("change",e=>{
+  const t=e.target;
+  if(t.matches('input[type=radio]')){
+    S_.answers[t.dataset.id]=t.value;
+    t.closest(".opts").querySelectorAll(".opt").forEach(o=>o.classList.toggle("sel",o.contains(t)&&t.checked));
+    saveState(); updateProgress();
+  } else if(t.matches("select[data-id]")){
+    S_.answers[t.dataset.id]=t.value; t.classList.toggle("filled",!!t.value); saveState(); updateProgress();
+  }
+});
+
+/* modal */
+function modal(title,msg,ok){
+  $("m-title").textContent=title; $("m-msg").textContent=msg;
+  const m=$("modal"); m.classList.add("active");
+  $("m-ok").onclick=()=>{m.classList.remove("active"); ok();};
+  $("m-cancel").onclick=()=>m.classList.remove("active");
+  $("m-ok").focus();
+}
+
+/* ---------------------------- results -------------------------------- */
+function optText(it,sec,k){ return it.kind==="mcq" ? it.opts[L.indexOf(k)] : sec.shared[L.indexOf(k)]; }
+function joinPost(post){ return post ? (/^[,.;]/.test(post)?"":" ")+esc(post) : ""; }
+function sentence(it, sec, vals, cls){
+  // vals: array of display strings (one per blank). cls: ok|bad|key|none
+  const f = (s)=> s ? `<span class="fill ${cls}">${esc(s)}</span>` : `<span class="fill none">no answer</span>`;
+  if(it.kind==="text"){
+    if(it.fix){ const v0=vals[0]; if(v0==="✓"||(v0&&TICKS.includes(norm(v0)))) return it.q+' <span class="fill '+cls+'">✓ correct as it is</span>'; return it.q.replace(/<b>.*?<\/b>/, f(v0)); }
+    if(it.pre!==undefined) return `<div>→ ${esc(it.pre)} ${f(vals[0])}${joinPost(it.post)}</div>`;
+    return it.q.split("{}").map((p,i,a)=>p+(i<a.length-1?f(vals[i]):"")).join("");
+  }
+  if(it.kind==="mcq"){
+    if(/___/.test(it.q)) return it.q.replace(/___/,f(vals[0]));
+    return `${it.q}<div>→ ${f(vals[0])}</div>`;
+  }
+  if(it.kind==="sel") return `${esc(it.q)} ${f(vals[0])}`;
+  return "";
+}
+function lineHTML(it){ // tick line with extra word marked
+  return esc(it.q).replace(/\[\[(.*?)\]\]/g,'<mark class="x">$1</mark>');
+}
+function resultCard(it, sec, val, st){
+  const cls = st==="correct"?"correct": st==="wrong"?"wrong":"blank-ans";
+  const tag = st==="correct"?"✓ Correct": st==="wrong"?"✗ Incorrect":"○ Not answered";
+  let top = `<div class="rc-top"><span class="rc-no">${sec.roman}.${it.no}</span><span class="mark">${tag}</span><span class="rule">${esc(it.rule)}</span></div>`;
+  let mid="", alt="";
+  if(it.kind==="tick"){
+    const u=norm(val||""), got=!u?"":(TICKS.includes(u)?"✓":u);
+    const mine = !u ? `<span class="fill none">no answer</span>` : got==="✓" ? `<span class="fill ${st==="correct"?"ok":"bad"}">✓ line is correct</span>` : `<span class="fill ${st==="correct"?"ok":"bad"}">extra word: ${esc(val)}</span>`;
+    const key = it.ans==="✓" ? `<span class="fill key">✓ line is correct</span>` : `<span class="fill key">extra word: ${esc(it.ans)}</span>`;
+    mid = `<div class="orig">${lineHTML(it)}</div><div class="ans"><small>YOUR ANSWER</small>${mine}</div>` + (st!=="correct"?`<div class="ans"><small>CORRECT ANSWER</small>${key}</div>`:"");
+  } else {
+    let mineVals, keyVals;
+    if(it.kind==="text"){
+      const bl=blanksOf(it); const vs=Array.isArray(val)?val:[];
+      mineVals = bl.map((_,i)=>(vs[i]||"").trim()); keyVals = bl.map(a=>a[0]);
+      const extra = bl.flatMap(a=>a.slice(1));
+      if(extra.length) alt = `<div class="alt">Also accepted: ${extra.map(a=>"<i>"+esc(a)+"</i>").join(" · ")}</div>`;
+    } else {
+      const key=it.ans[0]; keyVals=[L.indexOf(key)>=0? optText(it,sec,key):""];
+      mineVals=[val? optText(it,sec,val):""];
+      if(it.ans.length>1) alt = `<div class="alt">Also acceptable: <i>${it.ans.slice(1).map(k=>esc(optText(it,sec,k))).join(" / ")}</i></div>`;
+    }
+    const letterMine = (it.kind!=="text" && val) ? ` <small style="display:inline;letter-spacing:0">(${val})</small>`:"";
+    const letterKey = it.kind!=="text" ? ` <small style="display:inline;letter-spacing:0">(${it.ans[0]})</small>`:"";
+    const showOrig = it.kind==="text" && (it.pre!==undefined||it.fix) ? `<div class="orig">${it.q}${it.kw?`<span class="kw">${esc(it.kw)}</span>`:""}</div>`:"";
+    mid = showOrig +
+      `<div class="ans"><small>YOUR ANSWER</small>${sentence(it,sec,mineVals, st==="correct"?"ok": st==="wrong"?"bad":"none")}${letterMine}</div>` +
+      (st!=="correct" ? `<div class="ans"><small>CORRECT ANSWER</small>${sentence(it,sec,keyVals,"key")}${letterKey}</div>` : "") + alt;
+  }
+  return `<article class="glass rc ${cls}" id="r-${it.id}">${top}${mid}<div class="why"><b>Why:</b> ${it.why}</div></article>`;
+}
+function showResults(){
+  clearInterval(S_.timer); S_.done=true;
+  const set=S_.set; let ok=0,bad=0,skip=0; const per=set.sections.map(()=>({ok:0,n:0}));
+  let html="";
+  set.sections.forEach(sec=>{
+    let secHtml="";
+    sec.items.forEach(it=>{
+      const val=S_.answers[it.id], st=grade(it,val);
+      per[sec.si].n++; if(st==="correct"){ok++;per[sec.si].ok++;} else if(st==="wrong") bad++; else skip++;
+      secHtml += resultCard(it,sec,val,st);
+    });
+    html += `<div class="rsec" id="rs-${sec.si}"><span class="roman">${sec.roman}</span><h3>${sec.title}</h3><small>${per[sec.si].ok} / ${per[sec.si].n}</small></div>`+secHtml;
+  });
+  const total=ok+bad+skip, pct=Math.round(ok/total*100);
+  $("res-title").textContent = set.title+" · results";
+  $("res-pct").textContent=pct+"%"; $("ring").style.setProperty("--pct",pct+"%");
+  $("n-ok").textContent=ok; $("n-bad").textContent=bad; $("n-skip").textContent=skip; $("res-time").textContent=fmt(S_.elapsed);
+  $("secbars").innerHTML = set.sections.map((s,i)=>`<div class="sb" data-go="rs-${i}" role="button" tabindex="0"><span class="rn">${s.roman}</span><span class="bar"><i style="width:${per[i].ok/per[i].n*100}%"></i></span><span class="nm">${per[i].ok}/${per[i].n}</span></div>`).join("");
+  $("res-body").className=""; document.querySelectorAll("[data-f]").forEach(b=>b.classList.toggle("active",b.dataset.f==="all"));
+  $("res-body").innerHTML=html;
+  lsDel(sKey(set.key,"a")); lsDel(sKey(set.key,"t"));
+  show("results");
+}
+function submit(){
+  const its=itemsOf(S_.set), n=its.filter(it=>answered(it,S_.answers[it.id])).length;
+  if(n<its.length) modal("Submit with blanks?",`You have answered ${n} of ${its.length} questions. Unanswered items will be marked and explained too.`,showResults);
+  else showResults();
+}
+
+/* nav buttons */
+$("btn-submit").onclick=submit;
+$("btn-home").onclick=()=>{ if(S_.set&&!S_.done) saveState(); clearInterval(S_.timer); renderHome(); show("home"); };
+$("btn-home2").onclick=()=>{ renderHome(); show("home"); };
+$("btn-retake").onclick=()=>modal("Retake this set?","Your current results will be cleared and the set restarts from question 1.",()=>startSet(S_.set.key,true));
+
+$("btn-other").onclick=()=>startSet(S_.set.key==="A"?"B":"A",false);
+document.addEventListener("keydown",e=>{ if((e.key==="Enter"||e.key===" ")&&e.target.classList&&e.target.classList.contains("sb")){e.preventDefault();e.target.click();} });
+window.addEventListener("pagehide",()=>{ if(S_.set&&!S_.done&&$("view-quiz").classList.contains("active")) saveState(); });
+renderHome();
+</script>
+</body>
+</html>

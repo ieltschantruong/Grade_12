@@ -1,0 +1,890 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Lesson 7 | Unreal Past, Wishes &amp; Contrast</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+  color-scheme:light;
+  --bg1:#fff4f9; --bg2:#eaf3ff;
+  --ink:#3d3a5c; --ink2:#6b6888; --line:rgba(120,110,170,.2);
+  --glass:rgba(255,255,255,.72); --glass-b:rgba(255,255,255,.85); --shadow:0 8px 28px rgba(160,150,210,.18);
+  --primary:#a9b6f5; --primary-text:#4c52b0; --primary-soft:rgba(169,182,245,.24); --primary-ink:#25224a;
+  --lav:#e9defb; --lav-ink:#5a3f8f; --blob1:#fcd5ea; --blob2:#cfe5ff; --blob3:#d3f4e4;
+  --ok:#2c7a58; --ok-bg:#def5ea; --ok-line:#9bdbbd;
+  --bad:#b24a50; --bad-bg:#ffe5e8; --bad-line:#f4b4bb;
+  --skip:#85692a; --skip-bg:#fff2d4; --skip-line:#eed38d;
+  --field:rgba(255,255,255,.88); --field-line:#d8d2ee;
+  --font:'Inter',system-ui,-apple-system,'Segoe UI',sans-serif;
+  --serif:'Fraunces',Georgia,'Times New Roman',serif;
+}
+html{scroll-padding-top:calc(env(safe-area-inset-top,0px) + 5.5rem)}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:var(--font);color:var(--ink);min-height:100vh;background:linear-gradient(135deg,var(--bg1),#f1f0ff 55%,var(--bg2));overflow-x:hidden;line-height:1.5}
+.blob{position:fixed;border-radius:50%;filter:blur(90px);z-index:-1;opacity:.6;pointer-events:none}
+.b1{top:-12%;left:-10%;width:50vw;height:50vw;background:var(--blob1)}
+.b2{bottom:-12%;right:-10%;width:60vw;height:60vw;background:var(--blob2)}
+.b3{top:42%;left:60%;width:36vw;height:36vw;background:var(--blob3);opacity:.35}
+.glass{background:var(--glass);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border:1px solid var(--glass-b);border-radius:20px;box-shadow:var(--shadow)}
+.container{max-width:920px;margin:0 auto;padding:1.25rem 1.25rem 3rem}
+h1,h2,h3{font-family:var(--serif);font-weight:700;letter-spacing:-.01em}
+
+/* header */
+header.bar{display:flex;justify-content:space-between;align-items:center;gap:1rem;padding:.8rem 1.2rem;margin-bottom:1.5rem;position:sticky;top:calc(env(safe-area-inset-top,0px) + .6rem);z-index:50}
+.brand{display:flex;flex-direction:column;line-height:1.15;min-width:0}
+.brand b{font-family:var(--serif);font-size:1.08rem}
+.brand span{font-size:.78rem;color:var(--ink2)}
+.stats{display:flex;align-items:center;gap:.7rem;font-weight:600;font-size:.9rem}
+.pill{display:inline-flex;align-items:center;gap:.4rem;padding:.4rem .8rem;border-radius:999px;background:var(--field);border:1px solid var(--line)}
+.btn{font-family:inherit;font-weight:600;font-size:1rem;border:none;border-radius:999px;padding:.85rem 1.6rem;cursor:pointer;background:var(--primary);color:var(--primary-ink);transition:transform .15s,filter .15s}
+.btn:hover{filter:brightness(1.07);transform:translateY(-1px)}
+.btn.ghost{background:transparent;color:var(--ink);border:2px solid var(--primary)}
+.btn.small{padding:.45rem .95rem;font-size:.85rem}
+.btn:focus-visible,.opt:focus-within,input:focus-visible,select:focus-visible,summary:focus-visible,.chip:focus-visible,.tickbtn:focus-visible{outline:3px solid var(--primary-text);outline-offset:2px}
+
+.view{display:none}.view.active{display:block}
+@media (prefers-reduced-motion:no-preference){.view.active{animation:fade .35s ease}}
+@keyframes fade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+
+/* home */
+.hero{padding:2.2rem 2rem 1.6rem;margin-bottom:1.4rem}
+.hero h2{font-size:clamp(1.8rem,4.5vw,2.6rem);line-height:1.1;margin-bottom:.8rem}
+.hero p{color:var(--ink2);max-width:62ch}
+.sets{display:grid;grid-template-columns:1fr;gap:1.2rem}
+@media(min-width:760px){.sets{grid-template-columns:1fr 1fr}}
+.setcard{padding:1.6rem;display:flex;flex-direction:column;gap:.9rem}
+.setcard .tagline{display:inline-block;align-self:flex-start;font-size:.8rem;font-weight:600;padding:.25rem .7rem;border-radius:999px;background:var(--lav);color:var(--lav-ink)}
+.setcard h3{font-size:1.4rem;line-height:1.2}
+.setcard p{color:var(--ink2);font-size:.95rem}
+.secl{list-style:none;display:flex;flex-direction:column;gap:.15rem;font-size:.88rem;border-top:1px solid var(--line);padding-top:.7rem}
+.secl li{display:flex;justify-content:space-between;gap:1rem}
+.secl li span:last-child{color:var(--ink2);white-space:nowrap}
+.setcard .go{margin-top:auto;display:flex;gap:.6rem;flex-wrap:wrap;align-items:center}
+.resume{font-size:.82rem;color:var(--ink2)}
+
+/* quiz */
+.toolbar{padding:1rem 1.2rem;margin-bottom:1.2rem}
+.toolbar .row{display:flex;justify-content:space-between;align-items:center;gap:1rem;flex-wrap:wrap}
+.toolbar h2{font-size:1.15rem}
+.prog{height:6px;background:var(--line);border-radius:3px;overflow:hidden;margin:.8rem 0}
+.prog i{display:block;height:100%;width:0;background:var(--primary);transition:width .25s}
+.chips{display:flex;gap:.45rem;overflow-x:auto;padding-bottom:.3rem;scrollbar-width:thin}
+.chip{flex:0 0 auto;font-family:inherit;font-size:.8rem;font-weight:600;border:1px solid var(--line);background:var(--field);color:var(--ink);padding:.3rem .7rem;border-radius:999px;cursor:pointer}
+.chip.done{background:var(--ok-bg);border-color:var(--ok-line);color:var(--ok)}
+.sec{padding:1.5rem 1.4rem 1rem;margin-bottom:1.4rem}
+.sec-h{display:flex;gap:.9rem;align-items:baseline;margin-bottom:.35rem}
+.roman{font-family:var(--serif);font-size:1.55rem;color:var(--primary-text);min-width:2.3rem}
+.sec-h h3{font-size:1.2rem;line-height:1.25}
+.instr{color:var(--ink2);font-size:.93rem;margin:0 0 .7rem 3.2rem}
+details.note{margin:0 0 1rem 3.2rem;border:1px solid var(--line);border-radius:12px;background:var(--primary-soft);font-size:.9rem}
+details.note summary{cursor:pointer;padding:.5rem .9rem;font-weight:600;list-style:none}
+details.note summary::-webkit-details-marker{display:none}
+details.note summary::before{content:'+';display:inline-block;width:1.1rem;font-weight:700}
+details.note[open] summary::before{content:'–'}
+details.note .nb{padding:0 .9rem .8rem}
+details.note ul{margin:.3rem 0 0 1.1rem}
+details.note li{margin:.15rem 0}
+.passage{margin:0 0 1rem 0;padding:1rem 1.1rem;border:1px dashed var(--field-line);border-radius:14px;background:var(--field);line-height:2.15;font-size:.98rem}
+.passage h4{font-family:var(--serif);text-align:center;margin-bottom:.5rem}
+.shared{margin:0 0 1rem 3.2rem;padding:.8rem 1rem;border-radius:12px;background:var(--field);border:1px solid var(--line);font-size:.88rem;display:grid;gap:.25rem}
+.shared b{color:var(--primary-text);margin-right:.35rem}
+
+.q{display:flex;gap:.9rem;padding:1rem 0;border-top:1px solid var(--line)}
+.qn{flex:0 0 2.1rem;height:2.1rem;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.9rem;background:var(--lav);color:var(--lav-ink)}
+.qb{flex:1;min-width:0}
+.qt{font-size:1.04rem;line-height:1.85;font-weight:500}
+.kw{display:inline-block;font-size:.78rem;font-weight:700;padding:.05rem .55rem;border-radius:999px;border:1px solid var(--primary);color:var(--primary-text);margin-left:.4rem;vertical-align:middle}
+.blank,.wide{font-family:inherit;font-size:.98rem;color:var(--ink);background:var(--field);border:none;border-bottom:2px solid var(--field-line);border-radius:6px 6px 0 0;padding:.18rem .5rem;margin:0 .15rem;transition:border-color .15s}
+.blank{width:11.5ch;text-align:center}
+.blank:focus,.wide:focus{border-bottom-color:var(--primary);outline:none}
+.blank.filled,.wide.filled{border-bottom-color:var(--primary)}
+.line{display:flex;align-items:baseline;gap:.5rem;flex-wrap:wrap;margin-top:.45rem;font-weight:500}
+.line .wide{flex:1 1 220px;min-width:0;padding:.35rem .6rem}
+.opts{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:.55rem;margin-top:.7rem}
+.opt{display:flex;gap:.7rem;align-items:flex-start;padding:.65rem .85rem;background:var(--field);border:2px solid transparent;border-radius:12px;cursor:pointer;font-size:.97rem;transition:border-color .15s,background .15s}
+.opt:hover{border-color:var(--line)}
+.opt.sel{border-color:var(--primary);background:var(--primary-soft)}
+.opt input{position:absolute;opacity:0;pointer-events:none}
+.ltr{flex:0 0 1.5rem;height:1.5rem;border-radius:50%;border:2px solid var(--field-line);display:flex;align-items:center;justify-content:center;font-size:.75rem;font-weight:700}
+.opt.sel .ltr{background:var(--primary);border-color:var(--primary);color:var(--primary-ink)}
+select{font-family:inherit;font-size:.95rem;color:var(--ink);background:var(--field);border:2px solid var(--field-line);border-radius:10px;padding:.5rem .6rem;width:100%;margin-top:.5rem}
+select.filled{border-color:var(--primary)}
+.tickrow{display:flex;gap:.6rem;align-items:center;flex-wrap:wrap}
+.tickrow .qt{flex:1 1 320px;font-size:.98rem;line-height:1.6;order:2}
+.tickbox{display:flex;gap:.3rem;align-items:center;order:1}
+.tickbox .blank{width:8.5ch}
+.tickbtn{font-family:inherit;font-size:1rem;font-weight:700;width:2.2rem;height:2rem;border-radius:8px;border:1px solid var(--field-line);background:var(--field);color:var(--ink);cursor:pointer}
+.tickbtn.on{background:var(--ok-bg);border-color:var(--ok-line);color:var(--ok)}
+.actions{display:flex;justify-content:center;gap:.8rem;flex-wrap:wrap;margin:1.8rem 0 1rem}
+
+/* results */
+.summary{padding:2rem 1.5rem;text-align:center;margin-bottom:1.3rem}
+.summary h2{font-size:1.6rem;margin-bottom:1.1rem}
+.ring{width:150px;height:150px;border-radius:50%;margin:0 auto 1rem;display:flex;align-items:center;justify-content:center;background:conic-gradient(var(--ok-line) var(--pct),var(--line) 0);position:relative}
+.ring::before{content:'';position:absolute;inset:14px;border-radius:50%;background:var(--bg1)}
+.ring b{position:relative;font-family:var(--serif);font-size:2.3rem}
+.tally{display:flex;justify-content:center;gap:.6rem;flex-wrap:wrap;margin:.6rem 0 .2rem}
+.tally .pill b{font-size:1.05rem}
+.t-ok{color:var(--ok)}.t-bad{color:var(--bad)}.t-skip{color:var(--skip)}
+.secbars{padding:1.2rem 1.4rem;margin-bottom:1.2rem}
+.secbars h3{font-size:1.05rem;margin-bottom:.7rem}
+.sb{display:grid;grid-template-columns:2.4rem 1fr 3.6rem;gap:.6rem;align-items:center;padding:.3rem 0;cursor:pointer;border-radius:8px;font-size:.9rem}
+.sb:hover{background:var(--primary-soft)}
+.sb .bar{height:8px;border-radius:4px;background:var(--bad-line);overflow:hidden;position:relative}
+.sb .bar i{position:absolute;left:0;top:0;bottom:0;background:var(--ok-line)}
+.sb .nm{text-align:right;color:var(--ink2);font-variant-numeric:tabular-nums}
+.sb .rn{font-family:var(--serif);font-weight:700;color:var(--primary-text)}
+.filters{display:flex;gap:.5rem;flex-wrap:wrap;justify-content:center;margin-bottom:1.2rem}
+.filters .chip.active{background:var(--primary);color:var(--primary-ink);border-color:var(--primary)}
+.only-wrong .rc.correct{display:none}
+.only-right .rc:not(.correct){display:none}
+.rsec{margin:1.8rem 0 .7rem;display:flex;gap:.8rem;align-items:baseline}
+.rsec .roman{font-size:1.3rem}
+.rsec h3{font-size:1.1rem}
+.rsec small{margin-left:auto;color:var(--ink2);font-weight:600;white-space:nowrap}
+.rc{padding:1.15rem 1.3rem;margin-bottom:.9rem;border-left:7px solid var(--line)}
+.rc.correct{border-left-color:var(--ok-line)}
+.rc.wrong{border-left-color:var(--bad-line)}
+.rc.blank-ans{border-left-color:var(--skip-line)}
+.rc-top{display:flex;gap:.6rem;align-items:center;flex-wrap:wrap;margin-bottom:.7rem}
+.mark{font-size:.82rem;font-weight:700;padding:.2rem .7rem;border-radius:999px}
+.correct .mark{background:var(--ok-bg);color:var(--ok)}
+.wrong .mark{background:var(--bad-bg);color:var(--bad)}
+.blank-ans .mark{background:var(--skip-bg);color:var(--skip)}
+.rc-no{font-weight:700;color:var(--ink2);font-size:.85rem}
+.rule{margin-left:auto;font-size:.76rem;font-weight:600;padding:.15rem .6rem;border-radius:999px;background:var(--lav);color:var(--lav-ink)}
+.orig{font-weight:500;margin-bottom:.35rem}
+.ans{margin:.45rem 0;font-size:.97rem;line-height:1.7}
+.ans small{display:block;font-size:.75rem;font-weight:700;letter-spacing:.02em;color:var(--ink2);margin-bottom:.1rem}
+.fill{padding:.05rem .45rem;border-radius:6px;font-weight:600}
+.fill.ok,.fill.key{background:var(--ok-bg);color:var(--ok)}
+.fill.bad{background:var(--bad-bg);color:var(--bad);text-decoration:line-through;text-decoration-thickness:1.5px}
+.fill.none{background:var(--skip-bg);color:var(--skip);font-style:italic;font-weight:500}
+mark.x{background:var(--bad-bg);color:var(--bad);padding:0 .3rem;border-radius:5px;font-weight:700;text-decoration:line-through}
+.fixq b,.orig b{background:var(--bad-bg);color:var(--bad);border:1px dashed var(--bad-line);padding:0 .35rem;border-radius:6px}
+.alt{margin-top:.35rem;font-size:.85rem;color:var(--ink2)}
+.why{margin-top:.8rem;padding:.8rem 1rem;border-radius:10px;border-left:3px solid var(--primary);background:var(--primary-soft);font-size:.93rem;line-height:1.55}
+.why b:first-child{color:var(--primary-text)}
+
+/* modal */
+.mo{position:fixed;inset:0;background:rgba(110,100,160,.28);backdrop-filter:blur(4px);display:none;align-items:center;justify-content:center;z-index:200;padding:1rem}
+.mo.active{display:flex}
+.mc{max-width:440px;width:100%;padding:2rem 1.6rem;text-align:center}
+.mc h3{margin-bottom:.7rem;font-size:1.35rem}
+.mc p{color:var(--ink2);margin-bottom:1.4rem}
+.mc .actions{margin:0}
+
+@media(max-width:640px){
+  .container{padding:.8rem .8rem 2.5rem}
+  header.bar{padding:.65rem .8rem}
+  .brand span{display:none}
+  .hero{padding:1.5rem 1.2rem}
+  .instr,details.note,.shared{margin-left:0}
+  .sec{padding:1.2rem .9rem .6rem}
+  .q{gap:.65rem}
+  .rule{margin-left:0}
+}
+@media print{.blob,header.bar,.actions,.filters,.toolbar{display:none!important}.glass{box-shadow:none;background:#fff}}
+</style>
+</head>
+<body>
+<div class="blob b1"></div><div class="blob b2"></div><div class="blob b3"></div>
+
+<div class="container">
+  <header class="bar glass">
+    <div class="brand"><b>Lesson 7 · Unreal Past, Wishes &amp; Contrast</b><span id="hdr-sub">Practice workbook</span></div>
+    <div class="stats">
+      <span class="pill" id="hdr-prog" style="display:none">0 / 0</span>
+      <span class="pill" title="Time"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg><span id="timer">00:00</span></span>
+      <button class="btn small ghost" id="btn-home" style="display:none" type="button">Home</button>
+    </div>
+  </header>
+
+  <!-- HOME -->
+  <main id="view-home" class="view active">
+    <section class="glass hero">
+      <h2>Unreal past, wishes and contrast</h2>
+      <p>Two practice sets on the same grammar. Set A reproduces every exercise from the lesson pages (Sections I–IX). Set B is new material for extra drilling. After you submit, each answer is marked and explained.</p>
+    </section>
+    <div class="sets" id="setcards"></div>
+  </main>
+
+  <!-- QUIZ -->
+  <main id="view-quiz" class="view">
+    <section class="glass toolbar">
+      <div class="row"><h2 id="quiz-title"></h2><span class="resume" id="quiz-count"></span></div>
+      <div class="prog"><i id="prog-bar"></i></div>
+      <nav class="chips" id="chips" aria-label="Jump to section"></nav>
+    </section>
+    <div id="quiz-body"></div>
+    <div class="actions"><button class="btn" id="btn-submit" type="button">Submit and see results</button></div>
+  </main>
+
+  <!-- RESULTS -->
+  <main id="view-results" class="view">
+    <section class="glass summary">
+      <h2 id="res-title">Results</h2>
+      <div class="ring" id="ring" style="--pct:0%"><b id="res-pct">0%</b></div>
+      <div class="tally">
+        <span class="pill t-ok"><b id="n-ok">0</b> correct</span>
+        <span class="pill t-bad"><b id="n-bad">0</b> incorrect</span>
+        <span class="pill t-skip"><b id="n-skip">0</b> not answered</span>
+        <span class="pill">Time <b id="res-time">00:00</b></span>
+      </div>
+    </section>
+    <section class="glass secbars"><h3>Score by section (tap to jump)</h3><div id="secbars"></div></section>
+    <div class="filters" role="group" aria-label="Filter answers">
+      <button class="chip active" data-f="all" type="button">All</button>
+      <button class="chip" data-f="wrong" type="button">Needs review</button>
+      <button class="chip" data-f="right" type="button">Correct</button>
+    </div>
+    <div id="res-body"></div>
+    <div class="actions">
+      <button class="btn" id="btn-retake" type="button">Retake this set</button>
+      <button class="btn ghost" id="btn-other" type="button">Try the other set</button>
+      <button class="btn ghost" id="btn-home2" type="button">Home</button>
+    </div>
+  </main>
+</div>
+
+<div class="mo" id="modal" role="dialog" aria-modal="true" aria-labelledby="m-title">
+  <div class="glass mc">
+    <h3 id="m-title"></h3><p id="m-msg"></p>
+    <div class="actions"><button class="btn ghost" id="m-cancel" type="button">Cancel</button><button class="btn" id="m-ok" type="button">Confirm</button></div>
+  </div>
+</div>
+
+<script>
+/* =====================================================================
+   DATA
+   Item builders:  M = multiple choice, T = typed answer, S = select (match),
+   K = tick / extra-word line.  Answers are normalised before comparing.
+   ===================================================================== */
+const L = "ABCDEFGHIJ";
+const M = (q, opts, ans, rule, why) => ({kind:"mcq", q, opts, ans:[].concat(ans), rule, why});
+const T = (q, ans, rule, why, o) => Object.assign({kind:"text", q, ans, rule, why}, o||{});
+const S = (q, ans, rule, why) => ({kind:"sel", q, ans:[ans], rule, why});
+const K = (q, ans, rule, why) => ({kind:"tick", q, ans, rule, why});
+const F = (q, ans, rule, why) => T(q, ans, rule, why, {fix:true}); // spot & fix: bold part is wrong, type the corrected part
+
+/* ---------------------------- SET A ---------------------------------- */
+const NOTE_UNREAL = `<ul>
+<li><b>Unreal past</b> = a past tense with present / future meaning.</li>
+<li>Used after: a second conditional, <i>suppose / what if / imagine</i>, <i>would rather + you/he/she/we/they</i>, <i>it’s (high / about) time + subject</i>, polite questions, <i>wish / if only</i>.</li>
+<li>Exception: <i>it’s time <u>to</u> + infinitive</i> has no unreal past.</li>
+<li><i>Suppose / what if / imagine</i> + present tense = more likely; + past tense = less likely.</li></ul>`;
+const NOTE_WISH = `<ul>
+<li>Present / future / general: <b>wish / if only + past simple / continuous</b></li>
+<li>Past regret: <b>wish / if only + past perfect</b></li>
+<li>Criticising others / complaining: <b>wish / if only + would</b></li>
+<li>Hypothetical ability / permission: <b>wish / if only + could</b></li>
+<li>Formal desire: <b>wish + full infinitive</b> (I wish to speak to the manager)</li>
+<li>We do not usually say <i>if only / I wish I would…</i> or <i>wish + will</i>. For future desires use <b>hope</b>.</li></ul>`;
+const NOTE_CONTRAST = `<ul>
+<li><b>although / though / even though</b> + subject + verb (even though = stronger; though = informal, can end a sentence)</li>
+<li><b>in spite of / despite</b> + noun / -ing / the fact (that) + clause (never <i>despite of</i>). With -ing the subject must be the same; perfect -ing (having worn) shows an earlier action.</li>
+<li><b>however / nevertheless</b> (formal) join separate sentences, always with commas.</li>
+<li><b>while / whereas</b> contrast two different facts or ideas.</li></ul>`;
+
+const SET_A = {
+  key:"A", title:"Set A · Textbook practice", tagline:"From the lesson pages",
+  blurb:"The nine exercises printed in Lesson 7, in order. Typed answers accept sensible variants; the key shows the book-style answer first.",
+  sections:[
+  {roman:"I", title:"Verb forms", instr:"Complete using the correct form of the verb in brackets.", note:NOTE_UNREAL, items:[
+    T("Don’t you think it’s time you {} (tell) Andrea the truth?", ["told"], "It’s time + past simple",
+      "After <i>it’s (high / about) time + subject</i> we use the past simple with a present or future meaning (unreal past). It suggests the action is overdue: you should tell her now."),
+    T("What if we {} (rent) a villa by the sea for the summer?", ["rented","rent"], "What if + past / present",
+      "<i>What if</i> + past simple shows the speaker thinks the plan is less likely, so <b>rented</b> is the expected answer. A present tense (<i>rent</i>) is also possible when the plan feels more likely."),
+    T("I’d rather people {} (send) me e-mails than {} (phone) me.", [["sent"],["phoned"]], "would rather + subject + past",
+      "<i>Would rather</i> + a different subject takes the past simple for a present or future preference: <i>sent … than phoned</i>. The tense is unreal past, so it does not refer to the past."),
+    T("Suppose you {} (be going to) open a clothes shop. What kind of clothes would you stock?", ["were going to","was going to","are going to"], "suppose + past",
+      "<i>Suppose</i> + past tense presents an imaginary situation: <b>were going to</b> (<i>was</i> is informal). A present form (<i>are going to</i>) would signal that it is a real plan, which the lesson also allows."),
+    T("It’s time to {} (go) now.", ["go"], "it’s time to + infinitive",
+      "Careful: <i>it’s time <u>to</u> + infinitive</i> is a normal structure. The unreal past only appears in <i>it’s time + subject + past simple</i> (it’s time we went). No subject here, so use the base verb <b>go</b>."),
+    T("If you {} (have) a time machine, which era would you want to go back to?", ["had"], "Second conditional",
+      "Second conditional: <i>if + past simple, would + infinitive</i>. <b>Had</b> describes an imaginary present situation."),
+    T("Shelia would come with us if she {} (not lend) Brenda any more money — she’s got to learn not to spend what she doesn’t have.", ["didn't lend"], "Second conditional (negative)",
+      "Second conditional again: <i>if + past simple</i>. The negative is <b>didn’t lend</b>. She is lending money now; the imaginary situation is that she stops."),
+    T("We’d rather you {} (not have to) work tomorrow.", ["didn't have to"], "would rather + subject + past",
+      "<i>Would rather + you / we / they + past simple</i> expresses what we prefer someone else’s situation to be. <i>Not have to</i> becomes <b>didn’t have to</b>."),
+    T("It’s high time I {} (get) married. Would that make you happy?", ["got"], "It’s high time + past",
+      "<i>It’s high time + subject + past simple</i> refers to the present or future: marriage is overdue. <b>Got</b> is unreal past, not a real past event."),
+    T("What if we {} (leave)?", ["left","leave"], "What if + past / present",
+      "Both are correct. <i>What if we leave?</i> (present) suggests the speaker thinks leaving is more likely; <i>What if we left?</i> (past) suggests it is less likely."),
+  ]},
+  {roman:"II", title:"Spot and fix the error", instr:"Each of the words or phrases in bold is incorrect. Rewrite them correctly: type only the corrected word(s) for the bold part in the box under each sentence.", note:NOTE_WISH, items:[
+    F("I wish I <b>know</b> how to set the timer on this video. Where are the instructions?", ["knew"], "wish + past simple",
+      "A wish about a present situation (we don’t know now) takes the past simple: <b>I wish I knew</b>."),
+    F("“If only I <b>listened</b> to Hilary,” said Warren sadly. “Now it’s too late!”", ["had listened"], "if only + past perfect",
+      "Regret about the past (“now it’s too late”) needs <i>if only + past perfect</i>: <b>had listened</b>."),
+    F("I wish you <b>did</b> shut up for five minutes!", ["would"], "wish + would (complaint)",
+      "To complain about someone’s behaviour or ask them to change it we use <i>wish + would</i>: <b>I wish you would shut up</b>."),
+    F("If only Charlie <b>can</b> get tomorrow off work.", ["could"], "if only + could",
+      "<i>If only + could</i> expresses hypothetical ability or permission in the present or future: <b>could</b> get tomorrow off."),
+    F("Do you wish you <b>went</b> with Jack to the concert tomorrow night?", ["were going","was going","could go"], "wish + past continuous / could",
+      "The concert is a future arrangement, so <i>wish + past continuous</i> fits: <b>were going</b>. <b>Could go</b> (hypothetical ability / permission) also works."),
+    F("Excuse me. I wish <b>speaking</b> with the manager of this establishment immediately.", ["to speak"], "wish + full infinitive (formal)",
+      "In formal language desire is expressed with <i>wish + full infinitive</i>: <b>I wish to speak</b>. The -ing form is not used."),
+    F("Albert wishes like anything that he <b>was driving</b> more slowly that night.", ["had been driving"], "wish + past perfect continuous",
+      "<i>That night</i> points to a past regret about an action in progress: <i>wish + past perfect continuous</i> → <b>had been driving</b>."),
+    F("I wish I <b>would feel</b> well enough to eat something.", ["felt"], "wish + past simple (own state)",
+      "We do not use <i>wish + would</i> for our own state or things we cannot control. A present state we regret needs the past simple: <b>I wish I felt</b>."),
+    F("I <b>wish</b> I’ll get my exam results sooner rather than later.", ["hope"], "hope for future desires",
+      "For desires about the future we use <b>hope</b> (+ will). <i>Wish + will</i> is never used."),
+    F("If only you <b>to listen</b> to what your teachers tell you!", ["listened","would listen"], "if only + past / would",
+      "Two possibilities: <i>if only + past simple</i> (<b>listened</b>) or <i>if only + would</i> (<b>would listen</b>) to criticise. The infinitive is wrong after <i>if only</i>."),
+  ]},
+  {roman:"III", title:"Same meaning", instr:"Complete the sentences so that the meaning remains the same.", note:NOTE_WISH, items:[
+    T("I don’t like your criticising me all the time.", ["you wouldn't criticise me all the time","you would stop criticising me all the time","you didn't criticise me all the time"], "wish + would",
+      "Complaining about an annoying habit → <i>wish + would</i>: <b>I wish you wouldn’t criticise me all the time</b>. <i>Didn’t criticise</i> is also acceptable.", {pre:"I wish"}),
+    T("It’s awful – Sam doesn’t know how I feel about him!", ["sam knew how i feel about him","sam knew how i felt about him","sam understood how i feel about him"], "if only + past simple",
+      "An unhappy present situation → <i>if only + past simple</i>: <b>If only Sam knew how I feel about him!</b>", {pre:"If only"}),
+    T("I’d love to be with you in Switzerland right now.", ["i were with you in switzerland right now","i was with you in switzerland right now","i could be with you in switzerland right now"], "wish + past simple / could",
+      "An unreal present desire → <i>wish + past simple</i>. <i>Were</i> is formal with <i>I</i>; <i>was</i> is common in speech; <i>could be</i> also works.", {pre:"I wish"}),
+    T("Frank regrets not taking the job when he had the chance.", ["he had taken the job when he had the chance","he'd taken the job when he had the chance"], "wish + past perfect",
+      "Regret about a past event → <i>wish + past perfect</i>: <b>Frank wishes he had taken the job</b>. The second <i>had</i> (had the chance) stays past simple.", {pre:"Frank wishes"}),
+    T("Wouldn’t you like us to be standing in the middle of Times Square right now?", ["we were standing in the middle of times square right now","we was standing in the middle of times square right now"], "wish + past continuous",
+      "A wish about the present moment → <i>wish + past continuous</i>: <b>Don’t you wish we were standing…</b>", {pre:"Don’t you wish"}),
+    T("It’s a shame I can’t play chess as well as Steve.", ["i could play chess as well as steve"], "wish + could",
+      "Hypothetical ability → <i>wish + could</i>: <b>I wish I could play chess as well as Steve.</b>", {pre:"I wish"}),
+    T("What would you do if you had a million euros?", ["you had a million euros what would you do"], "suppose + past",
+      "<i>Suppose</i> + past simple introduces an imaginary situation: <b>Suppose you had a million euros, what would you do?</b>", {pre:"Suppose"}),
+    T("I don’t really want you to smoke in here.", ["you didn't smoke in here"], "would rather + subject + past",
+      "<i>Would rather + you + past simple</i> states a preference about someone else’s action: <b>I’d rather you didn’t smoke in here.</b>", {pre:"I’d rather"}),
+    T("It’s time for them to go to bed.", ["they went to bed"], "It’s high time + past",
+      "<i>It’s high time + subject + past simple</i>: <b>It’s high time they went to bed.</b> The action is overdue.", {pre:"It’s high time"}),
+  ]},
+  {roman:"IV", title:"Choose the correct answer", instr:"Choose the correct answer.", note:NOTE_WISH, items:[
+    M("It’s about time you ___ thinking about setting up your own business.", ["start","have started","started","to start"], "C", "It’s about time + past simple", "<i>It’s about time + subject</i> takes the past simple (unreal past): <b>started</b>. It suggests the action is overdue."),
+    M("I’d really rather you ___ the kids drop bits of pizza all over my new sofa.", ["don’t let","aren’t letting","won’t let","didn’t let"], "D", "would rather + subject + past", "<i>Would rather + you + past simple</i> for a present / future preference about someone else: <b>didn’t let</b>."),
+    M("___ anything particular in mind or are you just browsing?", ["Did you have","Are you having","Can you have","Had you had"], "A", "Polite question", "Polite questions use the past simple to sound less direct while referring to now: <b>Did you have</b>… <i>Have</i> (= have in mind) is stative, so <i>Are you having</i> is wrong."),
+    M("I wish Karen ___ that we’re not trying to interfere in her life.", ["understands","would understand","has understood","is going to understand"], "B", "wish + would", "<i>Wish + would</i> is used when we want someone else’s behaviour or attitude to change: <b>would understand</b>. Present, perfect and <i>going to</i> forms cannot follow <i>wish</i>."),
+    M("I’d have been able to say goodbye to Trish if only ___ to the airport in time.", ["I get","I got","I have got","I had got"], "D", "if only + past perfect", "<i>I’d have been able</i> shows a past regret, so <i>if only + past perfect</i>: <b>I had got</b>."),
+    M("Don’t you sometimes wish you ___ invisible?", ["could be","would be","will be","are"], "A", "wish + could", "<i>Wish + could</i> expresses hypothetical ability: <b>could be</b>. <i>Will</i> and <i>are</i> never follow <i>wish</i>; <i>would</i> is for other people’s behaviour."),
+    M("Suppose we ___ we could go and live on another planet. Would you want to go?", ["to hear","hearing","heard","having heard"], "C", "suppose + past", "<i>Suppose</i> + past tense signals an imaginary, unlikely situation: <b>heard</b>."),
+    M("Do you wish ___ an official complaint?", ["making","to make","you made","you make"], "B", "wish + full infinitive (formal)", "A formal desire is expressed with <i>wish + full infinitive</i>: <b>Do you wish to make…</b>"),
+    M("Adrian was ___ enough money to buy a new computer for the school.", ["wishing to have raised","wishing he will raise","hoping to have raised","hoping he will raise"], "C", "hope for the future", "Future desires use <b>hope</b>, not wish. <i>Hoping to have raised</i> = hoping to have collected enough by a future point. <i>Wish + will</i> is never used, and <i>was hoping he will</i> breaks the tense sequence."),
+    M("Don’t you wish we ___ the exam a week on Monday and not tomorrow?", ["take","will take","would take","were taking"], "D", "wish + past continuous", "A wish about a fixed future arrangement takes the past continuous: <b>were taking</b>. <i>Would</i> is for someone else’s behaviour; <i>will / take</i> cannot follow <i>wish</i>."),
+  ]},
+  {roman:"V", title:"Match to make sentences", instr:"Match the beginnings (1–9) with the endings (A–I).", note:NOTE_CONTRAST,
+   shared:["of being a vegetarian, Aesop does occasionally eat fish.","does occasionally eat fish.","Aesop does occasionally eat fish.","being a vegetarian, Aesop does occasionally eat fish.","occasionally eat fish, however.","Aesop’s a vegetarian, he does occasionally eat fish.","been a vegetarian for years, Aesop does occasionally eat fish.","fact that Aesop is a vegetarian, he does occasionally eat fish.","although he does occasionally eat fish."],
+   items:[
+    S("Although", "F", "although + clause", "<i>Although + subject + verb, subject + verb</i>: <b>Although Aesop’s a vegetarian, he does occasionally eat fish.</b>"),
+    S("Despite", "D", "despite + -ing", "<i>Despite + -ing form</i> (same subject): <b>Despite being a vegetarian, Aesop does occasionally eat fish.</b>"),
+    S("Despite the", "H", "despite the fact (that)", "<i>Despite the fact (that) + subject + verb</i>: <b>Despite the fact that Aesop is a vegetarian, he…</b>"),
+    S("Aesop is a vegetarian,", "I", "although mid-sentence", "<i>Although</i> can follow the main clause: <b>Aesop is a vegetarian, although he does occasionally eat fish.</b>"),
+    S("Despite his vegetarianism", "C", "despite + noun", "<i>Despite + noun</i>, then subject + verb: <b>Despite his vegetarianism, Aesop does occasionally eat fish.</b>"),
+    S("In spite", "A", "in spite of + -ing", "<i>In spite of + -ing form</i>: <b>In spite of being a vegetarian, Aesop…</b>"),
+    S("Despite havin", "G", "despite + perfect -ing", "The perfect -ing form shows the action happened before the result: <b>Despite having been a vegetarian for years, Aesop…</b>"),
+    S("Aesop is a vegetarian. However, he", "B", "however at start", "<i>However</i> starts the second sentence and is followed by a comma: <b>However, he does occasionally eat fish.</b>"),
+    S("Aesop is a vegetarian. He does", "E", "however at end", "<i>However</i> can also close the sentence: <b>He does occasionally eat fish, however.</b>"),
+  ]},
+  {roman:"VI", title:"Although, despite, however or while", instr:"Complete using <i>although, despite, however</i> or <i>while</i>.", note:NOTE_CONTRAST, items:[
+    M("___ the storm, over ten thousand people took part in the marathon.", ["although","despite","however","while"], "B", "despite + noun", "<i>Despite</i> + noun phrase (the storm)."),
+    M("___ I wrote myself a note to remind me, I still forgot to call George tonight.", ["although","despite","however","while"], "A", "although + clause", "A full clause (subject + verb) follows, so <b>although</b>. <i>Despite</i> would need a noun or -ing form."),
+    M("Most Egyptologists believe that the Sphinx is about 4000 years old. Some geologists, ___, argue that it must be at least 14,000 years old.", ["although","despite","however","while"], "C", "however between commas", "<b>However</b> can sit inside a sentence between commas to contrast with the previous sentence."),
+    M("___ having taken two aspirin, I had such a bad headache that I had to go home.", ["although","despite","however","while"], "B", "despite + -ing", "<i>Despite + -ing form</i> (having taken)."),
+    M("I’ve never seen a UFO. ___, that doesn’t mean that I don’t believe in them.", ["although","despite","however","while"], "C", "however at start", "<b>However</b> begins a new sentence and is followed by a comma."),
+    M("There are still two million people unemployed ___ the fact that we’re in the middle of an economic boom.", ["although","despite","however","while"], "B", "despite the fact that", "<i>Despite the fact that</i> + clause."),
+    M("___ no European country carries out capital punishment, it is widely used throughout the United States.", ["although","despite","however","while"], ["D","A"], "while contrasts two facts", "<b>While</b> contrasts two different facts (Europe vs the United States). <i>Although</i> would also be acceptable."),
+    M("Technology has benefited humankind enormously. There are drawbacks with our reliance on technology, ___.", ["although","despite","however","while"], "C", "however at end", "<b>However</b> can come at the end of a sentence, after a comma."),
+    M("I couldn’t find my keys ___ searching for them everywhere.", ["although","despite","however","while"], "B", "despite + -ing", "<i>Despite + -ing form</i> (searching); the same person searches and fails to find."),
+  ]},
+  {roman:"VII", title:"Key word transformations", instr:"Complete each second sentence using the word given, so that it has a similar meaning to the first sentence. Write between two and five words in each gap.", note:NOTE_CONTRAST, items:[
+    T("Although he was exhausted, Mike kept on climbing.", ["spite of the fact that","spite of the fact"], "in spite of the fact (that)", "<i>In spite of + the fact (that) + subject + verb</i>: <b>In spite of the fact that he was exhausted…</b>", {kw:"fact", pre:"In", post:"he was exhausted, Mike kept on climbing.", strip:["in"]}),
+    T("Sally had been sure she would win the music competition. She came third, however.", ["having been sure she","having been sure that she"], "despite + perfect -ing", "<i>Despite + perfect -ing</i> shows the confidence came before the result: <b>Despite having been sure she would win…</b>", {kw:"been", pre:"Despite", post:"would win the music competition, Sally came third.", strip:["despite"]}),
+    T("Doug wasn’t shortlisted for the job even though he had a great CV.", ["in spite of having","in spite of his having"], "in spite of + -ing", "<i>In spite of + -ing</i>, same subject (Doug): <b>in spite of having</b> a great CV.", {kw:"spite", pre:"Doug wasn’t shortlisted for the job", post:"a great CV."}),
+    T("Planes can still take off and land but ferries have been cancelled.", ["whereas planes are still","whereas planes are","whereas planes remain"], "whereas + clause", "<i>Whereas + subject + verb</i> contrasts two different facts: <b>whereas planes are still</b> able to take off and land.", {kw:"whereas", pre:"Ferries have been cancelled,", post:"able to take off and land."}),
+    T("Despite having got a good degree, Sandra couldn’t find a well-paid job.", ["even though she had got","even though she had","even though she'd got","even though she has got","even though she has","even though she got"], "even though + clause", "<i>Even though</i> (emphatic <i>although</i>) + subject + verb: <b>even though she had got</b> a good degree.", {kw:"even", pre:"Sandra couldn’t find a well-paid job", post:"a good degree."}),
+    T("Even though he’d been robbed twice, Red still enjoyed living in the city.", ["despite having been robbed","in spite of having been robbed"], "despite + perfect -ing", "<i>Despite + perfect -ing (passive)</i>: the robberies came first, and Red is the subject of both verbs: <b>despite having been robbed</b> twice.", {kw:"having", pre:"Red still enjoyed living in the city", post:"twice."}),
+    T("It’s a great film despite the plot being a little complicated.", ["though the plot is","even though the plot is","though the plot was","even though the plot was"], "though + clause", "<i>Though + subject + verb</i>: <b>though the plot is</b> a little complicated. (<i>Even though</i> is a more emphatic alternative.)", {kw:"though", pre:"It’s a great film,", post:"a little complicated."}),
+    T("Despite looking everywhere, the kids failed to find the tennis ball.", ["although they looked","although they had looked","although they'd looked","even though they looked","even though they had looked"], "although + clause", "<i>Although + subject + verb</i>: <b>although they looked</b> (or <i>had looked</i>) everywhere.", {kw:"although", pre:"The kids failed to find the tennis ball", post:"everywhere."}),
+    T("Pat really enjoyed the match even though she was beaten.", ["spite of being beaten","spite of having been beaten","spite of her being beaten"], "in spite of + -ing", "<i>In spite of + -ing</i> (passive): <b>In spite of being beaten, Pat really enjoyed the match.</b> Pat is the subject of both actions.", {kw:"of", pre:"In", post:", Pat really enjoyed the match.", strip:["in"]}),
+    T("Despite their thorough investigation of the case, the police didn’t manage to catch the culprit.", ["having thoroughly investigated the case","having investigated the case thoroughly"], "despite + perfect -ing", "The noun phrase becomes <i>perfect -ing</i> and the adjective becomes an adverb: <b>Despite having thoroughly investigated the case…</b>", {kw:"investigated", pre:"Despite", post:", the police didn’t manage to catch the culprit.", strip:["despite"]}),
+  ]},
+  {roman:"VIII", title:"Tick or extra word", instr:"If a line is correct, put a tick (✓) next to the number. If there is an extra word in a line, write it next to the number. Passage: <i>The school dance</i>.", note:NOTE_CONTRAST, type:"lines", items:[
+    K("I went to my first school dance last Saturday night and it was a disaster! If", "✓", "Correct line", "Nothing extra. <i>If</i> at the end of the line begins <i>If only I’d thought…</i> on the next."),
+    K("only [[that]] I’d thought about what I was going to wear a bit more carefully. Although", "that", "if only + past perfect", "<b>that</b> is extra: <i>If only I’d thought about…</i> needs no <i>that</i>."),
+    K("being my best friend Jenny had told me it wasn’t that kind of event, I’d decided", "✓", "Correct line", "Correct. <i>Although my best friend Jenny had told me…</i> (although + subject + verb). The <i>that</i> in <i>that kind of event</i> is a determiner, so it is not extra."),
+    K("to look really grown-up and wear a dress and high-heeled shoes. When I got", "✓", "Correct line", "Correct: <i>I’d decided to look … and wear…</i>"),
+    K("there, I looked totally ridiculous and some people started laughing. Despite [[of]]", "of", "despite (never + of)", "<b>of</b> is extra: it is <i>in spite <u>of</u></i>, but just <i>despite</i> (Despite this slight setback…)."),
+    K("this slight setback, I thought I’d hit the dance floor. If I could [[have]] survive that,", "have", "modal + base verb", "<b>have</b> is extra: <i>If I could survive that</i> (could + base verb)."),
+    K("I could survive anything. But even [[though]] that went wrong! One of my heels", "though", "even though needs a clause", "<b>though</b> is extra: the line should read <i>But even that went wrong!</i> Adding <i>though</i> would leave an unfinished contrast clause."),
+    K("snapped – even [[if]] though my shoes were brand new – and I had to carry them", "if", "even though (fixed phrase)", "<b>if</b> is extra: the correct phrase is <i>even though my shoes were brand new</i>."),
+    K("to the side of the room. It was very embarrassing! Still, despite the disastrous", "✓", "Correct line", "Correct: <i>despite the disastrous start</i> (despite + noun phrase) continues onto the next line."),
+    K("start [[was]], Craig Fielding came up to me and asked me if I wanted to go out with", "was", "despite + noun, no verb", "<b>was</b> is extra: <i>Despite the disastrous start, Craig…</i> (despite + noun, no extra verb)."),
+    K("him next Saturday. Of course I said no, but he is cute! We’ll see what happens!", "✓", "Correct line", "Correct. Nothing extra in this line."),
+  ]},
+  {roman:"IX", title:"One word per gap", instr:"Write one word in each gap. Passage: <i>On the Catwalk with Sunny Magenta</i>.", note:NOTE_UNREAL+NOTE_WISH+NOTE_CONTRAST, type:"passage", ptitle:"On the Catwalk with Sunny Magenta",
+   passage:"{1} the fact that I try to be as upbeat as possible in this column, I have to say Milan has disappointed me. If only we {2} possibly go back to the glory days of fashion (ie last year) when skirts were short and pink was the new black. Pink is still in this year, interestingly enough. {3}, it’s only being used in accessories such as buckles, belts, braces and beads. Brown – the must-have colour of the season – has never been my favourite colour, {4} I have to say that Belinda Steven’s all-brown paper beachwear was quite stunning. That’s in {5} of its complete impracticality, of course. It really is {6} time that hate couture entered the real world just a tiny bit. I know it’s supposed to be more art than clothing, but suppose you actually {7} the mistake of buying a Diego Fernandez baseball cap made of candle wax. That’s one walk in the sunshine and five thousand euros is dripping down your face! Now, I’m not saying I wish I {8} stayed back in dull and grey London – the after-show parties were tremendous, as always. But I do hope that next season I {9} be able to report that the fashion world’s got a grip on itself once more, and then – {10} though none of us will ever be able to afford any of the items I describe in this column – at least we’ll have something to dream about once more.",
+   items:[
+    T("{} the fact that I try to be as upbeat as possible…", ["despite"], "despite the fact that", "<i>Despite the fact that + clause.</i> (<i>In spite of</i> is two words, so <b>Despite</b> is the one-word answer.)", {gap:1}),
+    T("If only we {} possibly go back to the glory days of fashion…", ["could"], "if only + could", "<i>If only + could</i> expresses a wish for something impossible now: <b>could</b>.", {gap:2}),
+    T("Pink is still in this year. {}, it’s only being used in accessories…", ["however","nevertheless"], "however / nevertheless", "A contrast with the previous sentence, followed by a comma: <b>However</b> (or the more formal <i>Nevertheless</i>).", {gap:3}),
+    T("…never been my favourite colour, {} I have to say that…", ["although","though"], "although / though", "<b>Although</b> (or <i>though</i>) + clause contrasts the two ideas inside one sentence.", {gap:4}),
+    T("That’s in {} of its complete impracticality, of course.", ["spite"], "in spite of", "<i>In <b>spite</b> of + noun phrase.</i>", {gap:5}),
+    T("It really is {} time that hate couture entered the real world…", ["high","about"], "It’s high / about time", "<i>It’s high / about time + subject + past simple</i> (<i>entered</i>): <b>high</b> (or <i>about</i>).", {gap:6}),
+    T("…suppose you actually {} the mistake of buying a… baseball cap", ["made","make"], "suppose + past", "<i>Suppose + past simple</i> for an imaginary situation: <b>made</b>. (A present <i>make</i> would suggest it is more likely.)", {gap:7}),
+    T("…I’m not saying I wish I {} stayed back in dull and grey London", ["had"], "wish + past perfect", "A regret about a past choice → <i>wish + past perfect</i>: <b>had</b> stayed.", {gap:8}),
+    T("But I do hope that next season I {} be able to report…", ["will","shall"], "hope + will", "For future desires we use <b>hope</b> (+ will). <i>Hope</i> is followed by <i>will</i>, unlike <i>wish</i>.", {gap:9}),
+    T("…and then – {} though none of us will ever be able to afford…", ["even"], "even though", "<b>Even though</b> is the emphatic form of <i>although</i>.", {gap:10}),
+  ]},
+  ]
+};
+
+/* ---------------------------- SET B ---------------------------------- */
+const SET_B = {
+  key:"B", title:"Set B · Extra drill", tagline:"New questions",
+  blurb:"Fresh practice on the same grammar points, mixing choice, typed and transformation tasks. Good for a second round or for retesting weak spots.",
+  sections:[
+  {roman:"I", title:"Unreal past and wishes: choose", instr:"Choose the correct answer.", note:NOTE_UNREAL+NOTE_WISH, items:[
+    M("It’s high time the council ___ something about the potholes on this road.", ["does","did","has done","will do"], "B", "It’s high time + past", "<i>It’s high time + subject</i> takes the past simple with present meaning: <b>did</b>. It says the action is overdue."),
+    M("I’d rather you ___ your phone at the dinner table, if you don’t mind.", ["won’t use","aren’t using","didn’t use","don’t use"], "C", "would rather + subject + past", "<i>Would rather + you + past simple</i> expresses a preference about someone else’s action: <b>didn’t use</b>."),
+    M("What if you ___ born a century earlier? How different would your life be?", ["are","will be","have been","were"], "D", "what if + past", "An imaginary, impossible situation takes the past tense: <b>were</b> born. The <i>would</i> clause confirms it is unreal."),
+    M("A shop assistant wants to sound as polite and tentative as possible. Which question is best?", ["Do you want a bag?","Did you want a bag with that?","Are you wanting a bag?","You want a bag?"], "B", "Polite question", "Polite questions use a past tense for present meaning to sound less direct: <b>Did you want…?</b> <i>Are you wanting</i> is wrong because <i>want</i> is stative."),
+    M("I wish Sam ___ so loudly when I’m on the phone. It’s really distracting.", ["wouldn’t talk","doesn’t talk","hasn’t talked","won’t talk"], "A", "wish + would", "Complaining about someone’s irritating behaviour → <i>wish + would</i>: <b>wouldn’t talk</b>."),
+    M("If only we ___ the earlier train! We’d be home by now.", ["took","would take","had taken","take"], "C", "if only + past perfect", "Regret about a past choice → <i>if only + past perfect</i>: <b>had taken</b>."),
+    M("I wish I ___ speak Italian. I’m going to Rome next month.", ["can","will","could","would"], "C", "wish + could", "Hypothetical ability → <i>wish + could</i>. <i>Can</i> and <i>will</i> never follow <i>wish</i>; <i>would</i> is for other people’s behaviour."),
+    M("Which sentence is grammatically INCORRECT?", ["I wish I had more free time.","If only I could afford this coat.","I hope I’ll have enough money next week.","I wish I would have enough money to buy this coat."], "D", "no wish + would for self", "We do not usually say <i>I wish I would…</i>. Use <i>I wish I had</i> (present) or <i>I hope I’ll have</i> (future)."),
+    M("If you wish ___ a refund, please contact our customer service team.", ["to get","getting","you get","will get"], "A", "wish + full infinitive (formal)", "A formal desire takes <i>wish + full infinitive</i>: <b>to get</b>."),
+    M("Which sentence shows the speaker thinks the situation is MOST likely to happen?", ["What if the rain stopped?","What if the rain stops?","What if the rain had stopped?","What if the rain would stop?"], "B", "what if + present = more likely", "A present tense after <i>what if</i> indicates the situation is more likely; a past tense (<i>stopped</i>) makes it less likely. <i>Would</i> cannot follow <i>what if</i> here."),
+    M("Which sentence shows the speaker thinks the situation is LESS likely to happen?", ["Suppose you get the job.","Imagine you are selected.","What if you pass?","Suppose you got the job."], "D", "suppose + past = less likely", "A past tense after <i>suppose / what if / imagine</i> signals less likelihood; the other three use present tenses (more likely)."),
+    M("If only I ___ my keys this morning! Now I’m locked out.", ["hadn’t lost","didn’t lose","wouldn’t lose","don’t lose"], "A", "if only + past perfect", "Regret about a past event → <i>if only + past perfect</i>: <b>hadn’t lost</b>."),
+    M("If only the sun ___ shining. We could go to the beach!", ["were","is","has been","will be"], "A", "if only + past continuous", "A wish about the present → <i>if only + past simple / continuous</i>: <b>were shining</b>."),
+  ]},
+  {roman:"II", title:"Verb forms", instr:"Complete using the correct form of the verb in brackets.", note:NOTE_UNREAL, items:[
+    T("It’s time we {} (replace) this old printer; it jams every day.", ["replaced"], "It’s time + subject + past", "<i>It’s time + subject</i> takes the past simple (unreal past): <b>replaced</b>."),
+    T("I’d rather you {} (not tell) anyone about the surprise party.", ["didn't tell"], "would rather + subject + past", "<i>Would rather + you + past simple</i>: <b>didn’t tell</b>, a preference about the future."),
+    T("If I {} (be) taller, I would apply to join the basketball team.", ["were","was"], "Second conditional", "Second conditional: <i>if + past simple</i>. <b>Were</b> is formal; <i>was</i> is common in speech."),
+    T("Suppose your flight {} (be) cancelled tomorrow. What would you do?", ["were","was","is"], "suppose + past / present", "<b>Were</b> / <i>was</i> treats it as unlikely. A present <i>is</i> is also correct if the speaker thinks it is more likely."),
+    T("It’s high time the government {} (take) the problem seriously.", ["took"], "It’s high time + past", "<i>It’s high time + subject + past simple</i>: <b>took</b>. The action is overdue."),
+    T("{} (you / want) me to carry that bag for you? (polite question – use a past tense)", ["did you want"], "Polite question", "A past tense makes a present request more tentative and polite: <b>Did you want</b> me to carry that?"),
+    T("I wish I {} (know) the answer when the teacher asked me yesterday.", ["had known"], "wish + past perfect", "<i>Yesterday</i> = a past regret → <i>wish + past perfect</i>: <b>had known</b>."),
+    T("She wishes she {} (can) swim, so she could join the lifeguard team.", ["could"], "wish + could", "Hypothetical ability → <i>wish + could</i>: <b>could</b>. <i>Can</i> does not follow <i>wish</i>."),
+    T("I wish the neighbours {} (stop) playing music at 3 a.m. every night!", ["would stop","stopped"], "wish + would", "Complaining about annoying behaviour → <i>wish + would</i>: <b>would stop</b>. <i>Stopped</i> (past simple) is grammatical but less natural for a complaint."),
+  ]},
+  {roman:"III", title:"Spot and fix the error", instr:"Each word or phrase in bold is incorrect. Rewrite it correctly: type only the corrected word(s) for the bold part in the box under each sentence.", note:NOTE_WISH, items:[
+    F("I wish I <b>have</b> a bigger flat.", ["had"], "wish + past simple", "A wish about the present → <i>wish + past simple</i>: <b>I wish I had</b>."),
+    F("If only I <b>didn’t eat</b> so much cake last night!", ["hadn't eaten"], "if only + past perfect", "Past regret → <i>if only + past perfect</i>: <b>hadn’t eaten</b>."),
+    F("It’s time we <b>leave</b>; the film starts in ten minutes.", ["left"], "It’s time + subject + past", "After <i>it’s time + subject</i> the lesson uses the unreal past: <b>left</b>."),
+    F("I’d rather you <b>don’t</b> park in front of my garage.", ["didn't"], "would rather + subject + past", "<i>Would rather + you</i> needs the past simple: <b>didn’t</b> park."),
+    F("I wish he <b>will</b> stop interrupting me.", ["would"], "wish + would", "<i>Wish + will</i> is never used. To complain about behaviour use <b>would</b>."),
+    F("She wishes she <b>would</b> be taller.", ["were","was"], "wish + past simple (own state)", "We do not use <i>wish + would</i> for our own state. A present situation → past simple: <b>were</b> / <i>was</i> taller."),
+    F("We <b>wish</b> the weather will be sunny for the wedding.", ["hope"], "hope for future desires", "Desires about the future use <b>hope</b> + will. <i>Wish + will</i> is not possible."),
+    F("If only I <b>can</b> remember where I parked the car!", ["could"], "if only + could", "<i>If only + could</i> expresses hypothetical ability: <b>could</b> remember."),
+    F("What if he <b>would</b> say no?", ["said","says"], "what if + past / present", "<i>Would</i> cannot follow <i>what if</i>. Use the past simple (less likely) <b>said</b> or the present <b>says</b> (more likely)."),
+  ]},
+  {roman:"IV", title:"Same meaning", instr:"Complete the sentences so that the meaning stays the same.", note:NOTE_WISH, items:[
+    T("I’m sorry I didn’t revise more for the exam.", ["i had revised more for the exam","i'd revised more for the exam"], "wish + past perfect", "Regret about the past → <i>wish + past perfect</i>: <b>I wish I had revised more for the exam.</b>", {pre:"I wish"}),
+    T("My sister never tidies her room, and it really annoys me.", ["my sister would tidy her room","my sister would tidy up her room"], "wish + would", "Complaining about someone’s habit → <i>wish + would</i>: <b>I wish my sister would tidy her room.</b>", {pre:"I wish"}),
+    T("I don’t have a car.", ["i had a car"], "if only + past simple", "A present situation we regret → <i>if only + past simple</i>: <b>If only I had a car.</b>", {pre:"If only"}),
+    T("I think you should start preparing for the interview now. (Use a subject + past tense.)", ["you started preparing for the interview","you started preparing for the interview now","you started to prepare for the interview","you started to prepare for the interview now"], "It’s time + subject + past", "<i>It’s time + subject + past simple</i>: <b>It’s time you started preparing for the interview.</b>", {pre:"It’s time"}),
+    T("Please don’t borrow my laptop without asking. (Start with <i>you</i>.)", ["you didn't borrow my laptop without asking"], "would rather + subject + past", "<i>Would rather + you + past simple</i>: <b>I’d rather you didn’t borrow my laptop without asking.</b>", {pre:"I’d rather"}),
+    T("Tom regrets spending all his savings on a watch.", ["he hadn't spent all his savings on a watch"], "wish + past perfect", "Past regret → <i>wish + past perfect</i> (negative): <b>Tom wishes he hadn’t spent all his savings on a watch.</b>", {pre:"Tom wishes"}),
+    T("It’s a pity we can’t stay longer.", ["we could stay longer"], "wish + could", "Hypothetical ability / permission → <i>wish + could</i>: <b>I wish we could stay longer.</b>", {pre:"I wish"}),
+    T("What would you do if you were invisible for a day?", ["you were invisible for a day what would you do"], "imagine + past", "<i>Imagine + past tense</i> introduces an imaginary situation: <b>Imagine you were invisible for a day. What would you do?</b>", {pre:"Imagine"}),
+  ]},
+  {roman:"V", title:"Contrast: choose", instr:"Choose the correct answer.", note:NOTE_CONTRAST, items:[
+    M("___ the heavy traffic, we arrived on time.", ["Although","Despite","However","Whereas"], "B", "despite + noun", "<i>Despite + noun phrase</i> (the heavy traffic). <i>Although</i> would need a clause."),
+    M("___ it was raining, we went for a long walk.", ["Despite","In spite","However","Even though"], "D", "even though + clause", "A full clause follows, so <b>even though</b> (emphatic although). <i>Despite</i> and <i>in spite</i> need a noun / -ing, and <i>in spite</i> lacks <i>of</i>."),
+    M("The hotel was beautiful. ___, it was far too expensive for us.", ["However","Although","Despite","While"], "A", "however at start", "<b>However</b> begins a new sentence, followed by a comma. The others would need to join with the previous sentence."),
+    M("He passed the exam ___ not having studied much.", ["although","however","despite","even though"], "C", "despite + -ing", "<i>Despite + -ing form</i> (not having studied)."),
+    M("My brother loves action films, ___ I prefer romantic comedies.", ["despite","whereas","however","in spite"], "B", "whereas contrasts two facts", "<b>Whereas</b> (or <i>while</i>) contrasts two different facts or ideas."),
+    M("She never complained, ___ she was clearly in a lot of pain.", ["however","despite","in spite","though"], "D", "though + clause", "<b>Though</b> (informal <i>although</i>) joins two clauses. <i>However</i> would need a full stop or semicolon; <i>despite / in spite</i> need a noun or -ing."),
+    M("___ the fact that the film got terrible reviews, it was a box-office hit.", ["Although","Even though","However","Despite"], "D", "despite the fact that", "<i>Despite the fact that + clause</i>. <i>Although / even though</i> cannot be followed by <i>the fact that</i>."),
+    M("I got sunburnt ___ wearing a hat.", ["in spite of","even though","however","whereas"], "A", "in spite of + -ing", "<i>In spite of + -ing form</i>. The other options need a clause or a new sentence."),
+    M("The fashion show was a huge success. ___, the organisers lost money.", ["Although","Despite","Nevertheless","Whereas"], "C", "nevertheless at start", "<b>Nevertheless</b> (very formal, like <i>however</i>) links two separate sentences."),
+    M("Which sentence is NOT correct?", ["Despite the rain, we had a picnic.","In spite of the rain, we had a picnic.","Despite the fact that it rained, we had a picnic.","Despite it rained, we had a picnic."], "D", "despite + noun / -ing / the fact", "<i>Despite</i> cannot be followed directly by a clause. Use <i>despite the rain</i>, <i>despite the fact that it rained</i>, or <i>although it rained</i>."),
+    M("Which sentence is grammatically INCORRECT?", ["Despite wearing a hat, I got sunburnt.","I got sunburnt despite having worn a hat.","Despite wearing a hat, my sunburn was terrible.","Despite my hat, I got sunburnt."], "C", "same subject with -ing", "After <i>despite + -ing</i> the subject of the main verb must also do the -ing action. <i>My sunburn</i> cannot wear a hat."),
+  ]},
+  {roman:"VI", title:"Key word transformations", instr:"Complete the second sentence using the word given. Write between two and five words in each gap.", note:NOTE_CONTRAST+NOTE_WISH, items:[
+    T("Although the test was difficult, most students passed.", ["the fact that the test was","the fact the test was"], "in spite of the fact (that)", "<i>In spite of + the fact (that) + subject + verb</i>: <b>the fact that the test was</b> difficult.", {kw:"fact", pre:"In spite of", post:"difficult, most students passed.", strip:["in spite of"]}),
+    T("Mia is a gifted painter, but she has never sold a picture.", ["she however","however she"], "however mid / start", "<i>However</i> contrasts with the previous sentence and is set off by commas: <b>She, however, has never sold…</b> or <b>However, she has…</b>", {kw:"however", pre:"Mia is a gifted painter.", post:"has never sold a picture."}),
+    T("Dan loves spicy food, but his wife can’t stand it.", ["whereas his wife","while his wife"], "whereas + clause", "<i>Whereas + subject + verb</i> contrasts two different facts: <b>whereas his wife</b> can’t stand it.", {kw:"whereas", pre:"Dan loves spicy food,", post:"can’t stand it."}),
+    T("Despite the fact that she was ill, Kara went to work.", ["though she was","even though she was","although she was"], "though + clause", "<i>Though / even though + subject + verb</i> replaces <i>despite the fact that</i>: Kara went to work <b>though she was</b> ill.", {kw:"though", pre:"Kara went to work", post:"ill."}),
+    T("I’m sorry I didn’t call you earlier.", ["wish i had called","wish i'd called","wish i had phoned","wish i'd phoned","wish i had rung","wish i'd rung"], "wish + past perfect", "A past regret → <i>wish + past perfect</i>: <b>I wish I had called</b> you earlier.", {kw:"wish", pre:"I", post:"you earlier.", strip:["i"]}),
+    T("It’s a shame you can’t come to the concert.", ["if only you could"], "if only + could", "<i>If only + could</i> expresses hypothetical ability: <b>If only you could</b> come to the concert.", {kw:"if", pre:"", post:"come to the concert."}),
+    T("I’d prefer you not to wear perfume in the office.", ["rather you didn't","rather you did not"], "would rather + subject + past", "<i>Would rather + you + past simple</i>: <b>I’d rather you didn’t</b> wear perfume in the office.", {kw:"rather", pre:"I’d", post:"wear perfume in the office.", strip:["i'd"]}),
+  ]},
+  {roman:"VII", title:"One word per gap", instr:"Write one word in each gap. Passage: <i>Open-plan blues</i>.", note:NOTE_UNREAL+NOTE_WISH+NOTE_CONTRAST, type:"passage", ptitle:"Open-plan blues",
+   passage:"Last week I started working in an open-plan office, and I have to admit that it’s quite noisy. {1} the fact that my colleagues are friendly, I find it hard to concentrate. I wish they {2} talk so loudly on the phone! I’d rather my manager {3} us to work from home on Fridays, but she says it’s {4} time that the team learnt to cooperate face to face. {5} I love working from home, my husband prefers the office; he says he is more productive there, {6} I’m easily distracted. Still, {7} the noise, I managed to finish the report on time. If only I {8} a quieter desk by the window, everything would be perfect!",
+   items:[
+    T("{} the fact that my colleagues are friendly, I find it hard to concentrate.", ["despite"], "despite the fact that", "<i>Despite the fact that + clause.</i>", {gap:1}),
+    T("I wish they {} talk so loudly on the phone!", ["wouldn't"], "wish + would", "Complaining about others’ behaviour → <i>wish + would</i>: <b>wouldn’t</b> talk."),
+    T("I’d rather my manager {} us to work from home on Fridays…", ["allowed"], "would rather + subject + past", "<i>Would rather + subject + past simple</i>: <b>allowed</b> us to work from home."),
+    T("…she says it’s {} time that the team learnt to cooperate…", ["high","about"], "It’s high / about time", "<i>It’s high / about time + subject + past simple</i> (<i>learnt</i>)."),
+    T("{} I love working from home, my husband prefers the office.", ["although","though"], "although / though", "<b>Although</b> + clause, then a contrasting main clause."),
+    T("…he is more productive there, {} I’m easily distracted.", ["whereas","while"], "whereas / while", "<b>Whereas / while</b> contrast two different facts about two people."),
+    T("Still, {} the noise, I managed to finish the report on time.", ["despite"], "despite + noun", "<i>Despite + noun phrase</i> (the noise)."),
+    T("If only I {} a quieter desk by the window, everything would be perfect!", ["had"], "if only + past simple", "A present wish → <i>if only + past simple</i>: <b>had</b>."),
+   ].map((it,i)=>{ it.gap=i+1; return it; })},
+  {roman:"VIII", title:"Tick or extra word", instr:"If a line is correct, put a tick (✓). If there is an extra word in a line, write it. Passage: <i>The new choir</i>.", note:NOTE_UNREAL+NOTE_WISH+NOTE_CONTRAST, type:"lines", items:[
+    K("Last year I moved to a small town in the north. It’s about time I", "✓", "Correct line", "Correct. <i>It’s about time I made…</i> continues on the next line (past simple after <i>it’s about time</i>)."),
+    K("made some friends here, but I’m shy. Although I’d rather people", "✓", "Correct line", "Correct. <i>Although I’d rather people didn’t notice me</i> continues on the next line."),
+    K("didn’t notice me, I recently joined a local choir. Despite [[of]] being", "of", "despite (never + of)", "<b>of</b> is extra: <i>despite being nervous</i>, but <i>in spite <u>of</u> being</i>."),
+    K("nervous, I enjoyed the first rehearsal. Everyone was friendly,", "✓", "Correct line", "Correct. Nothing extra in this line."),
+    K("whereas [[while]] the conductor was quite strict. I wish I could", "while", "whereas OR while", "<b>while</b> is extra: use either <i>whereas</i> or <i>while</i>, not both."),
+    K("sing better, but I’m learning. If only I had [[been]] started lessons", "been", "if only + past perfect", "<b>been</b> is extra: <i>If only I had started lessons earlier</i> (past perfect, not passive)."),
+    K("earlier! Even so, I hope to perform at the winter concert,", "✓", "Correct line", "Correct. <i>Hope to + infinitive</i> expresses a future desire."),
+    K("in spite of the fact that [[that]] I won’t be the soloist.", "that", "in spite of the fact that", "The second <b>that</b> is extra: <i>in spite of the fact that I won’t be…</i>"),
+  ]},
+  ]
+};
+
+/* ---- Set B extra drill (added) ---- */
+(function(){
+const B = SET_B.sections;
+B[0].items.push(
+ M("I’d rather you ___ the window; it’s freezing in here.", ["don’t open","didn’t open","won’t open","haven’t opened"], "B", "would rather + subject + past", "<i>Would rather + you + past simple</i>: <b>didn’t open</b> (a present / future preference)."),
+ M("It’s about time you ___ a proper job.", ["find","found","have found","finding"], "B", "It’s about time + past", "<i>It’s about time + subject</i> takes the unreal past: <b>found</b>."),
+ M("I wish I ___ taller. I can’t reach the top shelf.", ["were","would be","will be","had been"], "A", "wish + past simple", "A present wish → <i>wish + past simple</i>: <b>were</b> (or <i>was</i>) taller."),
+ M("Suppose you ___ the lottery. What would you buy first?", ["would win","won","have won","winning"], "B", "suppose + past", "<i>Suppose + past simple</i> sets up an imaginary situation: <b>won</b>."),
+ M("I wish I ___ to the party last night. I missed all the fun.", ["went","had gone","would go","could go"], "B", "wish + past perfect", "<i>Last night</i> = a past regret → <i>wish + past perfect</i>: <b>had gone</b>."),
+ M("I wish you ___ leave your wet towels on the floor!", ["don’t","won’t","wouldn’t","didn’t had"], "C", "wish + would", "Complaining about someone’s habit → <i>wish + would</i>: <b>wouldn’t</b> leave."),
+ M("Which sentence is correct?", ["I wish I will pass the exam.","I hope I will pass the exam.","I hope I would pass the exam.","I wish I would pass the exam."], "B", "hope for future desires", "Future desires use <b>hope</b> (+ will). <i>Wish + will / would</i> is not used for your own future hopes."),
+ M("If only I ___ so tired! I could go out tonight.", ["am not","weren’t","won’t be","hadn’t"], "B", "if only + past simple", "A present wish → <i>if only + past simple</i>: <b>weren’t</b> so tired.")
+);
+B[1].items.push(
+ T("It’s high time you {} (stop) making excuses.", ["stopped"], "It’s high time + past", "<i>It’s high time + subject + past simple</i>: <b>stopped</b>."),
+ T("I’d rather he {} (not smoke) in the house.", ["didn't smoke"], "would rather + subject + past", "<i>Would rather + he + past simple</i>: <b>didn’t smoke</b>."),
+ T("Imagine you {} (win) a million euros tomorrow. What would you do?", ["won","win"], "imagine + past / present", "<b>Won</b> = unlikely; <i>win</i> is possible if the speaker thinks it is more likely."),
+ T("I wish I {} (have) more time to read.", ["had"], "wish + past simple", "A present wish → <i>wish + past simple</i>: <b>had</b>."),
+ T("If only she {} (listen) to my advice last year!", ["had listened"], "if only + past perfect", "<i>Last year</i> = past regret → <b>had listened</b>."),
+ T("I wish it {} (stop) raining. I want to go out.", ["would stop"], "wish + would", "Annoyance about something outside our control → <i>wish + would</i>: <b>would stop</b>."),
+ T("What if the bus {} (not come)? We’d be stuck here all night.", ["didn't come","doesn't come"], "what if + past / present", "<b>Didn’t come</b> (unlikely) or <i>doesn’t come</i> (more likely)."),
+ T("I’d rather you {} (call) me before you visit next time.", ["called"], "would rather + subject + past", "<i>Would rather + you + past simple</i>: <b>called</b> (a future preference).")
+);
+B[2].items.push(
+ F("I wish I <b>can</b> play the piano like you.", ["could"], "wish + could", "<i>Wish + can</i> is never used. Hypothetical ability → <b>could</b>."),
+ F("It’s about time he <b>to find</b> a job.", ["found"], "It’s about time + past", "<i>It’s about time + subject</i> takes the past simple: <b>found</b>. (Only <i>it’s time <u>to</u></i> takes the infinitive.)"),
+ F("If only I <b>didn’t say</b> those awful things to her last week!", ["hadn't said"], "if only + past perfect", "Past regret → <b>hadn’t said</b>."),
+ F("I wish it <b>wouldn’t be</b> so cold today.", ["weren't","wasn't"], "wish + past simple (state)", "We don’t use <i>wish + would</i> for a state. Present situation → <b>weren’t</b> / <i>wasn’t</i>."),
+ F("I’d rather you <b>won’t</b> tell her yet.", ["didn't"], "would rather + subject + past", "<i>Would rather + you</i> needs the past simple: <b>didn’t</b> tell."),
+ F("She wishes she <b>studied</b> harder before last year’s exam.", ["had studied"], "wish + past perfect", "<i>Last year</i> = past regret → <b>had studied</b>."),
+ F("I <b>wish</b> I’ll see you again next summer.", ["hope"], "hope for future desires", "Future desires → <b>hope</b> + will. <i>Wish + will</i> is not used."),
+ F("I wish my neighbours <b>won’t</b> play loud music every night.", ["wouldn't"], "wish + would", "Complaining about other people’s behaviour → <b>wouldn’t</b> play.")
+);
+B[3].items.push(
+ T("I regret not telling her the truth.", ["i had told her the truth","i'd told her the truth"], "wish + past perfect", "<b>I wish I had told her the truth.</b>", {pre:"I wish"}),
+ T("It’s a pity I’m not good at maths.", ["i were good at maths","i was good at maths"], "if only + past simple", "<b>If only I were good at maths.</b>", {pre:"If only"}),
+ T("You should go to bed now; it’s very late.", ["you went to bed now","you went to bed"], "It’s time + subject + past", "<b>It’s time you went to bed.</b>", {pre:"It’s time"}),
+ T("I don’t want you to smoke in here.", ["you didn't smoke in here"], "would rather + subject + past", "<b>I’d rather you didn’t smoke in here.</b>", {pre:"I’d rather"})
+);
+B[4].items.push(
+ M("___ being tired, she finished the marathon.", ["Although","Despite","However","While"], "B", "despite + -ing", "<i>Despite + -ing</i>: <b>Despite</b> being tired."),
+ M("He is very rich; ___, he never gives anything to charity.", ["although","nevertheless","despite","whereas"], "B", "nevertheless (formal)", "<b>Nevertheless</b> links two sentences (here after a semicolon) and is followed by a comma."),
+ M("___ she studied hard, she failed the test.", ["Despite","In spite of","Although","Nevertheless"], "C", "although + clause", "A full clause follows, so <b>Although</b>."),
+ M("Tom is very tall, ___ his brother is quite short.", ["despite","however","whereas","in spite of"], "C", "whereas contrasts two facts", "<b>Whereas</b> + clause contrasts two different facts."),
+ M("She still loves him ___ everything he did.", ["although","despite","however","even though"], "B", "despite + noun", "<i>Despite + noun phrase</i> (everything he did)… the others need a clause."),
+ M("Which sentence is correct?", ["Despite of the cold, we swam.","In spite the cold, we swam.","In spite of the cold, we swam.","Although the cold, we swam."], "C", "in spite of + noun", "It is <i>in spite <u>of</u></i> + noun; <i>despite</i> has no <i>of</i>; <i>although</i> needs a clause."),
+ M("We stayed outside ___ it was getting dark.", ["despite","even though","however","in spite of"], "B", "even though + clause", "A clause follows → <b>even though</b>."),
+ M("I’ve got a cold. ___, I’m going to the party.", ["Despite","Although","However","Whereas"], "C", "however at start", "<b>However</b> starts a new sentence, followed by a comma.")
+);
+B[5].items.push(
+ T("Although he was exhausted, Ben carried on working.", ["despite being","despite the fact that he was","despite the fact he was"], "despite + -ing / the fact", "<i>Despite + -ing</i> (same subject): Ben carried on working <b>despite being</b> exhausted.", {kw:"despite", pre:"Ben carried on working", post:"exhausted."}),
+ T("It’s a pity I don’t live nearer the sea.", ["wish i lived"], "wish + past simple", "Present regret → <b>I wish I lived</b> nearer the sea.", {kw:"wish", pre:"I", post:"nearer the sea.", strip:["i"]}),
+ T("Mark never listens, and it annoys me.", ["wish mark would listen"], "wish + would", "Complaint about behaviour → <b>I wish Mark would listen</b> to me.", {kw:"wish", pre:"I", post:"to me.", strip:["i"]})
+);
+})();
+
+const SETS = {A:SET_A, B:SET_B};
+/* assign ids and local numbers */
+Object.values(SETS).forEach(set=>{
+  let n=0; set.total=0;
+  set.sections.forEach((s,si)=>{ s.si=si; s.items.forEach((it,i)=>{ it.id=set.key+(++n); it.no=it.gap||(i+1); it.sec=si; }); set.total+=s.items.length; });
+});
+const itemsOf = set => set.sections.flatMap(s=>s.items);
+
+/* ---------------------------- helpers -------------------------------- */
+const $ = id => document.getElementById(id);
+const esc = s => String(s==null?"":s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+function lsGet(k){try{return localStorage.getItem(k)}catch(e){return null}}
+function lsSet(k,v){try{localStorage.setItem(k,v)}catch(e){}}
+function lsDel(k){try{localStorage.removeItem(k)}catch(e){}}
+function fmt(t){return String(Math.floor(t/60)).padStart(2,"0")+":"+String(t%60).padStart(2,"0")}
+
+function norm(s){
+  s = String(s==null?"":s).toLowerCase().replace(/[’‘`´]/g,"'");
+  s = s.replace(/\bcannot\b/g,"can't").replace(/\bcan not\b/g,"can't").replace(/\bwill not\b/g,"won't");
+  s = s.replace(/\b(did|do|does|was|were|is|are|had|has|have|would|could|should|must|might|need)\s+not\b/g,"$1n't");
+  s = s.replace(/criticiz/g,"criticis").replace(/cancell?ed/g,"canceled");
+  return s.replace(/[.,;:!?"“”()\[\]]/g," ").replace(/\s+/g," ").trim();
+}
+const TICKS = ["✓","✔","√","v","tick","correct","ok","right","yes","c"];
+function stripPre(u,it){
+  const list = it.strip || (it.pre ? [it.pre] : []);
+  list.forEach(p=>{ p=norm(p); if(!p) return; if(u===p) u=""; else if(u.startsWith(p+" ")) u=u.slice(p.length+1); });
+  return u;
+}
+function blanksOf(it){ // array of accepted-lists, one per blank
+  if(it.kind!=="text") return null;
+  return Array.isArray(it.ans[0]) ? it.ans : [it.ans];
+}
+function grade(it, val){
+  if(it.kind==="mcq"||it.kind==="sel") return !val ? "blank" : (it.ans.includes(val)?"correct":"wrong");
+  if(it.kind==="tick"){
+    const u = norm(val||""); if(!u) return "blank";
+    const got = TICKS.includes(u) ? "✓" : u;
+    return got===norm(it.ans) || (it.ans==="✓" && got==="✓") ? "correct" : "wrong";
+  }
+  const bl = blanksOf(it), vs = Array.isArray(val)?val:[val];
+  if(!vs.some(v=>norm(v))) return "blank";
+  const ok = bl.every((acc,i)=>{ const u=stripPre(norm(vs[i]||""),it); return acc.some(a=>{ a=norm(a); return a===u || (it.fix && u.endsWith(" "+a)); }); });
+  return ok ? "correct":"wrong";
+}
+function answered(it,val){
+  if(val==null) return false;
+  return Array.isArray(val) ? val.some(v=>String(v).trim()) : String(val).trim()!=="";
+}
+
+/* ---------------------------- state ---------------------------------- */
+const S_ = {set:null, answers:{}, elapsed:0, timer:null, done:false};
+function sKey(k,s){return "l7:"+k+":"+s}
+function saveState(){ lsSet(sKey(S_.set.key,"a"),JSON.stringify(S_.answers)); lsSet(sKey(S_.set.key,"t"),String(S_.elapsed)); }
+function loadSaved(key){
+  let a={}; try{a=JSON.parse(lsGet(sKey(key,"a"))||"{}")}catch(e){a={}}
+  return {answers:a, elapsed:parseInt(lsGet(sKey(key,"t"))||"0",10)||0};
+}
+function startTimer(){
+  clearInterval(S_.timer);
+  S_.timer=setInterval(()=>{S_.elapsed++; $("timer").textContent=fmt(S_.elapsed); if(S_.elapsed%5===0) saveState();},1000);
+}
+function show(v){
+  document.querySelectorAll(".view").forEach(x=>x.classList.remove("active"));
+  $("view-"+v).classList.add("active"); window.scrollTo(0,0);
+  $("btn-home").style.display = v==="home" ? "none":"";
+  $("hdr-prog").style.display = v==="quiz" ? "":"none";
+  if(v==="home"){ clearInterval(S_.timer); $("hdr-sub").textContent="Practice workbook"; }
+}
+
+/* ---------------------------- home ----------------------------------- */
+function renderHome(){
+  $("setcards").innerHTML = Object.values(SETS).map(set=>{
+    const sv = loadSaved(set.key), n = Object.values(sv.answers).filter(v=>answered(null,v)||(v!=null&&String(v)!=="")).length;
+    const secs = set.sections.map(s=>`<li><span><b>${s.roman}.</b> ${s.title}</span><span>${s.items.length} Q</span></li>`).join("");
+    return `<article class="glass setcard">
+      <span class="tagline">${esc(set.tagline)}</span>
+      <h3>${esc(set.title)}</h3>
+      <p>${esc(set.blurb)}</p>
+      <ul class="secl">${secs}</ul>
+      <div class="go"><button class="btn" data-start="${set.key}" type="button">${n?"Resume":"Start"} (${set.total} questions)</button>
+      ${n?`<span class="resume">${n} answered · saved in this browser</span>`:""}</div>
+    </article>`;
+  }).join("");
+}
+
+/* ---------------------------- quiz render ---------------------------- */
+function blankInput(it,b,val,cls){
+  return `<input class="${cls||"blank"} ${val?"filled":""}" type="text" data-id="${it.id}" data-b="${b}" value="${esc(val||"")}" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="Answer ${it.no}">`;
+}
+function itemHTML(it, sec){
+  const v = S_.answers[it.id];
+  let body="";
+  if(it.kind==="mcq"){
+    const tx = it.q.replace(/___/g,'<span style="display:inline-block;min-width:3.2em;border-bottom:2px solid var(--field-line)"></span>');
+    body = `<div class="qt">${tx}</div><div class="opts" role="radiogroup">`+
+      it.opts.map((o,i)=>`<label class="opt ${v===L[i]?"sel":""}"><input type="radio" name="q${it.id}" value="${L[i]}" data-id="${it.id}" ${v===L[i]?"checked":""}><span class="ltr">${L[i]}</span><span>${esc(o)}</span></label>`).join("")+`</div>`;
+  } else if(it.kind==="sel"){
+    const opts = sec.shared.map((o,i)=>`<option value="${L[i]}" ${v===L[i]?"selected":""}>${L[i]}. ${esc(o)}</option>`).join("");
+    body = `<div class="qt">${esc(it.q)} …</div><select data-id="${it.id}" class="${v?"filled":""}" aria-label="Ending for ${esc(it.q)}"><option value="">Choose the ending…</option>${opts}</select>`;
+  } else if(it.kind==="tick"){
+    const isTick = v==="✓";
+    body = `<div class="tickrow"><div class="tickbox"><button type="button" class="tickbtn ${isTick?"on":""}" data-tick="${it.id}" title="Line is correct" aria-label="Mark line ${it.no} as correct">✓</button>${blankInput(it,0,isTick?"":(v||""))}</div><div class="qt">${esc(it.q.replace(/\[\[|\]\]/g,""))}</div></div>`;
+  } else if(it.fix){
+    const vals = Array.isArray(v)?v:[];
+    body = `<div class="qt fixq">${it.q}</div><div class="line"><span>✎ Corrected form of the bold part:</span>${blankInput(it,0,vals[0],"wide")}</div>`;
+  } else if(it.pre!==undefined){
+    const vals = Array.isArray(v)?v:[];
+    const kw = it.kw ? `<span class="kw">${esc(it.kw)}</span>`:"";
+    body = `<div class="qt">${it.q}${kw}</div><div class="line"><span>→ ${esc(it.pre)}</span>${blankInput(it,0,vals[0],"wide")}${it.post?`<span>${esc(it.post)}</span>`:""}</div>`;
+  } else {
+    const parts = it.q.split("{}"), vals = Array.isArray(v)?v:[];
+    body = `<div class="qt">`+parts.map((p,i)=> p + (i<parts.length-1 ? blankInput(it,i,vals[i]) : "")).join("")+`</div>`;
+  }
+  return `<div class="q" id="q-${it.id}"><div class="qn">${it.no}</div><div class="qb">${body}</div></div>`;
+}
+function sectionHTML(sec){
+  let h = `<section class="glass sec" id="sec-${sec.si}"><div class="sec-h"><span class="roman">${sec.roman}</span><h3>${sec.title}</h3></div><p class="instr">${sec.instr}</p>`;
+  if(sec.note) h += `<details class="note"><summary>Quick rule reminder</summary><div class="nb">${sec.note}</div></details>`;
+  if(sec.type==="passage"){
+    const html = esc(sec.passage).replace(/\{(\d+)\}/g,(m,n)=>{ const it=sec.items[n-1]; const v=(S_.answers[it.id]||[])[0]||""; return `<span style="white-space:nowrap"><sup style="font-size:.72em;font-weight:700;color:var(--primary-text)">${n}</sup>${blankInput(it,0,v)}</span>`; });
+    h += `<div class="passage"><h4>${esc(sec.ptitle)}</h4>${html}</div>`;
+    return h+`</section>`;
+  }
+  if(sec.type==="lines") h += `<div class="passage" style="line-height:1.5;padding:.4rem 1rem"><h4 style="margin-top:.5rem">${sec.instr.match(/<i>(.*?)<\/i>/)?sec.instr.match(/<i>(.*?)<\/i>/)[1]:""}</h4></div>`;
+  if(sec.shared) h += `<div class="shared">`+sec.shared.map((o,i)=>`<div><b>${L[i]}</b>${esc(o)}</div>`).join("")+`</div>`;
+  h += sec.items.map(it=>itemHTML(it,sec)).join("");
+  return h+`</section>`;
+}
+function startSet(key, fresh){
+  const set = SETS[key]; S_.set=set; S_.done=false;
+  const sv = loadSaved(key);
+  S_.answers = fresh?{}:sv.answers; S_.elapsed = fresh?0:sv.elapsed;
+  if(fresh){lsDel(sKey(key,"a")); lsDel(sKey(key,"t"));}
+  $("quiz-title").textContent = set.title;
+  $("hdr-sub").textContent = set.title;
+  $("quiz-body").innerHTML = set.sections.map(sectionHTML).join("");
+  $("timer").textContent = fmt(S_.elapsed);
+  show("quiz"); updateProgress(); startTimer();
+}
+function updateProgress(){
+  const set=S_.set, its=itemsOf(set);
+  const n = its.filter(it=>answered(it,S_.answers[it.id])).length;
+  $("hdr-prog").textContent = n+" / "+its.length;
+  $("quiz-count").textContent = n+" of "+its.length+" answered";
+  $("prog-bar").style.width = (n/its.length*100)+"%";
+  $("chips").innerHTML = set.sections.map(s=>{
+    const done = s.items.every(it=>answered(it,S_.answers[it.id]));
+    return `<button type="button" class="chip ${done?"done":""}" data-jump="sec-${s.si}">${s.roman}${done?" ✓":""}</button>`;
+  }).join("");
+}
+
+/* ---------------------------- events --------------------------------- */
+document.addEventListener("click",e=>{
+  const st=e.target.closest("[data-start]"); if(st){ startSet(st.dataset.start,false); return; }
+  const jp=e.target.closest("[data-jump]"); if(jp){ const el=$(jp.dataset.jump); if(el) el.scrollIntoView({behavior:"smooth",block:"start"}); return; }
+  const tk=e.target.closest("[data-tick]");
+  if(tk){
+    const id=tk.dataset.tick, was=S_.answers[id]==="✓";
+    S_.answers[id]= was ? "" : "✓";
+    const row=$("q-"+id); row.querySelector(".tickbtn").classList.toggle("on",!was);
+    const inp=row.querySelector("input.blank"); inp.value=""; inp.classList.remove("filled");
+    saveState(); updateProgress(); return;
+  }
+  const sb=e.target.closest(".sb"); if(sb){ const el=$(sb.dataset.go); if(el) el.scrollIntoView({behavior:"smooth",block:"start"}); return; }
+  const fl=e.target.closest("[data-f]");
+  if(fl){
+    document.querySelectorAll("[data-f]").forEach(b=>b.classList.toggle("active",b===fl));
+    const rb=$("res-body"); rb.classList.remove("only-wrong","only-right");
+    if(fl.dataset.f==="wrong") rb.classList.add("only-wrong");
+    if(fl.dataset.f==="right") rb.classList.add("only-right");
+  }
+});
+document.addEventListener("input",e=>{
+  const t=e.target; if(!t.matches("input.blank,input.wide")) return;
+  const it=itemsOf(S_.set).find(x=>x.id===t.dataset.id); if(!it) return;
+  if(it.kind==="tick"){ S_.answers[it.id]=t.value; $("q-"+it.id).querySelector(".tickbtn").classList.remove("on"); }
+  else { const arr=Array.isArray(S_.answers[it.id])?S_.answers[it.id]:[]; arr[+t.dataset.b]=t.value; S_.answers[it.id]=arr; }
+  t.classList.toggle("filled",!!t.value.trim());
+  saveState(); updateProgress();
+});
+document.addEventListener("change",e=>{
+  const t=e.target;
+  if(t.matches('input[type=radio]')){
+    S_.answers[t.dataset.id]=t.value;
+    t.closest(".opts").querySelectorAll(".opt").forEach(o=>o.classList.toggle("sel",o.contains(t)&&t.checked));
+    saveState(); updateProgress();
+  } else if(t.matches("select[data-id]")){
+    S_.answers[t.dataset.id]=t.value; t.classList.toggle("filled",!!t.value); saveState(); updateProgress();
+  }
+});
+
+/* modal */
+function modal(title,msg,ok){
+  $("m-title").textContent=title; $("m-msg").textContent=msg;
+  const m=$("modal"); m.classList.add("active");
+  $("m-ok").onclick=()=>{m.classList.remove("active"); ok();};
+  $("m-cancel").onclick=()=>m.classList.remove("active");
+  $("m-ok").focus();
+}
+
+/* ---------------------------- results -------------------------------- */
+function optText(it,sec,k){ return it.kind==="mcq" ? it.opts[L.indexOf(k)] : sec.shared[L.indexOf(k)]; }
+function joinPost(post){ return post ? (/^[,.;]/.test(post)?"":" ")+esc(post) : ""; }
+function sentence(it, sec, vals, cls){
+  // vals: array of display strings (one per blank). cls: ok|bad|key|none
+  const f = (s)=> s ? `<span class="fill ${cls}">${esc(s)}</span>` : `<span class="fill none">no answer</span>`;
+  if(it.kind==="text"){
+    if(it.fix) return it.q.replace(/<b>.*?<\/b>/, f(vals[0]));
+    if(it.pre!==undefined) return `<div>→ ${esc(it.pre)} ${f(vals[0])}${joinPost(it.post)}</div>`;
+    return it.q.split("{}").map((p,i,a)=>p+(i<a.length-1?f(vals[i]):"")).join("");
+  }
+  if(it.kind==="mcq"){
+    if(/___/.test(it.q)) return it.q.replace(/___/,f(vals[0]));
+    return `${it.q}<div>→ ${f(vals[0])}</div>`;
+  }
+  if(it.kind==="sel") return `${esc(it.q)} ${f(vals[0])}`;
+  return "";
+}
+function lineHTML(it){ // tick line with extra word marked
+  return esc(it.q).replace(/\[\[(.*?)\]\]/g,'<mark class="x">$1</mark>');
+}
+function resultCard(it, sec, val, st){
+  const cls = st==="correct"?"correct": st==="wrong"?"wrong":"blank-ans";
+  const tag = st==="correct"?"✓ Correct": st==="wrong"?"✗ Incorrect":"○ Not answered";
+  let top = `<div class="rc-top"><span class="rc-no">${sec.roman}.${it.no}</span><span class="mark">${tag}</span><span class="rule">${esc(it.rule)}</span></div>`;
+  let mid="", alt="";
+  if(it.kind==="tick"){
+    const u=norm(val||""), got=!u?"":(TICKS.includes(u)?"✓":u);
+    const mine = !u ? `<span class="fill none">no answer</span>` : got==="✓" ? `<span class="fill ${st==="correct"?"ok":"bad"}">✓ line is correct</span>` : `<span class="fill ${st==="correct"?"ok":"bad"}">extra word: ${esc(val)}</span>`;
+    const key = it.ans==="✓" ? `<span class="fill key">✓ line is correct</span>` : `<span class="fill key">extra word: ${esc(it.ans)}</span>`;
+    mid = `<div class="orig">${lineHTML(it)}</div><div class="ans"><small>YOUR ANSWER</small>${mine}</div>` + (st!=="correct"?`<div class="ans"><small>CORRECT ANSWER</small>${key}</div>`:"");
+  } else {
+    let mineVals, keyVals;
+    if(it.kind==="text"){
+      const bl=blanksOf(it); const vs=Array.isArray(val)?val:[];
+      mineVals = bl.map((_,i)=>(vs[i]||"").trim()); keyVals = bl.map(a=>a[0]);
+      const extra = bl.flatMap(a=>a.slice(1));
+      if(extra.length) alt = `<div class="alt">Also accepted: ${extra.map(a=>"<i>"+esc(a)+"</i>").join(" · ")}</div>`;
+    } else {
+      const key=it.ans[0]; keyVals=[L.indexOf(key)>=0? optText(it,sec,key):""];
+      mineVals=[val? optText(it,sec,val):""];
+      if(it.ans.length>1) alt = `<div class="alt">Also acceptable: <i>${it.ans.slice(1).map(k=>esc(optText(it,sec,k))).join(" / ")}</i></div>`;
+    }
+    const letterMine = (it.kind!=="text" && val) ? ` <small style="display:inline;letter-spacing:0">(${val})</small>`:"";
+    const letterKey = it.kind!=="text" ? ` <small style="display:inline;letter-spacing:0">(${it.ans[0]})</small>`:"";
+    const showOrig = it.kind==="text" && (it.pre!==undefined||it.fix) ? `<div class="orig">${it.q}${it.kw?`<span class="kw">${esc(it.kw)}</span>`:""}</div>`:"";
+    mid = showOrig +
+      `<div class="ans"><small>YOUR ANSWER</small>${sentence(it,sec,mineVals, st==="correct"?"ok": st==="wrong"?"bad":"none")}${letterMine}</div>` +
+      (st!=="correct" ? `<div class="ans"><small>CORRECT ANSWER</small>${sentence(it,sec,keyVals,"key")}${letterKey}</div>` : "") + alt;
+  }
+  return `<article class="glass rc ${cls}" id="r-${it.id}">${top}${mid}<div class="why"><b>Why:</b> ${it.why}</div></article>`;
+}
+function showResults(){
+  clearInterval(S_.timer); S_.done=true;
+  const set=S_.set; let ok=0,bad=0,skip=0; const per=set.sections.map(()=>({ok:0,n:0}));
+  let html="";
+  set.sections.forEach(sec=>{
+    let secHtml="";
+    sec.items.forEach(it=>{
+      const val=S_.answers[it.id], st=grade(it,val);
+      per[sec.si].n++; if(st==="correct"){ok++;per[sec.si].ok++;} else if(st==="wrong") bad++; else skip++;
+      secHtml += resultCard(it,sec,val,st);
+    });
+    html += `<div class="rsec" id="rs-${sec.si}"><span class="roman">${sec.roman}</span><h3>${sec.title}</h3><small>${per[sec.si].ok} / ${per[sec.si].n}</small></div>`+secHtml;
+  });
+  const total=ok+bad+skip, pct=Math.round(ok/total*100);
+  $("res-title").textContent = set.title+" · results";
+  $("res-pct").textContent=pct+"%"; $("ring").style.setProperty("--pct",pct+"%");
+  $("n-ok").textContent=ok; $("n-bad").textContent=bad; $("n-skip").textContent=skip; $("res-time").textContent=fmt(S_.elapsed);
+  $("secbars").innerHTML = set.sections.map((s,i)=>`<div class="sb" data-go="rs-${i}" role="button" tabindex="0"><span class="rn">${s.roman}</span><span class="bar"><i style="width:${per[i].ok/per[i].n*100}%"></i></span><span class="nm">${per[i].ok}/${per[i].n}</span></div>`).join("");
+  $("res-body").className=""; document.querySelectorAll("[data-f]").forEach(b=>b.classList.toggle("active",b.dataset.f==="all"));
+  $("res-body").innerHTML=html;
+  lsDel(sKey(set.key,"a")); lsDel(sKey(set.key,"t"));
+  show("results");
+}
+function submit(){
+  const its=itemsOf(S_.set), n=its.filter(it=>answered(it,S_.answers[it.id])).length;
+  if(n<its.length) modal("Submit with blanks?",`You have answered ${n} of ${its.length} questions. Unanswered items will be marked and explained too.`,showResults);
+  else showResults();
+}
+
+/* nav buttons */
+$("btn-submit").onclick=submit;
+$("btn-home").onclick=()=>{ if(S_.set&&!S_.done) saveState(); clearInterval(S_.timer); renderHome(); show("home"); };
+$("btn-home2").onclick=()=>{ renderHome(); show("home"); };
+$("btn-retake").onclick=()=>modal("Retake this set?","Your current results will be cleared and the set restarts from question 1.",()=>startSet(S_.set.key,true));
+$("btn-other").onclick=()=>startSet(S_.set.key==="A"?"B":"A",false);
+document.addEventListener("keydown",e=>{ if((e.key==="Enter"||e.key===" ")&&e.target.classList&&e.target.classList.contains("sb")){e.preventDefault();e.target.click();} });
+window.addEventListener("pagehide",()=>{ if(S_.set&&!S_.done&&$("view-quiz").classList.contains("active")) saveState(); });
+renderHome();
+</script>
+</body>
+</html>
