@@ -1,0 +1,1496 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grade 12 | Lesson 10 Reading Vocab</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            /* Theme: Lavender Mist & Peach Cream */
+            --primary: #7c69c9; /* Teal 600 */
+            --primary-light: #ece8fb; 
+            --primary-hover: #6552b3; 
+            --text-main: #334155;
+            --text-muted: #64748b;
+            --bg-body: #faf8ff; 
+            --card-bg: #ffffff;
+            --accent: #f0906b; /* Rose/Coral */
+            --accent-light: #fff0e6; 
+            --border: #cfc6f3;
+            --badge-bg: #fff0e6; 
+            --badge-text: #9c4a2a; 
+            --success: #5b86c9; /* Sky blue for translation */
+            
+            --font-headings: 'Cormorant Garamond', serif;
+            --font-body: 'Outfit', sans-serif;
+            --font-cursive: 'Caveat', cursive;
+            --font-ipa: Arial, Helvetica, sans-serif;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: var(--font-body); }
+
+        body { background: linear-gradient(180deg,#f3efff 0%,#faf8ff 280px); background-color: var(--bg-body); color: var(--text-main); line-height: 1.6; padding-bottom: 2rem; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 1rem; }
+        
+        .header-banner { background-color: var(--card-bg); color: var(--text-main); text-align: center; padding: 1.2rem; font-weight: 600; font-size: 1.1rem; letter-spacing: 0.15em; width: 100%; border-bottom: 2px solid var(--primary); margin-bottom: 2.5rem; text-transform: uppercase; font-family: var(--font-headings); }
+
+        header { text-align: center; margin-bottom: 2rem; }
+        h1 { color: var(--primary); font-size: 3rem; margin-bottom: 0.5rem; font-weight: 700; font-family: var(--font-headings); letter-spacing: 0.02em;}
+        .subtitle { color: var(--text-muted); font-size: 1.15rem; font-weight: 400; letter-spacing: 0.05em; }
+
+        .filter-controls { display: flex; justify-content: center; gap: 0.8rem; margin-bottom: 2rem; flex-wrap: wrap; }
+        .filter-btn { padding: 0.6rem 1.4rem; font-size: 0.95rem; font-weight: 500; background: var(--card-bg); color: var(--primary); border: 1px solid var(--border); border-radius: 50px; cursor: pointer; transition: all 0.3s ease; box-shadow: 0 2px 4px rgba(0,0,0,0.02);}
+        .filter-btn.active { background: var(--primary); color: white; border-color: var(--primary); box-shadow: 0 4px 12px rgba(124, 105, 201, 0.25); }
+        .filter-btn:hover:not(.active) { background: var(--primary-light); border-color: var(--primary); }
+
+        .search-container { text-align: center; margin-bottom: 1.5rem; width: 100%; display: flex; justify-content: center; padding: 0 1rem; }
+        .search-input { padding: 0.9rem 1.8rem; width: 100%; max-width: 500px; border: 2px solid var(--border); border-radius: 50px; font-size: 1.05rem; color: var(--text-main); outline: none; transition: all 0.3s ease; box-shadow: 0 4px 10px rgba(0,0,0,0.03); background: var(--card-bg); font-family: var(--font-body); }
+        .search-input:focus { border-color: var(--primary); box-shadow: 0 6px 20px rgba(124, 105, 201, 0.15); }
+
+        .view-controls { display: flex; justify-content: center; gap: 1rem; margin-bottom: 3rem; }
+        .view-btn { padding: 0.75rem 1.5rem; font-size: 1rem; font-weight: 500; background: var(--card-bg); color: var(--text-muted); border: 1px solid #e2e8f0; border-radius: 50px; cursor: pointer; transition: all 0.3s ease; display: flex; align-items: center; gap: 0.5rem; }
+        .view-btn.active { background: var(--accent); color: white; border-color: var(--accent); box-shadow: 0 4px 12px rgba(240, 144, 107, 0.25); }
+        .view-btn:hover:not(.active) { border-color: var(--accent); color: var(--accent); }
+
+        #grid-view { display: grid; grid-template-columns: repeat(auto-fill, minmax(360px, 1fr)); gap: 2rem; }
+        .vocab-card { background-color: var(--card-bg); border-radius: 20px; padding: 2rem; box-shadow: 0 10px 25px rgba(0, 0, 0, 0.03); border: 1px solid #f1f5f9; transition: transform 0.3s ease, box-shadow 0.3s ease; display: flex; flex-direction: column; }
+        .vocab-card:hover { transform: translateY(-5px); box-shadow: 0 15px 35px rgba(124, 105, 201, 0.1); border-color: var(--border); }
+        .vocab-card.hidden { display: none; }
+        
+        .word-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1rem; border-bottom: 1px solid var(--border); padding-bottom: 1rem; }
+        .word-main { display: flex; align-items: center; gap: 0.8rem; }
+        .word { font-size: 1.8rem; font-weight: 700; color: var(--primary); text-transform: capitalize; font-family: var(--font-headings); }
+        
+        .audio-btn { background: var(--primary-light); border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; width: 40px; height: 40px; border-radius: 50%; transition: all 0.2s ease; color: var(--primary); }
+        .audio-btn:hover { transform: scale(1.1); background-color: var(--primary); color: white; box-shadow: 0 4px 10px rgba(124, 105, 201, 0.3); }
+        
+        .meta-info { text-align: right; display: flex; flex-direction: column; align-items: flex-end; gap: 0.25rem; }
+        .phonetic { font-size: 1.05rem; color: var(--text-muted); font-style: italic; font-family: var(--font-ipa); letter-spacing: 0.02em; }
+        
+        /* Structure/Families */
+        .structure-container { margin: 0.5rem 0 1.2rem 0; padding: 1rem; background: var(--bg-body); border-radius: 12px; border: 1px dashed var(--primary); }
+        .structure-label { display: block; font-weight: 600; color: var(--accent); margin-bottom: 0.5rem; text-transform: uppercase; letter-spacing: 0.1em; font-size: 0.75rem; }
+        .structure-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+        .structure-tag { background: var(--card-bg); color: var(--primary); padding: 0.3rem 0.8rem; border-radius: 50px; font-size: 0.85rem; font-weight: 500; border: 1px solid var(--border); box-shadow: 0 2px 4px rgba(0,0,0,0.02); line-height: 1.2;}
+
+        .topic-tag { font-size: 0.75rem; color: var(--badge-text); background: var(--badge-bg); padding: 0.4rem 1rem; border-radius: 20px; font-weight: 600; margin-bottom: 1.2rem; display: inline-block; text-transform: uppercase; letter-spacing: 0.1em;}
+        
+        .definition { font-size: 1.1rem; margin-bottom: 0.5rem; color: var(--text-main); font-weight: 400; }
+        .definition strong { color: var(--primary); font-weight: 600;}
+        .translation { font-size: 1.05rem; color: var(--success); margin-bottom: 1.5rem; font-weight: 500; }
+
+        .example-box { background-color: var(--accent-light); padding: 1.5rem; border-radius: 16px; margin-top: auto; position: relative;}
+        .example-box::before { content: ''; position: absolute; left: 0; top: 10%; bottom: 10%; width: 4px; background-color: var(--accent); border-radius: 0 4px 4px 0;}
+        .example-box span { display: block; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.15em; color: var(--accent); margin-bottom: 0.5rem; font-weight: 600; }
+        
+        /* VERY LARGE CURSIVE FONT FOR EXAMPLES */
+        .example-text { font-family: var(--font-cursive); font-size: 3rem; color: #9c4a2a; line-height: 1.2; font-weight: 700;}
+
+        #flashcard-view { display: none; flex-direction: column; align-items: center; width: 100%; }
+        .flashcard-scene { width: 100%; max-width: 750px; height: 600px; perspective: 1000px; cursor: pointer; margin-bottom: 2.5rem; }
+        .flashcard-inner { width: 100%; height: 100%; position: relative; transition: transform 0.7s cubic-bezier(0.4, 0.2, 0.2, 1); transform-style: preserve-3d; }
+        .flashcard-scene.is-flipped .flashcard-inner { transform: rotateY(180deg); }
+        .flashcard-face { position: absolute; width: 100%; height: 100%; backface-visibility: hidden; border-radius: 30px; box-shadow: 0 20px 40px rgba(124, 105, 201, 0.1); border: 1px solid var(--border); background: var(--card-bg); padding: 3.5rem; display: flex; flex-direction: column; justify-content: center; align-items: center; overflow-y: auto; }
+        
+        .flashcard-front { text-align: center; }
+        .flashcard-front .word { font-size: 4rem; margin-bottom: 1.2rem; color: var(--primary); font-weight: 700; font-family: var(--font-headings);}
+        .flashcard-front .meta-row { display: flex; align-items: center; gap: 1.5rem; margin-bottom: 1rem; }
+        .flashcard-front .audio-btn { width: 55px; height: 55px; }
+        .flashcard-front .audio-btn svg { width: 28px; height: 28px; }
+        .flashcard-front .phonetic { font-size: 1.5rem; color: var(--text-muted); font-style: italic; font-family: var(--font-ipa); }
+        
+        .flashcard-back { transform: rotateY(180deg); background: var(--bg-body); align-items: flex-start; text-align: left; }
+        .flashcard-back h3 { color: var(--primary); font-size: 1.3rem; margin-bottom: 1rem; text-transform: uppercase; letter-spacing: 0.15em; font-weight: 700; font-family: var(--font-headings); }
+        .flashcard-back .definition { font-size: 1.3rem; margin-bottom: 0.8rem; color: var(--text-main); font-weight: 400;}
+        .flashcard-back .translation { font-size: 1.2rem; margin-bottom: 2rem; color: var(--success); font-weight: 500;}
+        .flashcard-back .example-box { width: 100%; padding: 1.5rem; border-radius: 16px; }
+        
+        .flashcard-hint { position: absolute; bottom: 1.5rem; font-size: 0.85rem; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.2em; font-weight: 500; }
+
+        .flashcard-controls { display: flex; align-items: center; gap: 1.5rem; background: var(--card-bg); padding: 1.2rem 3rem; border-radius: 50px; box-shadow: 0 10px 25px rgba(0,0,0,0.05); border: 1px solid #f1f5f9; }
+        .fc-btn { background: none; border: none; color: var(--primary); font-size: 1.1rem; font-weight: 600; cursor: pointer; padding: 0.8rem 1.8rem; border-radius: 25px; transition: all 0.2s; display: flex; align-items: center; gap: 0.5rem; }
+        .fc-btn:hover:not(:disabled) { background: var(--primary-light); color: var(--primary-hover); transform: translateY(-2px);}
+        .fc-btn:disabled { opacity: 0.3; cursor: not-allowed; transform: none;}
+        .fc-counter { font-weight: 600; font-size: 1.3rem; color: var(--accent); min-width: 90px; text-align: center; font-family: var(--font-headings); letter-spacing: 0.05em;}
+
+        @media (max-width: 768px) { 
+            h1 { font-size: 2.2rem; } 
+            #grid-view { grid-template-columns: 1fr; } 
+            .flashcard-scene { height: 650px; } 
+            .flashcard-front .word { font-size: 3rem; } 
+            .flashcard-back .definition { font-size: 1.15rem; }
+            .flashcard-face { padding: 2rem; }
+            .example-text { font-size: 2.4rem; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="header-banner">Grade 12 | Chan Truong</div>
+
+<div class="container">
+    <header>
+        <h1>Reading Vocabulary</h1>
+        <p class="subtitle">Lesson 10 · Careers, Skills &amp; the Future Workforce</p>
+    </header>
+
+    <div class="search-container">
+        <input type="text" id="search-input" class="search-input" placeholder="🔍 Search vocabulary or meaning..." onkeyup="applyFilters()">
+    </div>
+
+    <div class="filter-controls" id="topic-filters"></div>
+
+    <div class="view-controls">
+        <button class="view-btn active" id="btn-grid" onclick="switchView('grid')">📄 List View</button>
+        <button class="view-btn" id="btn-flashcards" onclick="switchView('flashcards')">🗂️ Flashcards</button>
+    </div>
+
+    <div id="flashcard-view">
+        <div class="flashcard-scene" id="flashcard-scene" onclick="flipCard()">
+            <div class="flashcard-inner">
+                <div class="flashcard-face flashcard-front">
+                    <h2 class="word" id="fc-word">Word</h2>
+                    <div class="meta-row">
+                        <span class="phonetic" id="fc-phonetic">/wɜːd/</span>
+                        <button class="audio-btn" id="fc-audio" onclick="playAudioFromCard(event)" title="Listen to pronunciation">
+                            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg>
+                        </button>
+                    </div>
+                    <div id="fc-forms-container" style="width: 100%; display: flex; justify-content: center;"></div>
+                    <span class="topic-tag" id="fc-topic" style="margin-top: 1rem;">Topic</span>
+                    <span class="flashcard-hint">Click card to flip</span>
+                </div>
+                <div class="flashcard-face flashcard-back">
+                    <h3>Meaning</h3>
+                    <p class="definition" id="fc-definition">Definition goes here.</p>
+                    <p class="translation" id="fc-translation">Vietnamese goes here.</p>
+                    <div id="fc-example-container" style="width: 100%; margin-top: 1.5rem;">
+                        <!-- Examples injected here -->
+                    </div>
+                    <span class="flashcard-hint" style="left: 50%; transform: translateX(-50%);">Click card to flip back</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="flashcard-controls">
+            <button class="fc-btn" id="fc-prev" onclick="prevCard()">◀ Prev</button>
+            <span class="fc-counter" id="fc-counter">1 / X</span>
+            <button class="fc-btn" id="fc-next" onclick="nextCard()">Next ▶</button>
+            <div style="width: 2px; height: 24px; background: var(--border); margin: 0 0.5rem;"></div>
+            <button class="fc-btn" onclick="shuffleCards()" title="Shuffle Order">🔀</button>
+        </div>
+    </div>
+
+    <main id="grid-view">
+        <!-- Injected via JavaScript -->
+    </main>
+</div>
+
+<script>
+    // ---------------------------------------------------------
+    // Vocabulary Bank (Grade 12 Reading Vocab)
+    // ---------------------------------------------------------
+    const vocabBank = [
+ {
+  "topic": "Joining the Workforce",
+  "word": "Undergo",
+  "phonetic": "/ˌʌn.dəˈɡəʊ/",
+  "form": "Verb",
+  "forms": "Past: Underwent · P.P: Undergone",
+  "def": "Experience or be subjected to something, especially a change.",
+  "translation": "Trải qua, chịu đựng",
+  "example": "The world of work has undergone dramatic changes in the last decade."
+ },
+ {
+  "topic": "Joining the Workforce",
+  "word": "Manual job",
+  "phonetic": "/ˈmæn.ju.əl dʒɒb/",
+  "form": "Noun Phrase",
+  "forms": "Adj: Manual",
+  "def": "Work that mainly needs physical effort and the use of the hands.",
+  "translation": "Công việc chân tay",
+  "example": "Robots are taking over manual jobs in factories and warehouses."
+ },
+ {
+  "topic": "Joining the Workforce",
+  "word": "Semi-skilled",
+  "phonetic": "/ˌsem.iˈskɪld/",
+  "form": "Adjective",
+  "forms": "N: Skill",
+  "def": "Having some training, but not specialist expertise.",
+  "translation": "Bán lành nghề",
+  "example": "Many semi-skilled workers fear being replaced by machines."
+ },
+ {
+  "topic": "Joining the Workforce",
+  "word": "Make use of",
+  "phonetic": "/meɪk juːs ɒv/",
+  "form": "Phrase",
+  "forms": "Syn: Utilise · Take advantage of",
+  "def": "Use something in a practical or beneficial way.",
+  "translation": "Tận dụng, sử dụng",
+  "example": "Several restaurants now make use of robots instead of waiters."
+ },
+ {
+  "topic": "Joining the Workforce",
+  "word": "Empower",
+  "phonetic": "/ɪmˈpaʊ.ər/",
+  "form": "Verb",
+  "forms": "N: Empowerment",
+  "def": "Give someone the confidence, authority or means to do something.",
+  "translation": "Trao quyền, tiếp thêm năng lực",
+  "example": "Good career guidance empowers students to make informed choices."
+ },
+ {
+  "topic": "Joining the Workforce",
+  "word": "Insight",
+  "phonetic": "/ˈɪn.saɪt/",
+  "form": "Noun",
+  "forms": "Adj: Insightful",
+  "def": "A deep and accurate understanding of a person or situation.",
+  "translation": "Sự thấu hiểu, cái nhìn sâu sắc",
+  "example": "Personality tests offer useful insights into your potential."
+ },
+ {
+  "topic": "Joining the Workforce",
+  "word": "In-depth",
+  "phonetic": "/ˌɪnˈdepθ/",
+  "form": "Adjective",
+  "forms": "N: Depth",
+  "def": "Thorough, detailed and covering every aspect.",
+  "translation": "Chuyên sâu, kỹ lưỡng",
+  "example": "Choosing a career requires in-depth self-understanding."
+ },
+ {
+  "topic": "Joining the Workforce",
+  "word": "School-leaver",
+  "phonetic": "/ˈskuːl ˌliː.vər/",
+  "form": "Noun",
+  "forms": "V: Leave school",
+  "def": "A young person who has just finished secondary school.",
+  "translation": "Người mới tốt nghiệp phổ thông",
+  "example": "School-leavers must be ready for once-in-a-lifetime opportunities."
+ },
+ {
+  "topic": "Joining the Workforce",
+  "word": "Bewildering",
+  "phonetic": "/bɪˈwɪl.dər.ɪŋ/",
+  "form": "Adjective",
+  "forms": "V: Bewilder · Opp: Clear",
+  "def": "Causing confusion, especially because there are too many choices.",
+  "translation": "Gây bối rối, rối rắm",
+  "example": "Choosing a career can feel bewildering at the age of eighteen."
+ },
+ {
+  "topic": "Joining the Workforce",
+  "word": "Career development",
+  "phonetic": "/kəˈrɪə dɪˈvel.əp.mənt/",
+  "form": "Noun Phrase",
+  "forms": "V: Develop",
+  "def": "The lifelong process of learning and growing in your working life.",
+  "translation": "Phát triển sự nghiệp",
+  "example": "Career development never stops, even after university graduation."
+ },
+ {
+  "topic": "Joining the Workforce",
+  "word": "Boost",
+  "phonetic": "/buːst/",
+  "form": "Verb / Noun",
+  "forms": "N/A",
+  "def": "Increase or improve something.",
+  "translation": "Tăng cường, thúc đẩy",
+  "example": "Joining a team project can boost your confidence at work."
+ },
+ {
+  "topic": "Joining the Workforce",
+  "word": "Networking",
+  "phonetic": "/ˈnet.wɜː.kɪŋ/",
+  "form": "Noun",
+  "forms": "V: Network",
+  "def": "Building contacts with people who can support your career.",
+  "translation": "Mở rộng mạng lưới quan hệ",
+  "example": "Networking helps young graduates find hidden job opportunities."
+ },
+ {
+  "topic": "Joining the Workforce",
+  "word": "Mainstream",
+  "phonetic": "/ˈmeɪn.striːm/",
+  "form": "Adjective",
+  "forms": "N: Mainstream",
+  "def": "Accepted or followed by most people; conventional.",
+  "translation": "Chính thống, phổ biến",
+  "example": "Mainstream education is only the first step of lifelong learning."
+ },
+ {
+  "topic": "Joining the Workforce",
+  "word": "Agility",
+  "phonetic": "/əˈdʒɪl.ə.ti/",
+  "form": "Noun",
+  "forms": "Adj: Agile",
+  "def": "The ability to think, move and adapt quickly.",
+  "translation": "Sự nhanh nhẹn, linh hoạt",
+  "example": "Professional agility lets workers switch roles when markets change."
+ },
+ {
+  "topic": "Joining the Workforce",
+  "word": "Emotional intelligence",
+  "phonetic": "/ɪˈməʊ.ʃən.əl ɪnˈtel.ɪ.dʒəns/",
+  "form": "Noun Phrase",
+  "forms": "Abbr: EQ",
+  "def": "The ability to understand and manage your own and others' feelings.",
+  "translation": "Trí tuệ cảm xúc",
+  "example": "Nurses need high emotional intelligence to comfort lonely patients."
+ },
+ {
+  "topic": "Joining the Workforce",
+  "word": "Pursue",
+  "phonetic": "/pəˈsjuː/",
+  "form": "Verb",
+  "forms": "N: Pursuit",
+  "def": "Follow a career, goal or activity with determination.",
+  "translation": "Theo đuổi",
+  "example": "Which career to pursue requires sensible decisions based on self-understanding."
+ },
+ {
+  "topic": "Joining the Workforce",
+  "word": "Sensible",
+  "phonetic": "/ˈsen.sɪ.bəl/",
+  "form": "Adjective",
+  "forms": "Adv: Sensibly · N: Sense",
+  "def": "Based on good judgement and practical reasoning.",
+  "translation": "Hợp lý, thận trọng",
+  "example": "Sensible choices come from knowing your own strengths and weaknesses."
+ },
+ {
+  "topic": "Joining the Workforce",
+  "word": "Continual",
+  "phonetic": "/kənˈtɪn.ju.əl/",
+  "form": "Adjective",
+  "forms": "Adv: Continually",
+  "def": "Happening repeatedly over a long period, often with short breaks.",
+  "translation": "Liên tục, lặp đi lặp lại",
+  "example": "Career development is a continual process of self-improvement."
+ },
+ {
+  "topic": "Joining the Workforce",
+  "word": "Specify",
+  "phonetic": "/ˈspes.ɪ.faɪ/",
+  "form": "Verb",
+  "forms": "N: Specification",
+  "def": "State clearly and precisely what is needed or intended.",
+  "translation": "Nêu rõ, xác định cụ thể",
+  "example": "Young people need to specify their goals before choosing a major."
+ },
+ {
+  "topic": "Joining the Workforce",
+  "word": "Signify",
+  "phonetic": "/ˈsɪɡ.nɪ.faɪ/",
+  "form": "Verb",
+  "forms": "N: Significance",
+  "def": "Be a sign of something; indicate or mean.",
+  "translation": "Biểu thị, có nghĩa là",
+  "example": "Graduation signifies the start of non-stop self-improvement, not its end."
+ },
+ {
+  "topic": "Joining the Workforce",
+  "word": "Manifest itself",
+  "phonetic": "/ˈmæn.ɪ.fest ɪtˈself/",
+  "form": "Phrase",
+  "forms": "Adj/V: Manifest",
+  "def": "Show clearly; become obvious in a particular way.",
+  "translation": "Thể hiện rõ, bộc lộ",
+  "example": "Flexibility manifests itself in problem-solving and innovative thinking."
+ },
+ {
+  "topic": "Joining the Workforce",
+  "word": "In essence",
+  "phonetic": "/ɪn ˈes.əns/",
+  "form": "Adverbial Phrase",
+  "forms": "N: Essence · Adj: Essential",
+  "def": "Used to state the basic or most important point.",
+  "translation": "Về bản chất, về cơ bản",
+  "example": "In essence, career development is a lifelong journey."
+ },
+ {
+  "topic": "Joining the Workforce",
+  "word": "Blue-collar",
+  "phonetic": "/ˌbluːˈkɒl.ər/",
+  "form": "Adjective",
+  "forms": "Opp: White-collar",
+  "def": "Relating to workers who do physical or industrial jobs.",
+  "translation": "Lao động chân tay",
+  "example": "AI has been replacing certain blue-collar workers."
+ },
+ {
+  "topic": "Joining the Workforce",
+  "word": "Secure",
+  "phonetic": "/sɪˈkjʊər/",
+  "form": "Adjective / Verb",
+  "forms": "N: Security",
+  "def": "Safe, stable and unlikely to be lost; (v) obtain with effort.",
+  "translation": "Ổn định, an toàn; giành được",
+  "example": "Getting a secure job has never been more challenging."
+ },
+ {
+  "topic": "Joining the Workforce",
+  "word": "Take over",
+  "phonetic": "/teɪk ˈəʊ.vər/",
+  "form": "Phrasal Verb",
+  "forms": "N: Takeover",
+  "def": "Gain control of or replace something or someone.",
+  "translation": "Thay thế, tiếp quản",
+  "example": "Step by step, robots are taking over manual jobs."
+ },
+ {
+  "topic": "Joining the Workforce",
+  "word": "Establish",
+  "phonetic": "/ɪˈstæb.lɪʃ/",
+  "form": "Verb",
+  "forms": "N: Establishment",
+  "def": "Set up or gain a firm and accepted position.",
+  "translation": "Thiết lập, tạo dựng",
+  "example": "AI can never establish a role in fields that need emotional intelligence."
+ },
+ {
+  "topic": "Joining the Workforce",
+  "word": "Innovative",
+  "phonetic": "/ˈɪn.ə.və.tɪv/",
+  "form": "Adjective",
+  "forms": "V: Innovate · N: Innovation",
+  "def": "Introducing new ideas or original methods.",
+  "translation": "Đổi mới, sáng tạo",
+  "example": "Innovative thinking helps employees get any task done."
+ },
+ {
+  "topic": "Joining the Workforce",
+  "word": "Change management",
+  "phonetic": "/tʃeɪndʒ ˈmæn.ɪdʒ.mənt/",
+  "form": "Noun Phrase",
+  "forms": "V: Manage",
+  "def": "The skill of guiding people and organisations through change.",
+  "translation": "Quản lý sự thay đổi",
+  "example": "Change management is a vital quality in a fast-changing world."
+ },
+ {
+  "topic": "Joining the Workforce",
+  "word": "Problem-solving",
+  "phonetic": "/ˈprɒb.ləm ˌsɒl.vɪŋ/",
+  "form": "Noun / Adjective",
+  "forms": "V: Solve · N: Solution",
+  "def": "The process of finding effective solutions to difficulties.",
+  "translation": "Giải quyết vấn đề",
+  "example": "Problem-solving skills make a person flexible at work."
+ },
+ {
+  "topic": "Joining the Workforce",
+  "word": "Mankind",
+  "phonetic": "/mænˈkaɪnd/",
+  "form": "Noun",
+  "forms": "Syn: Humankind",
+  "def": "All human beings considered together.",
+  "translation": "Nhân loại",
+  "example": "Technology has taken mankind to a world of constant change."
+ },
+ {
+  "topic": "Joining the Workforce",
+  "word": "Self-understanding",
+  "phonetic": "/ˌself ˌʌn.dəˈstæn.dɪŋ/",
+  "form": "Noun",
+  "forms": "V: Understand",
+  "def": "Knowledge of your own abilities, interests and character.",
+  "translation": "Sự thấu hiểu bản thân",
+  "example": "In-depth self-understanding guides a sound career choice."
+ },
+ {
+  "topic": "Joining the Workforce",
+  "word": "Once-in-a-lifetime",
+  "phonetic": "/ˌwʌns.ɪn.əˈlaɪf.taɪm/",
+  "form": "Adjective",
+  "forms": "N: Lifetime",
+  "def": "So special that it is unlikely to happen again.",
+  "translation": "Có một không hai, hiếm có",
+  "example": "School-leavers must seize once-in-a-lifetime opportunities."
+ },
+ {
+  "topic": "Joining the Workforce",
+  "word": "No alternative but to",
+  "phonetic": "/nəʊ ɔːlˈtɜː.nə.tɪv bʌt tə/",
+  "form": "Phrase",
+  "forms": "N: Alternative",
+  "def": "Have no other option than to do something.",
+  "translation": "Không còn cách nào khác ngoài",
+  "example": "Workers have no alternative but to become better day by day."
+ },
+ {
+  "topic": "Joining the Workforce",
+  "word": "Hologram",
+  "phonetic": "/ˈhɒl.ə.ɡræm/",
+  "form": "Noun",
+  "forms": "Adj: Holographic",
+  "def": "A three-dimensional image created with light.",
+  "translation": "Ảnh ba chiều",
+  "example": "Hologram assistants now welcome travellers at some airports."
+ },
+ {
+  "topic": "Joining the Workforce",
+  "word": "Comfort",
+  "phonetic": "/ˈkʌm.fət/",
+  "form": "Verb / Noun",
+  "forms": "Adj: Comfortable",
+  "def": "Make someone feel less sad, worried or lonely.",
+  "translation": "An ủi, xoa dịu",
+  "example": "A gentle nurse can comfort suffering patients; a robot cannot."
+ },
+ {
+  "topic": "Future Career",
+  "word": "Landscape",
+  "phonetic": "/ˈlænd.skeɪp/",
+  "form": "Noun",
+  "forms": "N/A",
+  "def": "The general situation in a particular area of activity.",
+  "translation": "Bối cảnh, bức tranh tổng thể",
+  "example": "The landscape of future careers is undergoing a transformation."
+ },
+ {
+  "topic": "Future Career",
+  "word": "Obsolete",
+  "phonetic": "/ˈɒb.sə.liːt/",
+  "form": "Adjective",
+  "forms": "N: Obsolescence",
+  "def": "No longer used because something newer or better exists.",
+  "translation": "Lỗi thời",
+  "example": "Typewriters became obsolete once personal computers arrived."
+ },
+ {
+  "topic": "Future Career",
+  "word": "Linear career path",
+  "phonetic": "/ˈlɪn.i.ə kəˈrɪə pɑːθ/",
+  "form": "Noun Phrase",
+  "forms": "Adj: Linear",
+  "def": "A traditional career that moves step by step within one profession.",
+  "translation": "Lộ trình sự nghiệp một chiều",
+  "example": "A linear career path is rare among today's young professionals."
+ },
+ {
+  "topic": "Future Career",
+  "word": "Emerging",
+  "phonetic": "/ɪˈmɜː.dʒɪŋ/",
+  "form": "Adjective",
+  "forms": "V: Emerge · N: Emergence",
+  "def": "Newly formed or just becoming important.",
+  "translation": "Mới nổi",
+  "example": "Emerging fields like biotechnology will create millions of jobs."
+ },
+ {
+  "topic": "Future Career",
+  "word": "STEM",
+  "phonetic": "/stem/",
+  "form": "Noun",
+  "forms": "Science · Technology · Engineering · Maths",
+  "def": "A group of subjects focused on science and technical skills.",
+  "translation": "Khoa học – Công nghệ – Kỹ thuật – Toán",
+  "example": "Strong STEM foundations are in demand in the AI sector."
+ },
+ {
+  "topic": "Future Career",
+  "word": "Gig economy",
+  "phonetic": "/ɡɪɡ ɪˈkɒn.ə.mi/",
+  "form": "Noun Phrase",
+  "forms": "N/A",
+  "def": "A labour market based on short-term contracts and freelance work.",
+  "translation": "Nền kinh tế việc làm tự do, ngắn hạn",
+  "example": "The gig economy lets people take on several projects at once."
+ },
+ {
+  "topic": "Future Career",
+  "word": "Freelancer",
+  "phonetic": "/ˈfriː.lɑːn.sər/",
+  "form": "Noun",
+  "forms": "V: Freelance",
+  "def": "A person who works for different clients without a permanent employer.",
+  "translation": "Người làm việc tự do",
+  "example": "As a freelancer, she manages multiple projects at the same time."
+ },
+ {
+  "topic": "Future Career",
+  "word": "Entrepreneurial",
+  "phonetic": "/ˌɒn.trə.prəˈnɜː.ri.əl/",
+  "form": "Adjective",
+  "forms": "N: Entrepreneur",
+  "def": "Having the skills and risk-taking spirit to start new businesses.",
+  "translation": "Có tinh thần khởi nghiệp",
+  "example": "Independent contractors need entrepreneurial skills to survive."
+ },
+ {
+  "topic": "Future Career",
+  "word": "Necessitate",
+  "phonetic": "/nəˈses.ɪ.teɪt/",
+  "form": "Verb",
+  "forms": "N: Necessity",
+  "def": "Make something necessary.",
+  "translation": "Đòi hỏi, khiến trở nên cần thiết",
+  "example": "Remote work necessitates strong self-motivation."
+ },
+ {
+  "topic": "Future Career",
+  "word": "Navigate",
+  "phonetic": "/ˈnæv.ɪ.ɡeɪt/",
+  "form": "Verb",
+  "forms": "N: Navigation",
+  "def": "Find your way through a complex or difficult situation.",
+  "translation": "Xoay xở, điều hướng",
+  "example": "Workers must navigate diverse work environments with confidence."
+ },
+ {
+  "topic": "Future Career",
+  "word": "Paramount",
+  "phonetic": "/ˈpær.ə.maʊnt/",
+  "form": "Adjective",
+  "forms": "Syn: Crucial · Vital",
+  "def": "More important than anything else.",
+  "translation": "Tối quan trọng",
+  "example": "Lifelong learning is paramount for staying relevant."
+ },
+ {
+  "topic": "Future Career",
+  "word": "Automation",
+  "phonetic": "/ˌɔː.təˈmeɪ.ʃən/",
+  "form": "Noun",
+  "forms": "V: Automate",
+  "def": "The use of machines to do tasks without human effort.",
+  "translation": "Tự động hóa",
+  "example": "Automation is likely to replace many routine tasks."
+ },
+ {
+  "topic": "Future Career",
+  "word": "Upskill",
+  "phonetic": "/ˌʌpˈskɪl/",
+  "form": "Verb",
+  "forms": "Related: Reskill",
+  "def": "Learn new, more advanced skills to improve in your current job.",
+  "translation": "Nâng cao kỹ năng",
+  "example": "Professionals must upskill and reskill throughout their careers."
+ },
+ {
+  "topic": "Future Career",
+  "word": "Cultivate",
+  "phonetic": "/ˈkʌl.tɪ.veɪt/",
+  "form": "Verb",
+  "forms": "N: Cultivation",
+  "def": "Try hard to develop a quality, skill or relationship.",
+  "translation": "Trau dồi, vun đắp",
+  "example": "Students can cultivate a growth mindset by welcoming challenges."
+ },
+ {
+  "topic": "Future Career",
+  "word": "Growth mindset",
+  "phonetic": "/ɡrəʊθ ˈmaɪnd.set/",
+  "form": "Noun Phrase",
+  "forms": "N/A",
+  "def": "The belief that abilities can be improved through effort and learning.",
+  "translation": "Tư duy phát triển",
+  "example": "A growth mindset helps you see failure as a chance to learn."
+ },
+ {
+  "topic": "Future Career",
+  "word": "Transformation",
+  "phonetic": "/ˌtræns.fəˈmeɪ.ʃən/",
+  "form": "Noun",
+  "forms": "V: Transform",
+  "def": "A complete change in form, appearance or nature.",
+  "translation": "Sự chuyển đổi, biến đổi",
+  "example": "The job market is undergoing a significant transformation."
+ },
+ {
+  "topic": "Future Career",
+  "word": "Notion",
+  "phonetic": "/ˈnəʊ.ʃən/",
+  "form": "Noun",
+  "forms": "Syn: Concept · Idea",
+  "def": "A belief or general idea about something.",
+  "translation": "Quan niệm, khái niệm",
+  "example": "The notion of a job for life is fading fast."
+ },
+ {
+  "topic": "Future Career",
+  "word": "Coupled with",
+  "phonetic": "/ˈkʌp.əld wɪð/",
+  "form": "Phrase",
+  "forms": "V: Couple",
+  "def": "Combined or joined with something else.",
+  "translation": "Kết hợp với",
+  "example": "Technical knowledge, coupled with critical thinking, is in high demand."
+ },
+ {
+  "topic": "Future Career",
+  "word": "Cannot be overstated",
+  "phonetic": "/ˈkæn.ɒt bi ˌəʊ.vəˈsteɪ.tɪd/",
+  "form": "Phrase",
+  "forms": "V: Overstate",
+  "def": "So important that it is impossible to exaggerate.",
+  "translation": "Quan trọng đến mức không thể nói quá",
+  "example": "The importance of soft skills cannot be overstated."
+ },
+ {
+  "topic": "Future Career",
+  "word": "Interconnected",
+  "phonetic": "/ˌɪn.tə.kəˈnek.tɪd/",
+  "form": "Adjective",
+  "forms": "V: Interconnect",
+  "def": "Linked closely with each other.",
+  "translation": "Liên kết chặt chẽ",
+  "example": "Cultural competence matters in an interconnected global workforce."
+ },
+ {
+  "topic": "Future Career",
+  "word": "Reshape",
+  "phonetic": "/ˌriːˈʃeɪp/",
+  "form": "Verb",
+  "forms": "N: Shape",
+  "def": "Change the form or structure of something significantly.",
+  "translation": "Định hình lại",
+  "example": "Remote work is reshaping traditional employment models."
+ },
+ {
+  "topic": "Future Career",
+  "word": "Independent contractor",
+  "phonetic": "/ˌɪn.dɪˈpen.dənt kənˈtræk.tər/",
+  "form": "Noun Phrase",
+  "forms": "V: Contract",
+  "def": "A person who works for several clients rather than one employer.",
+  "translation": "Nhà thầu độc lập",
+  "example": "Many future professionals will work as independent contractors."
+ },
+ {
+  "topic": "Future Career",
+  "word": "Self-motivation",
+  "phonetic": "/ˌself ˌməʊ.tɪˈveɪ.ʃən/",
+  "form": "Noun",
+  "forms": "V: Motivate",
+  "def": "The drive to work hard without being pushed by others.",
+  "translation": "Tính tự thúc đẩy bản thân",
+  "example": "Freelancing demands strong self-motivation."
+ },
+ {
+  "topic": "Future Career",
+  "word": "Simultaneously",
+  "phonetic": "/ˌsɪm.əlˈteɪ.ni.əs.li/",
+  "form": "Adverb",
+  "forms": "Adj: Simultaneous",
+  "def": "At exactly the same time.",
+  "translation": "Đồng thời",
+  "example": "Freelancers often manage multiple projects simultaneously."
+ },
+ {
+  "topic": "Future Career",
+  "word": "Diverse",
+  "phonetic": "/daɪˈvɜːs/",
+  "form": "Adjective",
+  "forms": "N: Diversity",
+  "def": "Showing a great deal of variety; very different.",
+  "translation": "Đa dạng",
+  "example": "A diverse skill set prepares students for the future."
+ },
+ {
+  "topic": "Future Career",
+  "word": "Empathy",
+  "phonetic": "/ˈem.pə.θi/",
+  "form": "Noun",
+  "forms": "Adj: Empathetic",
+  "def": "The ability to understand and share another person's feelings.",
+  "translation": "Sự đồng cảm",
+  "example": "Empathy is a uniquely human skill that machines cannot copy."
+ },
+ {
+  "topic": "Future Career",
+  "word": "Unprecedented",
+  "phonetic": "/ʌnˈpres.ɪ.den.tɪd/",
+  "form": "Adjective",
+  "forms": "N: Precedent",
+  "def": "Never done or known before.",
+  "translation": "Chưa từng có tiền lệ",
+  "example": "The future job market offers unprecedented opportunities."
+ },
+ {
+  "topic": "Future Career",
+  "word": "Dynamic",
+  "phonetic": "/daɪˈnæm.ɪk/",
+  "form": "Adjective",
+  "forms": "N: Dynamics",
+  "def": "Constantly changing, active and full of energy.",
+  "translation": "Năng động, luôn thay đổi",
+  "example": "Students must prepare for a dynamic career landscape."
+ },
+ {
+  "topic": "Future Career",
+  "word": "Position oneself",
+  "phonetic": "/pəˈzɪʃ.ən wʌnˈself/",
+  "form": "Phrase",
+  "forms": "N: Position",
+  "def": "Put yourself in a favourable situation for future success.",
+  "translation": "Định vị bản thân",
+  "example": "Lifelong learners position themselves for success in the job market."
+ },
+ {
+  "topic": "Future Career",
+  "word": "Evolve",
+  "phonetic": "/ɪˈvɒlv/",
+  "form": "Verb",
+  "forms": "N: Evolution",
+  "def": "Develop gradually into a different or more advanced form.",
+  "translation": "Phát triển, tiến hóa",
+  "example": "Global challenges evolve, and so do career requirements."
+ },
+ {
+  "topic": "Future Career",
+  "word": "Sector",
+  "phonetic": "/ˈsek.tər/",
+  "form": "Noun",
+  "forms": "N/A",
+  "def": "A distinct part of the economy or of society.",
+  "translation": "Lĩnh vực, ngành",
+  "example": "The renewable energy sector will create many new jobs."
+ },
+ {
+  "topic": "Future Career",
+  "word": "Discipline",
+  "phonetic": "/ˈdɪs.ə.plɪn/",
+  "form": "Noun",
+  "forms": "Adj: Disciplinary",
+  "def": "A branch of knowledge or an academic subject.",
+  "translation": "Ngành học, lĩnh vực chuyên môn",
+  "example": "These sectors demand a strong foundation in STEM disciplines."
+ },
+ {
+  "topic": "Future Career",
+  "word": "Cultural competence",
+  "phonetic": "/ˈkʌl.tʃər.əl ˈkɒm.pɪ.təns/",
+  "form": "Noun Phrase",
+  "forms": "Adj: Cultural",
+  "def": "The ability to work effectively with people of other cultures.",
+  "translation": "Năng lực văn hóa",
+  "example": "Cultural competence is crucial in multinational teams."
+ },
+ {
+  "topic": "Future Career",
+  "word": "Technological literacy",
+  "phonetic": "/ˌtek.nəˈlɒdʒ.ɪ.kəl ˈlɪt.ər.ə.si/",
+  "form": "Noun Phrase",
+  "forms": "Adj: Technological",
+  "def": "The ability to understand and use new technology.",
+  "translation": "Hiểu biết công nghệ",
+  "example": "Embracing technological literacy keeps workers employable."
+ },
+ {
+  "topic": "Future Career",
+  "word": "Routine task",
+  "phonetic": "/ruːˈtiːn tɑːsk/",
+  "form": "Noun Phrase",
+  "forms": "Adj: Routine",
+  "def": "A repetitive job done in the same way each time.",
+  "translation": "Công việc lặp đi lặp lại",
+  "example": "Routine tasks are the first to be automated."
+ },
+ {
+  "topic": "Skills Employers Want",
+  "word": "Academic qualification",
+  "phonetic": "/ˌæk.əˈdem.ɪk ˌkwɒl.ɪ.fɪˈkeɪ.ʃən/",
+  "form": "Noun Phrase",
+  "forms": "V: Qualify",
+  "def": "A degree or certificate gained through formal study.",
+  "translation": "Bằng cấp, trình độ học vấn",
+  "example": "Academic qualifications alone are no longer sufficient."
+ },
+ {
+  "topic": "Skills Employers Want",
+  "word": "Prospective",
+  "phonetic": "/prəˈspek.tɪv/",
+  "form": "Adjective",
+  "forms": "N: Prospect",
+  "def": "Likely to become or expected to be in the future.",
+  "translation": "Tiềm năng, sắp tới",
+  "example": "Prospective employers look beyond grades to core competencies."
+ },
+ {
+  "topic": "Skills Employers Want",
+  "word": "Competency",
+  "phonetic": "/ˈkɒm.pɪ.tən.si/",
+  "form": "Noun",
+  "forms": "Plural: Competencies · Adj: Competent",
+  "def": "A skill or ability needed to do a job well.",
+  "translation": "Năng lực",
+  "example": "Teamwork is a key competency in modern workplaces."
+ },
+ {
+  "topic": "Skills Employers Want",
+  "word": "Thrive",
+  "phonetic": "/θraɪv/",
+  "form": "Verb",
+  "forms": "Adj: Thriving",
+  "def": "Grow, develop and be successful.",
+  "translation": "Phát triển mạnh, thành công",
+  "example": "Only flexible candidates can thrive in a fast-paced environment."
+ },
+ {
+  "topic": "Skills Employers Want",
+  "word": "Hard skills",
+  "phonetic": "/hɑːd skɪlz/",
+  "form": "Noun Phrase",
+  "forms": "Opp: Soft skills",
+  "def": "Technical abilities learned through education or training.",
+  "translation": "Kỹ năng cứng",
+  "example": "Coding and accounting are typical hard skills."
+ },
+ {
+  "topic": "Skills Employers Want",
+  "word": "Soft skills",
+  "phonetic": "/sɒft skɪlz/",
+  "form": "Noun Phrase",
+  "forms": "Opp: Hard skills",
+  "def": "Personal qualities for working well with others, such as communication.",
+  "translation": "Kỹ năng mềm",
+  "example": "Soft skills often seal the deal after the interview."
+ },
+ {
+  "topic": "Skills Employers Want",
+  "word": "Distinction",
+  "phonetic": "/dɪˈstɪŋk.ʃən/",
+  "form": "Noun",
+  "forms": "V: Distinguish",
+  "def": "A clear difference between two similar things.",
+  "translation": "Sự khác biệt, sự phân biệt",
+  "example": "Employers understand the distinction between hard and soft skills."
+ },
+ {
+  "topic": "Skills Employers Want",
+  "word": "Diminish",
+  "phonetic": "/dɪˈmɪn.ɪʃ/",
+  "form": "Verb",
+  "forms": "Opp: Increase · Syn: Decrease",
+  "def": "Become or make something smaller, weaker or less important.",
+  "translation": "Giảm bớt, suy giảm",
+  "example": "A poor communicator's value to a company soon diminishes."
+ },
+ {
+  "topic": "Skills Employers Want",
+  "word": "Proficiency",
+  "phonetic": "/prəˈfɪʃ.ən.si/",
+  "form": "Noun",
+  "forms": "Adj: Proficient",
+  "def": "A high degree of skill and ability.",
+  "translation": "Sự thành thạo",
+  "example": "Proficiency in a foreign language can open many doors."
+ },
+ {
+  "topic": "Skills Employers Want",
+  "word": "Digital literacy",
+  "phonetic": "/ˈdɪdʒ.ɪ.təl ˈlɪt.ər.ə.si/",
+  "form": "Noun Phrase",
+  "forms": "Adj: Literate",
+  "def": "The ability to use digital tools and information effectively.",
+  "translation": "Kỹ năng số",
+  "example": "Digital literacy goes far beyond knowing how to use social media."
+ },
+ {
+  "topic": "Skills Employers Want",
+  "word": "Non-negotiable",
+  "phonetic": "/ˌnɒn.nɪˈɡəʊ.ʃi.ə.bəl/",
+  "form": "Adjective",
+  "forms": "V: Negotiate",
+  "def": "Not open to discussion or change; absolutely required.",
+  "translation": "Bắt buộc, không thể thương lượng",
+  "example": "Digital literacy is a non-negotiable requirement for most jobs."
+ },
+ {
+  "topic": "Skills Employers Want",
+  "word": "Resilience",
+  "phonetic": "/rɪˈzɪl.i.əns/",
+  "form": "Noun",
+  "forms": "Adj: Resilient",
+  "def": "The ability to recover quickly from difficulties.",
+  "translation": "Khả năng phục hồi, kiên cường",
+  "example": "Employers value resilience in the face of constant change."
+ },
+ {
+  "topic": "Skills Employers Want",
+  "word": "Adaptability",
+  "phonetic": "/əˌdæp.təˈbɪl.ə.ti/",
+  "form": "Noun",
+  "forms": "V: Adapt · Adj: Adaptable",
+  "def": "The ability to adjust easily to new conditions.",
+  "translation": "Khả năng thích nghi",
+  "example": "Adaptability may be the most critical skill of all."
+ },
+ {
+  "topic": "Skills Employers Want",
+  "word": "Lifelong learning",
+  "phonetic": "/ˈlaɪf.lɒŋ ˈlɜː.nɪŋ/",
+  "form": "Noun Phrase",
+  "forms": "Adj: Lifelong",
+  "def": "Continuing to learn new knowledge and skills throughout your life.",
+  "translation": "Học tập suốt đời",
+  "example": "A commitment to lifelong learning keeps you competitive."
+ },
+ {
+  "topic": "Skills Employers Want",
+  "word": "Tech-savvy",
+  "phonetic": "/ˌtek ˈsæv.i/",
+  "form": "Adjective",
+  "forms": "N: Savvy",
+  "def": "Having good practical knowledge of modern technology.",
+  "translation": "Am hiểu công nghệ",
+  "example": "Being tech-savvy is now a fundamental necessity, not a bonus."
+ },
+ {
+  "topic": "Skills Employers Want",
+  "word": "Sufficient",
+  "phonetic": "/səˈfɪʃ.ənt/",
+  "form": "Adjective",
+  "forms": "Adv: Sufficiently · Opp: Insufficient",
+  "def": "Enough for a particular purpose.",
+  "translation": "Đủ, đầy đủ",
+  "example": "A degree alone is no longer sufficient to secure a good job."
+ },
+ {
+  "topic": "Skills Employers Want",
+  "word": "Core competencies",
+  "phonetic": "/kɔː ˈkɒm.pɪ.tən.siz/",
+  "form": "Noun Phrase",
+  "forms": "Sing: Core competency",
+  "def": "The essential skills and abilities needed for success.",
+  "translation": "Năng lực cốt lõi",
+  "example": "Employers assess core competencies, not just grades."
+ },
+ {
+  "topic": "Skills Employers Want",
+  "word": "Fast-paced",
+  "phonetic": "/ˌfɑːstˈpeɪst/",
+  "form": "Adjective",
+  "forms": "N: Pace",
+  "def": "Developing or happening very quickly.",
+  "translation": "Nhịp độ nhanh",
+  "example": "Modern graduates enter a fast-paced work environment."
+ },
+ {
+  "topic": "Skills Employers Want",
+  "word": "Golden ticket",
+  "phonetic": "/ˌɡəʊl.dən ˈtɪk.ɪt/",
+  "form": "Idiom",
+  "forms": "N/A",
+  "def": "Something that guarantees success or a special opportunity.",
+  "translation": "Tấm vé vàng, chìa khóa thành công",
+  "example": "A degree used to be a golden ticket to a stable career."
+ },
+ {
+  "topic": "Skills Employers Want",
+  "word": "Seal the deal",
+  "phonetic": "/siːl ðə diːl/",
+  "form": "Idiom",
+  "forms": "N: Deal",
+  "def": "Complete an agreement or achieve a decisive success.",
+  "translation": "Chốt thành công, đạt được thỏa thuận",
+  "example": "Soft skills often seal the deal at the final interview."
+ },
+ {
+  "topic": "Skills Employers Want",
+  "word": "Resist",
+  "phonetic": "/rɪˈzɪst/",
+  "form": "Verb",
+  "forms": "N: Resistance · Adj: Resistant",
+  "def": "Refuse to accept or fight against something.",
+  "translation": "Chống lại, kháng cự",
+  "example": "Workers who resist digital tools risk becoming obsolete."
+ },
+ {
+  "topic": "Skills Employers Want",
+  "word": "Adopt",
+  "phonetic": "/əˈdɒpt/",
+  "form": "Verb",
+  "forms": "N: Adoption",
+  "def": "Start to use or follow a new method or idea.",
+  "translation": "Áp dụng, tiếp nhận",
+  "example": "Employees must be comfortable adopting new technologies."
+ },
+ {
+  "topic": "Skills Employers Want",
+  "word": "Efficiency",
+  "phonetic": "/ɪˈfɪʃ.ən.si/",
+  "form": "Noun",
+  "forms": "Adj: Efficient",
+  "def": "Working well without wasting time, money or effort.",
+  "translation": "Hiệu suất, hiệu quả",
+  "example": "The modern economy is driven by efficiency and connectivity."
+ },
+ {
+  "topic": "Skills Employers Want",
+  "word": "Connectivity",
+  "phonetic": "/ˌkɒn.ekˈtɪv.ə.ti/",
+  "form": "Noun",
+  "forms": "V: Connect",
+  "def": "The state of being linked, especially through networks.",
+  "translation": "Khả năng kết nối",
+  "example": "Constant connectivity has changed how teams work."
+ },
+ {
+  "topic": "Skills Employers Want",
+  "word": "Collaboration",
+  "phonetic": "/kəˌlæb.əˈreɪ.ʃən/",
+  "form": "Noun",
+  "forms": "V: Collaborate",
+  "def": "The act of working together to achieve something.",
+  "translation": "Sự hợp tác",
+  "example": "Virtual collaboration tools are now standard in many firms."
+ },
+ {
+  "topic": "Skills Employers Want",
+  "word": "Analyse",
+  "phonetic": "/ˈæn.ə.laɪz/",
+  "form": "Verb",
+  "forms": "N: Analysis · Analyst",
+  "def": "Examine something in detail to understand it.",
+  "translation": "Phân tích",
+  "example": "Digitally literate staff can analyse data and solve problems."
+ },
+ {
+  "topic": "Skills Employers Want",
+  "word": "Unlearn",
+  "phonetic": "/ʌnˈlɜːn/",
+  "form": "Verb",
+  "forms": "Related: Relearn",
+  "def": "Deliberately forget old habits or methods.",
+  "translation": "Gạt bỏ cái cũ, bỏ thói quen cũ",
+  "example": "You must unlearn old methods to keep up with change."
+ },
+ {
+  "topic": "Skills Employers Want",
+  "word": "Relearn",
+  "phonetic": "/ˌriːˈlɜːn/",
+  "form": "Verb",
+  "forms": "Related: Unlearn",
+  "def": "Learn something again, often in a new way.",
+  "translation": "Học lại",
+  "example": "The ability to relearn new methods is vital."
+ },
+ {
+  "topic": "Skills Employers Want",
+  "word": "Commitment",
+  "phonetic": "/kəˈmɪt.mənt/",
+  "form": "Noun",
+  "forms": "V: Commit",
+  "def": "Dedication to a cause, activity or person.",
+  "translation": "Sự cam kết, tận tụy",
+  "example": "Employers value a commitment to lifelong learning."
+ },
+ {
+  "topic": "Skills Employers Want",
+  "word": "Capacity",
+  "phonetic": "/kəˈpæs.ə.ti/",
+  "form": "Noun",
+  "forms": "Adj: Capable",
+  "def": "The ability to do or understand something.",
+  "translation": "Năng lực, khả năng",
+  "example": "The capacity to grow matters as much as what you already know."
+ },
+ {
+  "topic": "Skills Employers Want",
+  "word": "Vital",
+  "phonetic": "/ˈvaɪ.təl/",
+  "form": "Adjective",
+  "forms": "Adv: Vitally",
+  "def": "Absolutely necessary or extremely important.",
+  "translation": "Thiết yếu, sống còn",
+  "example": "The ability to adapt is vital in a changing economy."
+ },
+ {
+  "topic": "Skills Employers Want",
+  "word": "Fundamental",
+  "phonetic": "/ˌfʌn.dəˈmen.təl/",
+  "form": "Adjective",
+  "forms": "Adv: Fundamentally",
+  "def": "Forming the base or most essential part of something.",
+  "translation": "Cơ bản, căn bản",
+  "example": "Being tech-savvy is a fundamental necessity today."
+ },
+ {
+  "topic": "Skills Employers Want",
+  "word": "Determinant",
+  "phonetic": "/dɪˈtɜː.mɪ.nənt/",
+  "form": "Noun",
+  "forms": "V: Determine",
+  "def": "A factor that decides the outcome of something.",
+  "translation": "Yếu tố quyết định",
+  "example": "Soft skills are often the determinant of final selection."
+ },
+ {
+  "topic": "Skills Employers Want",
+  "word": "Insignificant",
+  "phonetic": "/ˌɪn.sɪɡˈnɪf.ɪ.kənt/",
+  "form": "Adjective",
+  "forms": "Opp: Significant",
+  "def": "Too small or unimportant to matter.",
+  "translation": "Không đáng kể",
+  "example": "Prior knowledge may seem insignificant next to adaptability."
+ },
+ {
+  "topic": "Skills Employers Want",
+  "word": "Interpersonal",
+  "phonetic": "/ˌɪn.təˈpɜː.sən.əl/",
+  "form": "Adjective",
+  "forms": "Adv: Interpersonally",
+  "def": "Relating to relationships and communication between people.",
+  "translation": "Thuộc về giao tiếp giữa người với người",
+  "example": "Technology cannot replace strong interpersonal communication."
+ }
+];
+    const topicLabels = {"Joining the Workforce":"Joining the Workforce","Future Career":"Future Career","Skills Employers Want":"Skills Employers Want"};
+    (function buildFilters(){
+        const box = document.getElementById("topic-filters");
+        box.innerHTML = '<button class="filter-btn active" data-t="all">All Terms</button>' + Object.keys(topicLabels).map(t=>`<button class="filter-btn" data-t="${t}">${topicLabels[t]}</button>`).join("");
+        box.querySelectorAll(".filter-btn").forEach(b=>b.addEventListener("click",()=>filterTopic(b.dataset.t,b)));
+    })();
+
+    function renderGrid() {
+        const grid = document.getElementById('grid-view');
+        grid.innerHTML = '';
+        vocabBank.forEach(item => {
+            const article = document.createElement('article');
+            article.className = 'vocab-card';
+            article.setAttribute('data-topic', item.topic);
+            
+            // Format forms clearly
+            let formsDisplay = `
+                <div class="structure-container">
+                    <span class="structure-label">Grammar & Word Family</span>
+                    <div class="structure-tags">
+                        <span class="structure-tag" style="background: var(--primary); color: white;">${item.form}</span>
+                        <span class="structure-tag">${item.forms}</span>
+                    </div>
+                </div>
+            `;
+            
+            article.innerHTML = `
+                <div class="word-header">
+                    <div class="word-main">
+                        <span class="word">${item.word}</span>
+                        <button class="audio-btn" onclick="playAudio(this.dataset.w)" data-w="${item.word}" title="Listen to pronunciation">
+                            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg>
+                        </button>
+                    </div>
+                    <div class="meta-info">
+                        <span class="phonetic">${item.phonetic}</span>
+                    </div>
+                </div>
+                ${formsDisplay}
+                <span class="topic-tag">${item.topic}</span>
+                <p class="definition"><strong>Meaning:</strong> ${item.def}</p>
+                <p class="translation"><strong>Vietnamese:</strong> ${item.translation}</p>
+                
+                <div class="example-box">
+                    <span>Usage Example</span>
+                    <span class="example-text" style="text-transform: none; letter-spacing: normal;">"${item.example}"</span>
+                </div>
+            `;
+            grid.appendChild(article);
+        });
+    }
+
+    // Initialize Grid
+    renderGrid();
+
+    let voices = [];
+    if ('speechSynthesis' in window) {
+        voices = window.speechSynthesis.getVoices();
+        window.speechSynthesis.onvoiceschanged = () => {
+            voices = window.speechSynthesis.getVoices();
+        };
+    }
+
+    function playAudio(text) {
+        if ('speechSynthesis' in window) {
+            window.speechSynthesis.cancel();
+            const utterance = new SpeechSynthesisUtterance(text);
+            utterance.lang = 'en-GB';
+            utterance.rate = 0.9;
+            
+            // Try to find a female voice profile
+            let femaleVoice = voices.find(voice => 
+                voice.name.includes('Female') || 
+                voice.name.includes('Samantha') || 
+                voice.name.includes('Victoria') || 
+                voice.name.includes('Zira') ||
+                voice.name.includes('Karen') ||
+                voice.name.includes('Tessa') ||
+                voice.name.includes('Fiona') ||
+                voice.name.includes('Moira') ||
+                voice.name.includes('Veena')
+            );
+            
+            // Fallback to any en-GB voice that isn't explicitly male
+            if (!femaleVoice) {
+                femaleVoice = voices.find(voice => voice.lang.includes('en-GB') && !voice.name.includes('Male'));
+            }
+            
+            if (femaleVoice) {
+                utterance.voice = femaleVoice;
+            } else {
+                utterance.pitch = 1.3; 
+            }
+
+            window.speechSynthesis.speak(utterance);
+        } else {
+            console.warn("Speech synthesis not supported in this browser.");
+        }
+    }
+
+    function playAudioFromCard(event) {
+        event.stopPropagation();
+        const word = document.getElementById('fc-word').textContent;
+        playAudio(word);
+    }
+
+    let currentTopic = 'all';
+
+    function filterTopic(topicName, btn) {
+        const filterBtns = document.querySelectorAll('.filter-btn');
+        filterBtns.forEach(btn => btn.classList.remove('active'));
+        if (btn) btn.classList.add('active');
+        currentTopic = topicName;
+        applyFilters();
+    }
+
+    function applyFilters() {
+        const query = document.getElementById('search-input').value.toLowerCase();
+        const allCards = document.querySelectorAll('.vocab-card');
+        
+        allCards.forEach(card => {
+            const word = card.querySelector('.word').textContent.toLowerCase();
+            const translation = card.querySelector('.translation').textContent.toLowerCase();
+            const topic = card.getAttribute('data-topic');
+            
+            const matchesTopic = (currentTopic === 'all' || topic === currentTopic);
+            const matchesSearch = (word.includes(query) || translation.includes(query));
+            
+            if (matchesTopic && matchesSearch) {
+                card.classList.remove('hidden');
+            } else {
+                card.classList.add('hidden');
+            }
+        });
+
+        if (document.getElementById('flashcard-view').style.display === 'flex') {
+             extractDataFromGrid();
+             currentCardIndex = 0;
+             updateFlashcardUI();
+        }
+    }
+
+    function switchView(viewName) {
+        const gridView = document.getElementById('grid-view');
+        const flashcardView = document.getElementById('flashcard-view');
+        const btnGrid = document.getElementById('btn-grid');
+        const btnFlashcards = document.getElementById('btn-flashcards');
+
+        if (viewName === 'grid') {
+            gridView.style.display = 'grid';
+            flashcardView.style.display = 'none';
+            btnGrid.classList.add('active');
+            btnFlashcards.classList.remove('active');
+        } else {
+            gridView.style.display = 'none';
+            flashcardView.style.display = 'flex';
+            btnFlashcards.classList.add('active');
+            btnGrid.classList.remove('active');
+            
+            applyFilters();
+        }
+    }
+
+    let flashcardData = [];
+    let currentCardIndex = 0;
+    const flashcardScene = document.getElementById('flashcard-scene');
+
+    function extractDataFromGrid() {
+        flashcardData = [];
+        const query = document.getElementById('search-input').value.toLowerCase();
+        vocabBank.forEach(item => {
+            const matchesTopic = (currentTopic === 'all' || item.topic === currentTopic);
+            const matchesSearch = item.word.toLowerCase().includes(query) || item.translation.toLowerCase().includes(query);
+            
+            if (matchesTopic && matchesSearch) {
+                flashcardData.push(item);
+            }
+        });
+    }
+
+    function updateFlashcardUI() {
+        if (flashcardData.length === 0) {
+            document.getElementById('fc-word').textContent = "No matches";
+            document.getElementById('fc-phonetic').textContent = "";
+            document.getElementById('fc-topic').textContent = "Try adjusting your search";
+            document.getElementById('fc-forms-container').innerHTML = "";
+            document.getElementById('fc-definition').textContent = "Could not find any vocabulary matching your search and filter criteria.";
+            document.getElementById('fc-translation').textContent = "";
+            document.getElementById('fc-example-container').innerHTML = "";
+            document.getElementById('fc-counter').textContent = "0 / 0";
+            document.getElementById('fc-prev').disabled = true;
+            document.getElementById('fc-next').disabled = true;
+            return;
+        }
+        
+        const data = flashcardData[currentCardIndex];
+        
+        flashcardScene.classList.remove('is-flipped');
+        
+        setTimeout(() => {
+            document.getElementById('fc-word').textContent = data.word;
+            document.getElementById('fc-phonetic').textContent = data.phonetic;
+            document.getElementById('fc-topic').textContent = data.topic;
+            
+            document.getElementById('fc-forms-container').innerHTML = `
+                <div class="structure-container" style="width: 85%; margin-top: 1rem; margin-bottom: 0;">
+                    <span class="structure-label">Grammar & Word Family</span>
+                    <div class="structure-tags" style="justify-content: center;">
+                        <span class="structure-tag" style="background: var(--primary); color: white;">${data.form}</span>
+                        <span class="structure-tag">${data.forms}</span>
+                    </div>
+                </div>
+            `;
+            
+            document.getElementById('fc-definition').textContent = data.def;
+            document.getElementById('fc-translation').textContent = data.translation;
+            
+            const examplesHTML = `
+                <div class="example-box" style="margin-bottom: 0.5rem;">
+                    <span style="color: var(--accent);">Usage Example</span>
+                    <span class="example-text" style="text-transform: none; letter-spacing: normal;">"${data.example}"</span>
+                </div>
+            `;
+            document.getElementById('fc-example-container').innerHTML = examplesHTML;
+            
+            document.getElementById('fc-counter').textContent = `${currentCardIndex + 1} / ${flashcardData.length}`;
+            
+            document.getElementById('fc-prev').disabled = currentCardIndex === 0;
+            document.getElementById('fc-next').disabled = currentCardIndex === flashcardData.length - 1;
+        }, 150);
+    }
+
+    function flipCard() { flashcardScene.classList.toggle('is-flipped'); }
+    function nextCard() { if (currentCardIndex < flashcardData.length - 1) { currentCardIndex++; updateFlashcardUI(); } }
+    function prevCard() { if (currentCardIndex > 0) { currentCardIndex--; updateFlashcardUI(); } }
+    
+    function shuffleCards() {
+        for (let i = flashcardData.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [flashcardData[i], flashcardData[j]] = [flashcardData[j], flashcardData[i]];
+        }
+        currentCardIndex = 0;
+        updateFlashcardUI();
+    }
+</script>
+</body>
+</html>
